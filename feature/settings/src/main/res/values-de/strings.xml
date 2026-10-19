@@ -2,4 +2,68 @@
 <resources>
     <string name="feature_settings_title">Einstellungen</string>
     <string name="feature_settings_placeholder">Profil, Pausentimer, Health Connect und Datenexport.</string>
+
+    <string name="settings_action_save">Speichern</string>
+    <string name="settings_action_cancel">Abbrechen</string>
+    <string name="settings_coming_soon">Kommt bald</string>
+    <string name="settings_not_set">Nicht festgelegt</string>
+
+    <string name="settings_value_kg">%1$s kg</string>
+    <string name="settings_value_cm">%1$s cm</string>
+    <string name="settings_value_seconds">%1$d s</string>
+    <string name="settings_value_per_week">%1$d pro Woche</string>
+    <string name="settings_unit_kg">kg</string>
+    <string name="settings_unit_cm">cm</string>
+    <string name="settings_unit_seconds">s</string>
+
+    <string name="settings_section_profile">Profil</string>
+    <string name="settings_name">Name</string>
+    <string name="settings_body_weight">Körpergewicht</string>
+    <string name="settings_body_weight_summary">Wird beim Start eines Workouts als Körpergewicht verwendet</string>
+    <string name="settings_height">Größe (optional)</string>
+    <string name="settings_error_name">Höchstens 50 Zeichen</string>
+    <string name="settings_error_weight">Gewicht zwischen 20 und 400 kg eingeben</string>
+    <string name="settings_error_height">Größe zwischen 100 und 250 cm eingeben</string>
+
+    <string name="settings_section_training">Training</string>
+    <string name="settings_rest_timer">Pausentimer</string>
+    <string name="settings_error_rest_timer">10 bis 600 Sekunden eingeben</string>
+    <string name="settings_week_start">Woche beginnt am</string>
+    <string name="settings_week_monday">Montag</string>
+    <string name="settings_week_sunday">Sonntag</string>
+    <string name="settings_weekly_goal">Wochenziel</string>
+    <string name="settings_weekly_goal_label">Trainings pro Woche</string>
+    <string name="settings_error_weekly_goal">1 bis 14 Trainings eingeben</string>
+
+    <string name="settings_section_appearance">Darstellung</string>
+    <string name="settings_theme">Design</string>
+    <string name="settings_theme_system">Systemstandard</string>
+    <string name="settings_theme_light">Hell</string>
+    <string name="settings_theme_dark">Dunkel</string>
+    <string name="settings_dynamic_color">Dynamische Farben</string>
+    <string name="settings_dynamic_color_summary">Farben aus dem Hintergrundbild verwenden</string>
+    <string name="settings_dynamic_color_unavailable">Erfordert Android 12 oder neuer</string>
+
+    <string name="settings_section_language">Sprache</string>
+    <string name="settings_language">App-Sprache</string>
+    <string name="settings_language_system">Systemstandard</string>
+
+    <string name="settings_section_body">Körpermaße</string>
+    <string name="settings_body_measurements">Maße und Fortschrittsfotos</string>
+    <string name="settings_body_measurements_summary">Gewicht, Körperfett und Umfänge im Zeitverlauf verfolgen</string>
+
+    <string name="settings_section_health">Gesundheitsdaten</string>
+    <string name="settings_health_connect">Health Connect</string>
+    <string name="settings_health_connect_summary">Workouts teilen und Körperdaten aus Android Health Connect lesen</string>
+    <string name="settings_samsung_health">Samsung Health</string>
+    <string name="settings_samsung_health_summary">Synchronisiert über Health Connect</string>
+
+    <string name="settings_section_data">Daten</string>
+    <string name="settings_export_import">Export und Import</string>
+    <string name="settings_export_import_summary">Workouts, Pläne und Übungen sichern oder übertragen</string>
+
+    <string name="settings_section_about">Über die App</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_licenses">Open-Source-Lizenzen</string>
+    <string name="settings_licenses_summary">Übungsdaten und Bibliotheken, die GymPulse nutzt</string>
 </resources>

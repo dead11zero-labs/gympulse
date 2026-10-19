@@ -51,6 +51,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.database)
     implementation(projects.core.featuregate)
+    implementation(projects.core.settings)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)
@@ -59,6 +60,8 @@ dependencies {
     implementation(projects.feature.settings)
 
     implementation(libs.androidx.core.ktx)
+    // AppCompatActivity und AppCompatDelegate für die App-Sprache (Per-App-Locales ab API 28).
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Fenster-Theme bis Compose übernimmt; das eigentliche Theme ist GymPulseTheme. -->
-    <style name="Theme.GymPulse" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Fenster-Theme bis Compose übernimmt; das eigentliche Theme ist GymPulseTheme.
+         AppCompat-Basis, weil MainActivity eine AppCompatActivity ist (Per-App-Sprache). -->
+    <style name="Theme.GymPulse" parent="Theme.AppCompat.DayNight.NoActionBar" />
 </resources>
