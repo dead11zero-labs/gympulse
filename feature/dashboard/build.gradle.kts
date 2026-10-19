@@ -5,3 +5,11 @@ plugins {
 android {
     namespace = "app.gympulse.feature.dashboard"
 }
+
+dependencies {
+    implementation(projects.core.data)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.kotlinx.coroutines.core)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+}

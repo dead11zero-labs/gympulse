@@ -20,6 +20,16 @@ data class WeeklyVolume(
     val totalKg: Double get() = dailyVolumeKg.sum()
 }
 
+/** Kompakte Darstellung einer abgeschlossenen Session für Listen (z. B. "Zuletzt trainiert"). */
+data class CompletedSessionSummary(
+    val id: String,
+    /** Planname zum Zeitpunkt des Trainings, null bei freiem Workout. */
+    val title: String?,
+    val startedAt: Instant,
+    val endedAt: Instant,
+    val volumeKg: Double,
+)
+
 class StatsRepository @Inject constructor(
     private val sessionDao: SessionDao,
     private val time: TimeProvider,
@@ -27,6 +37,21 @@ class StatsRepository @Inject constructor(
     fun observeSessionVolumes(from: Instant, to: Instant, includeWarmups: Boolean = false): Flow<List<SessionVolume>> =
         sessionDao.observeSessionVolumes(from.toEpochMilli(), to.toEpochMilli(), includeWarmups).map { rows ->
             rows.map { SessionVolume(it.sessionId, Instant.ofEpochMilli(it.endedAt), it.volumeKg) }
+        }
+
+    /** Die letzten [limit] abgeschlossenen Sessions, neueste zuerst. */
+    fun observeRecentSessions(limit: Int): Flow<List<CompletedSessionSummary>> =
+        sessionDao.observeRecentCompleted(limit).map { rows ->
+            rows.mapNotNull { row ->
+                val endedAt = row.endedAt ?: return@mapNotNull null
+                CompletedSessionSummary(
+                    id = row.id,
+                    title = row.title,
+                    startedAt = Instant.ofEpochMilli(row.startedAt),
+                    endedAt = Instant.ofEpochMilli(endedAt),
+                    volumeKg = row.totalVolumeKg ?: 0.0,
+                )
+            }
         }
 
     /**
