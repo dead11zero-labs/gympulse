@@ -40,3 +40,4 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 ## Release
 - `.github/workflows/release.yml` baut `assembleRelease` (manuell, bei Push auf `main` und bei Tags `v*`; Tags erzeugen ein GitHub-Release mit APK).
 - Signatur über die Secrets `GYMPULSE_KEYSTORE_BASE64`, `GYMPULSE_KEYSTORE_PASSWORD`, `GYMPULSE_KEY_ALIAS`, `GYMPULSE_KEY_PASSWORD`. Fehlen sie, wird mit dem Debug-Schlüssel signiert. Keystores nie committen.
+- Jeder Build auf `main` veröffentlicht die APK zusätzlich als Pre-Release `latest-main` (direkter Download ohne ZIP, funktioniert auch am Handy).
