@@ -1,6 +1,11 @@
 package app.gympulse.ui
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
@@ -28,6 +33,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.gympulse.R
 import app.gympulse.feature.settings.SettingsRoute
+import app.gympulse.feature.workout.bar.ActiveWorkoutBar
+import app.gympulse.feature.workout.bar.ActiveWorkoutServiceEffect
+import app.gympulse.feature.workout.navigateToWorkout
 import app.gympulse.navigation.GymPulseNavHost
 import app.gympulse.navigation.TopLevelDestination
 
@@ -51,6 +59,9 @@ fun GymPulseApp(
         windowWidth >= MediumWidthBreakpoint -> NavigationSuiteType.NavigationRail
         else -> NavigationSuiteType.NavigationBar
     }
+
+    // Keeps the workout notification running while a session is active.
+    ActiveWorkoutServiceEffect()
 
     NavigationSuiteScaffold(
         layoutType = layoutType,
@@ -98,6 +109,20 @@ fun GymPulseApp(
                         }
                     },
                 )
+            },
+            bottomBar = {
+                // Mini bar of a running workout, only on the main tabs. Without a bottom
+                // navigation bar it has to keep clear of the system navigation itself.
+                if (currentTopLevel != null) {
+                    ActiveWorkoutBar(
+                        onClick = { navController.navigateToWorkout() },
+                        modifier = if (layoutType == NavigationSuiteType.NavigationBar) {
+                            Modifier
+                        } else {
+                            Modifier.windowInsetsPadding(WindowInsets.navigationBars.only(WindowInsetsSides.Bottom))
+                        },
+                    )
+                }
             },
         ) { innerPadding ->
             GymPulseNavHost(

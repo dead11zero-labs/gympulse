@@ -111,6 +111,114 @@ class WorkoutRepository @Inject constructor(
         return sessionId
     }
 
+    /** Die laufende Session als Momentaufnahme, oder null. */
+    suspend fun getActiveSession(): WorkoutSession? = sessionDao.observeActive().first()?.toModel()
+
+    /**
+     * Startet eine Session, sofern keine aktive existiert; sonst wird die aktive Session
+     * zurückgegeben. So gibt es höchstens eine aktive Session gleichzeitig.
+     */
+    suspend fun startOrResumeSession(planId: String?): String =
+        sessionDao.observeActive().first()?.session?.id ?: startSession(planId)
+
+    /**
+     * Hängt eine Übung an die Session an. Die Sätze werden mit den Werten der letzten
+     * abgeschlossenen Session vorbefüllt (ohne Aufwärmsätze), mindestens ein Satz.
+     *
+     * @return ID des neuen SessionExercise oder null, wenn die Session nicht existiert.
+     */
+    suspend fun addExercise(sessionId: String, exerciseId: String): String? {
+        val current = sessionDao.getById(sessionId) ?: return null
+        val now = time.now().toEpochMilli()
+        val sessionExerciseId = Ids.newId(now)
+        val nextSortOrder = (current.exercises.maxOfOrNull { it.sessionExercise.sortOrder } ?: -1) + 1
+        val previous = sessionDao.getPreviousSets(exerciseId, sessionId).filter { it.setType != SetType.WARMUP }
+        val setCount = previous.size.coerceAtLeast(1)
+        val sets = List(setCount) { setIndex ->
+            val template = previous.getOrNull(setIndex)
+            SetEntryEntity(
+                id = Ids.newId(now),
+                sessionExerciseId = sessionExerciseId,
+                setIndex = setIndex,
+                setType = SetType.WORKING,
+                weightKg = template?.weightKg,
+                reps = template?.reps,
+                durationSeconds = template?.durationSeconds,
+                distanceMeters = template?.distanceMeters,
+                rpe = null,
+                isCompleted = false,
+                completedAt = null,
+                createdAt = now,
+                updatedAt = now,
+            )
+        }
+        sessionDao.upsertSessionExercises(
+            listOf(
+                SessionExerciseEntity(
+                    id = sessionExerciseId,
+                    sessionId = sessionId,
+                    exerciseId = exerciseId,
+                    sortOrder = nextSortOrder,
+                    supersetGroup = null,
+                    notes = null,
+                    equipmentSettingsSnapshot = equipmentSnapshot(exerciseId),
+                    createdAt = now,
+                    updatedAt = now,
+                ),
+            ),
+        )
+        sessionDao.upsertSets(sets)
+        return sessionExerciseId
+    }
+
+    /** Entfernt eine Übung samt Sätzen aus der Session (Soft-Delete). */
+    suspend fun removeExercise(sessionExerciseId: String) =
+        sessionDao.softDeleteSessionExercise(sessionExerciseId, time.now().toEpochMilli())
+
+    /** Setzt die Notiz einer Übung in der Session; leere Notizen werden als null gespeichert. */
+    suspend fun updateExerciseNotes(sessionId: String, sessionExerciseId: String, notes: String?) {
+        val current = sessionDao.getById(sessionId) ?: return
+        val entity = current.exercises.firstOrNull { it.sessionExercise.id == sessionExerciseId }?.sessionExercise ?: return
+        val now = time.now().toEpochMilli()
+        sessionDao.upsertSessionExercises(
+            listOf(entity.copy(notes = notes?.takeIf { it.isNotBlank() }, updatedAt = now)),
+        )
+    }
+
+    /**
+     * Fügt einen offenen Satz hinzu, vorbefüllt mit den Werten des letzten Satzes der Übung.
+     *
+     * @return ID des neuen Satzes oder null, wenn die Übung nicht existiert.
+     */
+    suspend fun addSet(sessionId: String, sessionExerciseId: String): String? {
+        val current = sessionDao.getById(sessionId) ?: return null
+        val exercise = current.exercises.firstOrNull { it.sessionExercise.id == sessionExerciseId } ?: return null
+        val now = time.now().toEpochMilli()
+        val visibleSets = exercise.sets.filter { it.deletedAt == null }.sortedBy { it.setIndex }
+        val template = visibleSets.lastOrNull()
+        val setId = Ids.newId(now)
+        sessionDao.upsertSets(
+            listOf(
+                SetEntryEntity(
+                    id = setId,
+                    sessionExerciseId = sessionExerciseId,
+                    setIndex = (exercise.sets.maxOfOrNull { it.setIndex } ?: -1) + 1,
+                    setType = SetType.WORKING,
+                    weightKg = template?.weightKg,
+                    reps = template?.reps,
+                    durationSeconds = template?.durationSeconds,
+                    distanceMeters = template?.distanceMeters,
+                    rpe = null,
+                    isCompleted = false,
+                    completedAt = null,
+                    createdAt = now,
+                    updatedAt = now,
+                ),
+            ),
+        )
+        return setId
+    }
+
     /** Werte der letzten abgeschlossenen Session für die "Vorher"-Spalte. */
     suspend fun previousSets(exerciseId: String, currentSessionId: String?): List<SetEntry> =
         sessionDao.getPreviousSets(exerciseId, currentSessionId).map { it.toModel() }
