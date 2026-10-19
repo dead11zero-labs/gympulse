@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_library_title">Bibliothek</string>
+    <string name="feature_library_placeholder">Hier findest du Übungen, Geräte und deine Geräteeinstellungen.</string>
+</resources>

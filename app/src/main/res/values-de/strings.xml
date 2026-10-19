@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_plans">Pläne</string>
+    <string name="nav_library">Bibliothek</string>
+    <string name="nav_calendar">Kalender</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_back">Zurück</string>
+</resources>
