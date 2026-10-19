@@ -10,8 +10,22 @@ android {
 
     defaultConfig {
         applicationId = "app.gympulse"
-        versionCode = 1
+        versionCode = providers.environmentVariable("GITHUB_RUN_NUMBER").orNull?.toIntOrNull() ?: 1
         versionName = "0.1.0"
+    }
+
+    // Release-Signatur kommt aus Umgebungsvariablen (CI: GitHub Secrets), der Keystore liegt nie im Repo.
+    // Ohne Keystore wird der Release-Build mit dem Debug-Schlüssel signiert, damit er installierbar bleibt.
+    val releaseKeystore = providers.environmentVariable("GYMPULSE_KEYSTORE_FILE").orNull
+    signingConfigs {
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = file(releaseKeystore)
+                storePassword = providers.environmentVariable("GYMPULSE_KEYSTORE_PASSWORD").get()
+                keyAlias = providers.environmentVariable("GYMPULSE_KEY_ALIAS").get()
+                keyPassword = providers.environmentVariable("GYMPULSE_KEY_PASSWORD").get()
+            }
+        }
     }
 
     buildTypes {
@@ -22,6 +36,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
         }
     }
 
