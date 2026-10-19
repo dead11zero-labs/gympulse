@@ -1,5 +1,6 @@
 package app.gympulse.ui
 
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -42,6 +43,7 @@ fun GymPulseApp(
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
     val currentTopLevel = TopLevelDestination.entries.firstOrNull { currentDestination.isOn(it) }
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
 
     // Adaptive Navigation: Navigation Bar auf Handys, Navigation Rail auf Tablets und Foldables.
     // Im Workout und in den Einstellungen wird sie ausgeblendet.
@@ -79,7 +81,8 @@ fun GymPulseApp(
                     },
                     navigationIcon = {
                         if (currentTopLevel == null && navController.previousBackStackEntry != null) {
-                            IconButton(onClick = { navController.navigateUp() }) {
+                            // Über den Dispatcher, damit BackHandler (z. B. "Änderungen verwerfen?" im Plan-Editor) greifen.
+                            IconButton(onClick = { backDispatcher?.onBackPressed() ?: navController.navigateUp() }) {
                                 Icon(
                                     Icons.AutoMirrored.Filled.ArrowBack,
                                     contentDescription = stringResource(R.string.action_back),
