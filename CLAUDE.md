@@ -13,6 +13,7 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 - `app` – Activity, Scaffold mit Bottom Navigation, NavHost.
 - `core:designsystem` – `GymPulseTheme`, Farben/Typo/Shapes, gemeinsame Komponenten. Screens nutzen nur
   `MaterialTheme`-Tokens, keine hartcodierten Farben oder Größen außerhalb dieses Moduls.
+- `core:featuregate` – `Feature`, `FeatureGate` und Hilt-Bindings; entscheidet aus lokalen Defaults, Remote-Config und Entitlements, ob ein Feature aktiv ist.
 - `feature:*` – je ein Feature; stellt eine `@Serializable`-Route und `NavGraphBuilder.xyzScreen()` bereit.
 - Convention-Plugins in `build-logic/convention`: `gympulse.android.application`, `.library`, `.compose`,
   `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`.
