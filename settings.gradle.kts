@@ -20,6 +20,9 @@ rootProject.name = "GymPulse"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":app")
+include(":core:model")
+include(":core:database")
+include(":core:data")
 include(":core:designsystem")
 include(":feature:dashboard")
 include(":feature:workout")
