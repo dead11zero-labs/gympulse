@@ -1,0 +1,905 @@
+muscle:abdominals	Bauch
+muscle:abductors	Abduktoren
+muscle:adductors	Adduktoren
+muscle:biceps	Bizeps
+muscle:calves	Waden
+muscle:chest	Brust
+muscle:forearms	Unterarme
+muscle:glutes	Gesäß
+muscle:hamstrings	Beinbeuger
+muscle:lats	Latissimus
+muscle:lower_back	unterer Rücken
+muscle:middle_back	mittlerer Rücken
+muscle:neck	Nacken
+muscle:quadriceps	Quadrizeps
+muscle:shoulders	Schultern
+muscle:traps	Trapez
+muscle:triceps	Trizeps
+equipment:band	Band/Widerstandsband
+equipment:barbell	Langhantel
+equipment:bodyweight	Körpergewicht
+equipment:cable	Kabelzug
+equipment:dumbbell	Kurzhantel(n)
+equipment:exercise_ball	Gymnastikball
+equipment:ez_bar	SZ-Stange
+equipment:foam_roll	Faszienrolle
+equipment:kettlebell	Kettlebell
+equipment:machine	Maschine
+equipment:medicine_ball	Medizinball
+equipment:other	Sonstiges
+3_4_sit_up	3/4 Sit-Up
+90_90_hamstring	90/90 Beinbeuger
+ab_crunch_machine	Bauchmaschine (Crunch)
+ab_roller	Ab Roller
+adductor	Adduktor
+adductor_groin	Adduktoren/Leiste
+advanced_kettlebell_windmill	Fortgeschrittene Kettlebell-Windmill
+air_bike	Air Bike
+all_fours_quad_stretch	Dehnung Quadrizeps (Vierfüßler)
+alternate_hammer_curl	Hammer Curl abwechselnd
+alternate_heel_touchers	Abwechselndes Fersenberühren
+alternate_incline_dumbbell_curl	Kurzhantel-Curl abwechselnd auf Schrägbank
+alternate_leg_diagonal_bound	Diagonale Sprünge abwechselnd
+alternating_cable_shoulder_press	Schulterdrücken am Kabelzug abwechselnd
+alternating_deltoid_raise	Seitheben abwechselnd
+alternating_floor_press	Bodenpresse abwechselnd
+alternating_hang_clean	Hang Clean abwechselnd
+alternating_kettlebell_press	Kettlebell-Drücken abwechselnd
+alternating_kettlebell_row	Kettlebell-Rudern abwechselnd
+alternating_renegade_row	Renegade Row abwechselnd
+ankle_circles	Sprunggelenkkreisen
+ankle_on_the_knee	Knöchel auf dem Knie
+anterior_tibialis_smr	Vorderer Schienbeinmuskel (SMR)
+anti_gravity_press	Anti-Gravity Press
+arm_circles	Armkreisen
+arnold_dumbbell_press	Arnold Press
+around_the_worlds	Around the Worlds
+atlas_stone_trainer	Atlas Stone Trainer
+atlas_stones	Atlas Stones
+axle_deadlift	Axle Kreuzheben
+back_flyes_with_bands	Rückenfliegende mit Band
+backward_drag	Rückwärtsziehen
+backward_medicine_ball_throw	Medizinball-Rückwurf
+balance_board	Balance Board
+ball_leg_curl	Beinbeuger auf dem Ball
+band_assisted_pull_up	Klimmzug mit Band-Unterstützung
+band_good_morning	Good Morning mit Band
+band_good_morning_pull_through	Good Morning mit Band (Pull Through)
+band_hip_adductions	Hüft-Adduktion mit Band
+band_pull_apart	Band Pull-Apart
+band_skull_crusher	Skull Crusher mit Band
+barbell_ab_rollout	Langhantel-Ab-Rollout
+barbell_ab_rollout_on_knees	Langhantel-Ab-Rollout im Kniestand
+barbell_bench_press_medium_grip	Bankdrücken mit Langhantel (mittlerer Griff)
+barbell_curl	Langhantel-Curl
+barbell_curls_lying_against_an_incline	Langhantel-Curls auf Schrägbank liegend
+barbell_deadlift	Kreuzheben mit Langhantel
+barbell_full_squat	Kniebeuge mit Langhantel (tief)
+barbell_glute_bridge	Glute Bridge mit Langhantel
+barbell_guillotine_bench_press	Guillotine-Bankdrücken mit Langhantel
+barbell_hack_squat	Hack Squat mit Langhantel
+barbell_hip_thrust	Hip Thrust mit Langhantel
+barbell_incline_bench_press_medium_grip	Schrägbankdrücken mit Langhantel (mittlerer Griff)
+barbell_incline_shoulder_raise	Schulterheben mit Langhantel auf Schrägbank
+barbell_lunge	Ausfallschritt mit Langhantel
+barbell_rear_delt_row	Langhantel-Rudern für hintere Schulter
+barbell_rollout_from_bench	Langhantel-Rollout von der Bank
+barbell_seated_calf_raise	Wadenheben sitzend mit Langhantel
+barbell_shoulder_press	Schulterdrücken mit Langhantel
+barbell_shrug	Schulterheben (Shrugs) mit Langhantel
+barbell_shrug_behind_the_back	Schulterheben (Shrugs) mit Langhantel hinter dem Rücken
+barbell_side_bend	Seitbeuge mit Langhantel
+barbell_side_split_squat	Side Split Squat mit Langhantel
+barbell_squat	Kniebeuge mit Langhantel
+barbell_squat_to_a_bench	Kniebeuge mit Langhantel bis zur Bank
+barbell_step_ups	Step-Ups mit Langhantel
+barbell_walking_lunge	Gehende Ausfallschritte mit Langhantel
+battling_ropes	Battle Ropes
+bear_crawl_sled_drags	Bear Crawl mit Schlitten
+behind_head_chest_stretch	Dehnung Brust (hinter dem Kopf)
+bench_dips	Bankdips
+bench_jump	Bank-Sprung
+bench_press_powerlifting	Bankdrücken (Powerlifting)
+bench_press_with_bands	Bankdrücken mit Band
+bench_press_with_chains	Bankdrücken mit Ketten
+bench_sprint	Bench Sprint
+bent_arm_barbell_pullover	Langhantel-Pullover mit gebeugten Armen
+bent_arm_dumbbell_pullover	Kurzhantel-Pullover mit gebeugten Armen
+bent_knee_hip_raise	Hüftheben mit angewinkelten Knien
+bent_over_barbell_row	Vorgebeugtes Rudern mit Langhantel
+bent_over_dumbbell_rear_delt_raise_with_head_on_bench	Vorgebeugtes Seitheben hinten mit Kurzhanteln (Kopf auf Bank)
+bent_over_low_pulley_side_lateral	Vorgebeugtes Seitheben am unteren Kabelzug
+bent_over_one_arm_long_bar_row	Vorgebeugtes einarmiges Rudern mit Langhantel
+bent_over_two_arm_long_bar_row	Vorgebeugtes beidarmiges Rudern mit Langhantel
+bent_over_two_dumbbell_row	Vorgebeugtes Rudern mit zwei Kurzhanteln
+bent_over_two_dumbbell_row_with_palms_in	Vorgebeugtes Rudern mit zwei Kurzhanteln (Griff nach innen)
+bent_press	Bent Press
+bicycling	Radfahren
+bicycling_stationary	Radfahren (Ergometer)
+board_press	Board Press
+body_tricep_press	Trizepsdrücken mit Körpergewicht
+body_up	Body-Up
+bodyweight_flyes	Fliegende mit Körpergewicht
+bodyweight_mid_row	Rudern mit Körpergewicht (mittel)
+bodyweight_squat	Kniebeuge mit Körpergewicht
+bodyweight_walking_lunge	Gehende Ausfallschritte mit Körpergewicht
+bosu_ball_cable_crunch_with_side_bends	Crunch am Kabelzug mit Seitbeuge auf dem Bosu
+bottoms_up	Bottoms Up
+bottoms_up_clean_from_the_hang_position	Bottoms-Up Clean aus dem Hang
+box_jump_multiple_response	Box Jump (Serie)
+box_skip	Box Skip
+box_squat	Box Squat
+box_squat_with_bands	Box Squat mit Band
+box_squat_with_chains	Box Squat mit Ketten
+brachialis_smr	Brachialis-SMR
+bradford_rocky_presses	Bradford/Rocky Press
+butt_lift_bridge	Butt Lift (Brücke)
+butt_ups	Butt-Ups
+butterfly	Butterfly
+cable_chest_press	Brustpresse am Kabelzug
+cable_crossover	Cable Crossover
+cable_crunch	Cable Crunch
+cable_deadlifts	Kreuzheben am Kabelzug
+cable_hammer_curls_rope_attachment	Hammer Curls am Kabelzug (Seilgriff)
+cable_hip_adduction	Hüft-Adduktion am Kabelzug
+cable_incline_pushdown	Trizepsdrücken am Kabelzug (schräg)
+cable_incline_triceps_extension	Trizepsstrecken am Kabelzug (schräg)
+cable_internal_rotation	Innenrotation am Kabelzug
+cable_iron_cross	Iron Cross am Kabelzug
+cable_judo_flip	Judo Flip am Kabelzug
+cable_lying_triceps_extension	Trizepsstrecken am Kabelzug (liegend)
+cable_one_arm_tricep_extension	Trizepsstrecken einarmig am Kabelzug
+cable_preacher_curl	Preacher Curl am Kabelzug
+cable_rear_delt_fly	Cable Rear Delt Fly
+cable_reverse_crunch	Cable Reverse Crunch
+cable_rope_overhead_triceps_extension	Trizepsstrecken über Kopf am Kabelzug (Seil)
+cable_rope_rear_delt_rows	Rudern am Kabelzug für hintere Schulter (Seil)
+cable_russian_twists	Cable Russian Twists
+cable_seated_crunch	Crunch am Kabelzug (sitzend)
+cable_seated_lateral_raise	Seitheben am Kabelzug (sitzend)
+cable_shoulder_press	Schulterdrücken am Kabelzug
+cable_shrugs	Schulterheben am Kabelzug
+cable_wrist_curl	Handgelenk-Curl am Kabelzug
+calf_machine_shoulder_shrug	Schulterheben an der Wadenmaschine
+calf_press	Wadenpresse
+calf_press_on_the_leg_press_machine	Wadenpresse an der Beinpresse
+calf_raise_on_a_dumbbell	Wadenheben mit Kurzhantel
+calf_raises_with_bands	Wadenheben mit Band
+calf_stretch_elbows_against_wall	Dehnung Waden (Ellbogen an der Wand)
+calf_stretch_hands_against_wall	Dehnung Waden (Hände an der Wand)
+calves_smr	Waden-SMR
+car_deadlift	Kreuzheben am Auto
+car_drivers	Car Drivers
+carioca_quick_step	Carioca Quick Step
+cat_stretch	Katzenbuckel
+catch_and_overhead_throw	Fangen und Überkopfwurf
+chain_handle_extension	Trizepsstrecken mit Kette
+chain_press	Kettendrücken
+chair_leg_extended_stretch	Dehnung Beinstrecker (Stuhl)
+chair_lower_back_stretch	Dehnung unterer Rücken (Stuhl)
+chair_squat	Kniebeuge am Stuhl
+chair_upper_body_stretch	Dehnung Oberkörper (Stuhl)
+chest_and_front_of_shoulder_stretch	Dehnung Brust und vordere Schulter
+chest_push_from_3_point_stance	Brustdrücken aus dem 3-Punkt-Stand
+chest_push_multiple_response	Brustdrücken (Serie)
+chest_push_single_response	Brustdrücken (einzeln)
+chest_push_with_run_release	Brustdrücken mit Run Release
+chest_stretch_on_stability_ball	Dehnung Brust auf dem Gymnastikball
+childs_pose	Kindeshaltung (Child's Pose)
+chin_to_chest_stretch	Dehnung Kinn zur Brust
+chin_up	Klimmzug (Untergriff)
+circus_bell	Circus Bell
+clean	Clean
+clean_and_jerk	Clean and Jerk
+clean_and_press	Clean and Press
+clean_deadlift	Clean Kreuzheben
+clean_from_blocks	Clean aus dem Block
+clean_pull	Clean Pull
+clean_shrug	Clean Shrug
+clock_push_up	Clock Push-Up
+close_grip_barbell_bench_press	Bankdrücken mit Langhantel (enger Griff)
+close_grip_dumbbell_press	Kurzhantel-Drücken (enger Griff)
+close_grip_ez_bar_curl	EZ-Curl enger Griff
+close_grip_ez_bar_curl_with_band	EZ-Curl mit Band (enger Griff)
+close_grip_ez_bar_press	EZ-Drücken enger Griff
+close_grip_front_lat_pulldown	Latzug frontal (enger Griff)
+close_grip_push_up_off_of_a_dumbbell	Liegestütz enger Griff auf Kurzhantel
+close_grip_standing_barbell_curl	Langhantel-Curl im Stehen (enger Griff)
+cocoons	Cocoons
+conans_wheel	Conan's Wheel
+concentration_curls	Konzentrationscurls
+cross_body_crunch	Crunch seitlich (Cross-Body)
+cross_body_hammer_curl	Cross-Body Hammer Curl
+cross_over_with_bands	Kabelzug-Cross-Over mit Band
+crossover_reverse_lunge	Crossover Reverse Lunge
+crucifix	Crucifix
+crunch_hands_overhead	Crunch mit Händen über dem Kopf
+crunch_legs_on_exercise_ball	Crunch mit Beinen auf dem Gymnastikball
+crunches	Crunches
+cuban_press	Cuban Press
+dancers_stretch	Dancer's Stretch
+dead_bug	Dead Bug
+deadlift_with_bands	Kreuzheben mit Band
+deadlift_with_chains	Kreuzheben mit Ketten
+decline_barbell_bench_press	Bankdrücken mit Langhantel (Negativbank)
+decline_close_grip_bench_to_skull_crusher	Trizepsdrücken am Kabelzug (enger Griff, Negativbank)
+decline_crunch	Crunch (Negativbank)
+decline_dumbbell_bench_press	Kurzhantel-Bankdrücken (Negativbank)
+decline_dumbbell_flyes	Kurzhantel-Fliegende (Negativbank)
+decline_dumbbell_triceps_extension	Trizepsstrecken mit Kurzhantel (Negativbank)
+decline_ez_bar_triceps_extension	Trizepsstrecken mit EZ-Stange (Negativbank)
+decline_oblique_crunch	Schräger Crunch (Negativbank)
+decline_push_up	Liegestütz (Negativbank)
+decline_reverse_crunch	Reverse Crunch (Negativbank)
+decline_smith_press	Multipresse (Negativbank)
+deficit_deadlift	Kreuzheben mit Defizit
+depth_jump_leap	Tiefsprung
+dip_machine	Dip-Maschine
+dips_chest_version	Dips (Brustversion)
+dips_triceps_version	Dips (Trizepsversion)
+donkey_calf_raises	Eselwaden
+double_kettlebell_alternating_hang_clean	Double Kettlebell Alternating Hang Clean
+double_kettlebell_jerk	Double Kettlebell Jerk
+double_kettlebell_push_press	Double Kettlebell Push Press
+double_kettlebell_snatch	Double Kettlebell Snatch
+double_kettlebell_windmill	Double Kettlebell Windmill
+double_leg_butt_kick	Double Leg Butt Kick
+downward_facing_balance	Downward Facing Balance
+drag_curl	Drag Curl
+drop_push	Drop Push
+dumbbell_alternate_bicep_curl	Kurzhantel-Curl abwechselnd
+dumbbell_bench_press	Kurzhantel-Bankdrücken
+dumbbell_bench_press_with_neutral_grip	Kurzhantel-Bankdrücken (neutraler Griff)
+dumbbell_bicep_curl	Bizepscurl mit Kurzhanteln
+dumbbell_clean	Kurzhantel-Clean
+dumbbell_floor_press	Kurzhantel-Bodenpresse
+dumbbell_flyes	Kurzhantel-Fliegende
+dumbbell_incline_row	Kurzhantel-Rudern auf Schrägbank
+dumbbell_incline_shoulder_raise	Kurzhantel-Seitheben auf Schrägbank
+dumbbell_lunges	Kurzhantel-Ausfallschritte
+dumbbell_lying_one_arm_rear_lateral_raise	Kurzhantel-Seitheben hinten einarmig liegend
+dumbbell_lying_pronation	Kurzhantel-Pronation liegend
+dumbbell_lying_rear_lateral_raise	Kurzhantel-Seitheben hinten liegend
+dumbbell_lying_supination	Kurzhantel-Supination liegend
+dumbbell_one_arm_shoulder_press	Kurzhantel-Schulterdrücken einarmig
+dumbbell_one_arm_triceps_extension	Kurzhantel-Trizepsstrecken einarmig
+dumbbell_one_arm_upright_row	Kurzhantel-Aufrechtes Rudern einarmig
+dumbbell_prone_incline_curl	Kurzhantel-Curl Bauchlage auf Schrägbank
+dumbbell_raise	Kurzhantel-Heben
+dumbbell_rear_lunge	Kurzhantel-Ausfallschritt rückwärts
+dumbbell_scaption	Kurzhantel-Scaption
+dumbbell_seated_box_jump	Kurzhantel-Tiefsprung sitzend
+dumbbell_seated_one_leg_calf_raise	Kurzhantel-Wadenheben einbeinig sitzend
+dumbbell_shoulder_press	Kurzhantel-Schulterdrücken
+dumbbell_shrug	Kurzhantel-Schulterheben
+dumbbell_side_bend	Kurzhantel-Seitbeuge
+dumbbell_squat	Kurzhantel-Kniebeuge
+dumbbell_squat_to_a_bench	Kurzhantel-Kniebeuge zur Bank
+dumbbell_step_ups	Kurzhantel-Step-Ups
+dumbbell_tricep_extension_pronated_grip	Kurzhantel-Trizepsstrecken (Pronation)
+dynamic_back_stretch	Dynamische Rückendehnung
+dynamic_chest_stretch	Dynamische Brustdehnung
+elbow_circles	Ellbogenkreisen
+elbow_to_knee	Ellbogen zum Knie
+elbows_back	Ellbogen nach hinten
+elevated_back_lunge	Erhöhter Ausfallschritt rückwärts
+elevated_cable_rows	Erhöhtes Rudern am Kabelzug
+elliptical_trainer	Crosstrainer
+exercise_ball_crunch	Crunch auf dem Gymnastikball
+exercise_ball_pull_in	Pull-In auf dem Gymnastikball
+extended_range_one_arm_kettlebell_floor_press	Einarmiges Kettlebell-Bodenpressen (erweiterter Bewegungsradius)
+external_rotation	Außenrotation
+external_rotation_with_band	Außenrotation mit Band
+external_rotation_with_cable	Außenrotation am Kabelzug
+ez_bar_curl	EZ-Curl
+ez_bar_skullcrusher	EZ-Stangen-Skullcrusher
+face_pull	Face Pull
+farmers_walk	Farmer's Walk
+fast_skipping	Schnelles Seilspringen
+finger_curls	Fingercurls
+flat_bench_cable_flyes	Fliegende am Kabelzug auf flacher Bank
+flat_bench_leg_pull_in	Flachbank Beinzug (Pull-In)
+flat_bench_lying_leg_raise	Flachbank Beinheben liegend
+flexor_incline_dumbbell_curls	Flexor Incline Dumbbell Curls
+floor_glute_ham_raise	Floor Glute-Ham Raise
+floor_press	Bodenpresse
+floor_press_with_chains	Bodenpresse mit Ketten
+flutter_kicks	Flutter Kicks
+foot_smr	Fuß-SMR
+forward_drag_with_press	Forward Drag mit Drücken
+frankenstein_squat	Frankenstein-Kniebeuge
+freehand_jump_squat	Sprungkniebeuge ohne Gewicht
+frog_hops	Frog Hops
+frog_sit_ups	Frog Sit-Ups
+front_barbell_squat	Front-Kniebeuge mit Langhantel
+front_barbell_squat_to_a_bench	Front-Kniebeuge mit Langhantel bis zur Bank
+front_box_jump	Front Box Jump
+front_cable_raise	Seitheben am Kabelzug (frontal)
+front_cone_hops_or_hurdle_hops	Front Cone Hops (bzw. Hürdensprünge)
+front_dumbbell_raise	Frontheben mit Kurzhantel
+front_incline_dumbbell_raise	Frontheben mit Kurzhantel auf Schrägbank
+front_leg_raises	Frontheben der Beine
+front_plate_raise	Frontheben mit Hantelscheibe
+front_raise_and_pullover	Frontheben und Pullover
+front_squat_clean_grip	Front-Kniebeuge (Clean-Griff)
+front_squats_with_two_kettlebells	Front-Kniebeuge mit zwei Kettlebells
+front_two_dumbbell_raise	Frontheben mit zwei Kurzhanteln
+full_range_of_motion_lat_pulldown	Latzug (voller Bewegungsradius)
+gironda_sternum_chins	Gironda Sternum Chins
+glute_ham_raise	Glute Ham Raise
+glute_kickback	Glute Kickback
+goblet_squat	Goblet Squat
+good_morning	Good Morning
+good_morning_off_pins	Good Morning von Pins
+gorilla_chin_crunch	Gorilla Chin/Crunch
+groin_and_back_stretch	Dehnung Leiste und Rücken
+groiners	Groiners
+hack_squat	Hack Squat
+hammer_curls	Hammer Curls
+hammer_grip_incline_db_bench_press	Hammer-Griff Kurzhantel-Bankdrücken auf Schrägbank
+hamstring_smr	Beinbeuger-SMR
+hamstring_stretch	Dehnung Beinbeuger
+handstand_push_ups	Liegestütz im Handstand
+hang_clean	Hang Clean
+hang_clean_below_the_knees	Hang Clean (unterhalb der Knie)
+hang_snatch	Hang Snatch
+hang_snatch_below_knees	Hang Snatch (unterhalb der Knie)
+hanging_bar_good_morning	Good Morning an der Stange (hängend)
+hanging_leg_raise	Hängendes Beinheben
+hanging_pike	Hängendes Pike
+heaving_snatch_balance	Heaving Snatch Balance
+heavy_bag_thrust	Heavy Bag Thrust
+high_cable_curls	Curls am hohen Kabelzug
+hip_circles_prone	Hüftkreisen (Bauchlage)
+hip_extension_with_bands	Hüftstrecken mit Band
+hip_flexion_with_band	Hüftbeugen mit Band
+hip_lift_with_band	Hüftheben mit Band
+hug_a_ball	Hug A Ball
+hug_knees_to_chest	Knie zur Brust ziehen
+hurdle_hops	Hürdensprünge
+hyperextensions_back_extensions	Hyperextensions (Rückenstrecker)
+hyperextensions_with_no_hyperextension_bench	Hyperextensions ohne Hyperextensionsbank
+iliotibial_tract_smr	Tractus iliotibialis-SMR
+inchworm	Inchworm
+incline_barbell_triceps_extension	Trizepsstrecken mit Langhantel auf Schrägbank
+incline_bench_pull	Schrägbank-Zug
+incline_cable_chest_press	Schrägbank-Brustpresse am Kabelzug
+incline_cable_flye	Schrägbank-Fliegende am Kabelzug
+incline_dumbbell_bench_with_palms_facing_in	Kurzhantel-Bankdrücken auf Schrägbank (Handflächen nach innen)
+incline_dumbbell_curl	Kurzhantel-Curl auf Schrägbank
+incline_dumbbell_flyes	Kurzhantel-Fliegende auf Schrägbank
+incline_dumbbell_flyes_with_a_twist	Kurzhantel-Fliegende auf Schrägbank mit Drehung
+incline_dumbbell_press	Kurzhantel-Drücken auf Schrägbank
+incline_hammer_curls	Hammer Curls auf Schrägbank
+incline_inner_biceps_curl	Innerer Bizepscurl auf Schrägbank
+incline_push_up	Liegestütz
+incline_push_up_close_grip	Liegestütz enger Griff
+incline_push_up_depth_jump	Liegestütz mit Depth Jump
+incline_push_up_medium	Liegestütz (mittlerer Griff)
+incline_push_up_reverse_grip	Liegestütz Untergriff
+incline_push_up_wide	Liegestütz weiter Griff
+intermediate_groin_stretch	Dehnung Leiste (mittel)
+intermediate_hip_flexor_and_quad_stretch	Dehnung Hüftbeuger und Quadrizeps (mittel)
+internal_rotation_with_band	Innenrotation mit Band
+inverted_row	Inverted Row
+inverted_row_with_straps	Inverted Row mit Schlaufen
+iron_cross	Iron Cross
+iron_crosses_stretch	Iron Crosses (Dehnung)
+isometric_chest_squeezes	Isometrisches Brustpressen
+isometric_neck_exercise_front_and_back	Isometrische Nackenübung (vorne und hinten)
+isometric_neck_exercise_sides	Isometrische Nackenübung (seitlich)
+isometric_wipers	Isometric Wipers
+it_band_and_glute_stretch	Dehnung ITB und Gesäß
+jackknife_sit_up	Jackknife Sit-Up
+janda_sit_up	Janda Sit-Up
+jefferson_squats	Jefferson Squats
+jerk_balance	Jerk Balance
+jerk_dip_squat	Jerk Dip Squat
+jm_press	JM Press
+jogging_treadmill	Joggen (Laufband)
+keg_load	Keg Load
+kettlebell_arnold_press	Kettlebell Arnold Press
+kettlebell_dead_clean	Kettlebell Dead Clean
+kettlebell_figure_8	Kettlebell Figure 8
+kettlebell_halo	Kettlebell Halo
+kettlebell_halo_with_overhead_extension	Kettlebell Halo mit Überkopfstreckung
+kettlebell_hang_clean	Kettlebell Hang Clean
+kettlebell_one_legged_deadlift	Einbeiniges Kettlebell-Kreuzheben
+kettlebell_overhead_triceps_extension	Kettlebell-Trizepsstrecken über Kopf
+kettlebell_pass_between_the_legs	Kettlebell Pass Between The Legs
+kettlebell_pirate_ships	Kettlebell Pirate Ships
+kettlebell_pistol_squat	Kettlebell-Pistolenkniebeuge
+kettlebell_seated_press	Kettlebell-Drücken sitzend
+kettlebell_seesaw_press	Kettlebell Seesaw Press
+kettlebell_sumo_high_pull	Kettlebell Sumo High Pull
+kettlebell_thruster	Kettlebell Thruster
+kettlebell_turkish_get_up_lunge_style	Kettlebell Turkish Get-Up (Ausfallschritt)
+kettlebell_turkish_get_up_squat_style	Kettlebell Turkish Get-Up (Kniebeuge)
+kettlebell_windmill	Kettlebell Windmill
+kipping_muscle_up	Kipping Muscle-Up
+knee_across_the_body	Knie über den Körper
+knee_circles	Kniekreisen
+knee_hip_raise_on_parallel_bars	Knie-/Hüftheben an den Barren
+knee_tuck_jump	Knie Tuck Jump
+kneeling_arm_drill	Kneeling Arm Drill
+kneeling_cable_crunch_with_alternating_oblique_twists	Kniend Kabelzug-Crunch mit abwechselnder Rotation
+kneeling_cable_triceps_extension	Kniend Trizepsstrecken am Kabelzug
+kneeling_forearm_stretch	Dehnung Unterarme (kniend)
+kneeling_high_pulley_row	Rudern am hohen Kabelzug (kniend)
+kneeling_hip_flexor	Dehnung Hüftbeuger (kniend)
+kneeling_jump_squat	Sprungkniebeuge (kniend)
+kneeling_single_arm_high_pulley_row	Rudern am hohen Kabelzug einarmig (kniend)
+kneeling_squat	Kniebeuge (kniend)
+landmine_180s	Landmine 180s
+landmine_linear_jammer	Landmine Linear Jammer
+lateral_bound	Lateral Bound
+lateral_box_jump	Lateral Box Jump
+lateral_cone_hops	Lateral Cone Hops
+lateral_raise_with_bands	Seitheben mit Band
+latissimus_dorsi_smr	Latissimus Dorsi-SMR
+leg_extensions	Beinstrecker
+leg_lift	Beinheben
+leg_over_floor_press	Bodenpresse mit überkreuzten Beinen
+leg_press	Beinpresse
+leg_pull_in	Beinzug (Pull-In)
+leg_up_hamstring_stretch	Dehnung Beinbeuger (Beine hoch)
+leverage_chest_press	Brustpresse mit Hebelkraft
+leverage_deadlift	Kreuzheben mit Hebelkraft
+leverage_decline_chest_press	Brustpresse negativ mit Hebelkraft
+leverage_high_row	Hohes Rudern mit Hebelkraft
+leverage_incline_chest_press	Schrägbank-Brustpresse mit Hebelkraft
+leverage_iso_row	Leverage Iso Row
+leverage_shoulder_press	Brustpresse Schulter mit Hebelkraft
+leverage_shrug	Leverage Shrug
+linear_3_part_start_technique	Linear 3-Part Start Technique
+linear_acceleration_wall_drill	Linear Acceleration Wall Drill
+linear_depth_jump	Linear Depth Jump
+log_lift	Log Lift
+london_bridges	London Bridges
+looking_at_ceiling	Looking At Ceiling
+low_cable_crossover	Low Cable Crossover
+low_cable_triceps_extension	Trizepsstrecken am tiefen Kabelzug
+low_pulley_row_to_neck	Rudern am tiefen Kabelzug zum Hals
+lower_back_curl	Unterer Rücken Curl
+lower_back_smr	Unterer Rücken-SMR
+lunge_pass_through	Lunge Pass Through
+lunge_sprint	Lunge Sprint
+lying_bent_leg_groin	Liegende Leistenübung (Knie angewinkelt)
+lying_cable_curl	Liegender Kabelzug-Curl
+lying_cambered_barbell_row	Liegendes Rudern mit gewölbter Langhantel
+lying_close_grip_bar_curl_on_high_pulley	Liegender Curl mit enger Stange am hohen Kabelzug
+lying_close_grip_barbell_triceps_extension_behind_the_head	Liegendes Trizepsstrecken mit Langhantel hinter den Kopf (enger Griff)
+lying_close_grip_barbell_triceps_press_to_chin	Liegendes Trizepsdrücken mit Langhantel zum Kinn (enger Griff)
+lying_crossover	Liegendes Crossover
+lying_dumbbell_tricep_extension	Liegendes Trizepsstrecken mit Kurzhantel
+lying_face_down_plate_neck_resistance	Liegender Nackenwiderstand mit Scheibe (Bauchlage)
+lying_face_up_plate_neck_resistance	Liegender Nackenwiderstand mit Scheibe (Rückenlage)
+lying_glute	Liegendes Gesäß
+lying_hamstring	Liegende Beinbeuger
+lying_high_bench_barbell_curl	Liegendes Curl mit Langhantel auf hoher Bank
+lying_leg_curls	Liegendes Beinbeugen
+lying_machine_squat	Liegende Maschinen-Kniebeuge
+lying_one_arm_lateral_raise	Liegendes einarmiges Seitheben
+lying_prone_quadriceps	Liegende Quadrizeps (Bauchlage)
+lying_rear_delt_raise	Liegendes Seitheben hinten
+lying_supine_dumbbell_curl	Liegender Kurzhantel-Curl (Rückenlage)
+lying_t_bar_row	Liegendes T-Bar-Rudern
+lying_triceps_press	Liegendes Trizepsdrücken
+machine_bench_press	Maschine Bankdrücken
+machine_bicep_curl	Maschinen-Bizepscurl
+machine_preacher_curls	Maschinen-Preacher-Curls
+machine_shoulder_military_press	Schulterdrücken an der Maschine
+machine_triceps_extension	Trizepsstrecken an der Maschine
+medicine_ball_chest_pass	Medizinball-Brustpass
+medicine_ball_full_twist	Medizinball Full Twist
+medicine_ball_scoop_throw	Medizinball Scoop Throw
+middle_back_shrug	Schulterheben mittlerer Rücken
+middle_back_stretch	Dehnung mittlerer Rücken
+mixed_grip_chin	Klimmzug (gemischter Griff)
+monster_walk	Monster Walk
+mountain_climbers	Mountain Climbers
+moving_claw_series	Moving Claw Series
+muscle_snatch	Muscle Snatch
+muscle_up	Muscle-Up
+narrow_stance_hack_squats	Kniebeugen Hack Squat (enger Stand)
+narrow_stance_leg_press	Beinpresse (enger Stand)
+narrow_stance_squats	Kniebeugen (enger Stand)
+natural_glute_ham_raise	Natural Glute Ham Raise
+neck_press	Nackendrücken
+neck_smr	Nacken-SMR
+oblique_crunches	Schräge Bauchmuskeln (Crunch)
+oblique_crunches_on_the_floor	Schräger Crunch auf dem Boden
+olympic_squat	Olympic Squat
+on_your_back_quad_stretch	Dehnung Quadrizeps (Rückenlage)
+on_your_side_quad_stretch	Dehnung Quadrizeps (Seitlage)
+one_arm_against_wall	Einarmig an der Wand
+one_arm_chin_up	Klimmzug einarmig
+one_arm_dumbbell_bench_press	Einarmiges Kurzhantel-Bankdrücken
+one_arm_dumbbell_preacher_curl	Einarmiger Kurzhantel-Preacher-Curl
+one_arm_dumbbell_row	Einarmiges Kurzhantelrudern
+one_arm_flat_bench_dumbbell_flye	Einarmige Kurzhantel-Fliegende auf flacher Bank
+one_arm_floor_press	Einarmiges Bodenpressen
+one_arm_high_pulley_cable_side_bends	Einarmiges Seitbeugen am hohen Kabelzug
+one_arm_incline_lateral_raise	Einarmiges Seitheben auf Schrägbank
+one_arm_kettlebell_clean	Einarmiger Kettlebell-Clean
+one_arm_kettlebell_clean_and_jerk	Einarmiger Kettlebell-Clean and Jerk
+one_arm_kettlebell_floor_press	Einarmiges Kettlebell-Bodenpressen
+one_arm_kettlebell_jerk	Einarmiger Kettlebell-Jerk
+one_arm_kettlebell_military_press_to_the_side	Einarmiges Kettlebell-Schulterdrücken seitlich
+one_arm_kettlebell_para_press	Einarmiges Kettlebell-Para-Press
+one_arm_kettlebell_push_press	Einarmiges Kettlebell-Drücken (Push Press)
+one_arm_kettlebell_row	Einarmiges Kettlebell-Rudern
+one_arm_kettlebell_snatch	Einarmiges Kettlebell-Snatch
+one_arm_kettlebell_split_jerk	Einarmiger Kettlebell-Split-Jerk
+one_arm_kettlebell_split_snatch	Einarmiger Kettlebell-Split-Snatch
+one_arm_kettlebell_swings	Einarmiges Kettlebell-Schwingen
+one_arm_lat_pulldown	Einarmiger Latzug
+one_arm_long_bar_row	Einarmiges Langhantelrudern
+one_arm_medicine_ball_slam	Einarmiger Medizinball-Slam
+one_arm_open_palm_kettlebell_clean	Einarmiger Kettlebell-Clean (offene Handfläche)
+one_arm_overhead_kettlebell_squats	Einarmige Overhead-Kettlebell-Kniebeuge
+one_arm_pronated_dumbbell_triceps_extension	Einarmige Trizepsstrecken mit Kurzhantel (Pronation)
+one_arm_side_deadlift	Einarmiges Seitheben (Kreuzheben)
+one_arm_side_laterals	Einarmiges Seitheben
+one_arm_supinated_dumbbell_triceps_extension	Einarmige Trizepsstrecken mit Kurzhantel (Supination)
+one_half_locust	Halbe Heuschrecke (Half Locust)
+one_handed_hang	Einarmiges Hängen
+one_knee_to_chest	Knie zur Brust (einseitig)
+one_leg_barbell_squat	Einbeinige Langhantel-Kniebeuge
+one_legged_cable_kickback	Einbeiniger Kabelzug-Kickback
+open_palm_kettlebell_clean	Kettlebell-Clean (offene Handfläche)
+otis_up	Otis-Up
+overhead_cable_curl	Überkopf-Kabelzug-Curl
+overhead_lat	Überkopf-Latzug
+overhead_slam	Overhead Slam
+overhead_squat	Overhead Squat
+overhead_stretch	Überkopf-Dehnung
+overhead_triceps	Trizeps über Kopf
+pallof_press	Pallof Press
+pallof_press_with_rotation	Pallof Press mit Rotation
+palms_down_dumbbell_wrist_curl_over_a_bench	Handgelenk-Curl mit Kurzhantel über der Bank (Handflächen nach unten)
+palms_down_wrist_curl_over_a_bench	Handgelenk-Curl über der Bank (Handflächen nach unten)
+palms_up_barbell_wrist_curl_over_a_bench	Handgelenk-Curl mit Langhantel über der Bank (Handflächen nach oben)
+palms_up_dumbbell_wrist_curl_over_a_bench	Handgelenk-Curl mit Kurzhantel über der Bank (Handflächen nach oben)
+parallel_bar_dip	Parallelbarren-Dip
+pelvic_tilt_into_bridge	Beckenkippen in die Brücke
+peroneals_smr	Peroneus-SMR
+peroneals_stretch	Dehnung Peronealmuskeln
+physioball_hip_bridge	Physioball Hip Bridge
+pin_presses	Pin Presses
+piriformis_smr	Piriformis-SMR
+plank	Unterarmstütz (Plank)
+plate_pinch	Plate Pinch
+plate_twist	Plate Twist
+platform_hamstring_slides	Beinbeuger-Slides auf Plattform
+plie_dumbbell_squat	Plié-Kniebeuge mit Kurzhantel
+plyo_kettlebell_pushups	Plyo-Kettlebell-Liegestütz
+plyo_push_up	Plyo-Liegestütz
+posterior_tibialis_stretch	Dehnung Tibialis posterior
+power_clean	Power Clean
+power_clean_from_blocks	Power Clean vom Block
+power_jerk	Power Jerk
+power_partials	Power Partials
+power_snatch	Power Snatch
+power_snatch_from_blocks	Power Snatch vom Block
+power_stairs	Power Stairs
+preacher_curl	Preacher Curl
+preacher_hammer_dumbbell_curl	Preacher-Hammer-Curl mit Kurzhantel
+press_sit_up	Press Sit-Up
+prone_manual_hamstring	Beinbeuger manuell (Bauchlage)
+prowler_sprint	Prowler Sprint
+pull_through	Pull Through
+pullups	Klimmzüge
+push_press	Push Press
+push_press_behind_the_neck	Push Press hinter dem Nacken
+push_up_to_side_plank	Liegestütz zur Seitenstütze
+push_up_wide	Liegestütz weiter Griff
+push_ups_close_triceps_position	Liegestütz enger Trizeps
+push_ups_with_feet_elevated	Liegestütz mit erhöhten Füßen
+push_ups_with_feet_on_an_exercise_ball	Liegestütz mit Füßen auf dem Gymnastikball
+pushups	Liegestütz
+pushups_close_and_wide_hand_positions	Liegestütz (enge und weite Handposition)
+pyramid	Pyramid
+quad_stretch	Dehnung Quadrizeps
+quadriceps_smr	Quadrizeps-SMR
+quick_leap	Quick Leap
+rack_delivery	Rack Delivery
+rack_pull_with_bands	Rack Pull mit Band
+rack_pulls	Rack Pulls
+rear_leg_raises	Beinheben hinten
+recumbent_bike	Liegerad (Ergometer)
+return_push_from_stance	Return Push from Stance
+reverse_band_bench_press	Reverse Band Bankdrücken
+reverse_band_box_squat	Reverse Band Box Squat
+reverse_band_deadlift	Reverse Band Kreuzheben
+reverse_band_power_squat	Reverse Band Power Squat
+reverse_band_sumo_deadlift	Reverse Band Sumo-Kreuzheben
+reverse_barbell_curl	Reverse Langhantel-Curl
+reverse_barbell_preacher_curls	Reverse Langhantel-Preacher-Curls
+reverse_cable_curl	Reverse Kabelzug-Curl
+reverse_crunch	Reverse Crunch
+reverse_flyes	Umgekehrte Fliegende
+reverse_flyes_with_external_rotation	Umgekehrte Fliegende mit Außenrotation
+reverse_grip_bent_over_rows	Vorgebeugtes Rudern im Obergriff
+reverse_grip_triceps_pushdown	Trizepsdrücken am Kabelzug im Untergriff
+reverse_hyperextension	Reverse Hyperextension
+reverse_machine_flyes	Reverse Maschinen-Fliegende
+reverse_plate_curls	Reverse Scheiben-Curls
+reverse_triceps_bench_press	Trizepsdrücken auf der Bank im Untergriff
+rhomboids_smr	Rhomboiden-SMR
+rickshaw_carry	Rickshaw Carry
+rickshaw_deadlift	Rickshaw-Kreuzheben
+ring_dips	Ring-Dips
+rocket_jump	Rocket Jump
+rocking_standing_calf_raise	Wadenheben im Stehen mit Schaukelbewegung
+rocky_pull_ups_pulldowns	Rocky Klimmzüge/Latzug
+romanian_deadlift	Rumänisches Kreuzheben
+romanian_deadlift_from_deficit	Rumänisches Kreuzheben vom Defizit
+rope_climb	Seilklettern
+rope_crunch	Seil-Crunch
+rope_jumping	Seilspringen
+rope_straight_arm_pulldown	Seil-Pulldown mit gestreckten Armen
+round_the_world_shoulder_stretch	Schulterdehnung (Round the World)
+rowing_stationary	Rudern (Ergometer)
+runners_stretch	Läuferdehnung
+running_treadmill	Laufband (Laufen)
+russian_twist	Russian Twist
+sandbag_load	Sandsack-Last
+scapular_pull_up	Scapular Pull-Up
+scissor_kick	Scissor Kick
+scissors_jump	Scissors Jump
+seated_band_hamstring_curl	Sitzender Beinbeuger mit Band
+seated_barbell_military_press	Sitzendes Langhantel-Militarypress
+seated_barbell_twist	Sitzender Langhantel-Twist
+seated_bent_over_one_arm_dumbbell_triceps_extension	Sitzendes vorgebeugtes einarmiges Trizepsstrecken mit Kurzhantel
+seated_bent_over_rear_delt_raise	Sitzendes vorgebeugtes Seitheben hinten
+seated_bent_over_two_arm_dumbbell_triceps_extension	Sitzendes vorgebeugtes beidarmiges Trizepsstrecken mit Kurzhantel
+seated_biceps	Sitzender Bizeps
+seated_cable_rows	Rudern am Kabelzug (sitzend)
+seated_cable_shoulder_press	Schulterdrücken am Kabelzug (sitzend)
+seated_calf_raise	Wadenheben sitzend
+seated_calf_stretch	Dehnung Wade (sitzend)
+seated_close_grip_concentration_barbell_curl	Sitzender Curl mit enger Stange (Konzentration)
+seated_dumbbell_curl	Sitzender Kurzhantel-Curl
+seated_dumbbell_inner_biceps_curl	Sitzender innerer Bizepscurl mit Kurzhantel
+seated_dumbbell_palms_down_wrist_curl	Sitzender Handgelenk-Curl mit Kurzhantel (Handflächen nach unten)
+seated_dumbbell_palms_up_wrist_curl	Sitzender Handgelenk-Curl mit Kurzhantel (Handflächen nach oben)
+seated_dumbbell_press	Schulterdrücken mit Kurzhanteln (sitzend)
+seated_flat_bench_leg_pull_in	Beinheben am Flachbank-Pull-In (sitzend)
+seated_floor_hamstring_stretch	Dehnung Beinbeuger am Boden (sitzend)
+seated_front_deltoid	Vorderer Deltamuskel (sitzend)
+seated_glute	Glute sitzend
+seated_good_mornings	Good Mornings sitzend
+seated_hamstring	Beinbeuger sitzend
+seated_hamstring_and_calf_stretch	Dehnung Beinbeuger und Wade (sitzend)
+seated_head_harness_neck_resistance	Nackenwiderstand mit Kopfgeschirr (sitzend)
+seated_leg_curl	Beinbeuger sitzend an der Maschine
+seated_leg_tucks	Sitzendes Beinheben (Tucks)
+seated_one_arm_cable_pulley_rows	Rudern einarmig am Kabelzug (sitzend)
+seated_one_arm_dumbbell_palms_down_wrist_curl	Handgelenk-Curl einarmig mit Kurzhantel (sitzend, Handfläche nach unten)
+seated_one_arm_dumbbell_palms_up_wrist_curl	Handgelenk-Curl einarmig mit Kurzhantel (sitzend, Handfläche nach oben)
+seated_overhead_stretch	Überkopf-Dehnung (sitzend)
+seated_palm_up_barbell_wrist_curl	Handgelenk-Curl mit Langhantel (sitzend, Handfläche nach oben)
+seated_palms_down_barbell_wrist_curl	Handgelenk-Curl mit Langhantel (sitzend, Handfläche nach unten)
+seated_side_lateral_raise	Seitheben (sitzend)
+seated_triceps_press	Trizepsdrücken (sitzend)
+seated_two_arm_palms_up_low_pulley_wrist_curl	Handgelenk-Curl beidarmig am tiefen Kabelzug (sitzend, Handflächen nach oben)
+see_saw_press_alternating_side_press	See-Saw Press (Wechseldrücken)
+shotgun_row	Shotgun Row
+shoulder_circles	Schulterkreisen
+shoulder_press_with_bands	Schulterdrücken mit Band
+shoulder_raise	Schulterheben
+shoulder_stretch	Schulterdehnung
+side_bridge	Seitstütz (Side Bridge)
+side_hop_sprint	Seitlicher Hop-Sprint
+side_jackknife	Side Jackknife
+side_lateral_raise	Seitheben
+side_laterals_to_front_raise	Seitheben zum Frontheben
+side_leg_raises	Seitliches Beinheben
+side_lying_floor_stretch	Dehnung seitlich liegend (Boden)
+side_lying_groin_stretch	Dehnung Leiste seitlich liegend
+side_neck_stretch	Dehnung Halsseite
+side_standing_long_jump	Seitlicher Standweitsprung
+side_to_side_box_shuffle	Side to Side Box Shuffle
+side_to_side_chins	Seitliche Klimmzüge
+side_wrist_pull	Handgelenk-Zug seitlich
+single_arm_cable_crossover	Einarmiges Kabelzug-Crossover
+single_arm_linear_jammer	Einarmiger Linear Jammer
+single_arm_push_up	Einarmiger Liegestütz
+single_cone_sprint_drill	Single-Cone Sprint Drill
+single_dumbbell_raise	Einarmiges Kurzhantel-Heben
+single_leg_butt_kick	Single Leg Butt Kick
+single_leg_glute_bridge	Einbeinige Gesäßbrücke
+single_leg_high_box_squat	Einbeinige hohe Box-Kniebeuge
+single_leg_hop_progression	Single-Leg Hop Progression
+single_leg_lateral_hop	Einbeiniger seitlicher Hop
+single_leg_leg_extension	Einbeinige Beinstrecker
+single_leg_push_off	Single Leg Push-off
+single_leg_stride_jump	Einbeiniger Stride Jump
+sit_squats	Sit Squats
+sit_up	Sit-Up
+skating	Skating
+sled_drag_harness	Schlitten ziehen mit Gurt
+sled_overhead_backward_walk	Schlitten rückwärts gehen (Überkopf)
+sled_overhead_triceps_extension	Schlitten Trizepsstrecken über Kopf
+sled_push	Schlitten schieben
+sled_reverse_flye	Schlitten Reverse Flye
+sled_row	Schlitten Rudern
+sledgehammer_swings	Vorschlaghammer-Schwünge
+smith_incline_shoulder_raise	Smith Schrägbank-Schulterheben
+smith_machine_behind_the_back_shrug	Multipresse Shrug hinter dem Rücken
+smith_machine_bench_press	Multipresse Bankdrücken
+smith_machine_bent_over_row	Multipresse vorgebeugtes Rudern
+smith_machine_calf_raise	Multipresse Wadenheben
+smith_machine_close_grip_bench_press	Multipresse Bankdrücken (enger Griff)
+smith_machine_decline_press	Multipresse Negativdrücken
+smith_machine_hang_power_clean	Multipresse Hang Power Clean
+smith_machine_hip_raise	Multipresse Hüftheben
+smith_machine_incline_bench_press	Multipresse Schrägbankdrücken
+smith_machine_leg_press	Multipresse Beinpresse
+smith_machine_one_arm_upright_row	Multipresse einarmiges Aufrudern
+smith_machine_overhead_shoulder_press	Multipresse Schulterdrücken über Kopf
+smith_machine_pistol_squat	Multipresse Pistol Squat
+smith_machine_reverse_calf_raises	Multipresse Reverse Wadenheben
+smith_machine_squat	Multipresse Kniebeuge
+smith_machine_stiff_legged_deadlift	Multipresse Stiff-Legged Deadlift
+smith_machine_upright_row	Multipresse Aufrudern
+smith_single_leg_split_squat	Multipresse Einbein-Split-Kniebeuge
+snatch	Snatch
+snatch_balance	Snatch Balance
+snatch_deadlift	Snatch Deadlift
+snatch_from_blocks	Snatch vom Block
+snatch_pull	Snatch Pull
+snatch_shrug	Snatch Shrug
+speed_band_overhead_triceps	Speed Band Overhead Triceps
+speed_box_squat	Speed Box Squat
+speed_squats	Speed Squats
+spell_caster	Spell Caster
+spider_crawl	Spider Crawl
+spider_curl	Spider Curl
+spinal_stretch	Wirbelsäulen-Dehnung (Spinal Stretch)
+split_clean	Split Clean
+split_jerk	Split Jerk
+split_jump	Split Jump
+split_snatch	Split Snatch
+split_squat_with_dumbbells	Split-Kniebeuge mit Kurzhanteln
+split_squats	Split-Kniebeugen
+squat_jerk	Squat Jerk
+squat_with_bands	Kniebeuge mit Band
+squat_with_chains	Kniebeuge mit Ketten
+squat_with_plate_movers	Kniebeuge mit Gewichtsscheiben-Movern
+squats_with_bands	Kniebeugen mit Band
+stairmaster	Stairmaster
+standing_alternating_dumbbell_press	Wechseldrücken mit Kurzhanteln im Stehen
+standing_barbell_calf_raise	Wadenheben im Stehen mit Langhantel
+standing_barbell_press_behind_neck	Langhantel-Drücken im Stehen hinter den Nacken
+standing_bent_over_one_arm_dumbbell_triceps_extension	Trizepsstrecken im Stehen mit Kurzhantel (vorgebeugt, einarmig)
+standing_bent_over_two_arm_dumbbell_triceps_extension	Trizepsstrecken im Stehen mit Kurzhantel (vorgebeugt, beidarmig)
+standing_biceps_cable_curl	Bizepscurl am Kabelzug im Stehen
+standing_biceps_stretch	Dehnung Bizeps im Stehen
+standing_bradford_press	Bradford Press im Stehen
+standing_cable_chest_press	Brustpresse am Kabelzug im Stehen
+standing_cable_lift	Kabelzug-Heben im Stehen
+standing_cable_wood_chop	Holzhacken am Kabelzug im Stehen
+standing_calf_raises	Wadenheben im Stehen
+standing_concentration_curl	Konzentrationscurl im Stehen
+standing_dumbbell_calf_raise	Wadenheben im Stehen mit Kurzhantel
+standing_dumbbell_press	Schulterdrücken mit Kurzhanteln im Stehen
+standing_dumbbell_reverse_curl	Reverse Curl mit Kurzhantel im Stehen
+standing_dumbbell_straight_arm_front_delt_raise_above_head	Frontheben mit Kurzhantel über den Kopf (gestreckte Arme)
+standing_dumbbell_triceps_extension	Trizepsstrecken mit Kurzhantel im Stehen
+standing_dumbbell_upright_row	Aufrechtes Rudern mit Kurzhantel im Stehen
+standing_elevated_quad_stretch	Dehnung Quadrizeps im Stehen (erhöht)
+standing_front_barbell_raise_over_head	Frontheben mit Langhantel über den Kopf im Stehen
+standing_gastrocnemius_calf_stretch	Dehnung Wadenmuskel (Gastrocnemius) im Stehen
+standing_hamstring_and_calf_stretch	Dehnung Beinbeuger und Wade im Stehen
+standing_hip_circles	Hüftkreisen im Stehen
+standing_hip_flexors	Hüftbeuger im Stehen
+standing_inner_biceps_curl	Innerer Bizepscurl im Stehen
+standing_lateral_stretch	Seitliche Dehnung im Stehen
+standing_leg_curl	Beinbeugen im Stehen
+standing_long_jump	Standweitsprung
+standing_low_pulley_deltoid_raise	Seitheben am tiefen Kabelzug im Stehen
+standing_low_pulley_one_arm_triceps_extension	Trizepsstrecken einarmig am tiefen Kabelzug im Stehen
+standing_military_press	Military Press im Stehen
+standing_olympic_plate_hand_squeeze	Olympic-Scheiben-Handquetschen im Stehen
+standing_one_arm_cable_curl	Bizepscurl einarmig am Kabelzug im Stehen
+standing_one_arm_dumbbell_curl_over_incline_bench	Kurzhantel-Curl einarmig über Schrägbank im Stehen
+standing_one_arm_dumbbell_triceps_extension	Trizepsstrecken einarmig mit Kurzhantel im Stehen
+standing_overhead_barbell_triceps_extension	Trizepsstrecken über Kopf mit Langhantel im Stehen
+standing_palm_in_one_arm_dumbbell_press	Kurzhantel-Drücken einarmig im Stehen (Handfläche innen)
+standing_palms_in_dumbbell_press	Kurzhantel-Drücken im Stehen (Handflächen innen)
+standing_palms_up_barbell_behind_the_back_wrist_curl	Handgelenk-Curl mit Langhantel hinter dem Rücken im Stehen (Handflächen oben)
+standing_pelvic_tilt	Beckenkippen im Stehen
+standing_rope_crunch	Seil-Crunch im Stehen
+standing_soleus_and_achilles_stretch	Dehnung Soleus und Achillessehne im Stehen
+standing_toe_touches	Zehenberühren im Stehen
+standing_towel_triceps_extension	Trizepsstrecken mit Handtuch im Stehen
+standing_two_arm_overhead_throw	Beidarmiger Überkopfwurf im Stehen
+star_jump	Star Jump
+step_mill	Stepmill
+step_up_with_knee_raise	Step-up mit Knieheben
+stiff_leg_barbell_good_morning	Good Morning mit gestreckter Langhantel
+stiff_legged_barbell_deadlift	Kreuzheben mit gestreckten Beinen (Langhantel)
+stiff_legged_dumbbell_deadlift	Kreuzheben mit gestreckten Beinen (Kurzhantel)
+stomach_vacuum	Bauchvakuum
+straight_arm_dumbbell_pullover	Pullover mit gestreckten Armen (Kurzhantel)
+straight_arm_pulldown	Pulldown mit gestreckten Armen
+straight_bar_bench_mid_rows	Bankrudern mit gerader Stange (mittel)
+straight_raises_on_incline_bench	Gerades Seitheben auf Schrägbank
+stride_jump_crossover	Stride Jump Crossover
+sumo_deadlift	Sumo-Kreuzheben
+sumo_deadlift_with_bands	Sumo-Kreuzheben mit Band
+sumo_deadlift_with_chains	Sumo-Kreuzheben mit Ketten
+superman	Superman
+supine_chest_throw	Supine Chest Throw
+supine_one_arm_overhead_throw	Supine One-Arm Overhead Throw
+supine_two_arm_overhead_throw	Supine Two-Arm Overhead Throw
+suspended_fallout	Suspended Fallout
+suspended_push_up	Suspended Push-Up
+suspended_reverse_crunch	Suspended Reverse Crunch
+suspended_row	Suspended Row
+suspended_split_squat	Suspended Split Squat
+svend_press	Svend Press
+t_bar_row_with_handle	T-Bar-Rudern mit Griff
+tate_press	Tate Press
+the_straddle	Grätsche (The Straddle)
+thigh_abductor	Hüftabduktoren (Thigh Abductor)
+thigh_adductor	Adduktoren (Thigh Adductor)
+tire_flip	Reifen umdrehen (Tire Flip)
+toe_touchers	Zehenberühren
+torso_rotation	Rumpfrotation
+trail_running_walking	Trailrunning/Gehen
+trap_bar_deadlift	Trap-Bar-Kreuzheben
+tricep_dumbbell_kickback	Trizeps-Kurzhantel-Kickback
+tricep_side_stretch	Dehnung Trizeps seitlich
+triceps_overhead_extension_with_rope	Trizepsstrecken über Kopf mit Seil
+triceps_pushdown	Trizepsdrücken am Kabelzug
+triceps_pushdown_rope_attachment	Trizepsdrücken am Kabelzug (Seilgriff)
+triceps_pushdown_v_bar_attachment	Trizepsdrücken am Kabelzug (V-Griff)
+triceps_stretch	Dehnung Trizeps
+tuck_crunch	Tuck Crunch
+two_arm_dumbbell_preacher_curl	Preacher-Curl mit zwei Kurzhanteln
+two_arm_kettlebell_clean	Clean mit zwei Kettlebells
+two_arm_kettlebell_jerk	Jerk mit zwei Kettlebells
+two_arm_kettlebell_military_press	Militarypress mit zwei Kettlebells
+two_arm_kettlebell_row	Rudern mit zwei Kettlebells
+underhand_cable_pulldowns	Latzug im Untergriff am Kabelzug
+upper_back_leg_grab	Oberrücken-Beinfassen
+upper_back_stretch	Dehnung oberer Rücken
+upright_barbell_row	Aufrechtes Rudern mit Langhantel
+upright_cable_row	Aufrechtes Rudern am Kabelzug
+upright_row_with_bands	Aufrechtes Rudern mit Band
+upward_stretch	Aufwärtsdehnung
+v_bar_pulldown	V-Bar-Latzug
+v_bar_pullup	V-Bar-Klimmzug
+vertical_swing	Vertical Swing
+walking_treadmill	Laufband (Gehen)
+weighted_ball_hyperextension	Hyperextension mit Medizinball
+weighted_ball_side_bend	Seitbeuge mit Medizinball
+weighted_bench_dip	Bankdips mit Zusatzgewicht
+weighted_crunches	Crunches mit Zusatzgewicht
+weighted_jump_squat	Sprungkniebeuge mit Zusatzgewicht
+weighted_pull_ups	Klimmzüge mit Zusatzgewicht
+weighted_sissy_squat	Sissy-Kniebeuge mit Zusatzgewicht
+weighted_sit_ups_with_bands	Sit-Ups mit Band und Zusatzgewicht
+weighted_squat	Kniebeuge mit Zusatzgewicht
+wide_grip_barbell_bench_press	Bankdrücken mit Langhantel (weiter Griff)
+wide_grip_decline_barbell_bench_press	Negativbankdrücken mit Langhantel (weiter Griff)
+wide_grip_decline_barbell_pullover	Pullover mit Langhantel auf Negativbank (weiter Griff)
+wide_grip_lat_pulldown	Latzug (weiter Griff)
+wide_grip_pulldown_behind_the_neck	Latzug hinter den Nacken (weiter Griff)
+wide_grip_rear_pull_up	Klimmzug mit weitem Griff hinten
+wide_grip_standing_barbell_curl	Bizepscurl mit Langhantel im Stehen (weiter Griff)
+wide_stance_barbell_squat	Kniebeuge mit Langhantel (breiter Stand)
+wide_stance_stiff_legs	Steife Beine mit Langhantel (breiter Stand)
+wind_sprints	Wind Sprints
+windmills	Windmills
+worlds_greatest_stretch	World's Greatest Stretch
+wrist_circles	Handgelenkkreisen
+wrist_roller	Wrist Roller
+wrist_rotations_with_straight_bar	Handgelenkrotation mit gerader Stange
+yoke_walk	Yoke Walk
+zercher_squats	Zercher-Kniebeugen
+zottman_curl	Zottman Curl
+zottman_preacher_curl	Zottman Preacher-Curl
