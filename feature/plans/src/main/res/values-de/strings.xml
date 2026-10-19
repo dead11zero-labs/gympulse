@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_plans_title">Pläne</string>
-    <string name="feature_plans_placeholder">Hier legst du deine Trainingspläne an und bearbeitest sie.</string>
+
+    <!-- Planliste -->
+    <string name="plans_new">Neuer Plan</string>
+    <string name="plans_empty_title">Noch keine Pläne</string>
+    <string name="plans_empty_body">Lege einen Plan an, um dein Training zu strukturieren.</string>
+    <string name="plans_no_exercises_yet">Noch keine Übungen</string>
+    <plurals name="plans_exercise_count">
+        <item quantity="one">%d Übung</item>
+        <item quantity="other">%d Übungen</item>
+    </plurals>
+    <plurals name="plans_set_count">
+        <item quantity="one">%d Satz</item>
+        <item quantity="other">%d Sätze</item>
+    </plurals>
+    <string name="plans_duration_minutes">~%1$d Min.</string>
+    <string name="plans_meta">%1$s · %2$s · %3$s</string>
+    <string name="plans_more_options">Weitere Optionen</string>
+    <string name="plans_menu_edit">Bearbeiten</string>
+    <string name="plans_menu_duplicate">Duplizieren</string>
+    <string name="plans_menu_delete">Löschen</string>
+    <string name="plans_copy_name">%1$s (Kopie)</string>
+    <string name="plans_delete_title">Plan löschen?</string>
+    <string name="plans_delete_message">„%1$s“ wird entfernt. Bisherige Trainings bleiben in deinem Verlauf erhalten.</string>
+    <string name="plans_delete_confirm">Löschen</string>
+    <string name="plans_cancel">Abbrechen</string>
+
+    <!-- Plan-Editor -->
+    <string name="plans_editor_title_new">Neuer Plan</string>
+    <string name="plans_editor_title_edit">Plan bearbeiten</string>
+    <string name="plans_field_name">Planname</string>
+    <string name="plans_field_name_error">Gib einen Namen ein</string>
+    <string name="plans_field_notes">Notiz (optional)</string>
+    <string name="plans_exercises_header">Übungen</string>
+    <string name="plans_add_exercises">Übungen hinzufügen</string>
+    <string name="plans_no_exercises_hint">Füge mindestens eine Übung hinzu.</string>
+    <string name="plans_unknown_exercise">Unbekannte Übung</string>
+    <string name="plans_field_sets">Sätze</string>
+    <string name="plans_field_reps_min">Wdh. min</string>
+    <string name="plans_field_reps_max">Wdh. max</string>
+    <string name="plans_field_weight">Zielgewicht (kg)</string>
+    <string name="plans_field_rest">Pause (s)</string>
+    <string name="plans_error_invalid">Ungültig</string>
+    <string name="plans_move_up">Nach oben</string>
+    <string name="plans_move_down">Nach unten</string>
+    <string name="plans_remove_exercise">Übung entfernen</string>
+    <string name="plans_superset_link">Mit nächster als Supersatz verbinden</string>
+    <string name="plans_superset_unlink">Von nächster lösen</string>
+    <string name="plans_save">Speichern</string>
+    <string name="plans_save_failed">Plan konnte nicht gespeichert werden</string>
+    <string name="plans_discard_title">Änderungen verwerfen?</string>
+    <string name="plans_discard_message">Nicht gespeicherte Änderungen gehen verloren.</string>
+    <string name="plans_discard_confirm">Verwerfen</string>
+    <string name="plans_discard_keep">Weiter bearbeiten</string>
+
+    <!-- Übungsauswahl -->
+    <string name="plans_picker_search">Übungen suchen</string>
+    <string name="plans_picker_clear">Suche löschen</string>
+    <string name="plans_picker_close">Schließen</string>
+    <string name="plans_picker_empty">Keine Übungen gefunden</string>
+    <string name="plans_picker_select_hint">Übungen auswählen</string>
+    <plurals name="plans_picker_add_count">
+        <item quantity="one">%d Übung hinzufügen</item>
+        <item quantity="other">%d Übungen hinzufügen</item>
+    </plurals>
 </resources>
