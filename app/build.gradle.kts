@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.material3.navigation.suite)
     implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)

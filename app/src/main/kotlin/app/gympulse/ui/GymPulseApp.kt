@@ -7,15 +7,18 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -28,6 +31,9 @@ import app.gympulse.feature.settings.SettingsRoute
 import app.gympulse.navigation.GymPulseNavHost
 import app.gympulse.navigation.TopLevelDestination
 
+/** Ab dieser Fensterbreite (Material 3 "Medium") wird die Navigation zur Rail an der Seite. */
+private val MediumWidthBreakpoint = 600.dp
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GymPulseApp(
@@ -37,54 +43,68 @@ fun GymPulseApp(
     val currentDestination = backStackEntry?.destination
     val currentTopLevel = TopLevelDestination.entries.firstOrNull { currentDestination.isOn(it) }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(stringResource(currentTopLevel?.labelRes ?: R.string.app_name))
-                },
-                navigationIcon = {
-                    if (currentTopLevel == null && navController.previousBackStackEntry != null) {
-                        IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = stringResource(R.string.action_back),
-                            )
-                        }
-                    }
-                },
-                actions = {
-                    if (currentTopLevel != null) {
-                        IconButton(onClick = { navController.navigate(SettingsRoute) }) {
-                            Icon(
-                                Icons.Filled.Settings,
-                                contentDescription = stringResource(R.string.action_settings),
-                            )
-                        }
-                    }
-                },
-            )
-        },
-        bottomBar = {
-            // Bottom Bar nur auf den vier Haupt-Tabs, nicht im Workout oder in den Einstellungen.
-            if (currentTopLevel != null) {
-                NavigationBar {
-                    TopLevelDestination.entries.forEach { destination ->
-                        NavigationBarItem(
-                            selected = destination == currentTopLevel,
-                            onClick = { navController.navigateToTopLevel(destination) },
-                            icon = { Icon(destination.icon, contentDescription = null) },
-                            label = { Text(stringResource(destination.labelRes)) },
+    // Adaptive Navigation: Navigation Bar auf Handys, Navigation Rail auf Tablets und Foldables.
+    // Im Workout und in den Einstellungen wird sie ausgeblendet.
+    val windowWidth = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
+    val layoutType = when {
+        currentTopLevel == null -> NavigationSuiteType.None
+        windowWidth >= MediumWidthBreakpoint -> NavigationSuiteType.NavigationRail
+        else -> NavigationSuiteType.NavigationBar
+    }
+
+    NavigationSuiteScaffold(
+        layoutType = layoutType,
+        navigationSuiteItems = {
+            TopLevelDestination.entries.forEach { destination ->
+                val selected = destination == currentTopLevel
+                item(
+                    selected = selected,
+                    onClick = { navController.navigateToTopLevel(destination) },
+                    icon = {
+                        Icon(
+                            if (selected) destination.selectedIcon else destination.unselectedIcon,
+                            contentDescription = null,
                         )
-                    }
-                }
+                    },
+                    label = { Text(stringResource(destination.labelRes)) },
+                )
             }
         },
-    ) { innerPadding ->
-        GymPulseNavHost(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding),
-        )
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(stringResource(currentTopLevel?.labelRes ?: R.string.app_name))
+                    },
+                    navigationIcon = {
+                        if (currentTopLevel == null && navController.previousBackStackEntry != null) {
+                            IconButton(onClick = { navController.navigateUp() }) {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = stringResource(R.string.action_back),
+                                )
+                            }
+                        }
+                    },
+                    actions = {
+                        if (currentTopLevel != null) {
+                            IconButton(onClick = { navController.navigate(SettingsRoute) }) {
+                                Icon(
+                                    Icons.Filled.Settings,
+                                    contentDescription = stringResource(R.string.action_settings),
+                                )
+                            }
+                        }
+                    },
+                )
+            },
+        ) { innerPadding ->
+            GymPulseNavHost(
+                navController = navController,
+                modifier = Modifier.padding(innerPadding),
+            )
+        }
     }
 }
 

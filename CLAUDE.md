@@ -17,6 +17,16 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 - Convention-Plugins in `build-logic/convention`: `gympulse.android.application`, `.library`, `.compose`,
   `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`.
 
+## Design (Material 3)
+- Referenz ist der Material-3-Skill (`/material-3`) bzw. m3.material.io; das finale Design von Jörg folgt.
+- Nur Tokens: `MaterialTheme.colorScheme` (immer in Paaren wie `primary`/`onPrimary`), `MaterialTheme.typography`
+  (Display/Headline/Title/Body/Label), `MaterialTheme.shapes`, Abstände aus `Spacing` (8-dp-Raster).
+- Material3-Composables statt Eigenbau (`Button`, `Card`, `ListItem`, `NavigationSuiteScaffold` …).
+- Tiefe über tonale Flächen (`surfaceContainer*`), keine Schatten als Standard. Trenner mit `outlineVariant`.
+- Adaptiv: Navigation Bar < 600 dp, Rail ab 600 dp; Inhalte auf großen Screens auf `Spacing.maxContentWidth` begrenzen.
+- Touch-Ziele mindestens 48 dp, Kontrast prüfen, Icons mit `contentDescription`, wenn sie allein stehen.
+- Aktives Navigationsziel: gefülltes Icon, sonst Outline-Icon. Labels immer anzeigen.
+
 ## Konventionen
 - UI-Texte nur über `strings.xml`, immer Englisch (`values/`) und Deutsch (`values-de/`) pflegen.
 - Gewicht immer in kg. Datenbank-IDs sind UUIDs, Tabellen tragen `created_at`, `updated_at`, `deleted_at`.
