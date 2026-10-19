@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation(projects.core.designsystem)
+    implementation(projects.core.featuregate)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)

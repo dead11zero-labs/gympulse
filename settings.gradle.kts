@@ -21,6 +21,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":app")
 include(":core:designsystem")
+include(":core:featuregate")
 include(":feature:dashboard")
 include(":feature:workout")
 include(":feature:plans")
