@@ -39,7 +39,7 @@ class StatsRepository @Inject constructor(
         includeWarmups: Boolean = false,
     ): Flow<WeeklyVolume> {
         val zone = time.zone()
-        val weekStart = LocalDate.ofInstant(time.now(), zone)
+        val weekStart = time.now().atZone(zone).toLocalDate()
             .with(TemporalAdjusters.previousOrSame(weekStartsOn))
             .plusWeeks(weekOffset)
         val from = weekStart.atStartOfDay(zone).toInstant()
@@ -47,7 +47,7 @@ class StatsRepository @Inject constructor(
         return observeSessionVolumes(from, to, includeWarmups).map { sessions ->
             val daily = DoubleArray(7)
             sessions.forEach { session ->
-                val day = LocalDate.ofInstant(session.endedAt, zone)
+                val day = session.endedAt.atZone(zone).toLocalDate()
                 val index = (day.toEpochDay() - weekStart.toEpochDay()).toInt()
                 if (index in 0..6) daily[index] += session.volumeKg
             }
