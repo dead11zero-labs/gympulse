@@ -25,7 +25,7 @@ fun GymPulseNavHost(
     ) {
         dashboardScreen(onStartWorkout = { navController.navigate(WorkoutRoute) })
         plansScreen()
-        libraryScreen()
+        libraryScreen(navController)
         calendarScreen()
         workoutScreen()
         settingsScreen()

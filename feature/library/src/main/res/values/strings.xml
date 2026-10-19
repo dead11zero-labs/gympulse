@@ -1,5 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_library_title">Library</string>
-    <string name="feature_library_placeholder">Exercises, equipment and machine settings will live here.</string>
+
+    <!-- Tabs and entry points -->
+    <string name="library_tab_exercises">Exercises</string>
+    <string name="library_tab_equipment">Equipment</string>
+    <string name="library_new_exercise">New exercise</string>
+    <string name="library_new_equipment">New equipment</string>
+
+    <!-- Common actions -->
+    <string name="library_save">Save</string>
+    <string name="library_cancel">Cancel</string>
+    <string name="library_delete">Delete</string>
+    <string name="library_edit">Edit</string>
+    <string name="library_back">Back</string>
+    <string name="library_unknown">–</string>
+
+    <!-- Exercise list -->
+    <string name="library_search_exercises">Search exercises</string>
+    <string name="library_clear_search">Clear search</string>
+    <string name="library_clear_filters">Clear filters</string>
+    <string name="library_filter_favorites">Favorites</string>
+    <string name="library_filter_muscle">Muscle</string>
+    <string name="library_filter_equipment_type">Equipment type</string>
+    <string name="library_filter_category">Category</string>
+    <string name="library_filter_all">All</string>
+    <string name="library_exercise_count">%1$d exercises</string>
+    <string name="library_custom_badge">Custom</string>
+    <string name="library_favorite">Favorite</string>
+    <string name="library_exercises_empty_title">No exercises yet</string>
+    <string name="library_exercises_empty_message">Create your own exercise with the button below.</string>
+    <string name="library_exercises_no_match_title">No matching exercises</string>
+    <string name="library_exercises_no_match_message">Try a different search term or remove a filter.</string>
+
+    <!-- Categories -->
+    <string name="library_category_strength">Strength</string>
+    <string name="library_category_stretching">Stretching</string>
+    <string name="library_category_plyometrics">Plyometrics</string>
+    <string name="library_category_powerlifting">Powerlifting</string>
+    <string name="library_category_olympic_weightlifting">Olympic weightlifting</string>
+    <string name="library_category_strongman">Strongman</string>
+    <string name="library_category_cardio">Cardio</string>
+
+    <!-- Tracking types -->
+    <string name="library_tracking_weight_reps">Weight and reps</string>
+    <string name="library_tracking_reps">Reps only</string>
+    <string name="library_tracking_duration">Duration</string>
+    <string name="library_tracking_distance">Distance</string>
+
+    <!-- Exercise detail -->
+    <string name="library_exercise_not_found">Exercise not found</string>
+    <string name="library_exercise_not_found_message">This exercise no longer exists.</string>
+    <string name="library_add_favorite">Add to favorites</string>
+    <string name="library_remove_favorite">Remove from favorites</string>
+    <string name="library_image_description">Demonstration of %1$s</string>
+    <string name="library_image_unavailable">Image unavailable</string>
+    <string name="library_label_category">Category</string>
+    <string name="library_label_equipment_type">Equipment type</string>
+    <string name="library_label_tracking">Tracking</string>
+    <string name="library_label_primary_muscles">Primary muscles</string>
+    <string name="library_label_secondary_muscles">Secondary muscles</string>
+    <string name="library_label_bodyweight_factor">Bodyweight factor</string>
+    <string name="library_label_rest">Rest time (seconds)</string>
+    <string name="library_seconds_value">%1$d s</string>
+    <string name="library_instructions">Instructions</string>
+    <string name="library_instructions_english_only">Instructions are only available in English.</string>
+    <string name="library_step_number">%1$d.</string>
+    <string name="library_notes">Notes</string>
+    <string name="library_last_session">Last session</string>
+    <string name="library_last_session_empty">No sets logged yet.</string>
+    <string name="library_set_line">Set %1$d: %2$s</string>
+    <string name="library_set_weight_reps">%1$s kg × %2$d</string>
+    <string name="library_set_reps">%1$d reps</string>
+    <string name="library_set_duration">%1$d s</string>
+    <string name="library_set_distance">%1$s m</string>
+    <string name="library_source_license">Source: %1$s · License: %2$s</string>
+    <string name="library_source_custom">Custom exercise</string>
+    <string name="library_machine">Machine</string>
+    <string name="library_delete_exercise_title">Delete exercise?</string>
+    <string name="library_delete_exercise_message">%1$s will be removed from your library. Past workouts keep their data.</string>
+
+    <!-- Exercise form -->
+    <string name="library_edit_exercise">Edit exercise</string>
+    <string name="library_field_name">Name</string>
+    <string name="library_field_instructions">Instructions</string>
+    <string name="library_hint_instructions">One step per line</string>
+    <string name="library_hint_bodyweight_factor">Share of your body weight that is moved, e.g. 0.64 for push-ups</string>
+    <string name="library_hint_rest">Optional, overrides the default rest time</string>
+    <string name="library_error_name_required">Please enter a name</string>
+    <string name="library_error_bodyweight_factor">Enter a number between 0 and 2</string>
+    <string name="library_error_rest">Enter a whole number of seconds</string>
+    <string name="library_builtin_hint">%1$s is a built-in exercise. You can change your notes, the rest time and the machine.</string>
+    <string name="library_machine_none">None</string>
+    <string name="library_machine_none_available">Add a machine in the Equipment tab to link it to this exercise.</string>
+
+    <!-- Equipment -->
+    <string name="library_settings_count">Settings: %1$d</string>
+    <string name="library_equipment_empty_title">No equipment yet</string>
+    <string name="library_equipment_empty_message">Save the machines in your gym together with their settings, for example seat height.</string>
+    <string name="library_equipment_not_found">Equipment not found</string>
+    <string name="library_equipment_not_found_message">This equipment no longer exists.</string>
+    <string name="library_search_templates">Search templates</string>
+    <string name="library_empty_equipment">Empty equipment</string>
+    <string name="library_empty_equipment_hint">Start from scratch and add your own settings</string>
+    <string name="library_templates_no_match">No matching templates</string>
+    <string name="library_edit_equipment">Edit equipment</string>
+    <string name="library_photo_placeholder">Photo (coming soon)</string>
+    <string name="library_field_equipment_name">Name</string>
+    <string name="library_field_location">Gym or location</string>
+    <string name="library_settings">Settings</string>
+    <string name="library_settings_hint">Save how you set up this machine, for example seat height 4.</string>
+    <string name="library_field_setting_name">Setting</string>
+    <string name="library_field_setting_value">Value</string>
+    <string name="library_add_setting">Add setting</string>
+    <string name="library_remove_setting">Remove setting</string>
+    <string name="library_linked_exercises">Exercises on this machine</string>
+    <string name="library_linked_exercises_empty">No exercises linked yet. Link one in the exercise editor.</string>
+    <string name="library_delete_equipment">Delete equipment</string>
+    <string name="library_delete_equipment_title">Delete equipment?</string>
+    <string name="library_delete_equipment_message">%1$s and its settings will be removed. Linked exercises stay in your library.</string>
 </resources>
