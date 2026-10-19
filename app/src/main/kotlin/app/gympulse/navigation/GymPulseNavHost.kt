@@ -29,7 +29,7 @@ fun GymPulseNavHost(
             onResumeWorkout = { navController.navigate(WorkoutRoute) },
         )
         plansScreen(navController)
-        libraryScreen()
+        libraryScreen(navController)
         calendarScreen()
         workoutScreen()
         settingsScreen()
