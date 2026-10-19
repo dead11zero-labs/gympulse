@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Abdominals</string>
+    <string name="muscle_abductors">Abductors</string>
+    <string name="muscle_adductors">Adductors</string>
+    <string name="muscle_biceps">Biceps</string>
+    <string name="muscle_calves">Calves</string>
+    <string name="muscle_chest">Chest</string>
+    <string name="muscle_forearms">Forearms</string>
+    <string name="muscle_glutes">Glutes</string>
+    <string name="muscle_hamstrings">Hamstrings</string>
+    <string name="muscle_lats">Lats</string>
+    <string name="muscle_lower_back">Lower Back</string>
+    <string name="muscle_middle_back">Middle Back</string>
+    <string name="muscle_neck">Neck</string>
+    <string name="muscle_quadriceps">Quadriceps</string>
+    <string name="muscle_shoulders">Shoulders</string>
+    <string name="muscle_traps">Traps</string>
+    <string name="muscle_triceps">Triceps</string>
+    <string name="equipment_band">Band</string>
+    <string name="equipment_barbell">Barbell</string>
+    <string name="equipment_bodyweight">Bodyweight</string>
+    <string name="equipment_cable">Cable</string>
+    <string name="equipment_dumbbell">Dumbbell</string>
+    <string name="equipment_exercise_ball">Exercise Ball</string>
+    <string name="equipment_ez_bar">EZ Bar</string>
+    <string name="equipment_foam_roll">Foam Roll</string>
+    <string name="equipment_kettlebell">Kettlebell</string>
+    <string name="equipment_machine">Machine</string>
+    <string name="equipment_medicine_ball">Medicine Ball</string>
+    <string name="equipment_other">Other</string>
+</resources>

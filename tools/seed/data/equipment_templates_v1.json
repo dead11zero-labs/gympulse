@@ -1,0 +1,2034 @@
+{
+  "schema_version": 1,
+  "source": "gympulse",
+  "license": "CC0-1.0",
+  "templates": [
+    {
+      "key": "leg_press",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Leg press",
+        "de": "Beinpresse"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "foot_position",
+          "name": {
+            "en": "Foot position",
+            "de": "Fußposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, shoulder-width",
+            "de": "z. B. hoch, schulterbreit"
+          }
+        },
+        {
+          "key": "start_position",
+          "name": {
+            "en": "Start position",
+            "de": "Startposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "hack_squat",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Hack squat",
+        "de": "Hack Squat"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "glutes"
+      ],
+      "setting_keys": [
+        {
+          "key": "shoulder_pad_position",
+          "name": {
+            "en": "Shoulder pad position",
+            "de": "Schulterpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "foot_position",
+          "name": {
+            "en": "Foot position",
+            "de": "Fußposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, shoulder-width",
+            "de": "z. B. hoch, schulterbreit"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "safety_stop_position",
+          "name": {
+            "en": "Safety stop position",
+            "de": "Sicherheitsstopp"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "leg_extension",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Leg extension",
+        "de": "Beinstrecker"
+      },
+      "muscle_groups": [
+        "quadriceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pad_position",
+          "name": {
+            "en": "Pad position",
+            "de": "Polsterposition"
+          },
+          "value_hint": {
+            "en": "e.g. top of shin, 2 holes lower",
+            "de": "z. B. Schienbein oben, 2 Löcher tiefer"
+          }
+        },
+        {
+          "key": "range_limiter",
+          "name": {
+            "en": "Range limiter",
+            "de": "Bewegungsbegrenzung"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "lying_leg_curl",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Lying leg curl",
+        "de": "Liegender Beinbeuger"
+      },
+      "muscle_groups": [
+        "hamstrings",
+        "calves"
+      ],
+      "setting_keys": [
+        {
+          "key": "pad_position",
+          "name": {
+            "en": "Pad position",
+            "de": "Polsterposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "thigh_pad_position",
+          "name": {
+            "en": "Thigh pad position",
+            "de": "Oberschenkelpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "range_limiter",
+          "name": {
+            "en": "Range limiter",
+            "de": "Bewegungsbegrenzung"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "seated_leg_curl",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Seated leg curl",
+        "de": "Sitzender Beinbeuger"
+      },
+      "muscle_groups": [
+        "hamstrings"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "thigh_pad_position",
+          "name": {
+            "en": "Thigh pad position",
+            "de": "Oberschenkelpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "shin_pad_position",
+          "name": {
+            "en": "Shin pad position",
+            "de": "Unterschenkelpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "range_limiter",
+          "name": {
+            "en": "Range limiter",
+            "de": "Bewegungsbegrenzung"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "hip_abductor",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Hip abductor",
+        "de": "Abduktor"
+      },
+      "muscle_groups": [
+        "abductors",
+        "glutes"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "hip_adductor",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Hip adductor",
+        "de": "Adduktor"
+      },
+      "muscle_groups": [
+        "adductors"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "thigh_pad_position",
+          "name": {
+            "en": "Thigh pad position",
+            "de": "Oberschenkelpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "glute_kickback_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Glute kickback machine",
+        "de": "Gesäß-Kickback-Maschine"
+      },
+      "muscle_groups": [
+        "glutes",
+        "hamstrings"
+      ],
+      "setting_keys": [
+        {
+          "key": "pad_position",
+          "name": {
+            "en": "Pad position",
+            "de": "Polsterposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "start_position",
+          "name": {
+            "en": "Start position",
+            "de": "Startposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "standing_calf_raise",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Standing calf raise",
+        "de": "Wadenmaschine stehend"
+      },
+      "muscle_groups": [
+        "calves"
+      ],
+      "setting_keys": [
+        {
+          "key": "shoulder_pad_position",
+          "name": {
+            "en": "Shoulder pad position",
+            "de": "Schulterpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "footplate_position",
+          "name": {
+            "en": "Footplate position",
+            "de": "Fußplatte"
+          },
+          "value_hint": {
+            "en": "e.g. 3 cm from edge",
+            "de": "z. B. 3 cm von der Kante"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "seated_calf_raise",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Seated calf raise",
+        "de": "Wadenmaschine sitzend"
+      },
+      "muscle_groups": [
+        "calves"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "thigh_pad_position",
+          "name": {
+            "en": "Thigh pad position",
+            "de": "Oberschenkelpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "footplate_position",
+          "name": {
+            "en": "Footplate position",
+            "de": "Fußplatte"
+          },
+          "value_hint": {
+            "en": "e.g. 3 cm from edge",
+            "de": "z. B. 3 cm von der Kante"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "chest_press",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Chest press",
+        "de": "Brustpresse"
+      },
+      "muscle_groups": [
+        "chest",
+        "triceps",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "incline_chest_press",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Incline chest press",
+        "de": "Schrägbank-Brustpresse"
+      },
+      "muscle_groups": [
+        "chest",
+        "shoulders",
+        "triceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "pec_deck",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Pec deck / butterfly",
+        "de": "Butterfly"
+      },
+      "muscle_groups": [
+        "chest",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "arm_pad_height",
+          "name": {
+            "en": "Arm pad height",
+            "de": "Armpolster Höhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "reverse_fly",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Reverse fly",
+        "de": "Reverse Butterfly"
+      },
+      "muscle_groups": [
+        "shoulders",
+        "middle_back"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "chest_pad_position",
+          "name": {
+            "en": "Chest pad position",
+            "de": "Brustpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "shoulder_press_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Shoulder press machine",
+        "de": "Schulterpresse"
+      },
+      "muscle_groups": [
+        "shoulders",
+        "triceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "lateral_raise_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Lateral raise machine",
+        "de": "Seitheben-Maschine"
+      },
+      "muscle_groups": [
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "arm_pad_position",
+          "name": {
+            "en": "Arm pad position",
+            "de": "Armpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "start_position",
+          "name": {
+            "en": "Start position",
+            "de": "Startposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "lat_pulldown",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Lat pulldown",
+        "de": "Latzug"
+      },
+      "muscle_groups": [
+        "lats",
+        "biceps",
+        "middle_back"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "thigh_pad_position",
+          "name": {
+            "en": "Thigh pad position",
+            "de": "Oberschenkelpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "seated_cable_row",
+      "equipment_type": "cable",
+      "name": {
+        "en": "Seated cable row",
+        "de": "Rudern am Kabelzug"
+      },
+      "muscle_groups": [
+        "middle_back",
+        "lats",
+        "biceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "footplate_position",
+          "name": {
+            "en": "Footplate position",
+            "de": "Fußplatte"
+          },
+          "value_hint": {
+            "en": "e.g. 3 cm from edge",
+            "de": "z. B. 3 cm von der Kante"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "assisted_pull_up_dip",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Assisted pull-up / dip machine",
+        "de": "Klimmzug-/Dipmaschine (unterstützt)"
+      },
+      "muscle_groups": [
+        "lats",
+        "triceps",
+        "chest"
+      ],
+      "setting_keys": [
+        {
+          "key": "assistance_weight",
+          "name": {
+            "en": "Assistance weight",
+            "de": "Unterstützung (Gewicht)"
+          },
+          "value_hint": {
+            "en": "e.g. 20 kg",
+            "de": "z. B. 20 kg"
+          }
+        },
+        {
+          "key": "knee_pad_position",
+          "name": {
+            "en": "Knee pad position",
+            "de": "Kniepolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "t_bar_row",
+      "equipment_type": "machine",
+      "name": {
+        "en": "T-bar row",
+        "de": "T-Bar-Rudern"
+      },
+      "muscle_groups": [
+        "middle_back",
+        "lats",
+        "biceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "footplate_position",
+          "name": {
+            "en": "Footplate position",
+            "de": "Fußplatte"
+          },
+          "value_hint": {
+            "en": "e.g. 3 cm from edge",
+            "de": "z. B. 3 cm von der Kante"
+          }
+        },
+        {
+          "key": "chest_pad_position",
+          "name": {
+            "en": "Chest pad position",
+            "de": "Brustpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "chest_supported_row",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Chest-supported row",
+        "de": "Brustgestütztes Rudern"
+      },
+      "muscle_groups": [
+        "middle_back",
+        "lats",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "chest_pad_position",
+          "name": {
+            "en": "Chest pad position",
+            "de": "Brustpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "biceps_curl_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Biceps curl machine",
+        "de": "Bizepsmaschine"
+      },
+      "muscle_groups": [
+        "biceps",
+        "forearms"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "arm_pad_position",
+          "name": {
+            "en": "Arm pad position",
+            "de": "Armpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "start_position",
+          "name": {
+            "en": "Start position",
+            "de": "Startposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "triceps_extension_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Triceps extension machine",
+        "de": "Trizepsmaschine"
+      },
+      "muscle_groups": [
+        "triceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "arm_pad_position",
+          "name": {
+            "en": "Arm pad position",
+            "de": "Armpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. rope, straight bar",
+            "de": "z. B. Seil, gerade Stange"
+          }
+        }
+      ]
+    },
+    {
+      "key": "triceps_dip_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Triceps dip machine",
+        "de": "Trizeps-Dipmaschine"
+      },
+      "muscle_groups": [
+        "triceps",
+        "chest",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "backrest_angle",
+          "name": {
+            "en": "Backrest angle",
+            "de": "Rückenlehne"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ab_crunch_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Ab crunch machine",
+        "de": "Bauchmaschine"
+      },
+      "muscle_groups": [
+        "abdominals"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pad_position",
+          "name": {
+            "en": "Pad position",
+            "de": "Polsterposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "back_extension",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Back extension (hyperextension bench)",
+        "de": "Hyperextension / Rückenstreckerbank"
+      },
+      "muscle_groups": [
+        "lower_back",
+        "glutes",
+        "hamstrings"
+      ],
+      "setting_keys": [
+        {
+          "key": "hip_pad_position",
+          "name": {
+            "en": "Hip pad position",
+            "de": "Hüftpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "footplate_position",
+          "name": {
+            "en": "Footplate position",
+            "de": "Fußplatte"
+          },
+          "value_hint": {
+            "en": "e.g. 3 cm from edge",
+            "de": "z. B. 3 cm von der Kante"
+          }
+        },
+        {
+          "key": "bench_angle",
+          "name": {
+            "en": "Bench angle",
+            "de": "Bankwinkel"
+          },
+          "value_hint": {
+            "en": "e.g. 30 degrees",
+            "de": "z. B. 30 Grad"
+          }
+        }
+      ]
+    },
+    {
+      "key": "rotary_torso",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Rotary torso",
+        "de": "Rotary Torso"
+      },
+      "muscle_groups": [
+        "abdominals",
+        "middle_back"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_position",
+          "name": {
+            "en": "Seat position",
+            "de": "Sitzposition"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "chest_pad_position",
+          "name": {
+            "en": "Chest pad position",
+            "de": "Brustpolster"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "pin_number",
+          "name": {
+            "en": "Pin / hole number",
+            "de": "Steckplatz"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "cable_crossover",
+      "equipment_type": "cable",
+      "name": {
+        "en": "Cable crossover",
+        "de": "Kabelturm (Cable Crossover)"
+      },
+      "muscle_groups": [
+        "chest",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "cable_height",
+          "name": {
+            "en": "Cable height",
+            "de": "Seilzughöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        },
+        {
+          "key": "stance_position",
+          "name": {
+            "en": "Stance position",
+            "de": "Standposition"
+          },
+          "value_hint": {
+            "en": "e.g. one step forward",
+            "de": "z. B. ein Schritt vor"
+          }
+        }
+      ]
+    },
+    {
+      "key": "functional_trainer",
+      "equipment_type": "cable",
+      "name": {
+        "en": "Functional trainer",
+        "de": "Functional Trainer"
+      },
+      "muscle_groups": [
+        "chest",
+        "lats",
+        "shoulders",
+        "biceps",
+        "triceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "left_cable_height",
+          "name": {
+            "en": "Left cable height",
+            "de": "Seilzughöhe links"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "right_cable_height",
+          "name": {
+            "en": "Right cable height",
+            "de": "Seilzughöhe rechts"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handle_position",
+          "name": {
+            "en": "Handle position",
+            "de": "Griffposition"
+          },
+          "value_hint": {
+            "en": "e.g. high, neutral",
+            "de": "z. B. hoch, neutral"
+          }
+        }
+      ]
+    },
+    {
+      "key": "smith_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Smith machine",
+        "de": "Multipresse (Smith-Maschine)"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "glutes",
+        "chest",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "hook_height",
+          "name": {
+            "en": "Hook height",
+            "de": "Hakenhöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "safety_stop_height",
+          "name": {
+            "en": "Safety stop height",
+            "de": "Sicherheitsstopp Höhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "bench_position",
+          "name": {
+            "en": "Bench position",
+            "de": "Bankposition"
+          },
+          "value_hint": {
+            "en": "e.g. under bar, 10 cm back",
+            "de": "z. B. unter der Stange, 10 cm zurück"
+          }
+        }
+      ]
+    },
+    {
+      "key": "squat_rack_power_rack",
+      "equipment_type": "barbell",
+      "name": {
+        "en": "Squat rack / power rack",
+        "de": "Kraftstation / Power Rack"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings",
+        "middle_back"
+      ],
+      "setting_keys": [
+        {
+          "key": "safety_bar_height",
+          "name": {
+            "en": "Safety bar height",
+            "de": "Sicherheitsbügel Höhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "j_hook_height",
+          "name": {
+            "en": "J-hook height",
+            "de": "J-Haken Höhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "rack_width",
+          "name": {
+            "en": "Rack width",
+            "de": "Abstand Ständer"
+          },
+          "value_hint": {
+            "en": "e.g. 1.2 m",
+            "de": "z. B. 1,2 m"
+          }
+        }
+      ]
+    },
+    {
+      "key": "flat_bench",
+      "equipment_type": "other",
+      "name": {
+        "en": "Flat bench",
+        "de": "Flachbank"
+      },
+      "muscle_groups": [
+        "chest",
+        "triceps",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "bench_position",
+          "name": {
+            "en": "Bench position",
+            "de": "Bankposition"
+          },
+          "value_hint": {
+            "en": "e.g. 10 cm from rack",
+            "de": "z. B. 10 cm vom Rack"
+          }
+        },
+        {
+          "key": "bench_angle",
+          "name": {
+            "en": "Bench angle",
+            "de": "Bankwinkel"
+          },
+          "value_hint": {
+            "en": "e.g. 0 (flat)",
+            "de": "z. B. 0 (flach)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "adjustable_bench",
+      "equipment_type": "other",
+      "name": {
+        "en": "Adjustable bench",
+        "de": "Verstellbare Hantelbank"
+      },
+      "muscle_groups": [
+        "chest",
+        "shoulders",
+        "triceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "bench_angle",
+          "name": {
+            "en": "Bench angle",
+            "de": "Bankwinkel"
+          },
+          "value_hint": {
+            "en": "e.g. 30 degrees",
+            "de": "z. B. 30 Grad"
+          }
+        },
+        {
+          "key": "bench_position",
+          "name": {
+            "en": "Bench position",
+            "de": "Bankposition"
+          },
+          "value_hint": {
+            "en": "e.g. 10 cm from rack",
+            "de": "z. B. 10 cm vom Rack"
+          }
+        }
+      ]
+    },
+    {
+      "key": "preacher_curl_bench",
+      "equipment_type": "other",
+      "name": {
+        "en": "Preacher curl bench",
+        "de": "Scottbank"
+      },
+      "muscle_groups": [
+        "biceps",
+        "forearms"
+      ],
+      "setting_keys": [
+        {
+          "key": "pad_height",
+          "name": {
+            "en": "Pad height",
+            "de": "Polsterhöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "seat_height",
+          "name": {
+            "en": "Seat height",
+            "de": "Sitzhöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "bench_angle",
+          "name": {
+            "en": "Bench angle",
+            "de": "Bankwinkel"
+          },
+          "value_hint": {
+            "en": "e.g. 30 degrees",
+            "de": "z. B. 30 Grad"
+          }
+        }
+      ]
+    },
+    {
+      "key": "decline_bench",
+      "equipment_type": "other",
+      "name": {
+        "en": "Decline bench",
+        "de": "Negativbank"
+      },
+      "muscle_groups": [
+        "chest",
+        "triceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "leg_roller_position",
+          "name": {
+            "en": "Leg roller position",
+            "de": "Fixierrolle"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "bench_angle",
+          "name": {
+            "en": "Bench angle",
+            "de": "Bankwinkel"
+          },
+          "value_hint": {
+            "en": "e.g. -20 degrees",
+            "de": "z. B. -20 Grad"
+          }
+        }
+      ]
+    },
+    {
+      "key": "pull_up_bar",
+      "equipment_type": "bodyweight",
+      "name": {
+        "en": "Pull-up bar",
+        "de": "Klimmzugstange"
+      },
+      "muscle_groups": [
+        "lats",
+        "biceps",
+        "middle_back"
+      ],
+      "setting_keys": [
+        {
+          "key": "grip_width",
+          "name": {
+            "en": "Grip width",
+            "de": "Griffbreite"
+          },
+          "value_hint": {
+            "en": "e.g. shoulder-width, wide",
+            "de": "z. B. schulterbreit, weit"
+          }
+        },
+        {
+          "key": "grip_type",
+          "name": {
+            "en": "Grip type",
+            "de": "Griffart"
+          },
+          "value_hint": {
+            "en": "e.g. pronated, neutral, chin",
+            "de": "z. B. Obergriff, Neutralgriff, Untergriff"
+          }
+        },
+        {
+          "key": "bar_height",
+          "name": {
+            "en": "Bar height",
+            "de": "Stangenhöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        }
+      ]
+    },
+    {
+      "key": "dip_station",
+      "equipment_type": "bodyweight",
+      "name": {
+        "en": "Dip station",
+        "de": "Dip-Station"
+      },
+      "muscle_groups": [
+        "triceps",
+        "chest",
+        "shoulders"
+      ],
+      "setting_keys": [
+        {
+          "key": "grip_width",
+          "name": {
+            "en": "Grip width",
+            "de": "Griffbreite"
+          },
+          "value_hint": {
+            "en": "e.g. shoulder-width, wide",
+            "de": "z. B. schulterbreit, weit"
+          }
+        },
+        {
+          "key": "bar_height",
+          "name": {
+            "en": "Bar height",
+            "de": "Stangenhöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "dip_depth",
+          "name": {
+            "en": "Dip depth",
+            "de": "Tiefe"
+          },
+          "value_hint": {
+            "en": "e.g. elbows at 90 degrees",
+            "de": "z. B. Ellbogen 90 Grad"
+          }
+        }
+      ]
+    },
+    {
+      "key": "treadmill",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Treadmill",
+        "de": "Laufband"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "hamstrings",
+        "calves",
+        "glutes"
+      ],
+      "setting_keys": [
+        {
+          "key": "speed",
+          "name": {
+            "en": "Speed",
+            "de": "Geschwindigkeit"
+          },
+          "value_hint": {
+            "en": "e.g. 8 km/h",
+            "de": "z. B. 8 km/h"
+          }
+        },
+        {
+          "key": "incline",
+          "name": {
+            "en": "Incline",
+            "de": "Steigung"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "program",
+          "name": {
+            "en": "Program",
+            "de": "Programm"
+          },
+          "value_hint": {
+            "en": "e.g. interval 1",
+            "de": "z. B. Intervall 1"
+          }
+        }
+      ]
+    },
+    {
+      "key": "stationary_bike",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Stationary bike",
+        "de": "Heimtrainer / Ergometer"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "hamstrings",
+        "calves"
+      ],
+      "setting_keys": [
+        {
+          "key": "seat_height",
+          "name": {
+            "en": "Seat height",
+            "de": "Sitzhöhe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "resistance_level",
+          "name": {
+            "en": "Resistance level",
+            "de": "Widerstandsstufe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handlebar_position",
+          "name": {
+            "en": "Handlebar position",
+            "de": "Lenkerposition"
+          },
+          "value_hint": {
+            "en": "e.g. upright",
+            "de": "z. B. aufrecht"
+          }
+        }
+      ]
+    },
+    {
+      "key": "rowing_machine",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Rowing machine",
+        "de": "Rudergerät"
+      },
+      "muscle_groups": [
+        "lats",
+        "middle_back",
+        "quadriceps",
+        "biceps"
+      ],
+      "setting_keys": [
+        {
+          "key": "damper_setting",
+          "name": {
+            "en": "Damper setting",
+            "de": "Dämpfer"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "footplate_position",
+          "name": {
+            "en": "Footplate position",
+            "de": "Fußrasten"
+          },
+          "value_hint": {
+            "en": "e.g. 3rd strap",
+            "de": "z. B. 3. Riemen"
+          }
+        }
+      ]
+    },
+    {
+      "key": "elliptical_trainer",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Elliptical trainer",
+        "de": "Crosstrainer"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "glutes",
+        "hamstrings"
+      ],
+      "setting_keys": [
+        {
+          "key": "resistance_level",
+          "name": {
+            "en": "Resistance level",
+            "de": "Widerstandsstufe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "incline",
+          "name": {
+            "en": "Incline",
+            "de": "Steigung"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "stride_length",
+          "name": {
+            "en": "Stride length",
+            "de": "Schrittlänge"
+          },
+          "value_hint": {
+            "en": "e.g. medium",
+            "de": "z. B. mittel"
+          }
+        }
+      ]
+    },
+    {
+      "key": "stair_climber",
+      "equipment_type": "machine",
+      "name": {
+        "en": "Stair climber",
+        "de": "Treppensteiger"
+      },
+      "muscle_groups": [
+        "quadriceps",
+        "glutes",
+        "calves"
+      ],
+      "setting_keys": [
+        {
+          "key": "level",
+          "name": {
+            "en": "Level",
+            "de": "Stufe"
+          },
+          "value_hint": {
+            "en": "e.g. 5",
+            "de": "z. B. 5"
+          }
+        },
+        {
+          "key": "handrail_position",
+          "name": {
+            "en": "Handrail position",
+            "de": "Handlauf"
+          },
+          "value_hint": {
+            "en": "e.g. low, high",
+            "de": "z. B. niedrig, hoch"
+          }
+        }
+      ]
+    }
+  ]
+}
