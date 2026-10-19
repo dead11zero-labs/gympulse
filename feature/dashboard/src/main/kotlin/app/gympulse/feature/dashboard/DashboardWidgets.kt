@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
@@ -37,7 +38,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.time.temporal.ChronoUnit
-import java.util.Locale
 import kotlin.math.max
 
 private const val BAR_WIDTH_FRACTION = 0.5f
@@ -104,7 +104,7 @@ private fun WeeklyVolumeChart(
     formatKg: (Double) -> String,
     modifier: Modifier = Modifier,
 ) {
-    val locale = Locale.getDefault()
+    val locale = LocalConfiguration.current.locales[0]
     val maxKg = volume.dailyKg.maxOrNull()?.takeIf { it > 0.0 } ?: 1.0
     val dayNames = volume.dailyKg.indices.map { index ->
         volume.weekStart.plusDays(index.toLong()).dayOfWeek
