@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_dashboard_title">Dashboard</string>
+    <string name="feature_dashboard_placeholder">Hier erscheinen Wochenvolumen, Wochenfortschritt und der Schnellstart für dein Workout.</string>
+    <string name="feature_dashboard_start_workout">Workout starten</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_dashboard_title">Dashboard</string>
+    <string name="feature_dashboard_placeholder">Weekly volume, weekly progress and a quick start for your workout will appear here.</string>
+    <string name="feature_dashboard_start_workout">Start workout</string>
+</resources>

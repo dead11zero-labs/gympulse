@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Calendar</string>
+    <string name="feature_calendar_placeholder">Assign plans to weekdays and review your training history here.</string>
+</resources>

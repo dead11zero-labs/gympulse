@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_library_title">Library</string>
+    <string name="feature_library_placeholder">Exercises, equipment and machine settings will live here.</string>
+</resources>
