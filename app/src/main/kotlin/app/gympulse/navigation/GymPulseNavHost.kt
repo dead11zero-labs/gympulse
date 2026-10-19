@@ -23,7 +23,11 @@ fun GymPulseNavHost(
         startDestination = DashboardRoute,
         modifier = modifier,
     ) {
-        dashboardScreen(onStartWorkout = { navController.navigate(WorkoutRoute) })
+        // TODO: planId an die Workout-Route übergeben, sobald sie ein optionales Argument hat.
+        dashboardScreen(
+            onStartWorkout = { _ -> navController.navigate(WorkoutRoute) },
+            onResumeWorkout = { navController.navigate(WorkoutRoute) },
+        )
         plansScreen(navController)
         libraryScreen()
         calendarScreen()
