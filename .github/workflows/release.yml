@@ -70,6 +70,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" "${{ steps.apk.outputs.file }}" --title "GymPulse $GITHUB_REF_NAME" --generate-notes --prerelease
 
+      # Rolling prerelease with the plain APK, so it can be downloaded without unzipping (e.g. on a phone).
+      - name: Publish latest build
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest-main --cleanup-tag --yes || true
+          gh release create latest-main "${{ steps.apk.outputs.file }}" --target "$GITHUB_SHA" --prerelease \
+            --title "GymPulse latest build" \
+            --notes "Automatic build of main (${GITHUB_SHA::7}), run #${GITHUB_RUN_NUMBER}."
+
       - name: Upload reports
         if: failure()
         uses: actions/upload-artifact@v4
