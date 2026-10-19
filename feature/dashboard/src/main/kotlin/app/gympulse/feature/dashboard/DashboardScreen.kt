@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import app.gympulse.core.designsystem.component.PlaceholderScreen
+import app.gympulse.core.designsystem.theme.Spacing
 
 @Composable
 internal fun DashboardScreen(
@@ -31,7 +31,7 @@ internal fun DashboardScreen(
             text = { Text(stringResource(R.string.feature_dashboard_start_workout)) },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp),
+                .padding(Spacing.m),
         )
     }
 }
