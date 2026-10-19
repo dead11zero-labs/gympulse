@@ -90,7 +90,7 @@ class DashboardViewModelTest {
     @Test
     fun emptyDatabaseYieldsEmptyWidgets() = runTest {
         val vm = viewModel()
-        backgroundScope.launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
 
         val state = vm.uiState.value
         assertFalse(state.isLoading)
@@ -107,7 +107,7 @@ class DashboardViewModelTest {
         data.current.value = WeeklyVolume(monday, listOf(1000.0, 0.0, 120.0, 0.0, 0.0, 0.0, 0.0))
         data.previous.value = WeeklyVolume(monday.minusWeeks(1), listOf(500.0, 500.0, 0.0, 0.0, 0.0, 0.0, 0.0))
         val vm = viewModel()
-        backgroundScope.launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
 
         val volume = vm.uiState.value.weeklyVolume!!
         assertEquals(1120.0, volume.totalKg, 0.001)
@@ -127,7 +127,7 @@ class DashboardViewModelTest {
             end(monday.minusWeeks(1).plusDays(4)),
         )
         val vm = viewModel(goal = 3)
-        backgroundScope.launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
 
         val progress = vm.uiState.value.weeklyProgress!!
         assertEquals(2, progress.completed)
@@ -142,7 +142,7 @@ class DashboardViewModelTest {
     fun reachingGoalCountsCurrentWeekInStreak() = runTest {
         data.endTimes.value = listOf(end(monday), end(monday.plusDays(1)), end(monday.plusDays(2)))
         val vm = viewModel(goal = 3)
-        backgroundScope.launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
 
         val progress = vm.uiState.value.weeklyProgress!!
         assertTrue(progress.goalReached)
@@ -162,7 +162,7 @@ class DashboardViewModelTest {
             ),
         )
         val vm = viewModel()
-        backgroundScope.launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
 
         val recent = vm.uiState.value.recentSessions.single()
         assertEquals("Push Day", recent.title)
@@ -174,7 +174,7 @@ class DashboardViewModelTest {
     @Test
     fun activeWorkoutIsExposedAndClearedWhenFinished() = runTest {
         val vm = viewModel()
-        backgroundScope.launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
         assertNull(vm.uiState.value.activeWorkout)
 
         data.active.value = ActiveWorkout("a1", "Leg Day", now)
