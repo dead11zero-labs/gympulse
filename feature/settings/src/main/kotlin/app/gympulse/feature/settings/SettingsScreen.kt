@@ -30,6 +30,7 @@ import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.WeekStart
+import app.gympulse.feature.settings.data.DataSettingsRows
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -162,10 +163,7 @@ internal fun SettingsScreen(
             }
 
             SettingsSection(stringResource(R.string.settings_section_data)) {
-                ComingSoonRow(
-                    headline = stringResource(R.string.settings_export_import),
-                    supporting = stringResource(R.string.settings_export_import_summary),
-                )
+                DataSettingsRows()
             }
 
             SettingsSection(stringResource(R.string.settings_section_about)) {
