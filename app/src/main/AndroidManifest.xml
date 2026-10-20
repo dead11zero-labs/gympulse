@@ -24,6 +24,27 @@
             </intent-filter>
         </activity>
 
+        <!-- Health Connect: Datenschutzhinweis bis Android 13. -->
+        <activity
+            android:name=".health.HealthPermissionsRationaleActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+
+        <!-- Health Connect: Datenschutzhinweis ab Android 14. -->
+        <activity-alias
+            android:name=".health.ViewPermissionUsageActivity"
+            android:exported="true"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE"
+            android:targetActivity=".health.HealthPermissionsRationaleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
+
         <!-- AppCompat speichert die App-Sprache auf Android 12 und älter selbst. -->
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"

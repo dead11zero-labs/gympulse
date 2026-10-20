@@ -17,9 +17,12 @@ interface EntitlementProvider {
     fun hasEntitlement(feature: Feature): Boolean?
 }
 
-/** Version 1 ist komplett kostenlos, daher sind alle Features aktiv. */
-class AllEnabledLocalFeatureDefaults @Inject constructor() : LocalFeatureDefaults {
-    override fun isEnabledByDefault(feature: Feature): Boolean = true
+/**
+ * Version 1 ist komplett kostenlos; es gilt [Feature.enabledByDefault]. Opt-in-Features wie
+ * Health Connect sind damit aus, bis der Nutzer sie einschaltet.
+ */
+class StaticLocalFeatureDefaults @Inject constructor() : LocalFeatureDefaults {
+    override fun isEnabledByDefault(feature: Feature): Boolean = feature.enabledByDefault
 }
 
 /** Platzhalter ohne Remote-Anbindung. */
