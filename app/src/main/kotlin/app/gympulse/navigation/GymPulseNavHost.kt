@@ -9,6 +9,8 @@ import app.gympulse.feature.dashboard.DashboardRoute
 import app.gympulse.feature.dashboard.dashboardScreen
 import app.gympulse.feature.library.libraryScreen
 import app.gympulse.feature.plans.plansScreen
+import app.gympulse.feature.settings.AboutRoute
+import app.gympulse.feature.settings.aboutScreen
 import app.gympulse.feature.settings.settingsScreen
 import app.gympulse.feature.workout.navigateToWorkout
 import app.gympulse.feature.workout.workoutScreen
@@ -31,6 +33,7 @@ fun GymPulseNavHost(
         libraryScreen(navController)
         calendarScreen()
         workoutScreen(onClose = { navController.navigateUp() })
-        settingsScreen()
+        settingsScreen(onOpenAbout = { navController.navigate(AboutRoute) })
+        aboutScreen()
     }
 }

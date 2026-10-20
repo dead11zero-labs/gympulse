@@ -38,6 +38,7 @@ private enum class SettingsDialog { NAME, WEIGHT, HEIGHT, REST_TIMER, WEEKLY_GOA
 
 @Composable
 internal fun SettingsScreen(
+    onOpenAbout: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -174,9 +175,10 @@ internal fun SettingsScreen(
                     supporting = appVersion(LocalContext.current),
                 )
                 SettingsDivider()
-                ComingSoonRow(
+                SettingsRow(
                     headline = stringResource(R.string.settings_licenses),
                     supporting = stringResource(R.string.settings_licenses_summary),
+                    onClick = onOpenAbout,
                 )
             }
         }
@@ -266,7 +268,7 @@ internal fun SettingsScreen(
 }
 
 @Composable
-private fun SettingsSection(title: String, content: @Composable () -> Unit) {
+internal fun SettingsSection(title: String, content: @Composable () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         SettingsSectionHeader(title)
         SettingsCard(content = content)
@@ -307,7 +309,7 @@ private fun formatNumber(value: Double): String =
     }.format(value)
 
 @Composable
-private fun appVersion(context: Context): String = remember(context) {
+internal fun appVersion(context: Context): String = remember(context) {
     val info = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         context.packageManager.getPackageInfo(context.packageName, PackageManager.PackageInfoFlags.of(0))
     } else {
