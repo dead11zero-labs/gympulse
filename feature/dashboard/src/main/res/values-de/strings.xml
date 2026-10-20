@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_dashboard_title">Dashboard</string>
-    <string name="feature_dashboard_placeholder">Hier erscheinen Wochenvolumen, Wochenfortschritt und der Schnellstart für dein Workout.</string>
     <string name="feature_dashboard_start_workout">Workout starten</string>
+    <string name="feature_dashboard_resume_workout">Workout fortsetzen</string>
+
+    <string name="feature_dashboard_greeting_morning">Guten Morgen</string>
+    <string name="feature_dashboard_greeting_afternoon">Guten Tag</string>
+    <string name="feature_dashboard_greeting_evening">Guten Abend</string>
+
+    <string name="feature_dashboard_active_title">Workout läuft</string>
+    <string name="feature_dashboard_active_subtitle">%1$s · gestartet um %2$s</string>
+    <string name="feature_dashboard_free_workout">Freies Workout</string>
+
+    <string name="feature_dashboard_volume_title">Wochenvolumen</string>
+    <string name="feature_dashboard_volume_total">%1$s kg</string>
+    <string name="feature_dashboard_volume_vs_last_week">%1$s zur Vorwoche</string>
+    <string name="feature_dashboard_volume_no_comparison">Noch kein Vergleich zur Vorwoche</string>
+    <string name="feature_dashboard_volume_empty">Diese Woche noch kein Volumen. Schließe ein Workout ab, dann erscheinen hier die Balken.</string>
+    <string name="feature_dashboard_volume_chart_description">Volumen pro Tag in dieser Woche, insgesamt %1$s kg. %2$s.</string>
+    <string name="feature_dashboard_volume_chart_day">%1$s: %2$s kg</string>
+    <string name="feature_dashboard_volume_chart_no_value">–</string>
+
+    <string name="feature_dashboard_progress_title">Wochenfortschritt</string>
+    <string name="feature_dashboard_progress_ring_value">%1$d/%2$d</string>
+    <string name="feature_dashboard_progress_description">%1$d von %2$d Trainings diese Woche erledigt</string>
+    <string name="feature_dashboard_progress_goal_reached">Wochenziel erreicht</string>
+    <string name="feature_dashboard_progress_streak_none">Noch keine Serie</string>
+    <plurals name="feature_dashboard_progress_remaining">
+        <item quantity="one">Noch %d Training bis zum Wochenziel</item>
+        <item quantity="other">Noch %d Trainings bis zum Wochenziel</item>
+    </plurals>
+    <plurals name="feature_dashboard_progress_streak">
+        <item quantity="one">%d Woche in Folge</item>
+        <item quantity="other">%d Wochen in Folge</item>
+    </plurals>
+
+    <string name="feature_dashboard_recent_title">Zuletzt trainiert</string>
+    <string name="feature_dashboard_recent_empty">Noch keine abgeschlossenen Workouts. Deine letzten Sessions erscheinen hier.</string>
+    <string name="feature_dashboard_recent_details">%1$s · %2$s kg</string>
+    <string name="feature_dashboard_date_today">Heute</string>
+    <string name="feature_dashboard_date_yesterday">Gestern</string>
+    <plurals name="feature_dashboard_date_days_ago">
+        <item quantity="one">Vor %d Tag</item>
+        <item quantity="other">Vor %d Tagen</item>
+    </plurals>
+    <string name="feature_dashboard_duration_minutes">%d Min.</string>
+    <string name="feature_dashboard_duration_hours_minutes">%1$d Std. %2$d Min.</string>
 </resources>

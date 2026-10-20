@@ -7,8 +7,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object DashboardRoute
 
-fun NavGraphBuilder.dashboardScreen(onStartWorkout: () -> Unit) {
+/**
+ * @param onStartWorkout startet ein Workout; `planId` ist null für ein freies Workout.
+ * @param onResumeWorkout öffnet das bereits laufende Workout.
+ */
+fun NavGraphBuilder.dashboardScreen(
+    onStartWorkout: (planId: String?) -> Unit,
+    onResumeWorkout: () -> Unit,
+) {
     composable<DashboardRoute> {
-        DashboardScreen(onStartWorkout = onStartWorkout)
+        DashboardScreen(onStartWorkout = onStartWorkout, onResumeWorkout = onResumeWorkout)
     }
 }

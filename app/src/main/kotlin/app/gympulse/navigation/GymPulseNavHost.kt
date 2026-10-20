@@ -10,7 +10,7 @@ import app.gympulse.feature.dashboard.dashboardScreen
 import app.gympulse.feature.library.libraryScreen
 import app.gympulse.feature.plans.plansScreen
 import app.gympulse.feature.settings.settingsScreen
-import app.gympulse.feature.workout.WorkoutRoute
+import app.gympulse.feature.workout.navigateToWorkout
 import app.gympulse.feature.workout.workoutScreen
 
 @Composable
@@ -23,11 +23,14 @@ fun GymPulseNavHost(
         startDestination = DashboardRoute,
         modifier = modifier,
     ) {
-        dashboardScreen(onStartWorkout = { navController.navigate(WorkoutRoute) })
-        plansScreen()
-        libraryScreen()
+        dashboardScreen(
+            onStartWorkout = { planId -> navController.navigateToWorkout(planId) },
+            onResumeWorkout = { navController.navigateToWorkout() },
+        )
+        plansScreen(navController)
+        libraryScreen(navController)
         calendarScreen()
-        workoutScreen()
+        workoutScreen(onClose = { navController.navigateUp() })
         settingsScreen()
     }
 }

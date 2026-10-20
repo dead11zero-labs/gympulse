@@ -1,5 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_library_title">Bibliothek</string>
-    <string name="feature_library_placeholder">Hier findest du Übungen, Geräte und deine Geräteeinstellungen.</string>
+
+    <!-- Tabs und Einstiegspunkte -->
+    <string name="library_tab_exercises">Übungen</string>
+    <string name="library_tab_equipment">Geräte</string>
+    <string name="library_new_exercise">Neue Übung</string>
+    <string name="library_new_equipment">Neues Gerät</string>
+
+    <!-- Allgemeine Aktionen -->
+    <string name="library_save">Speichern</string>
+    <string name="library_cancel">Abbrechen</string>
+    <string name="library_delete">Löschen</string>
+    <string name="library_edit">Bearbeiten</string>
+    <string name="library_back">Zurück</string>
+    <string name="library_unknown">–</string>
+
+    <!-- Übungsliste -->
+    <string name="library_search_exercises">Übungen suchen</string>
+    <string name="library_clear_search">Suche löschen</string>
+    <string name="library_clear_filters">Filter zurücksetzen</string>
+    <string name="library_filter_favorites">Favoriten</string>
+    <string name="library_filter_muscle">Muskel</string>
+    <string name="library_filter_equipment_type">Gerätetyp</string>
+    <string name="library_filter_category">Kategorie</string>
+    <string name="library_filter_all">Alle</string>
+    <string name="library_exercise_count">%1$d Übungen</string>
+    <string name="library_custom_badge">Eigene</string>
+    <string name="library_favorite">Favorit</string>
+    <string name="library_exercises_empty_title">Noch keine Übungen</string>
+    <string name="library_exercises_empty_message">Lege mit dem Button unten eine eigene Übung an.</string>
+    <string name="library_exercises_no_match_title">Keine passenden Übungen</string>
+    <string name="library_exercises_no_match_message">Versuche einen anderen Suchbegriff oder entferne einen Filter.</string>
+
+    <!-- Kategorien -->
+    <string name="library_category_strength">Kraft</string>
+    <string name="library_category_stretching">Dehnen</string>
+    <string name="library_category_plyometrics">Plyometrie</string>
+    <string name="library_category_powerlifting">Powerlifting</string>
+    <string name="library_category_olympic_weightlifting">Gewichtheben</string>
+    <string name="library_category_strongman">Strongman</string>
+    <string name="library_category_cardio">Cardio</string>
+
+    <!-- Tracking-Arten -->
+    <string name="library_tracking_weight_reps">Gewicht und Wiederholungen</string>
+    <string name="library_tracking_reps">Nur Wiederholungen</string>
+    <string name="library_tracking_duration">Dauer</string>
+    <string name="library_tracking_distance">Distanz</string>
+
+    <!-- Übungsdetail -->
+    <string name="library_exercise_not_found">Übung nicht gefunden</string>
+    <string name="library_exercise_not_found_message">Diese Übung gibt es nicht mehr.</string>
+    <string name="library_add_favorite">Zu Favoriten hinzufügen</string>
+    <string name="library_remove_favorite">Aus Favoriten entfernen</string>
+    <string name="library_image_description">Darstellung von %1$s</string>
+    <string name="library_image_unavailable">Bild nicht verfügbar</string>
+    <string name="library_label_category">Kategorie</string>
+    <string name="library_label_equipment_type">Gerätetyp</string>
+    <string name="library_label_tracking">Erfassung</string>
+    <string name="library_label_primary_muscles">Primäre Muskeln</string>
+    <string name="library_label_secondary_muscles">Sekundäre Muskeln</string>
+    <string name="library_label_bodyweight_factor">Körpergewichtsfaktor</string>
+    <string name="library_label_rest">Pausenzeit (Sekunden)</string>
+    <string name="library_seconds_value">%1$d s</string>
+    <string name="library_instructions">Anleitung</string>
+    <string name="library_instructions_english_only">Die Anleitung gibt es nur auf Englisch.</string>
+    <string name="library_step_number">%1$d.</string>
+    <string name="library_notes">Notizen</string>
+    <string name="library_last_session">Letztes Training</string>
+    <string name="library_last_session_empty">Noch keine Sätze erfasst.</string>
+    <string name="library_set_line">Satz %1$d: %2$s</string>
+    <string name="library_set_weight_reps">%1$s kg × %2$d</string>
+    <string name="library_set_reps">%1$d Wdh.</string>
+    <string name="library_set_duration">%1$d s</string>
+    <string name="library_set_distance">%1$s m</string>
+    <string name="library_source_license">Quelle: %1$s · Lizenz: %2$s</string>
+    <string name="library_source_custom">Eigene Übung</string>
+    <string name="library_machine">Gerät</string>
+    <string name="library_delete_exercise_title">Übung löschen?</string>
+    <string name="library_delete_exercise_message">%1$s wird aus deiner Bibliothek entfernt. Frühere Trainings behalten ihre Daten.</string>
+
+    <!-- Übungsformular -->
+    <string name="library_edit_exercise">Übung bearbeiten</string>
+    <string name="library_field_name">Name</string>
+    <string name="library_field_instructions">Anleitung</string>
+    <string name="library_hint_instructions">Ein Schritt pro Zeile</string>
+    <string name="library_hint_bodyweight_factor">Anteil deines Körpergewichts, der bewegt wird, z. B. 0,64 bei Liegestützen</string>
+    <string name="library_hint_rest">Optional, ersetzt die Standard-Pausenzeit</string>
+    <string name="library_error_name_required">Bitte gib einen Namen ein</string>
+    <string name="library_error_bodyweight_factor">Gib eine Zahl zwischen 0 und 2 ein</string>
+    <string name="library_error_rest">Gib eine ganze Zahl in Sekunden ein</string>
+    <string name="library_builtin_hint">%1$s ist eine mitgelieferte Übung. Du kannst Notizen, Pausenzeit und Gerät ändern.</string>
+    <string name="library_machine_none">Keins</string>
+    <string name="library_machine_none_available">Lege im Tab Geräte ein Gerät an, um es dieser Übung zuzuordnen.</string>
+
+    <!-- Geräte -->
+    <string name="library_settings_count">Einstellungen: %1$d</string>
+    <string name="library_equipment_empty_title">Noch keine Geräte</string>
+    <string name="library_equipment_empty_message">Speichere die Geräte in deinem Studio samt Einstellungen, zum Beispiel die Sitzhöhe.</string>
+    <string name="library_equipment_not_found">Gerät nicht gefunden</string>
+    <string name="library_equipment_not_found_message">Dieses Gerät gibt es nicht mehr.</string>
+    <string name="library_search_templates">Vorlagen suchen</string>
+    <string name="library_empty_equipment">Leeres Gerät</string>
+    <string name="library_empty_equipment_hint">Von Null beginnen und eigene Einstellungen anlegen</string>
+    <string name="library_templates_no_match">Keine passenden Vorlagen</string>
+    <string name="library_edit_equipment">Gerät bearbeiten</string>
+    <string name="library_photo_placeholder">Foto (folgt)</string>
+    <string name="library_field_equipment_name">Name</string>
+    <string name="library_field_location">Studio oder Ort</string>
+    <string name="library_settings">Einstellungen</string>
+    <string name="library_settings_hint">Speichere, wie du das Gerät einstellst, zum Beispiel Sitzhöhe 4.</string>
+    <string name="library_field_setting_name">Einstellung</string>
+    <string name="library_field_setting_value">Wert</string>
+    <string name="library_add_setting">Einstellung hinzufügen</string>
+    <string name="library_remove_setting">Einstellung entfernen</string>
+    <string name="library_linked_exercises">Übungen an diesem Gerät</string>
+    <string name="library_linked_exercises_empty">Noch keine Übungen zugeordnet. Ordne eine im Übungseditor zu.</string>
+    <string name="library_delete_equipment">Gerät löschen</string>
+    <string name="library_delete_equipment_title">Gerät löschen?</string>
+    <string name="library_delete_equipment_message">%1$s und die Einstellungen werden entfernt. Zugeordnete Übungen bleiben in deiner Bibliothek.</string>
 </resources>
