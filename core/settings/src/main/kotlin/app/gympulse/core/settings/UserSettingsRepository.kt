@@ -29,4 +29,5 @@ interface UserSettingsRepository {
     suspend fun setThemeMode(mode: ThemeMode)
     suspend fun setDynamicColor(enabled: Boolean)
     suspend fun setLanguage(language: AppLanguage)
+    suspend fun setOnboardingCompleted(completed: Boolean)
 }

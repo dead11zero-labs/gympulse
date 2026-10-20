@@ -463,6 +463,7 @@ private class FakeSettings(initial: UserSettings = UserSettings()) : UserSetting
     override suspend fun setThemeMode(mode: ThemeMode) = state.update { copy(themeMode = mode) }
     override suspend fun setDynamicColor(enabled: Boolean) = state.update { copy(dynamicColor = enabled) }
     override suspend fun setLanguage(language: AppLanguage) = state.update { copy(language = language) }
+    override suspend fun setOnboardingCompleted(completed: Boolean) = state.update { copy(onboardingCompleted = completed) }
 
     private fun MutableStateFlow<UserSettings>.update(change: UserSettings.() -> UserSettings) {
         value = value.change()

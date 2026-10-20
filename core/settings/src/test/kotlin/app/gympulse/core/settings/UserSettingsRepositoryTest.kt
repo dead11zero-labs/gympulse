@@ -48,6 +48,7 @@ class UserSettingsRepositoryTest {
         assertEquals(ThemeMode.SYSTEM, settings.themeMode)
         assertEquals(true, settings.dynamicColor)
         assertEquals(AppLanguage.SYSTEM, settings.language)
+        assertEquals(false, settings.onboardingCompleted)
     }
 
     @Test
@@ -58,9 +59,13 @@ class UserSettingsRepositoryTest {
         repository.setThemeMode(ThemeMode.DARK)
         repository.setDynamicColor(false)
         repository.setLanguage(AppLanguage.GERMAN)
+        repository.setOnboardingCompleted(true)
 
         assertEquals(
-            UserSettings(120, WeekStart.SUNDAY, 5, ThemeMode.DARK, dynamicColor = false, language = AppLanguage.GERMAN),
+            UserSettings(
+                120, WeekStart.SUNDAY, 5, ThemeMode.DARK,
+                dynamicColor = false, language = AppLanguage.GERMAN, onboardingCompleted = true,
+            ),
             repository.settings.first(),
         )
         assertEquals(120, repository.restTimerSeconds.first())

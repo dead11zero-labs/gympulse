@@ -47,4 +47,6 @@ data class UserSettings(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val dynamicColor: Boolean = true,
     val language: AppLanguage = AppLanguage.SYSTEM,
+    /** Ob das Onboarding beim ersten Start abgeschlossen oder übersprungen wurde. */
+    val onboardingCompleted: Boolean = false,
 )

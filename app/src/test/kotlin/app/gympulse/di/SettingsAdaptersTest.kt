@@ -29,6 +29,8 @@ class SettingsAdaptersTest {
         override suspend fun setThemeMode(mode: ThemeMode) = state.update { it.copy(themeMode = mode) }
         override suspend fun setDynamicColor(enabled: Boolean) = state.update { it.copy(dynamicColor = enabled) }
         override suspend fun setLanguage(language: AppLanguage) = state.update { it.copy(language = language) }
+        override suspend fun setOnboardingCompleted(completed: Boolean) =
+            state.update { it.copy(onboardingCompleted = completed) }
 
         private fun MutableStateFlow<UserSettings>.update(block: (UserSettings) -> UserSettings) {
             value = block(value)
