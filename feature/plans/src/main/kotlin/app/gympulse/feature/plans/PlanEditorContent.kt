@@ -21,8 +21,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,6 +39,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.SectionHeader
 import app.gympulse.core.designsystem.theme.Spacing
 
 private const val DESCRIPTION_MIN_LINES = 2
@@ -76,7 +77,7 @@ internal fun EditorContent(
                     text = stringResource(
                         if (state.isNew) R.string.plans_editor_title_new else R.string.plans_editor_title_edit,
                     ),
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }
@@ -109,11 +110,10 @@ internal fun EditorContent(
             }
             item(key = "header") {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = stringResource(R.string.plans_exercises_header),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
+                    SectionHeader(
+                        title = stringResource(R.string.plans_exercises_header),
                         modifier = Modifier.weight(1f),
+                        contentPadding = PaddingValues(vertical = Spacing.xs),
                     )
                     FilledTonalButton(onClick = viewModel::openPicker) {
                         Icon(
@@ -133,11 +133,16 @@ internal fun EditorContent(
                     } else {
                         MaterialTheme.colorScheme.onSurfaceVariant
                     }
-                    Text(
-                        text = stringResource(R.string.plans_no_exercises_hint),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = color,
-                    )
+                    GymPulseCard(
+                        modifier = Modifier.fillMaxWidth().animateItem(),
+                        variant = GymPulseCardVariant.Outlined,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.plans_no_exercises_hint),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = color,
+                        )
+                    }
                 }
             }
             items(draft.items, key = { it.id }) { item ->
@@ -178,14 +183,14 @@ private fun ExerciseCard(
     modifier: Modifier = Modifier,
 ) {
     val inSuperset = supersetLabel != null
-    val colors = if (inSuperset) {
-        CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
-    } else {
-        CardDefaults.cardColors()
-    }
     val invalid = stringResource(R.string.plans_error_invalid)
 
-    Card(modifier = modifier.fillMaxWidth(), colors = colors) {
+    GymPulseCard(
+        modifier = modifier.fillMaxWidth(),
+        variant = if (inSuperset) GymPulseCardVariant.Secondary else GymPulseCardVariant.Filled,
+        contentPadding = PaddingValues(Spacing.none),
+        shape = MaterialTheme.shapes.extraLarge,
+    ) {
         val bracketColor = MaterialTheme.colorScheme.primary
         Column {
             Column(

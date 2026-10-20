@@ -3,6 +3,7 @@ package app.gympulse.feature.plans
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,16 +13,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -30,8 +29,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.style.TextAlign
 import app.gympulse.core.data.ui.labelRes
+import app.gympulse.core.designsystem.component.EmptyState
+import app.gympulse.core.designsystem.component.GymPulseSearchField
+import app.gympulse.core.designsystem.component.ListRow
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.Exercise
 
@@ -64,51 +65,54 @@ internal fun ExercisePicker(
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }
-            OutlinedTextField(
+            GymPulseSearchField(
                 value = state.query,
                 onValueChange = onQueryChange,
-                label = { Text(stringResource(R.string.plans_picker_search)) },
-                leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
-                trailingIcon = if (state.query.isNotEmpty()) {
-                    {
-                        IconButton(onClick = { onQueryChange("") }) {
-                            Icon(
-                                Icons.Filled.Clear,
-                                contentDescription = stringResource(R.string.plans_picker_clear),
-                            )
-                        }
-                    }
-                } else {
-                    null
-                },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.screenMargin),
+                placeholder = stringResource(R.string.plans_picker_search),
+                clearContentDescription = stringResource(R.string.plans_picker_clear),
+                modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
             )
             if (filtered.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.plans_picker_empty),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().weight(1f).padding(Spacing.l),
+                EmptyState(
+                    icon = Icons.Filled.Search,
+                    title = stringResource(R.string.plans_picker_empty),
+                    message = stringResource(R.string.plans_picker_empty_hint),
+                    modifier = Modifier.weight(1f),
                 )
             } else {
                 LazyColumn(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
-                    verticalArrangement = Arrangement.Top,
+                    contentPadding = PaddingValues(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                 ) {
                     items(filtered, key = { it.id }) { exercise ->
                         val selected = exercise.id in state.selectedIds
-                        ListItem(
-                            headlineContent = { Text(exercise.name) },
-                            supportingContent = { Text(stringResource(exercise.equipmentType.labelRes())) },
-                            leadingContent = { Checkbox(checked = selected, onCheckedChange = null) },
-                            modifier = Modifier.toggleable(
-                                value = selected,
-                                role = Role.Checkbox,
-                                onValueChange = { onToggle(exercise.id) },
-                            ),
-                        )
+                        Surface(
+                            modifier = Modifier
+                                .animateItem()
+                                .toggleable(
+                                    value = selected,
+                                    role = Role.Checkbox,
+                                    onValueChange = { onToggle(exercise.id) },
+                                ),
+                            shape = MaterialTheme.shapes.large,
+                            color = if (selected) {
+                                MaterialTheme.colorScheme.secondaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.surfaceContainer
+                            },
+                            contentColor = if (selected) {
+                                MaterialTheme.colorScheme.onSecondaryContainer
+                            } else {
+                                MaterialTheme.colorScheme.onSurface
+                            },
+                        ) {
+                            ListRow(
+                                headline = exercise.name,
+                                supportingText = stringResource(exercise.equipmentType.labelRes()),
+                                leadingContent = { Checkbox(checked = selected, onCheckedChange = null) },
+                            )
+                        }
                     }
                 }
             }
