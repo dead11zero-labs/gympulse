@@ -71,4 +71,25 @@ internal data class WorkoutSummary(
     val durationSeconds: Long,
     val completedSets: Int,
     val volumeKg: Double,
+    /** Exercises with at least one completed set, in session order. */
+    val exercises: List<SummaryExercise> = emptyList(),
+) {
+    val recordCount: Int get() = exercises.sumOf { it.records.size }
+}
+
+internal data class SummaryExercise(
+    val exerciseId: String,
+    /** Null if the exercise is not in the catalog (the screen shows a generic label). */
+    val name: String?,
+    val sets: List<SummarySet>,
+    val records: List<PersonalRecord>,
+)
+
+internal data class SummarySet(
+    /** Number among the working sets; null for a warm-up set. */
+    val number: Int?,
+    val weightKg: Double?,
+    val reps: Int?,
+    val durationSeconds: Int?,
+    val distanceMeters: Double?,
 )

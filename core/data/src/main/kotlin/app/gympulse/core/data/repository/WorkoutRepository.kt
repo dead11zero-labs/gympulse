@@ -223,6 +223,37 @@ class WorkoutRepository @Inject constructor(
     suspend fun previousSets(exerciseId: String, currentSessionId: String?): List<SetEntry> =
         sessionDao.getPreviousSets(exerciseId, currentSessionId).map { it.toModel() }
 
+    /**
+     * Alle Sätze der angegebenen Übungen aus abgeschlossenen Sessions (inklusive gelöschter und
+     * offener Sätze, siehe [HistorySet]). Grundlage für die Rekord-Erkennung.
+     */
+    suspend fun setHistory(exerciseIds: Collection<String>): List<HistorySet> {
+        if (exerciseIds.isEmpty()) return emptyList()
+        val wanted = exerciseIds.toSet()
+        val factors = wanted.associateWith { exerciseDao.getById(it)?.exercise?.bodyweightFactor }
+        return sessionDao.observeCompletedBetween(0L, Long.MAX_VALUE).first().flatMap { entity ->
+            val content = sessionDao.getById(entity.id) ?: return@flatMap emptyList()
+            content.exercises
+                .filter { it.sessionExercise.exerciseId in wanted }
+                .flatMap { item ->
+                    item.sets.map { set ->
+                        HistorySet(
+                            setId = set.id,
+                            sessionId = entity.id,
+                            exerciseId = item.sessionExercise.exerciseId,
+                            setType = set.setType,
+                            weightKg = set.weightKg,
+                            reps = set.reps,
+                            isCompleted = set.isCompleted,
+                            deletedAt = set.deletedAt ?: item.sessionExercise.deletedAt,
+                            bodyweightKg = entity.bodyweightKg,
+                            bodyweightFactor = factors[item.sessionExercise.exerciseId],
+                        )
+                    }
+                }
+        }
+    }
+
     /** Speichert einen Satz (neu oder geändert). */
     suspend fun saveSet(sessionExerciseId: String, set: SetEntry) {
         val now = time.now().toEpochMilli()

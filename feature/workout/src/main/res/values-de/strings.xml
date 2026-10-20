@@ -63,13 +63,29 @@
     <string name="feature_workout_discard_text">Alle Sätze dieses Workouts gehen verloren.</string>
     <string name="feature_workout_discard_confirm">Verwerfen</string>
     <string name="feature_workout_summary_title">Workout abgeschlossen</string>
-    <string name="feature_workout_summary_duration">Dauer: %1$s</string>
-    <plurals name="feature_workout_summary_sets">
+    <string name="feature_workout_summary_duration_label">Dauer</string>
+    <string name="feature_workout_summary_volume_label">Volumen</string>
+    <string name="feature_workout_summary_sets_label">Sätze</string>
+    <string name="feature_workout_summary_done">Fertig</string>
+    <string name="feature_workout_summary_empty">Es wurden keine Sätze abgeschlossen.</string>
+    <string name="feature_workout_summary_exercise_fallback">Übung</string>
+    <plurals name="feature_workout_summary_exercise_sets">
         <item quantity="one">%1$d Satz erledigt</item>
         <item quantity="other">%1$d Sätze erledigt</item>
     </plurals>
-    <string name="feature_workout_summary_volume">Volumen: %1$s kg</string>
-    <string name="feature_workout_summary_done">Fertig</string>
+    <string name="feature_workout_summary_set_weight_reps">%1$s kg × %2$d</string>
+    <string name="feature_workout_summary_set_reps">%1$d Wdh.</string>
+    <string name="feature_workout_summary_set_distance">%1$s m</string>
+    <string name="feature_workout_summary_set_warmup_short">A</string>
+    <plurals name="feature_workout_summary_records">
+        <item quantity="one">%1$d neuer Rekord</item>
+        <item quantity="other">%1$d neue Rekorde</item>
+    </plurals>
+    <string name="feature_workout_summary_record_badge">Rekord</string>
+    <string name="feature_workout_summary_record_best_weight">Bestgewicht</string>
+    <string name="feature_workout_summary_record_one_rm">Geschätztes 1RM</string>
+    <string name="feature_workout_summary_record_set_volume">Bestes Satzvolumen</string>
+    <string name="feature_workout_summary_record_previous">vorher: %1$s kg</string>
 
     <!-- Benachrichtigung und Mini-Leiste -->
     <string name="feature_workout_notification_channel">Aktives Workout</string>
