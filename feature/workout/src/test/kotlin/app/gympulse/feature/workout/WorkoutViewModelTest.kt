@@ -269,12 +269,17 @@ class WorkoutViewModelTest {
         assertTrue(workoutRepository.setHistory(emptyList()).isEmpty())
     }
 
+    private var lastFinishedSessionId: String? = null
+
     private suspend fun finishOneSet(viewModel: WorkoutViewModel, weight: String): WorkoutSummary {
         viewModel.startWorkout(PLAN_ID)
-        val exercise = viewModel.awaitActive().exercises.single()
+        // uiState may still hold the previous (finished) session until the new one arrives.
+        val session = viewModel.awaitActive { it.sessionId != lastFinishedSessionId }
+        lastFinishedSessionId = session.sessionId
+        val exercise = session.exercises.single()
         viewModel.onWeightChange(exercise.sessionExerciseId, exercise.sets[0].id, weight)
         viewModel.toggleSetCompleted(exercise.sessionExerciseId, exercise.sets[0].id)
-        viewModel.awaitActive { it.completedSets == 1 }
+        viewModel.awaitActive { it.sessionId == session.sessionId && it.completedSets == 1 }
         time.advanceSeconds(600)
         viewModel.finishWorkout()
         return viewModel.summary.first { it != null }!!
