@@ -8,6 +8,8 @@
     <string name="feature_workout_empty_workout_description">Übungen spontan hinzufügen</string>
     <string name="feature_workout_plans_header">Deine Pläne</string>
     <string name="feature_workout_no_plans">Noch keine Pläne. Lege einen im Tab Pläne an.</string>
+    <string name="feature_workout_no_plans_title">Noch keine Pläne</string>
+    <string name="feature_workout_start_plan">%1$s starten</string>
     <plurals name="feature_workout_exercise_count">
         <item quantity="one">%1$d Übung</item>
         <item quantity="other">%1$d Übungen</item>
@@ -21,6 +23,7 @@
     <string name="feature_workout_finish">Workout beenden</string>
     <string name="feature_workout_discard">Verwerfen</string>
     <string name="feature_workout_no_exercises">Noch keine Übungen. Füge eine hinzu, um loszulegen.</string>
+    <string name="feature_workout_no_exercises_title">Noch leer</string>
     <string name="feature_workout_column_set">Satz</string>
     <string name="feature_workout_column_previous">Vorher</string>
     <string name="feature_workout_column_kg">kg</string>
