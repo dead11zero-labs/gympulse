@@ -51,25 +51,35 @@ fun ListRow(
     onClick: (() -> Unit)? = null,
     containerColor: Color = Color.Transparent,
 ) {
-    val leading: (@Composable () -> Unit)? = when {
-        leadingContent != null -> leadingContent
-        leadingIcon != null -> @Composable { ListRowIcon(leadingIcon) }
-        else -> null
+    val leading: (@Composable () -> Unit)? = if (leadingContent != null) {
+        leadingContent
+    } else if (leadingIcon != null) {
+        { ListRowIcon(leadingIcon) }
+    } else {
+        null
     }
-    val trailing: (@Composable () -> Unit)? = when {
-        trailingContent != null -> trailingContent
-        trailingText != null -> @Composable {
+    val trailing: (@Composable () -> Unit)? = if (trailingContent != null) {
+        trailingContent
+    } else if (trailingText != null) {
+        {
             Text(
                 text = trailingText,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        else -> null
+    } else {
+        null
     }
-    val overline: (@Composable () -> Unit)? = overlineText?.let { text -> @Composable { Text(text) } }
-    val supporting: (@Composable () -> Unit)? = supportingText?.let { text ->
-        @Composable { Text(text, maxLines = 3, overflow = TextOverflow.Ellipsis) }
+    val overline: (@Composable () -> Unit)? = if (overlineText != null) {
+        { Text(overlineText) }
+    } else {
+        null
+    }
+    val supporting: (@Composable () -> Unit)? = if (supportingText != null) {
+        { Text(supportingText, maxLines = 3, overflow = TextOverflow.Ellipsis) }
+    } else {
+        null
     }
     ListItem(
         headlineContent = { Text(headline, maxLines = 2, overflow = TextOverflow.Ellipsis) },

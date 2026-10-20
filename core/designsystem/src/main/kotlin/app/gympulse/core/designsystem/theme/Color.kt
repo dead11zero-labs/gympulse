@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
  *   positive Trends und Fortschritt.
  * - Error: Standard-Fehlerpalette von Material 3.
  *
- * Alle Paare (x/onX, xContainer/onXContainer, surface*/onSurface) erreichen mindestens 4.5:1,
+ * Alle Paare (x/onX, xContainer/onXContainer, surface-Varianten mit onSurface) erreichen mindestens 4.5:1,
  * siehe ColorSchemeContrastTest.
  */
 

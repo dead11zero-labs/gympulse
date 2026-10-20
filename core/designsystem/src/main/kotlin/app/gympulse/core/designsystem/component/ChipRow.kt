@@ -62,7 +62,7 @@ fun <T> ChipRow(
                 label = { Text(label(item)) },
                 enabled = enabled,
                 leadingIcon = if (selected) {
-                    @Composable {
+                    {
                         Icon(
                             Icons.Filled.Check,
                             contentDescription = null,
