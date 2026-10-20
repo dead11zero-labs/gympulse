@@ -14,6 +14,8 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
@@ -73,16 +75,18 @@ internal fun DataSettingsRows(viewModel: DataViewModel = hiltViewModel()) {
     SettingsRow(
         headline = stringResource(R.string.data_export),
         supporting = stringResource(R.string.data_export_summary),
+        icon = Icons.Filled.Share,
         onClick = if (idle) {
             { exportLauncher.launch(BackupManager.suggestedFileName()) }
         } else {
             null
         },
     )
-    SettingsDivider()
+    SettingsDivider(withIcon = true)
     SettingsRow(
         headline = stringResource(R.string.data_import),
         supporting = stringResource(R.string.data_import_summary),
+        icon = Icons.Filled.KeyboardArrowDown,
         onClick = if (idle) {
             { importLauncher.launch(IMPORT_MIME_TYPES) }
         } else {

@@ -1,5 +1,6 @@
 package app.gympulse.feature.calendar
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -31,14 +33,14 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedButton
@@ -61,11 +63,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.repository.CompletedSessionSummary
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.component.SectionHeader
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.ScheduleOverrideType
 import java.time.DayOfWeek
@@ -139,32 +151,26 @@ internal fun CalendarContent(
 /** Hinweis, wenn [app.gympulse.core.featuregate.Feature.CALENDAR] aus ist. */
 @Composable
 internal fun PremiumNotice(modifier: Modifier = Modifier) {
-    Card(
+    GymPulseCard(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
+        variant = GymPulseCardVariant.Tertiary,
+        shape = ExpressiveShapes.extraLargeIncreased,
+        contentPadding = PaddingValues(Spacing.l),
+        verticalSpacing = Spacing.s,
     ) {
-        Column(
-            modifier = Modifier.padding(Spacing.l),
-            verticalArrangement = Arrangement.spacedBy(Spacing.s),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Lock,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-            )
-            Text(
-                text = stringResource(R.string.feature_calendar_premium_title),
-                style = MaterialTheme.typography.titleLarge,
-            )
-            Text(
-                text = stringResource(R.string.feature_calendar_premium_body),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        ListRowIcon(
+            icon = Icons.Filled.Lock,
+            containerColor = MaterialTheme.colorScheme.tertiary,
+            contentColor = MaterialTheme.colorScheme.onTertiary,
+        )
+        Text(
+            text = stringResource(R.string.feature_calendar_premium_title),
+            style = MaterialTheme.typography.headlineSmall,
+        )
+        Text(
+            text = stringResource(R.string.feature_calendar_premium_body),
+            style = MaterialTheme.typography.bodyLarge,
+        )
     }
 }
 
@@ -179,11 +185,12 @@ private fun CalendarBody(state: CalendarUiState, actions: CalendarActions) {
     val locale = LocalConfiguration.current.locales[0]
     var dialog by remember { mutableStateOf<CalendarDialog?>(null) }
 
+    val margin = currentWindowWidthClass().horizontalMargin
     LazyColumn(
         modifier = Modifier
             .widthIn(max = Spacing.maxContentWidth)
             .fillMaxSize(),
-        contentPadding = PaddingValues(Spacing.screenMargin),
+        contentPadding = PaddingValues(horizontal = margin, vertical = Spacing.m),
         verticalArrangement = Arrangement.spacedBy(Spacing.m),
     ) {
         item { PeriodHeader(state, actions, locale) }
@@ -260,7 +267,7 @@ private fun PeriodHeader(state: CalendarUiState, actions: CalendarActions, local
     val title = periodTitle(state, locale)
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = actions.onPrevious) {
+            FilledTonalIconButton(onClick = actions.onPrevious) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = stringResource(R.string.feature_calendar_previous),
@@ -268,11 +275,11 @@ private fun PeriodHeader(state: CalendarUiState, actions: CalendarActions, local
             }
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f),
             )
-            IconButton(onClick = actions.onNext) {
+            FilledTonalIconButton(onClick = actions.onNext) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = stringResource(R.string.feature_calendar_next),
@@ -303,7 +310,7 @@ private fun PeriodHeader(state: CalendarUiState, actions: CalendarActions, local
                     }
                 }
             }
-            TextButton(onClick = actions.onToday) {
+            FilledTonalButton(onClick = actions.onToday) {
                 Text(stringResource(R.string.feature_calendar_today))
             }
         }
@@ -360,60 +367,115 @@ private fun WeekList(state: CalendarUiState, actions: CalendarActions, locale: L
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         state.weeks.firstOrNull().orEmpty().forEach { day ->
             val isSelected = day.date == state.selectedDate
-            Card(
+            val contentColor = if (isSelected) {
+                MaterialTheme.colorScheme.onSecondaryContainer
+            } else {
+                MaterialTheme.colorScheme.onSurface
+            }
+            GymPulseCard(
                 onClick = { actions.onSelectDate(day.date) },
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(
-                    containerColor = if (isSelected) {
-                        MaterialTheme.colorScheme.secondaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.surfaceContainer
-                    },
-                    contentColor = if (isSelected) {
-                        MaterialTheme.colorScheme.onSecondaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.onSurface
-                    },
-                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics { selected = isSelected },
+                variant = if (isSelected) GymPulseCardVariant.Secondary else GymPulseCardVariant.Elevated,
+                shape = ExpressiveShapes.largeIncreased,
+                contentPadding = PaddingValues(horizontal = Spacing.m, vertical = Spacing.s),
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .defaultMinSize(minHeight = Spacing.xxl)
-                        .padding(horizontal = Spacing.m, vertical = Spacing.s),
+                        .defaultMinSize(minHeight = Sizing.minTouchTarget),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(Spacing.m),
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale),
-                            style = MaterialTheme.typography.labelMedium,
-                        )
-                        Text(
-                            text = day.date.dayOfMonth.toString(),
-                            style = if (day.isToday) {
-                                MaterialTheme.typography.titleLarge
-                            } else {
-                                MaterialTheme.typography.titleMedium
-                            },
-                            color = if (day.isToday) MaterialTheme.colorScheme.primary else Color.Unspecified,
-                        )
-                    }
+                    DayBadge(
+                        label = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale),
+                        number = day.date.dayOfMonth.toString(),
+                        isToday = day.isToday,
+                    )
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = planSummary(day, names),
-                            style = MaterialTheme.typography.bodyLarge,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = contentColor,
                         )
                         if (day.plannedPlanIds.isNotEmpty()) {
                             Text(
                                 text = statusLabel(day.status),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = statusColor(day.status),
+                                style = MaterialTheme.typography.labelLarge,
+                                color = if (isSelected) contentColor else statusColor(day.status),
                             )
                         }
                     }
                     statusIcon(day.status)?.let { icon ->
-                        Icon(imageVector = icon, contentDescription = null, tint = statusColor(day.status))
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            tint = if (isSelected) contentColor else statusColor(day.status),
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** Wochentag über Tageszahl; heute als gefüllter Kreis in Primärfarbe. */
+@Composable
+private fun DayBadge(label: String, number: String, isToday: Boolean) {
+    Column(
+        modifier = Modifier.width(Sizing.minTouchTarget),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(text = label, style = MaterialTheme.typography.labelMedium)
+        Surface(
+            shape = CircleShape,
+            color = if (isToday) MaterialTheme.colorScheme.primary else Color.Transparent,
+            contentColor = if (isToday) MaterialTheme.colorScheme.onPrimary else LocalContentColor.current,
+        ) {
+            Text(
+                text = number,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xxs),
+            )
+        }
+    }
+}
+
+@Composable
+private fun MonthGrid(state: CalendarUiState, actions: CalendarActions, locale: Locale) {
+    val fullDate = remember(locale) { DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale) }
+    Surface(
+        shape = ExpressiveShapes.extraLargeIncreased,
+        color = MaterialTheme.colorScheme.surfaceContainerLow,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Column(
+            modifier = Modifier.padding(Spacing.xs),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                state.weeks.firstOrNull().orEmpty().forEach { day ->
+                    Text(
+                        text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
+            state.weeks.forEach { week ->
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    week.forEach { day ->
+                        MonthCell(
+                            day = day,
+                            isSelected = day.date == state.selectedDate,
+                            description = "${fullDate.format(day.date)}, ${statusLabel(day.status)}",
+                            onClick = { actions.onSelectDate(day.date) },
+                            modifier = Modifier.weight(1f),
+                        )
                     }
                 }
             }
@@ -422,70 +484,53 @@ private fun WeekList(state: CalendarUiState, actions: CalendarActions, locale: L
 }
 
 @Composable
-private fun MonthGrid(state: CalendarUiState, actions: CalendarActions, locale: Locale) {
-    val fullDate = remember(locale) { DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale) }
-    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
-        Row(modifier = Modifier.fillMaxWidth()) {
-            state.weeks.firstOrNull().orEmpty().forEach { day ->
-                Text(
-                    text = day.date.dayOfWeek.getDisplayName(TextStyle.SHORT, locale),
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    modifier = Modifier.weight(1f),
-                )
-            }
-        }
-        state.weeks.forEach { week ->
-            Row(modifier = Modifier.fillMaxWidth()) {
-                week.forEach { day ->
-                    val isSelected = day.date == state.selectedDate
-                    val description = "${fullDate.format(day.date)}, ${statusLabel(day.status)}"
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .defaultMinSize(minHeight = Spacing.xxl)
-                            .clip(MaterialTheme.shapes.medium)
-                            .background(if (isSelected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent)
-                            .clickable(role = Role.Button) { actions.onSelectDate(day.date) }
-                            .clearAndSetSemantics {
-                                contentDescription = description
-                                selected = isSelected
-                            },
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = day.date.dayOfMonth.toString(),
-                                style = if (day.isToday) {
-                                    MaterialTheme.typography.titleMedium
-                                } else {
-                                    MaterialTheme.typography.bodyMedium
-                                },
-                                color = when {
-                                    isSelected -> MaterialTheme.colorScheme.onSecondaryContainer
-                                    day.isToday -> MaterialTheme.colorScheme.primary
-                                    day.inPeriod -> MaterialTheme.colorScheme.onSurface
-                                    else -> MaterialTheme.colorScheme.outline
-                                },
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .size(Spacing.xs)
-                                    .background(
-                                        color = if (day.status == DayStatus.REST) {
-                                            Color.Transparent
-                                        } else {
-                                            statusColor(day.status)
-                                        },
-                                        shape = CircleShape,
-                                    ),
-                            )
-                        }
-                    }
-                }
-            }
+private fun MonthCell(
+    day: CalendarDay,
+    isSelected: Boolean,
+    description: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val background = when {
+        isSelected -> MaterialTheme.colorScheme.secondaryContainer
+        day.isToday -> MaterialTheme.colorScheme.primaryContainer
+        else -> Color.Transparent
+    }
+    Box(
+        modifier = modifier
+            .defaultMinSize(minHeight = Sizing.minTouchTarget)
+            .clip(MaterialTheme.shapes.large)
+            .background(background)
+            .clickable(role = Role.Button, onClick = onClick)
+            .clearAndSetSemantics {
+                contentDescription = description
+                selected = isSelected
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                text = day.date.dayOfMonth.toString(),
+                style = if (day.isToday) {
+                    MaterialTheme.typography.titleMedium
+                } else {
+                    MaterialTheme.typography.bodyLarge
+                },
+                color = when {
+                    isSelected -> MaterialTheme.colorScheme.onSecondaryContainer
+                    day.isToday -> MaterialTheme.colorScheme.onPrimaryContainer
+                    day.inPeriod -> MaterialTheme.colorScheme.onSurface
+                    else -> MaterialTheme.colorScheme.outline
+                },
+            )
+            Box(
+                modifier = Modifier
+                    .size(Spacing.xs)
+                    .background(
+                        color = if (day.status == DayStatus.REST) Color.Transparent else statusColor(day.status),
+                        shape = CircleShape,
+                    ),
+            )
         }
     }
 }
@@ -503,61 +548,49 @@ private fun DayDetailCard(
     val fullDate = remember(locale) { DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale) }
     val editable = !day.date.isBefore(state.today)
     val movablePlanId = day.plannedPlanIds.firstOrNull()
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
+    val exception = day.override?.let { overrideLabel(it) }
+    val supporting = if (day.plannedPlanIds.isNotEmpty() || day.override != null) {
+        listOfNotNull(
+            statusLabel(day.status).takeIf { day.plannedPlanIds.isNotEmpty() },
+            exception,
+        ).joinToString(" \u00B7 ")
+    } else {
+        null
+    }
+    GymPulseCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        variant = GymPulseCardVariant.Elevated,
+        shape = ExpressiveShapes.extraLargeIncreased,
+        contentPadding = PaddingValues(vertical = Spacing.xs),
+        verticalSpacing = Spacing.none,
     ) {
-        Column(modifier = Modifier.padding(vertical = Spacing.s)) {
-            Text(
-                text = fullDate.format(day.date),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = Spacing.m),
-            )
-            ListItem(
-                headlineContent = { Text(planSummary(day, state.planNames)) },
-                supportingContent = if (day.plannedPlanIds.isNotEmpty() || day.override != null) {
-                    {
-                        val exception = day.override?.let { overrideLabel(it) }
-                        Text(
-                            listOfNotNull(
-                                statusLabel(day.status).takeIf { day.plannedPlanIds.isNotEmpty() },
-                                exception,
-                            ).joinToString(" \u00B7 "),
-                        )
-                    }
-                } else {
-                    null
-                },
-                colors = transparentListItemColors(),
-            )
-            if (day.sessions.isNotEmpty()) {
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                Text(
-                    text = stringResource(R.string.feature_calendar_history),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(horizontal = Spacing.m, vertical = Spacing.xs),
-                )
-                day.sessions.forEach { session ->
-                    SessionRow(session = session, zone = state.zone, locale = locale)
-                }
+        SectionHeader(title = fullDate.format(day.date))
+        ListRow(
+            headline = planSummary(day, state.planNames),
+            supportingText = supporting,
+            leadingIcon = statusIcon(day.status) ?: Icons.Filled.DateRange,
+        )
+        if (day.sessions.isNotEmpty()) {
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            SectionHeader(title = stringResource(R.string.feature_calendar_history))
+            day.sessions.forEach { session ->
+                SessionRow(session = session, zone = state.zone, locale = locale)
             }
-            if (editable) {
-                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                if (movablePlanId != null && day.override != ScheduleOverrideType.SKIPPED) {
-                    ActionRow(Icons.Filled.Close, stringResource(R.string.feature_calendar_action_skip), onSkip)
-                    ActionRow(
-                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        stringResource(R.string.feature_calendar_action_move),
-                    ) { onMove(movablePlanId) }
-                }
-                ActionRow(Icons.Filled.Add, stringResource(R.string.feature_calendar_action_add), onAdd)
-                if (day.override != null) {
-                    ActionRow(Icons.Filled.Refresh, stringResource(R.string.feature_calendar_action_reset), onClear)
-                }
+        }
+        if (editable) {
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            if (movablePlanId != null && day.override != ScheduleOverrideType.SKIPPED) {
+                ActionRow(Icons.Filled.Close, stringResource(R.string.feature_calendar_action_skip), onSkip)
+                ActionRow(
+                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    stringResource(R.string.feature_calendar_action_move),
+                ) { onMove(movablePlanId) }
+            }
+            ActionRow(Icons.Filled.Add, stringResource(R.string.feature_calendar_action_add), onAdd)
+            if (day.override != null) {
+                ActionRow(Icons.Filled.Refresh, stringResource(R.string.feature_calendar_action_reset), onClear)
             }
         }
     }
@@ -573,15 +606,18 @@ private fun overrideLabel(type: ScheduleOverrideType): String = stringResource(
 )
 
 @Composable
-private fun transparentListItemColors() = ListItemDefaults.colors(containerColor = Color.Transparent)
-
-@Composable
 private fun ActionRow(icon: ImageVector, label: String, onClick: () -> Unit) {
-    ListItem(
-        headlineContent = { Text(label) },
-        leadingContent = { Icon(imageVector = icon, contentDescription = null) },
-        colors = transparentListItemColors(),
-        modifier = Modifier.clickable(role = Role.Button, onClick = onClick),
+    ListRow(
+        headline = label,
+        leadingContent = {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        },
+        onClick = onClick,
+        modifier = Modifier.semantics { role = Role.Button },
     )
 }
 
@@ -591,18 +627,14 @@ private fun SessionRow(session: CompletedSessionSummary, zone: ZoneId, locale: L
         DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withLocale(locale).withZone(zone)
     }
     val minutes = Duration.between(session.startedAt, session.endedAt).toMinutes().coerceAtLeast(0)
-    ListItem(
-        headlineContent = { Text(session.title ?: stringResource(R.string.feature_calendar_free_workout)) },
-        supportingContent = {
-            Text(
-                stringResource(
-                    R.string.feature_calendar_session_meta,
-                    timeFormat.format(session.endedAt),
-                    minutes,
-                    String.format(locale, "%,.0f", session.volumeKg),
-                ),
-            )
-        },
+    ListRow(
+        headline = session.title ?: stringResource(R.string.feature_calendar_free_workout),
+        supportingText = stringResource(
+            R.string.feature_calendar_session_meta,
+            timeFormat.format(session.endedAt),
+            minutes,
+            String.format(locale, "%,.0f", session.volumeKg),
+        ),
         leadingContent = {
             Icon(
                 imageVector = Icons.Filled.CheckCircle,
@@ -610,7 +642,6 @@ private fun SessionRow(session: CompletedSessionSummary, zone: ZoneId, locale: L
                 tint = MaterialTheme.colorScheme.primary,
             )
         },
-        colors = transparentListItemColors(),
     )
 }
 
@@ -618,44 +649,34 @@ private fun SessionRow(session: CompletedSessionSummary, zone: ZoneId, locale: L
 private fun WeekSchemeCard(state: CalendarUiState, locale: Locale, onEdit: (DayOfWeek) -> Unit) {
     val names = state.planNames
     val unknown = stringResource(R.string.feature_calendar_unknown_plan)
-    Card(
+    val restDay = stringResource(R.string.feature_calendar_rest_day)
+    val editLabel = stringResource(R.string.feature_calendar_edit)
+    GymPulseCard(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
+        variant = GymPulseCardVariant.Filled,
+        shape = ExpressiveShapes.extraLargeIncreased,
+        contentPadding = PaddingValues(vertical = Spacing.xs),
+        verticalSpacing = Spacing.none,
     ) {
-        Column(modifier = Modifier.padding(vertical = Spacing.s)) {
-            Text(
-                text = stringResource(R.string.feature_calendar_scheme_title),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(horizontal = Spacing.m),
+        SectionHeader(
+            title = stringResource(R.string.feature_calendar_scheme_title),
+            supportingText = stringResource(R.string.feature_calendar_scheme_hint),
+        )
+        state.weekScheme.forEachIndexed { index, slot ->
+            if (index > 0) HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            ListRow(
+                headline = slot.weekday.getDisplayName(TextStyle.FULL, locale),
+                supportingText = slot.planId?.let { names[it] ?: unknown } ?: restDay,
+                trailingContent = {
+                    Icon(
+                        imageVector = Icons.Filled.Edit,
+                        contentDescription = editLabel,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                onClick = { onEdit(slot.weekday) },
+                modifier = Modifier.semantics { role = Role.Button },
             )
-            Text(
-                text = stringResource(R.string.feature_calendar_scheme_hint),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = Spacing.m, vertical = Spacing.xxs),
-            )
-            state.weekScheme.forEach { slot ->
-                ListItem(
-                    headlineContent = { Text(slot.weekday.getDisplayName(TextStyle.FULL, locale)) },
-                    supportingContent = {
-                        Text(
-                            slot.planId?.let { names[it] ?: unknown }
-                                ?: stringResource(R.string.feature_calendar_rest_day),
-                        )
-                    },
-                    trailingContent = {
-                        Icon(
-                            imageVector = Icons.Filled.Edit,
-                            contentDescription = stringResource(R.string.feature_calendar_edit),
-                        )
-                    },
-                    colors = transparentListItemColors(),
-                    modifier = Modifier.clickable(role = Role.Button) { onEdit(slot.weekday) },
-                )
-            }
         }
     }
 }
@@ -728,10 +749,10 @@ private fun MoveTargetDialog(
         text = {
             Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 List(MOVE_TARGET_DAYS) { from.plusDays(it + 1L) }.forEach { target ->
-                    ListItem(
-                        headlineContent = { Text(format.format(target)) },
-                        colors = transparentListItemColors(),
-                        modifier = Modifier.clickable(role = Role.Button) { onSelect(target) },
+                    ListRow(
+                        headline = format.format(target),
+                        onClick = { onSelect(target) },
+                        modifier = Modifier.semantics { role = Role.Button },
                     )
                 }
             }
