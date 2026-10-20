@@ -9,13 +9,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import java.time.DayOfWeek
 import java.time.Instant
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /** Laufende Session, die auf dem Dashboard zum Fortsetzen angeboten wird. */
 data class ActiveWorkout(
@@ -55,7 +53,7 @@ class DefaultDashboardDataSource @Inject constructor(
         }
 }
 
-/** Wochenziel (Trainings pro Woche). Später aus den Einstellungen. */
+/** Wochenziel (Trainings pro Woche). Gebunden im app-Modul aus den Einstellungen. */
 interface WeeklyGoalProvider {
     val weeklyGoal: StateFlow<Int>
 
@@ -64,16 +62,9 @@ interface WeeklyGoalProvider {
     }
 }
 
-/** Wochenstart laut Einstellungen. Später aus den Einstellungen. */
+/** Wochenstart laut Einstellungen. Gebunden im app-Modul aus den Einstellungen. */
 interface WeekStartProvider {
     val weekStartsOn: StateFlow<DayOfWeek>
-}
-
-/** Standardwerte, bis die Einstellungen die Provider übernehmen: Ziel 3, Wochenstart Montag. */
-@Singleton
-class DefaultDashboardSettings @Inject constructor() : WeeklyGoalProvider, WeekStartProvider {
-    override val weeklyGoal: StateFlow<Int> = MutableStateFlow(WeeklyGoalProvider.DEFAULT_GOAL)
-    override val weekStartsOn: StateFlow<DayOfWeek> = MutableStateFlow(DayOfWeek.MONDAY)
 }
 
 @Module
@@ -81,10 +72,4 @@ class DefaultDashboardSettings @Inject constructor() : WeeklyGoalProvider, WeekS
 abstract class DashboardModule {
     @Binds
     abstract fun bindDataSource(impl: DefaultDashboardDataSource): DashboardDataSource
-
-    @Binds
-    abstract fun bindWeeklyGoalProvider(impl: DefaultDashboardSettings): WeeklyGoalProvider
-
-    @Binds
-    abstract fun bindWeekStartProvider(impl: DefaultDashboardSettings): WeekStartProvider
 }
