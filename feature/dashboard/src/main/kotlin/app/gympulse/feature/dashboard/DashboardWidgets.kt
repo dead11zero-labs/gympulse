@@ -123,7 +123,7 @@ private fun WeeklyVolumeChart(
         dayDescriptions.joinToString(", "),
     )
     val barColor = MaterialTheme.colorScheme.primary
-    val trackColor = MaterialTheme.colorScheme.surfaceContainerHighest
+    val trackColor = MaterialTheme.colorScheme.outlineVariant
 
     Row(
         modifier = modifier
@@ -253,7 +253,7 @@ private fun ProgressRing(progress: WeeklyProgressUi, modifier: Modifier = Modifi
             modifier = Modifier.size(Spacing.xxl * 2),
             color = MaterialTheme.colorScheme.primary,
             strokeWidth = Spacing.xs,
-            trackColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            trackColor = MaterialTheme.colorScheme.outlineVariant,
         )
         Text(
             text = stringResource(

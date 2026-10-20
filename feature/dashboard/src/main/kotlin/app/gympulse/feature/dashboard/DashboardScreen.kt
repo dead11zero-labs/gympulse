@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -72,7 +73,7 @@ internal fun DashboardContent(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = Spacing.screenMargin, vertical = Spacing.m),
+                    .padding(horizontal = currentWindowWidthClass().horizontalMargin, vertical = Spacing.m),
                 verticalArrangement = Arrangement.spacedBy(Spacing.m),
             ) {
                 Header(today = state.today, greeting = state.greeting)

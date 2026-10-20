@@ -43,6 +43,7 @@
 
     <!-- Pausentimer -->
     <string name="feature_workout_rest">Pause</string>
+    <string name="feature_workout_rest_remaining">Verbleibende Pause</string>
     <string name="feature_workout_rest_skip">Überspringen</string>
 
     <!-- Übungsauswahl -->

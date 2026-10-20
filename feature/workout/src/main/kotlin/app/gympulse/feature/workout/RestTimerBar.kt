@@ -18,6 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.feature.workout.timer.RestTimer
 import app.gympulse.feature.workout.timer.RestTimerState
@@ -33,6 +36,8 @@ internal fun RestTimerBar(
     modifier: Modifier = Modifier,
 ) {
     val step = RestTimer.ADJUST_STEP_SECONDS
+    val remainingLabel = stringResource(R.string.feature_workout_rest_remaining)
+    val remainingText = WorkoutFormat.formatElapsed(state.remainingSeconds(now()).toLong())
     Surface(
         modifier = modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.secondaryContainer,
@@ -53,13 +58,20 @@ internal fun RestTimerBar(
                         modifier = Modifier.weight(1f),
                     )
                     Text(
-                        text = WorkoutFormat.formatElapsed(state.remainingSeconds(now()).toLong()),
+                        text = remainingText,
                         style = MaterialTheme.typography.headlineSmall,
                     )
                 }
                 LinearProgressIndicator(
                     progress = { state.remainingFraction(now()) },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .semantics {
+                            contentDescription = remainingLabel
+                            stateDescription = remainingText
+                        },
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    trackColor = MaterialTheme.colorScheme.outlineVariant,
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.xs),

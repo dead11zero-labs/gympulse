@@ -50,6 +50,7 @@
 
     <!-- Rest timer -->
     <string name="feature_workout_rest">Rest</string>
+    <string name="feature_workout_rest_remaining">Rest time remaining</string>
     <string name="feature_workout_rest_minus" translatable="false">−%1$d s</string>
     <string name="feature_workout_rest_plus" translatable="false">+%1$d s</string>
     <string name="feature_workout_rest_skip">Skip</string>

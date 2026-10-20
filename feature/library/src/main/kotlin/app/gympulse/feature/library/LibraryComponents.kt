@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import app.gympulse.core.data.ui.labelRes
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.ExerciseCategory
@@ -69,10 +70,10 @@ internal fun FormColumn(
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(
             modifier = Modifier
-                .widthIn(max = Spacing.maxContentWidth)
+                .widthIn(max = Spacing.maxFormWidth)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(Spacing.screenMargin),
+                .padding(currentWindowWidthClass().horizontalMargin),
             verticalArrangement = Arrangement.spacedBy(Spacing.m),
             content = content,
         )
