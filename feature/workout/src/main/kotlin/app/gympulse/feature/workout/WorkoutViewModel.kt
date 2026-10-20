@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import java.time.Duration
 import java.time.Instant
 import java.util.Locale
 import javax.inject.Inject
@@ -186,11 +185,13 @@ internal class WorkoutViewModel @Inject constructor(
         restTimer.skip()
         val finished = workoutRepository.observeSession(session.id).first()
         val endedAt = finished?.endedAt ?: session.startedAt
-        _summary.value = WorkoutSummary(
-            title = session.title,
-            durationSeconds = Duration.between(session.startedAt, endedAt).seconds.coerceAtLeast(0),
-            completedSets = session.completedSetCount(),
+        val history = workoutRepository.setHistory(session.exercises.map { it.exerciseId }.distinct())
+        _summary.value = buildWorkoutSummary(
+            session = session,
+            endedAt = endedAt,
             volumeKg = finished?.totalVolumeKg ?: 0.0,
+            catalog = catalog.first(),
+            records = PersonalRecordDetector().detect(session.id, history),
         )
     }
 

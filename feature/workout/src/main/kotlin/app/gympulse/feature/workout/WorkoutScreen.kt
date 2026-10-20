@@ -35,6 +35,19 @@ internal fun WorkoutScreen(
 
     NotificationPermissionEffect(active = uiState is WorkoutUiState.Active)
 
+    val finishedSummary = summary
+    if (finishedSummary != null) {
+        WorkoutSummaryScreen(
+            summary = finishedSummary,
+            onDone = {
+                viewModel.dismissSummary()
+                onClose()
+            },
+            modifier = modifier,
+        )
+        return
+    }
+
     when (val state = uiState) {
         WorkoutUiState.Loading -> Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
@@ -68,16 +81,6 @@ internal fun WorkoutScreen(
                 onDiscard = viewModel::discardWorkout,
             ),
             modifier = modifier,
-        )
-    }
-
-    summary?.let {
-        WorkoutSummaryDialog(
-            summary = it,
-            onDismiss = {
-                viewModel.dismissSummary()
-                onClose()
-            },
         )
     }
 }

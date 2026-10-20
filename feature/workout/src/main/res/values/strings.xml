@@ -72,13 +72,29 @@
     <string name="feature_workout_discard_text">All sets of this workout will be lost.</string>
     <string name="feature_workout_discard_confirm">Discard</string>
     <string name="feature_workout_summary_title">Workout complete</string>
-    <string name="feature_workout_summary_duration">Duration: %1$s</string>
-    <plurals name="feature_workout_summary_sets">
+    <string name="feature_workout_summary_duration_label">Duration</string>
+    <string name="feature_workout_summary_volume_label">Volume</string>
+    <string name="feature_workout_summary_sets_label">Sets</string>
+    <string name="feature_workout_summary_done">Done</string>
+    <string name="feature_workout_summary_empty">No sets were completed.</string>
+    <string name="feature_workout_summary_exercise_fallback">Exercise</string>
+    <plurals name="feature_workout_summary_exercise_sets">
         <item quantity="one">%1$d set done</item>
         <item quantity="other">%1$d sets done</item>
     </plurals>
-    <string name="feature_workout_summary_volume">Volume: %1$s kg</string>
-    <string name="feature_workout_summary_done">Done</string>
+    <string name="feature_workout_summary_set_weight_reps">%1$s kg × %2$d</string>
+    <string name="feature_workout_summary_set_reps">%1$d reps</string>
+    <string name="feature_workout_summary_set_distance">%1$s m</string>
+    <string name="feature_workout_summary_set_warmup_short">W</string>
+    <plurals name="feature_workout_summary_records">
+        <item quantity="one">%1$d new record</item>
+        <item quantity="other">%1$d new records</item>
+    </plurals>
+    <string name="feature_workout_summary_record_badge">Record</string>
+    <string name="feature_workout_summary_record_best_weight">Best weight</string>
+    <string name="feature_workout_summary_record_one_rm">Estimated 1RM</string>
+    <string name="feature_workout_summary_record_set_volume">Best set volume</string>
+    <string name="feature_workout_summary_record_previous">before: %1$s kg</string>
 
     <!-- Notification and mini bar -->
     <string name="feature_workout_notification_channel">Active workout</string>

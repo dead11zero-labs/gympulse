@@ -230,6 +230,62 @@ class WorkoutViewModelTest {
     }
 
     @Test
+    fun finish_summaryListsExercisesAndDetectsRecordsAgainstEarlierSessions() = runTest {
+        seedPlan()
+        val viewModel = viewModel()
+        // First session: nothing to compare with.
+        val first = finishOneSet(viewModel, weight = "80")
+        assertEquals(0, first.recordCount)
+        viewModel.dismissSummary()
+        time.advanceSeconds(3600)
+
+        val second = finishOneSet(viewModel, weight = "100")
+
+        val exercise = second.exercises.single()
+        assertEquals("bench", exercise.exerciseId)
+        assertEquals(1, exercise.sets.size)
+        assertEquals(1, exercise.sets.single().number)
+        assertEquals(100.0, exercise.sets.single().weightKg!!, 0.001)
+        val weightRecord = exercise.records.first { it.type == RecordType.BEST_WEIGHT }
+        assertEquals(100.0, weightRecord.valueKg, 0.001)
+        assertEquals(80.0, weightRecord.previousKg, 0.001)
+        assertEquals(3, second.recordCount)
+    }
+
+    @Test
+    fun setHistory_includesDeletedSetsWithDeletedAt() = runTest {
+        seedPlan()
+        val viewModel = viewModel()
+        finishOneSet(viewModel, weight = "80")
+        val sessionId = db.sessionDao().observeRecentCompleted(1).first().single().id
+        val deletedSetId = db.sessionDao().getById(sessionId)!!.exercises.single().sets.last().id
+        workoutRepository.deleteSet(deletedSetId)
+
+        val history = workoutRepository.setHistory(listOf("bench"))
+
+        assertEquals(3, history.size)
+        assertEquals(listOf(deletedSetId), history.filter { it.deletedAt != null }.map { it.setId })
+        assertTrue(history.all { it.sessionId == sessionId && it.exerciseId == "bench" })
+        assertTrue(workoutRepository.setHistory(emptyList()).isEmpty())
+    }
+
+    private var lastFinishedSessionId: String? = null
+
+    private suspend fun finishOneSet(viewModel: WorkoutViewModel, weight: String): WorkoutSummary {
+        viewModel.startWorkout(PLAN_ID)
+        // uiState may still hold the previous (finished) session until the new one arrives.
+        val session = viewModel.awaitActive { it.sessionId != lastFinishedSessionId }
+        lastFinishedSessionId = session.sessionId
+        val exercise = session.exercises.single()
+        viewModel.onWeightChange(exercise.sessionExerciseId, exercise.sets[0].id, weight)
+        viewModel.toggleSetCompleted(exercise.sessionExerciseId, exercise.sets[0].id)
+        viewModel.awaitActive { it.sessionId == session.sessionId && it.completedSets == 1 }
+        time.advanceSeconds(600)
+        viewModel.finishWorkout()
+        return viewModel.summary.first { it != null }!!
+    }
+
+    @Test
     fun discard_marksSessionDiscarded() = runTest {
         seedPlan()
         val viewModel = viewModel()
