@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Export data</string>
+    <string name="data_export_summary">Save plans, workouts, exercises and settings as a JSON file</string>
+    <string name="data_import">Import data</string>
+    <string name="data_import_summary">Restore a GymPulse backup with a preview first</string>
+
+    <string name="data_action_ok">OK</string>
+    <string name="data_action_import">Import</string>
+
+    <string name="data_working_export">Exporting…</string>
+    <string name="data_working_read">Reading backup…</string>
+    <string name="data_working_import">Importing…</string>
+
+    <string name="data_export_done_title">Backup saved</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">%d entry exported.</item>
+        <item quantity="other">%d entries exported.</item>
+    </plurals>
+    <string name="data_import_done_title">Import complete</string>
+    <string name="data_import_done_message">%1$d added, %2$d updated, %3$d unchanged.</string>
+    <string name="data_import_done_settings">Settings were restored as well.</string>
+    <string name="data_export_failed_title">Export failed</string>
+    <string name="data_import_failed_title">Import failed</string>
+
+    <string name="data_error_io">The file could not be read or written. Please try again or choose another location.</string>
+    <string name="data_error_invalid">This file is not a GymPulse backup or it is damaged.</string>
+    <string name="data_error_missing_references">The backup refers to exercises or plans that are missing on this device. Nothing was changed.</string>
+    <string name="data_error_write">The data could not be saved. Nothing was changed.</string>
+
+    <string name="data_preview_title">Import backup</string>
+    <string name="data_preview_source">Created %1$s with GymPulse %2$s</string>
+    <string name="data_preview_newer_version">This backup comes from a newer version of GymPulse. Data this version does not know will be skipped.</string>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d entry refers to an exercise or plan that is missing on this device. Update the app and try again.</item>
+        <item quantity="other">%d entries refer to exercises or plans that are missing on this device. Update the app and try again.</item>
+    </plurals>
+    <string name="data_preview_empty">The backup contains no data.</string>
+    <string name="data_preview_counts">%1$d new · %2$d updated · %3$d unchanged</string>
+    <string name="data_preview_conflicts">Entries that already exist</string>
+    <string name="data_preview_apply_settings">Also restore settings</string>
+
+    <string name="data_strategy_newer">Keep the newer version</string>
+    <string name="data_strategy_newer_summary">Recommended. Compares the last change of each entry.</string>
+    <string name="data_strategy_keep">Keep existing</string>
+    <string name="data_strategy_keep_summary">Only adds entries that are not on this device yet.</string>
+    <string name="data_strategy_overwrite">Overwrite</string>
+    <string name="data_strategy_overwrite_summary">Replaces existing entries with the backup. Deleted entries stay deleted.</string>
+
+    <string name="data_table_profile">Profile</string>
+    <string name="data_table_body_measurements">Body measurements</string>
+    <string name="data_table_equipment">Equipment</string>
+    <string name="data_table_equipment_settings">Equipment settings</string>
+    <string name="data_table_custom_exercises">Custom exercises</string>
+    <string name="data_table_library_changes">Library favorites and notes</string>
+    <string name="data_table_exercise_names">Exercise names</string>
+    <string name="data_table_exercise_muscles">Exercise muscles</string>
+    <string name="data_table_plans">Plans</string>
+    <string name="data_table_plan_exercises">Plan exercises</string>
+    <string name="data_table_schedule">Weekly schedule</string>
+    <string name="data_table_schedule_changes">Schedule changes</string>
+    <string name="data_table_workouts">Workouts</string>
+    <string name="data_table_workout_exercises">Workout exercises</string>
+    <string name="data_table_sets">Sets</string>
+    <string name="data_table_records">Personal records</string>
+</resources>

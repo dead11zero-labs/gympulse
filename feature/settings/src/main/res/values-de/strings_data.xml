@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Daten exportieren</string>
+    <string name="data_export_summary">Pläne, Workouts, Übungen und Einstellungen als JSON-Datei sichern</string>
+    <string name="data_import">Daten importieren</string>
+    <string name="data_import_summary">GymPulse-Backup mit Vorschau wiederherstellen</string>
+
+    <string name="data_action_ok">OK</string>
+    <string name="data_action_import">Importieren</string>
+
+    <string name="data_working_export">Exportiere …</string>
+    <string name="data_working_read">Lese Backup …</string>
+    <string name="data_working_import">Importiere …</string>
+
+    <string name="data_export_done_title">Backup gespeichert</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">%d Eintrag exportiert.</item>
+        <item quantity="other">%d Einträge exportiert.</item>
+    </plurals>
+    <string name="data_import_done_title">Import abgeschlossen</string>
+    <string name="data_import_done_message">%1$d hinzugefügt, %2$d aktualisiert, %3$d unverändert.</string>
+    <string name="data_import_done_settings">Die Einstellungen wurden ebenfalls übernommen.</string>
+    <string name="data_export_failed_title">Export fehlgeschlagen</string>
+    <string name="data_import_failed_title">Import fehlgeschlagen</string>
+
+    <string name="data_error_io">Die Datei konnte nicht gelesen oder geschrieben werden. Bitte versuche es erneut oder wähle einen anderen Speicherort.</string>
+    <string name="data_error_invalid">Diese Datei ist kein GymPulse-Backup oder sie ist beschädigt.</string>
+    <string name="data_error_missing_references">Das Backup verweist auf Übungen oder Pläne, die auf diesem Gerät fehlen. Es wurde nichts geändert.</string>
+    <string name="data_error_write">Die Daten konnten nicht gespeichert werden. Es wurde nichts geändert.</string>
+
+    <string name="data_preview_title">Backup importieren</string>
+    <string name="data_preview_source">Erstellt am %1$s mit GymPulse %2$s</string>
+    <string name="data_preview_newer_version">Dieses Backup stammt aus einer neueren GymPulse-Version. Daten, die diese Version nicht kennt, werden übersprungen.</string>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d Eintrag verweist auf eine Übung oder einen Plan, die auf diesem Gerät fehlen. Aktualisiere die App und versuche es erneut.</item>
+        <item quantity="other">%d Einträge verweisen auf Übungen oder Pläne, die auf diesem Gerät fehlen. Aktualisiere die App und versuche es erneut.</item>
+    </plurals>
+    <string name="data_preview_empty">Das Backup enthält keine Daten.</string>
+    <string name="data_preview_counts">%1$d neu · %2$d aktualisiert · %3$d unverändert</string>
+    <string name="data_preview_conflicts">Bereits vorhandene Einträge</string>
+    <string name="data_preview_apply_settings">Einstellungen ebenfalls übernehmen</string>
+
+    <string name="data_strategy_newer">Neuere Version behalten</string>
+    <string name="data_strategy_newer_summary">Empfohlen. Vergleicht die letzte Änderung jedes Eintrags.</string>
+    <string name="data_strategy_keep">Vorhandene behalten</string>
+    <string name="data_strategy_keep_summary">Fügt nur Einträge hinzu, die es auf diesem Gerät noch nicht gibt.</string>
+    <string name="data_strategy_overwrite">Überschreiben</string>
+    <string name="data_strategy_overwrite_summary">Ersetzt vorhandene Einträge durch das Backup. Gelöschte bleiben gelöscht.</string>
+
+    <string name="data_table_profile">Profil</string>
+    <string name="data_table_body_measurements">Körpermaße</string>
+    <string name="data_table_equipment">Geräte</string>
+    <string name="data_table_equipment_settings">Geräteeinstellungen</string>
+    <string name="data_table_custom_exercises">Eigene Übungen</string>
+    <string name="data_table_library_changes">Favoriten und Notizen der Bibliothek</string>
+    <string name="data_table_exercise_names">Übungsnamen</string>
+    <string name="data_table_exercise_muscles">Muskeln der Übungen</string>
+    <string name="data_table_plans">Pläne</string>
+    <string name="data_table_plan_exercises">Übungen in Plänen</string>
+    <string name="data_table_schedule">Wochenschema</string>
+    <string name="data_table_schedule_changes">Ausnahmen im Wochenschema</string>
+    <string name="data_table_workouts">Workouts</string>
+    <string name="data_table_workout_exercises">Übungen in Workouts</string>
+    <string name="data_table_sets">Sätze</string>
+    <string name="data_table_records">Persönliche Rekorde</string>
+</resources>
