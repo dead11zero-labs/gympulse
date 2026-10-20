@@ -15,8 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -30,6 +28,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import app.gympulse.core.designsystem.theme.Spacing
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListGroup
+import app.gympulse.core.designsystem.component.StatTile
+import app.gympulse.core.designsystem.component.StatTileStyle
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
+import app.gympulse.core.designsystem.theme.Sizing
 
 /** Full-screen summary after finishing a workout: totals, sets per exercise and new records. */
 @Composable
@@ -49,7 +62,7 @@ internal fun WorkoutSummaryScreen(
                 .weight(1f)
                 .fillMaxWidth(),
             contentPadding = PaddingValues(horizontal = Spacing.screenMargin, vertical = Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.m),
+            verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item(key = "header") { SummaryHeader(summary, itemModifier) }
@@ -61,8 +74,9 @@ internal fun WorkoutSummaryScreen(
                 item(key = "empty") {
                     Text(
                         text = stringResource(R.string.feature_workout_summary_empty),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
                         modifier = itemModifier,
                     )
                 }
@@ -86,102 +100,102 @@ internal fun WorkoutSummaryScreen(
 
 @Composable
 private fun SummaryHeader(summary: WorkoutSummary, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.s),
+    Column(
+        modifier = modifier.padding(top = Spacing.xs),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
     ) {
-        Icon(
-            imageVector = Icons.Filled.Check,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-        )
-        Column {
-            Text(
-                text = stringResource(R.string.feature_workout_summary_title),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            if (summary.title != null) {
-                Text(
-                    text = summary.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+        Surface(
+            shape = ExpressiveShapes.full,
+            color = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            modifier = Modifier.size(Sizing.emptyStateIconContainer),
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(
+                    imageVector = Icons.Filled.Check,
+                    contentDescription = null,
+                    modifier = Modifier.size(Sizing.emptyStateIcon),
                 )
             }
+        }
+        Spacer(Modifier.height(Spacing.xs))
+        Text(
+            text = stringResource(R.string.feature_workout_summary_title),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            textAlign = TextAlign.Center,
+        )
+        if (summary.title != null) {
+            Text(
+                text = summary.title,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }
 
 @Composable
 private fun SummaryStats(summary: WorkoutSummary, modifier: Modifier = Modifier) {
-    Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+    Row(
+        modifier = modifier.height(IntrinsicSize.Max),
+        horizontalArrangement = Arrangement.spacedBy(Spacing.gutter),
+    ) {
         StatTile(
             label = stringResource(R.string.feature_workout_summary_duration_label),
             value = WorkoutFormat.formatElapsed(summary.durationSeconds),
-            modifier = Modifier.weight(1f),
+            compact = true,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
         )
         StatTile(
             label = stringResource(R.string.feature_workout_summary_volume_label),
-            value = stringResource(R.string.feature_workout_kg_value, WorkoutFormat.formatKg(summary.volumeKg)),
-            modifier = Modifier.weight(1f),
+            value = WorkoutFormat.formatKg(summary.volumeKg),
+            unit = stringResource(R.string.feature_workout_column_kg),
+            style = StatTileStyle.Highlighted,
+            compact = true,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
         )
         StatTile(
             label = stringResource(R.string.feature_workout_summary_sets_label),
             value = summary.completedSets.toString(),
-            modifier = Modifier.weight(1f),
+            compact = true,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight(),
         )
-    }
-}
-
-@Composable
-private fun StatTile(label: String, value: String, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-    ) {
-        Column(modifier = Modifier.padding(Spacing.m), verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(text = value, style = MaterialTheme.typography.titleLarge)
-        }
     }
 }
 
 @Composable
 private fun RecordsCard(summary: WorkoutSummary, modifier: Modifier = Modifier) {
-    Card(
+    GymPulseCard(
         modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        ),
+        variant = GymPulseCardVariant.Tertiary,
+        shape = ExpressiveShapes.largeIncreased,
     ) {
-        Column(modifier = Modifier.padding(Spacing.m), verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-                Icon(Icons.Filled.Star, contentDescription = null)
-                Text(
-                    text = pluralStringResource(
-                        R.plurals.feature_workout_summary_records,
-                        summary.recordCount,
-                        summary.recordCount,
-                    ),
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
-            summary.exercises.filter { it.records.isNotEmpty() }.forEach { exercise ->
-                Text(
-                    text = exercise.name ?: stringResource(R.string.feature_workout_summary_exercise_fallback),
-                    style = MaterialTheme.typography.titleSmall,
-                )
-                exercise.records.forEach { record -> RecordLine(record) }
-            }
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+            Icon(Icons.Filled.Star, contentDescription = null)
+            Text(
+                text = pluralStringResource(
+                    R.plurals.feature_workout_summary_records,
+                    summary.recordCount,
+                    summary.recordCount,
+                ),
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
+        summary.exercises.filter { it.records.isNotEmpty() }.forEach { exercise ->
+            Text(
+                text = exercise.name ?: stringResource(R.string.feature_workout_summary_exercise_fallback),
+                style = MaterialTheme.typography.titleSmall,
+            )
+            exercise.records.forEach { record -> RecordLine(record) }
         }
     }
 }
@@ -208,44 +222,33 @@ private fun RecordLine(record: PersonalRecord) {
 
 @Composable
 private fun SummaryExerciseCard(exercise: SummaryExercise, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-    ) {
-        Column(modifier = Modifier.padding(vertical = Spacing.xs)) {
-            Row(
-                modifier = Modifier.padding(horizontal = Spacing.m, vertical = Spacing.xs),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-            ) {
+    ListGroup(modifier = modifier) {
+        Row(
+            modifier = Modifier.padding(horizontal = Spacing.m, vertical = Spacing.s),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = exercise.name ?: stringResource(R.string.feature_workout_summary_exercise_fallback),
                     style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.weight(1f),
                 )
-                if (exercise.records.isNotEmpty()) {
-                    RecordBadge()
-                }
+                Text(
+                    text = pluralStringResource(
+                        R.plurals.feature_workout_summary_exercise_sets,
+                        exercise.sets.size,
+                        exercise.sets.size,
+                    ),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
-            Text(
-                text = pluralStringResource(
-                    R.plurals.feature_workout_summary_exercise_sets,
-                    exercise.sets.size,
-                    exercise.sets.size,
-                ),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = Spacing.m),
-            )
-            HorizontalDivider(
-                modifier = Modifier.padding(top = Spacing.xs),
-                color = MaterialTheme.colorScheme.outlineVariant,
-            )
-            exercise.sets.forEach { set -> SummarySetRow(set) }
+            if (exercise.records.isNotEmpty()) {
+                RecordBadge()
+            }
         }
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        exercise.sets.forEach { set -> SummarySetRow(set) }
     }
 }
 
@@ -254,10 +257,10 @@ private fun RecordBadge() {
     Surface(
         color = MaterialTheme.colorScheme.tertiaryContainer,
         contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        shape = MaterialTheme.shapes.small,
+        shape = ExpressiveShapes.full,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = Spacing.xs, vertical = Spacing.xxs),
+            modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xxs),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
         ) {
@@ -297,7 +300,7 @@ private fun SummarySetRow(set: SummarySet) {
             )
         },
         colors = ListItemDefaults.colors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+            containerColor = Color.Transparent,
             headlineColor = MaterialTheme.colorScheme.onSurface,
         ),
     )

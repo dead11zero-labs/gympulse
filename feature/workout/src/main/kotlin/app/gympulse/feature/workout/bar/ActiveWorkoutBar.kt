@@ -38,6 +38,9 @@ import kotlinx.coroutines.flow.stateIn
 import java.time.Duration
 import java.time.Instant
 import javax.inject.Inject
+import androidx.compose.foundation.layout.heightIn
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.theme.Sizing
 
 internal data class ActiveWorkoutBarState(
     val sessionId: String,
@@ -117,7 +120,13 @@ fun ActiveWorkoutBar(
             Text(current.title ?: stringResource(R.string.feature_workout_empty_workout), maxLines = 1)
         },
         supportingContent = { Text(supporting, maxLines = 1) },
-        leadingContent = { Icon(Icons.Filled.PlayArrow, contentDescription = null) },
+        leadingContent = {
+            ListRowIcon(
+                icon = Icons.Filled.PlayArrow,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+            )
+        },
         trailingContent = { Icon(Icons.Filled.KeyboardArrowUp, contentDescription = openLabel) },
         colors = ListItemDefaults.colors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -126,6 +135,8 @@ fun ActiveWorkoutBar(
             leadingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
             trailingIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
         ),
-        modifier = modifier.clickable(onClickLabel = openLabel, onClick = onClick),
+        modifier = modifier
+            .heightIn(min = Sizing.minTouchTarget)
+            .clickable(onClickLabel = openLabel, onClick = onClick),
     )
 }
