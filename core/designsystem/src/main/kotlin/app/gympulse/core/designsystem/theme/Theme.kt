@@ -2,6 +2,7 @@ package app.gympulse.core.designsystem.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -10,9 +11,12 @@ import androidx.compose.ui.platform.LocalContext
 
 /**
  * Zentrales Theme der App. Alle Screens nutzen ausschließlich die Tokens aus
- * [MaterialTheme] (colorScheme, typography, shapes), keine hartcodierten Farben.
+ * [MaterialTheme] (colorScheme, typography, shapes) sowie [Spacing], [Elevation], [Sizing]
+ * und [ExpressiveShapes]; keine hartcodierten Farben oder Größen.
  *
- * @param dynamicColor Material You: Farben aus dem Hintergrundbild (Android 12+).
+ * @param darkTheme dunkles Schema; die App reicht hier die Wahl aus den Einstellungen durch.
+ * @param dynamicColor Material You: Farben aus dem Hintergrundbild (Android 12+). Ist es aus
+ *   oder das Gerät älter, greift das eigene GymPulse-Schema (Seed [GymPulseSeedColor]).
  */
 @Composable
 fun GymPulseTheme(
@@ -20,13 +24,11 @@ fun GymPulseTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        darkTheme -> DarkColors
-        else -> LightColors
+    val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        val context = LocalContext.current
+        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+    } else {
+        gymPulseColorScheme(darkTheme)
     }
 
     MaterialTheme(
@@ -36,3 +38,7 @@ fun GymPulseTheme(
         content = content,
     )
 }
+
+/** Das eigene (nicht dynamische) Farbschema von GymPulse. */
+fun gymPulseColorScheme(darkTheme: Boolean): ColorScheme =
+    if (darkTheme) GymPulseDarkColors else GymPulseLightColors

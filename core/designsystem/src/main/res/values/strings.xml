@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Accessibility descriptions of a trend below a metric; %1$s is the formatted trend, e.g. "+5 %". -->
+    <string name="designsystem_trend_up">Trend rising: %1$s</string>
+    <string name="designsystem_trend_down">Trend falling: %1$s</string>
+    <string name="designsystem_trend_flat">Trend unchanged: %1$s</string>
+    <!-- Accessibility description of a progress ring or bar; %1$d is the percentage. -->
+    <string name="designsystem_progress_percent">%1$d percent</string>
+</resources>
