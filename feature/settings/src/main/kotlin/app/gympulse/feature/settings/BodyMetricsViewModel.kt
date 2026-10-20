@@ -3,6 +3,8 @@ package app.gympulse.feature.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.gympulse.core.data.repository.BodyMeasurementRepository
+import app.gympulse.core.featuregate.Feature
+import app.gympulse.core.featuregate.FeatureGate
 import app.gympulse.core.model.BodyMeasurement
 import app.gympulse.core.model.MeasurementType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,11 +24,14 @@ internal data class BodyMetricsUiState(
     val chart: List<BodyMeasurement> = emptyList(),
     /** Differenz des neuesten zum vorherigen Messwert; null, wenn es nur einen gibt. */
     val change: Double? = null,
+    /** Einstiegspunkt zur Foto-Galerie; hängt am Feature [Feature.PROGRESS_PHOTOS]. */
+    val photosEnabled: Boolean = false,
 )
 
 @HiltViewModel
 internal class BodyMetricsViewModel @Inject constructor(
     private val repository: BodyMeasurementRepository,
+    featureGate: FeatureGate,
 ) : ViewModel() {
 
     private val selectedType = MutableStateFlow(MeasurementType.WEIGHT)
@@ -34,13 +39,15 @@ internal class BodyMetricsViewModel @Inject constructor(
     val uiState: StateFlow<BodyMetricsUiState> = combine(
         repository.observeAll(),
         selectedType,
-    ) { all, type ->
+        featureGate.observe(Feature.PROGRESS_PHOTOS),
+    ) { all, type, photosEnabled ->
         val history = all.filter { it.type == type }.sortedByDescending { it.measuredAt }
         BodyMetricsUiState(
             selectedType = type,
             history = history,
             chart = history.asReversed(),
             change = if (history.size >= 2) history[0].value - history[1].value else null,
+            photosEnabled = photosEnabled,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), BodyMetricsUiState())
 

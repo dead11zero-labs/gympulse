@@ -12,6 +12,8 @@ dependencies {
     implementation(projects.core.backup)
     implementation(projects.core.health)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.coil.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.vico.compose.m3)
     implementation(libs.kotlinx.coroutines.core)

@@ -121,6 +121,14 @@ data class BodyMeasurement(
     val source: MeasurementSource,
 )
 
+/** Fortschrittsfoto; [fileName] liegt im privaten App-Speicher, das Bild verlässt das Gerät nicht. */
+data class ProgressPhoto(
+    val id: String,
+    val takenAt: Instant,
+    val fileName: String,
+    val note: String?,
+)
+
 data class PersonalRecord(
     val id: String,
     val exerciseId: String,
