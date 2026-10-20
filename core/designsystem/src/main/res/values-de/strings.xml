@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">Trend steigend: %1$s</string>
+    <string name="designsystem_trend_down">Trend fallend: %1$s</string>
+    <string name="designsystem_trend_flat">Trend unverändert: %1$s</string>
+    <string name="designsystem_progress_percent">%1$d Prozent</string>
+</resources>
