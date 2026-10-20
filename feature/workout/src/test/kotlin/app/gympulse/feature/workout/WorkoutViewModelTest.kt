@@ -233,15 +233,13 @@ class WorkoutViewModelTest {
     fun finish_summaryListsExercisesAndDetectsRecordsAgainstEarlierSessions() = runTest {
         seedPlan()
         val viewModel = viewModel()
-        finishOneSet(viewModel, weight = "80")
         // First session: nothing to compare with.
-        val first = viewModel.summary.first { it != null }!!
+        val first = finishOneSet(viewModel, weight = "80")
         assertEquals(0, first.recordCount)
         viewModel.dismissSummary()
         time.advanceSeconds(3600)
 
-        finishOneSet(viewModel, weight = "100")
-        val second = viewModel.summary.first { it != null }!!
+        val second = finishOneSet(viewModel, weight = "100")
 
         val exercise = second.exercises.single()
         assertEquals("bench", exercise.exerciseId)
@@ -271,7 +269,7 @@ class WorkoutViewModelTest {
         assertTrue(workoutRepository.setHistory(emptyList()).isEmpty())
     }
 
-    private suspend fun finishOneSet(viewModel: WorkoutViewModel, weight: String) {
+    private suspend fun finishOneSet(viewModel: WorkoutViewModel, weight: String): WorkoutSummary {
         viewModel.startWorkout(PLAN_ID)
         val exercise = viewModel.awaitActive().exercises.single()
         viewModel.onWeightChange(exercise.sessionExerciseId, exercise.sets[0].id, weight)
@@ -279,6 +277,7 @@ class WorkoutViewModelTest {
         viewModel.awaitActive { it.completedSets == 1 }
         time.advanceSeconds(600)
         viewModel.finishWorkout()
+        return viewModel.summary.first { it != null }!!
     }
 
     @Test
