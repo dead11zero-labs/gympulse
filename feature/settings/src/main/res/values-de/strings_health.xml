@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">Workouts werden beim Beenden mit Health Connect geteilt</string>
+    <string name="health_connect_not_installed">Installiere Health Connect aus Google Play, um das zu nutzen</string>
+    <string name="health_connect_update_required">Aktualisiere Health Connect in Google Play, um das zu nutzen</string>
+    <string name="health_connect_unsupported">Health Connect ist auf diesem Gerät nicht verfügbar</string>
+    <string name="health_connect_permissions">Berechtigungen</string>
+    <string name="health_connect_permissions_missing">Zugriff fehlt. Tippe, um Workouts und Körpergewicht zu erlauben.</string>
+    <string name="health_connect_permissions_denied">Der Zugriff auf Health Connect wurde nicht erlaubt. Workouts werden nicht geteilt.</string>
+    <string name="health_connect_weight">Körpergewicht aus Health Connect</string>
+    <string name="health_connect_weight_value">%1$s kg · %2$s</string>
+    <string name="health_connect_weight_none">Kein Körpergewicht in den letzten 12 Monaten</string>
+    <string name="health_connect_weight_import">Übernehmen</string>
+    <string name="health_connect_weight_imported">Das Körpergewicht wurde als Körpermaß gespeichert.</string>
+    <string name="health_connect_weight_already_imported">Dieses Körpergewicht wurde bereits übernommen.</string>
+    <string name="health_connect_action_ok">OK</string>
+
+    <string name="health_privacy_title">So nutzt GymPulse Health Connect</string>
+    <string name="health_privacy_write">Wenn du ein Workout beendest, schreibt GymPulse es als Trainingseinheit mit Start- und Endzeit, Titel und Notizen nach Health Connect.</string>
+    <string name="health_privacy_read">GymPulse liest dein Körpergewicht aus Health Connect nur, um es in den Einstellungen anzuzeigen. Als Körpermaß gespeichert wird es erst, wenn du auf Übernehmen tippst.</string>
+    <string name="health_privacy_storage">Deine Daten bleiben auf deinem Gerät. GymPulse sendet keine Gesundheitsdaten an Server, nutzt sie nicht für Werbung und gibt sie nicht weiter.</string>
+    <string name="health_privacy_revoke">Du kannst die Anbindung jederzeit in den GymPulse-Einstellungen ausschalten und die Berechtigungen in Health Connect widerrufen.</string>
+    <string name="health_privacy_close">Schließen</string>
+</resources>

@@ -59,6 +59,7 @@ import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.WeekStart
 import app.gympulse.feature.settings.data.DataSettingsRows
+import app.gympulse.feature.settings.health.HealthConnectSettingsRows
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -184,11 +185,7 @@ internal fun SettingsScreen(
             }
 
             SettingsSection(stringResource(R.string.settings_section_health)) {
-                ComingSoonRow(
-                    headline = stringResource(R.string.settings_health_connect),
-                    supporting = stringResource(R.string.settings_health_connect_summary),
-                    icon = Icons.Filled.Favorite,
-                )
+                HealthConnectSettingsRows()
                 SettingsDivider(withIcon = true)
                 ComingSoonRow(
                     headline = stringResource(R.string.settings_samsung_health),

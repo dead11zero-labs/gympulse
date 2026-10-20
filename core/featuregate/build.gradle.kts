@@ -10,4 +10,7 @@ android {
 dependencies {
     // Flow ist Teil der öffentlichen API (FeatureGate.observe).
     api(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.core.ktx)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Health Connect: Workouts schreiben, Körpergewicht lesen. -->
+    <uses-permission android:name="android.permission.health.WRITE_EXERCISE" />
+    <uses-permission android:name="android.permission.health.READ_WEIGHT" />
+
+    <!-- Android 9 bis 13: Health Connect ist eine eigene App, die sichtbar sein muss. -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
+</manifest>

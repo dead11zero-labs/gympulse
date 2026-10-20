@@ -10,9 +10,9 @@ dependencies {
     implementation(projects.core.settings)
     implementation(projects.core.data)
     implementation(projects.core.backup)
+    implementation(projects.core.health)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.activity.compose)
     implementation(libs.vico.compose.m3)
     implementation(libs.kotlinx.coroutines.core)
 

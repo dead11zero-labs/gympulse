@@ -3,6 +3,7 @@ package app.gympulse.feature.workout
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.gympulse.core.data.health.FinishedWorkoutExporter
 import app.gympulse.core.data.repository.ExerciseRepository
 import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.repository.WorkoutRepository
@@ -49,6 +50,7 @@ internal class WorkoutViewModel @Inject constructor(
     private val restTimerSettings: RestTimerSettings,
     ticker: Ticker,
     time: TimeProvider,
+    private val healthExporter: FinishedWorkoutExporter,
 ) : ViewModel() {
 
     private val writeMutex = Mutex()
@@ -193,6 +195,8 @@ internal class WorkoutViewModel @Inject constructor(
             catalog = catalog.first(),
             records = PersonalRecordDetector().detect(session.id, history),
         )
+        // Health Connect (opt-in); runs outside the write lock and never blocks the summary.
+        viewModelScope.launch { healthExporter.export(session.id) }
     }
 
     fun discardWorkout() = mutate {

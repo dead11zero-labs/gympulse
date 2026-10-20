@@ -10,6 +10,7 @@ import app.gympulse.core.model.MeasurementType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import java.time.Instant
 import javax.inject.Inject
 
 /**
@@ -54,16 +55,23 @@ class ProfileRepository @Inject constructor(
         )
     }
 
-    /** Legt einen neuen manuellen Gewichts-Messwert (kg) zum aktuellen Zeitpunkt an. */
-    suspend fun recordBodyWeight(weightKg: Double) {
+    /**
+     * Legt einen neuen Gewichts-Messwert (kg) an, standardmäßig manuell zum aktuellen Zeitpunkt.
+     * Importe (z. B. aus Health Connect) übergeben ihren Messzeitpunkt und ihre Quelle.
+     */
+    suspend fun recordBodyWeight(
+        weightKg: Double,
+        measuredAt: Instant? = null,
+        source: MeasurementSource = MeasurementSource.MANUAL,
+    ) {
         val now = time.now().toEpochMilli()
         bodyDao.upsertMeasurement(
             BodyMeasurementEntity(
                 id = Ids.newId(now),
-                measuredAt = now,
+                measuredAt = measuredAt?.toEpochMilli() ?: now,
                 type = MeasurementType.WEIGHT,
                 value = weightKg,
-                source = MeasurementSource.MANUAL,
+                source = source,
                 createdAt = now,
                 updatedAt = now,
             ),

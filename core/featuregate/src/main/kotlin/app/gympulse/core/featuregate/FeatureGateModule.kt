@@ -15,7 +15,7 @@ abstract class FeatureGateModule {
 
     @Binds
     @Singleton
-    abstract fun bindLocalDefaults(impl: AllEnabledLocalFeatureDefaults): LocalFeatureDefaults
+    abstract fun bindLocalDefaults(impl: StaticLocalFeatureDefaults): LocalFeatureDefaults
 
     @Binds
     @Singleton
@@ -24,4 +24,8 @@ abstract class FeatureGateModule {
     @Binds
     @Singleton
     abstract fun bindEntitlements(impl: NoOpEntitlementProvider): EntitlementProvider
+
+    @Binds
+    @Singleton
+    abstract fun bindUserToggles(impl: SharedPreferencesUserFeatureToggles): UserFeatureToggles
 }

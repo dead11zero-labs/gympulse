@@ -17,6 +17,7 @@ import app.gympulse.core.model.WorkoutPlan
 import app.gympulse.feature.workout.timer.RestTimer
 import app.gympulse.feature.workout.timer.RestTimerSettings
 import app.gympulse.feature.workout.timer.Ticker
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -51,6 +52,7 @@ class WorkoutViewModelTest {
     private lateinit var planRepository: PlanRepository
     private lateinit var exerciseRepository: ExerciseRepository
     private lateinit var restTimer: RestTimer
+    private val exportedSession = CompletableDeferred<String>()
 
     @Before
     fun setUp() {
@@ -224,6 +226,7 @@ class WorkoutViewModelTest {
         assertTrue(viewModel.uiState.first { it !is WorkoutUiState.Active } is WorkoutUiState.SelectPlan)
         val stored = db.sessionDao().observeRecentCompleted(1).first().single()
         assertEquals(SessionStatus.COMPLETED, stored.status)
+        assertEquals(stored.id, exportedSession.await())
 
         viewModel.dismissSummary()
         assertNull(viewModel.summary.value)
@@ -312,6 +315,7 @@ class WorkoutViewModelTest {
             override fun ticks(): Flow<Instant> = flowOf(time.now())
         },
         time = time,
+        healthExporter = { exportedSession.complete(it) },
     )
 
     private suspend fun WorkoutViewModel.awaitActive(
