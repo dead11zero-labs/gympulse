@@ -51,8 +51,36 @@
     <string name="settings_language_english" translatable="false">English</string>
 
     <string name="settings_section_body">Body measurements</string>
-    <string name="settings_body_measurements">Measurements and progress photos</string>
-    <string name="settings_body_measurements_summary">Track weight, body fat and measurements over time</string>
+    <string name="settings_body_measurements">Weight, body fat and measurements</string>
+    <string name="settings_body_measurements_summary">Log and chart your body data over time</string>
+
+    <string name="body_add">Add measurement</string>
+    <string name="body_add_title">New measurement</string>
+    <string name="body_add_hint">Weight is required. Leave other fields empty to skip them.</string>
+    <string name="body_type_weight">Weight</string>
+    <string name="body_type_body_fat">Body fat</string>
+    <string name="body_type_chest">Chest</string>
+    <string name="body_type_waist">Waist</string>
+    <string name="body_type_hips">Hips</string>
+    <string name="body_type_upper_arm">Upper arm</string>
+    <string name="body_type_thigh">Thigh</string>
+    <string name="body_type_calf">Calf</string>
+    <string name="body_type_neck">Neck</string>
+    <string name="body_unit_percent" translatable="false">%</string>
+    <string name="body_value_percent" translatable="false">%1$s %%</string>
+    <string name="body_error_body_fat">Enter a value between 3 and 60 percent</string>
+    <string name="body_error_circumference">Enter a value between 10 and 300 cm</string>
+    <string name="body_latest">Latest</string>
+    <string name="body_change">Change since previous entry: %1$s</string>
+    <string name="body_chart_description">Chart of %1$s over time</string>
+    <string name="body_chart_empty">Add at least two measurements to see a chart.</string>
+    <string name="body_history">History</string>
+    <string name="body_empty">No measurements yet</string>
+    <string name="body_edit">Edit</string>
+    <string name="body_edit_title">Edit %1$s</string>
+    <string name="body_delete">Delete</string>
+    <string name="body_delete_title">Delete measurement?</string>
+    <string name="body_delete_message">%1$s from %2$s will be removed.</string>
 
     <string name="settings_section_health">Health data</string>
     <string name="settings_health_connect">Health Connect</string>

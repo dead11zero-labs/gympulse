@@ -12,6 +12,8 @@ dependencies {
     implementation(projects.core.backup)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.vico.compose.m3)
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.kotlinx.coroutines.test)

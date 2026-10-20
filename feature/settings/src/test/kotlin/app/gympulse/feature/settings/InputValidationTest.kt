@@ -1,5 +1,6 @@
 package app.gympulse.feature.settings
 
+import app.gympulse.core.model.MeasurementType
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -60,5 +61,26 @@ class InputValidationTest {
         assertEquals(Validated.Ok(14), InputValidation.weeklyGoal("14"))
         assertEquals(Validated.Invalid, InputValidation.weeklyGoal("0"))
         assertEquals(Validated.Invalid, InputValidation.weeklyGoal("15"))
+    }
+
+    @Test
+    fun measurement_usesRangePerType() {
+        assertEquals(Validated.Ok(15.5), InputValidation.measurement(MeasurementType.BODY_FAT, "15,5"))
+        assertEquals(Validated.Invalid, InputValidation.measurement(MeasurementType.BODY_FAT, "2"))
+        assertEquals(Validated.Invalid, InputValidation.measurement(MeasurementType.BODY_FAT, "61"))
+        assertEquals(Validated.Ok(95.0), InputValidation.measurement(MeasurementType.WAIST, "95"))
+        assertEquals(Validated.Invalid, InputValidation.measurement(MeasurementType.WAIST, "9"))
+        assertEquals(Validated.Invalid, InputValidation.measurement(MeasurementType.WAIST, ""))
+        assertEquals(Validated.Ok(80.0), InputValidation.measurement(MeasurementType.WEIGHT, "80"))
+        assertEquals(Validated.Invalid, InputValidation.measurement(MeasurementType.WEIGHT, "19"))
+    }
+
+    @Test
+    fun optionalMeasurement_blankMeansNotRecorded() {
+        assertEquals(Validated.Ok(null), InputValidation.optionalMeasurement(MeasurementType.CHEST, ""))
+        assertEquals(Validated.Ok(null), InputValidation.optionalMeasurement(MeasurementType.CHEST, "  "))
+        assertEquals(Validated.Ok(100.0), InputValidation.optionalMeasurement(MeasurementType.CHEST, "100"))
+        assertEquals(Validated.Invalid, InputValidation.optionalMeasurement(MeasurementType.CHEST, "x"))
+        assertEquals(Validated.Invalid, InputValidation.optionalMeasurement(MeasurementType.CHEST, "301"))
     }
 }
