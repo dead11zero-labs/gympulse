@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import app.gympulse.core.database.GymPulseDatabase
+import app.gympulse.core.model.SetType
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -32,6 +33,26 @@ class RoomBackupStore @Inject constructor(private val database: GymPulseDatabase
         while (cursor.moveToNext()) rows += cursor.toJsonObject()
         rows
     }
+
+    /**
+     * Abgeschlossene Sätze aus nicht gelöschten, beendeten Trainings, chronologisch. Der Übungsname
+     * folgt [locale], fällt auf Englisch und dann auf den Slug zurück.
+     */
+    fun readWorkoutHistory(locale: String): List<WorkoutCsvRow> = db.query(WORKOUT_HISTORY_SQL, arrayOf<Any?>(locale))
+        .use { cursor ->
+            val rows = ArrayList<WorkoutCsvRow>(cursor.count)
+            while (cursor.moveToNext()) {
+                rows += WorkoutCsvRow(
+                    startedAtMillis = cursor.getLong(0),
+                    exerciseName = cursor.getString(1),
+                    setNumber = cursor.getInt(2),
+                    weightKg = if (cursor.isNull(3)) null else cursor.getDouble(3),
+                    reps = if (cursor.isNull(4)) null else cursor.getInt(4),
+                    isWarmup = cursor.getString(5) == SetType.WARMUP.name,
+                )
+            }
+            rows
+        }
 
     /** ID → Sync-Stand je Tabelle, inklusive gelöschter Zeilen. */
     fun readLocalMeta(tables: Collection<String>): Map<String, Map<String, RowMeta>> = tables.associateWith { table ->
@@ -63,6 +84,23 @@ class RoomBackupStore @Inject constructor(private val database: GymPulseDatabase
         db.update(table, SQLiteDatabase.CONFLICT_ABORT, values, "id = ?", arrayOf(id))
     }
 }
+
+private const val WORKOUT_HISTORY_SQL = """
+    SELECT ws.started_at, COALESCE(
+            (SELECT t.name FROM exercise_translation t
+             WHERE t.exercise_id = e.id AND t.locale = ? AND t.deleted_at IS NULL LIMIT 1),
+            (SELECT t.name FROM exercise_translation t
+             WHERE t.exercise_id = e.id AND t.locale = 'en' AND t.deleted_at IS NULL LIMIT 1),
+            e.slug, e.id) AS exercise_name,
+        se_set.set_index, se_set.weight_kg, se_set.reps, se_set.set_type
+    FROM set_entry se_set
+    JOIN session_exercise se ON se.id = se_set.session_exercise_id AND se.deleted_at IS NULL
+    JOIN workout_session ws ON ws.id = se.session_id AND ws.deleted_at IS NULL
+        AND ws.status = 'COMPLETED'
+    JOIN exercise e ON e.id = se.exercise_id
+    WHERE se_set.deleted_at IS NULL AND se_set.is_completed = 1
+    ORDER BY ws.started_at, se.sort_order, se_set.set_index
+"""
 
 private fun Cursor.toJsonObject(): JsonObject {
     val map = LinkedHashMap<String, JsonElement>(columnCount)

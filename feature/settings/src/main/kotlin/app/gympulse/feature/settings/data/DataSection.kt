@@ -57,6 +57,8 @@ import java.time.format.FormatStyle
 /** MIME-Typen, unter denen Dateimanager und Cloud-Anbieter JSON-Dateien anbieten. */
 private val IMPORT_MIME_TYPES = arrayOf(BackupFormat.MIME_TYPE, "text/*", "application/octet-stream")
 
+private const val WORKOUT_CSV_MIME_TYPE = "text/csv"
+
 /**
  * Zeilen "Exportieren" und "Importieren" im Abschnitt "Daten" samt Dialogen. Dateien laufen über
  * das Storage Access Framework, daher braucht die App keine Speicherberechtigung.
@@ -67,6 +69,9 @@ internal fun DataSettingsRows(viewModel: DataViewModel = hiltViewModel()) {
     val exportLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.CreateDocument(BackupFormat.MIME_TYPE),
     ) { uri -> uri?.let(viewModel::export) }
+    val csvExportLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument(WORKOUT_CSV_MIME_TYPE),
+    ) { uri -> uri?.let(viewModel::exportCsv) }
     val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         uri?.let(viewModel::openImport)
     }
@@ -78,6 +83,17 @@ internal fun DataSettingsRows(viewModel: DataViewModel = hiltViewModel()) {
         icon = Icons.Filled.Share,
         onClick = if (idle) {
             { exportLauncher.launch(BackupManager.suggestedFileName()) }
+        } else {
+            null
+        },
+    )
+    SettingsDivider(withIcon = true)
+    SettingsRow(
+        headline = stringResource(R.string.data_export_csv),
+        supporting = stringResource(R.string.data_export_csv_summary),
+        icon = Icons.Filled.Share,
+        onClick = if (idle) {
+            { csvExportLauncher.launch(BackupManager.suggestedCsvFileName()) }
         } else {
             null
         },

@@ -2,6 +2,8 @@
 <resources>
     <string name="data_export">Daten exportieren</string>
     <string name="data_export_summary">Pläne, Workouts, Übungen und Einstellungen als JSON-Datei sichern</string>
+    <string name="data_export_csv">Trainingshistorie exportieren (CSV)</string>
+    <string name="data_export_csv_summary">Jeder abgeschlossene Satz als Tabellendatei (CSV)</string>
     <string name="data_import">Daten importieren</string>
     <string name="data_import_summary">GymPulse-Backup mit Vorschau wiederherstellen</string>
 
