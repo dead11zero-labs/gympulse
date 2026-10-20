@@ -20,6 +20,12 @@ interface BodyDao {
     @Query("SELECT * FROM body_measurement WHERE type = :type AND deleted_at IS NULL ORDER BY measured_at")
     fun observeMeasurements(type: MeasurementType): Flow<List<BodyMeasurementEntity>>
 
+    @Query("SELECT * FROM body_measurement WHERE deleted_at IS NULL ORDER BY measured_at DESC")
+    fun observeAllMeasurements(): Flow<List<BodyMeasurementEntity>>
+
+    @Query("SELECT * FROM body_measurement WHERE id = :id AND deleted_at IS NULL")
+    suspend fun getMeasurement(id: String): BodyMeasurementEntity?
+
     /** Letzter Messwert vor einem Zeitpunkt, z. B. das Körpergewicht zu Beginn einer Session. */
     @Query(
         """

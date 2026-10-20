@@ -49,8 +49,34 @@
     <string name="settings_language_system">Systemstandard</string>
 
     <string name="settings_section_body">Körpermaße</string>
-    <string name="settings_body_measurements">Maße und Fortschrittsfotos</string>
-    <string name="settings_body_measurements_summary">Gewicht, Körperfett und Umfänge im Zeitverlauf verfolgen</string>
+    <string name="settings_body_measurements">Gewicht, Körperfett und Umfänge</string>
+    <string name="settings_body_measurements_summary">Körperdaten erfassen und im Zeitverlauf darstellen</string>
+
+    <string name="body_add">Messung hinzufügen</string>
+    <string name="body_add_title">Neue Messung</string>
+    <string name="body_add_hint">Das Gewicht ist Pflicht. Andere Felder können leer bleiben.</string>
+    <string name="body_type_weight">Gewicht</string>
+    <string name="body_type_body_fat">Körperfett</string>
+    <string name="body_type_chest">Brust</string>
+    <string name="body_type_waist">Taille</string>
+    <string name="body_type_hips">Hüfte</string>
+    <string name="body_type_upper_arm">Oberarm</string>
+    <string name="body_type_thigh">Oberschenkel</string>
+    <string name="body_type_calf">Wade</string>
+    <string name="body_type_neck">Nacken</string>
+    <string name="body_error_body_fat">Bitte einen Wert zwischen 3 und 60 % eingeben</string>
+    <string name="body_error_circumference">Bitte einen Wert zwischen 10 und 300 cm eingeben</string>
+    <string name="body_latest">Aktuell</string>
+    <string name="body_change">Änderung zum vorherigen Eintrag: %1$s</string>
+    <string name="body_chart_description">Diagramm: %1$s im Zeitverlauf</string>
+    <string name="body_chart_empty">Mit mindestens zwei Messungen erscheint ein Diagramm.</string>
+    <string name="body_history">Verlauf</string>
+    <string name="body_empty">Noch keine Messungen</string>
+    <string name="body_edit">Bearbeiten</string>
+    <string name="body_edit_title">%1$s bearbeiten</string>
+    <string name="body_delete">Löschen</string>
+    <string name="body_delete_title">Messung löschen?</string>
+    <string name="body_delete_message">%1$s vom %2$s wird entfernt.</string>
 
     <string name="settings_section_health">Gesundheitsdaten</string>
     <string name="settings_health_connect">Health Connect</string>

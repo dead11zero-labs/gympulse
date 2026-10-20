@@ -38,6 +38,7 @@ private enum class SettingsDialog { NAME, WEIGHT, HEIGHT, REST_TIMER, WEEKLY_GOA
 
 @Composable
 internal fun SettingsScreen(
+    onOpenBodyMetrics: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
@@ -143,9 +144,10 @@ internal fun SettingsScreen(
             }
 
             SettingsSection(stringResource(R.string.settings_section_body)) {
-                ComingSoonRow(
+                SettingsRow(
                     headline = stringResource(R.string.settings_body_measurements),
                     supporting = stringResource(R.string.settings_body_measurements_summary),
+                    onClick = onOpenBodyMetrics,
                 )
             }
 
@@ -300,7 +302,7 @@ private fun languageLabel(language: AppLanguage): String = stringResource(
 )
 
 /** Zahl in der Sprache des Geräts, ohne Tausendertrenner, höchstens zwei Nachkommastellen. */
-private fun formatNumber(value: Double): String =
+internal fun formatNumber(value: Double): String =
     NumberFormat.getNumberInstance(Locale.getDefault()).apply {
         isGroupingUsed = false
         maximumFractionDigits = 2
