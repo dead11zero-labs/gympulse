@@ -16,6 +16,12 @@ interface ScheduleDao {
     @Query("SELECT * FROM schedule_override WHERE deleted_at IS NULL AND date >= :fromDate AND date <= :toDate")
     fun observeOverrides(fromDate: String, toDate: String): Flow<List<ScheduleOverrideEntity>>
 
+    @Query("SELECT * FROM schedule_rule WHERE deleted_at IS NULL")
+    suspend fun getRules(): List<ScheduleRuleEntity>
+
+    @Query("SELECT * FROM schedule_override WHERE deleted_at IS NULL AND date = :date")
+    suspend fun getOverridesOn(date: String): List<ScheduleOverrideEntity>
+
     @Upsert
     suspend fun upsertRule(rule: ScheduleRuleEntity)
 
