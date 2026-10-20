@@ -54,6 +54,10 @@ class DataStoreUserSettingsRepository @Inject constructor(
         dataStore.edit { it[Keys.LANGUAGE] = language.name }
     }
 
+    override suspend fun setOnboardingCompleted(completed: Boolean) {
+        dataStore.edit { it[Keys.ONBOARDING_COMPLETED] = completed }
+    }
+
     private object Keys {
         val REST_TIMER_SECONDS = intPreferencesKey("rest_timer_seconds")
         val WEEK_START = stringPreferencesKey("week_start")
@@ -61,6 +65,7 @@ class DataStoreUserSettingsRepository @Inject constructor(
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val DYNAMIC_COLOR = booleanPreferencesKey("dynamic_color")
         val LANGUAGE = stringPreferencesKey("language")
+        val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
     }
 
     private fun Preferences.toSettings() = UserSettings(
@@ -72,6 +77,7 @@ class DataStoreUserSettingsRepository @Inject constructor(
         themeMode = enumOrDefault(this[Keys.THEME_MODE], ThemeMode.SYSTEM),
         dynamicColor = this[Keys.DYNAMIC_COLOR] ?: true,
         language = enumOrDefault(this[Keys.LANGUAGE], AppLanguage.SYSTEM),
+        onboardingCompleted = this[Keys.ONBOARDING_COMPLETED] ?: false,
     )
 }
 

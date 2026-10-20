@@ -60,6 +60,8 @@ dependencies {
     implementation(projects.feature.settings)
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     // AppCompatActivity und AppCompatDelegate für die App-Sprache (Per-App-Locales ab API 28).
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)

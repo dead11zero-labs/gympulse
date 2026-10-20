@@ -5,18 +5,25 @@ import android.os.Bundle
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.os.LocaleListCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import app.gympulse.core.designsystem.theme.GymPulseTheme
 import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
+import app.gympulse.core.settings.UserSettings
 import app.gympulse.core.settings.UserSettingsRepository
+import app.gympulse.onboarding.OnboardingRoute
+import app.gympulse.onboarding.OnboardingViewModel
 import app.gympulse.ui.GymPulseApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -33,13 +40,21 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     @Inject lateinit var settingsRepository: UserSettingsRepository
 
+    private val onboardingViewModel: OnboardingViewModel by viewModels()
+
+    /** Einstellungen, sobald geladen; solange null, bleibt der Splash sichtbar. */
+    private var loadedSettings: UserSettings? by mutableStateOf(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+        splashScreen.setKeepOnScreenCondition { loadedSettings == null }
         enableEdgeToEdge()
         lifecycleScope.launch { keepAppLanguageInSync() }
         setContent {
-            // Bis die Einstellungen geladen sind, bleibt das Fenster leer (kein Theme-Flackern).
+            // Bis die Einstellungen geladen sind, bleibt der Splash stehen (kein Theme-Flackern).
             val settings by settingsRepository.settings.collectAsStateWithLifecycle(initialValue = null)
+            loadedSettings = settings
             settings?.let { current ->
                 val systemDark = isSystemInDarkTheme()
                 val darkTheme = when (current.themeMode) {
@@ -56,7 +71,11 @@ class MainActivity : AppCompatActivity() {
                     onDispose { }
                 }
                 GymPulseTheme(darkTheme = darkTheme, dynamicColor = current.dynamicColor) {
-                    GymPulseApp()
+                    if (current.onboardingCompleted) {
+                        GymPulseApp()
+                    } else {
+                        OnboardingRoute(viewModel = onboardingViewModel)
+                    }
                 }
             }
         }

@@ -67,6 +67,9 @@ object Sizing {
     val emptyStateIconContainer: Dp = 96.dp
     val emptyStateIcon: Dp = 48.dp
 
+    /** Runde Illustration auf den Seiten des Onboardings. */
+    val onboardingHero: Dp = 160.dp
+
     /** Fortschrittsring: Standardgröße und Strichstärke. */
     val progressRing: Dp = 120.dp
     val progressRingStroke: Dp = 10.dp

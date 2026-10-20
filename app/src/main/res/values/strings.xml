@@ -9,4 +9,18 @@
     <string name="action_about">About the app</string>
     <string name="action_account">Account menu</string>
     <string name="action_back">Back</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_start">Let\'s go</string>
+    <string name="onboarding_page_indicator">Page %1$d of %2$d</string>
+    <string name="onboarding_welcome_title">Welcome to GymPulse</string>
+    <string name="onboarding_welcome_body">Log your workouts, follow your progress and keep your training on track. Everything stays on your device.</string>
+    <string name="onboarding_goal_title">Set your weekly goal</string>
+    <string name="onboarding_goal_body">How many workouts per week do you want to do? You can change this any time in Settings.</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="one">%d workout per week</item>
+        <item quantity="other">%d workouts per week</item>
+    </plurals>
+    <string name="onboarding_done_title">You\'re all set</string>
+    <string name="onboarding_done_body">Start your first workout from the dashboard. Have a great session!</string>
 </resources>

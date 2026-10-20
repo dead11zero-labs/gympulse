@@ -8,4 +8,18 @@
     <string name="action_about">Über die App</string>
     <string name="action_account">Kontomenü</string>
     <string name="action_back">Zurück</string>
+    <string name="onboarding_skip">Überspringen</string>
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_start">Los geht\'s</string>
+    <string name="onboarding_page_indicator">Seite %1$d von %2$d</string>
+    <string name="onboarding_welcome_title">Willkommen bei GymPulse</string>
+    <string name="onboarding_welcome_body">Protokolliere dein Training, behalte deinen Fortschritt im Blick und bleib dran. Alle Daten bleiben auf deinem Gerät.</string>
+    <string name="onboarding_goal_title">Setze dein Wochenziel</string>
+    <string name="onboarding_goal_body">Wie oft pro Woche möchtest du trainieren? Du kannst das jederzeit in den Einstellungen ändern.</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="one">%d Training pro Woche</item>
+        <item quantity="other">%d Trainings pro Woche</item>
+    </plurals>
+    <string name="onboarding_done_title">Alles bereit</string>
+    <string name="onboarding_done_body">Starte dein erstes Training im Dashboard. Viel Erfolg!</string>
 </resources>
