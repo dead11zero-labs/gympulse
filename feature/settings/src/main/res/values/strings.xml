@@ -68,7 +68,7 @@
     <string name="body_type_neck">Neck</string>
     <string name="body_unit_percent" translatable="false">%</string>
     <string name="body_value_percent" translatable="false">%1$s %%</string>
-    <string name="body_error_body_fat">Enter a value between 3 and 60 %</string>
+    <string name="body_error_body_fat">Enter a value between 3 and 60 percent</string>
     <string name="body_error_circumference">Enter a value between 10 and 300 cm</string>
     <string name="body_latest">Latest</string>
     <string name="body_change">Change since previous entry: %1$s</string>

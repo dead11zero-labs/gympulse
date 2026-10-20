@@ -64,7 +64,7 @@
     <string name="body_type_thigh">Oberschenkel</string>
     <string name="body_type_calf">Wade</string>
     <string name="body_type_neck">Nacken</string>
-    <string name="body_error_body_fat">Bitte einen Wert zwischen 3 und 60 % eingeben</string>
+    <string name="body_error_body_fat">Bitte einen Wert zwischen 3 und 60 Prozent eingeben</string>
     <string name="body_error_circumference">Bitte einen Wert zwischen 10 und 300 cm eingeben</string>
     <string name="body_latest">Aktuell</string>
     <string name="body_change">Änderung zum vorherigen Eintrag: %1$s</string>
