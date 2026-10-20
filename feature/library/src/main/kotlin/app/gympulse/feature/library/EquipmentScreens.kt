@@ -1,6 +1,5 @@
 package app.gympulse.feature.library
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +22,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -44,6 +42,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.ui.labelRes
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListGroup
+import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.component.ListRowDivider
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.EquipmentTemplate
 
@@ -65,7 +68,7 @@ internal fun EquipmentTemplatesScreen(
     ContentColumn(modifier = modifier) {
         Text(
             text = stringResource(R.string.library_new_equipment),
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
         )
@@ -79,15 +82,27 @@ internal fun EquipmentTemplatesScreen(
             state.isLoading -> LoadingIndicator(modifier = Modifier.weight(1f))
             else -> LazyColumn(
                 modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(bottom = Spacing.l),
+                contentPadding = PaddingValues(
+                    start = Spacing.screenMargin,
+                    end = Spacing.screenMargin,
+                    top = Spacing.xs,
+                    bottom = Spacing.l,
+                ),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
             ) {
                 item(key = "empty") {
-                    ListItem(
-                        modifier = Modifier.clickable { onPickTemplate(null) },
-                        leadingContent = { Icon(Icons.Filled.Add, contentDescription = null) },
-                        headlineContent = { Text(stringResource(R.string.library_empty_equipment)) },
-                        supportingContent = { Text(stringResource(R.string.library_empty_equipment_hint)) },
-                    )
+                    GymPulseCard(
+                        modifier = Modifier.fillMaxWidth(),
+                        variant = GymPulseCardVariant.Filled,
+                        onClick = { onPickTemplate(null) },
+                        contentPadding = PaddingValues(Spacing.none),
+                    ) {
+                        ListRow(
+                            headline = stringResource(R.string.library_empty_equipment),
+                            supportingText = stringResource(R.string.library_empty_equipment_hint),
+                            leadingIcon = Icons.Filled.Add,
+                        )
+                    }
                 }
                 if (state.templates.isEmpty()) {
                     item(key = "no-match") {
@@ -111,17 +126,17 @@ internal fun EquipmentTemplatesScreen(
 private fun TemplateRow(template: EquipmentTemplate, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val type = stringResource(template.equipmentType.labelRes())
     val settings = template.settingKeys.joinToString(", ") { it.name }
-    ListItem(
-        modifier = modifier.clickable(onClick = onClick),
-        headlineContent = { Text(template.name) },
-        supportingContent = {
-            Text(
-                text = if (settings.isEmpty()) type else "$type · $settings",
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
-    )
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+    ) {
+        ListRow(
+            headline = template.name,
+            supportingText = if (settings.isEmpty()) type else "$type · $settings",
+            onClick = onClick,
+        )
+    }
 }
 
 // ------------------------------------------------------------ Gerät bearbeiten
@@ -250,12 +265,11 @@ private fun EquipmentForm(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 } else {
-                    state.linkedExercises.forEach { exercise ->
-                        Text(
-                            text = exercise.name,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
+                    ListGroup(modifier = Modifier.fillMaxWidth()) {
+                        state.linkedExercises.forEachIndexed { index, exercise ->
+                            if (index > 0) ListRowDivider(inset = Spacing.m)
+                            ListRow(headline = exercise.name)
+                        }
                     }
                 }
             }

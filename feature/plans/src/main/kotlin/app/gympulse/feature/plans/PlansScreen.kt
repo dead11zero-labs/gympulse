@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -39,7 +39,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.gympulse.core.designsystem.component.PlaceholderScreen
+import app.gympulse.core.designsystem.component.EmptyState
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.WorkoutPlan
 
@@ -75,11 +77,15 @@ internal fun PlansScreen(
             }
 
             is PlansUiState.Loaded -> if (current.plans.isEmpty()) {
-                PlaceholderScreen(
-                    title = stringResource(R.string.plans_empty_title),
-                    description = stringResource(R.string.plans_empty_body),
-                    modifier = Modifier.padding(padding),
-                )
+                Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
+                    EmptyState(
+                        icon = Icons.AutoMirrored.Filled.List,
+                        title = stringResource(R.string.plans_empty_title),
+                        message = stringResource(R.string.plans_empty_body),
+                        actionLabel = stringResource(R.string.plans_new),
+                        onAction = onCreatePlan,
+                    )
+                }
             } else {
                 Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.TopCenter) {
                     LazyColumn(
@@ -90,7 +96,7 @@ internal fun PlansScreen(
                             top = Spacing.m,
                             bottom = FabClearance,
                         ),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.s),
+                        verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
                     ) {
                         items(current.plans, key = { it.plan.id }) { item ->
                             PlanCard(
@@ -139,7 +145,13 @@ private fun PlanCard(
     val copyName = stringResource(R.string.plans_copy_name, plan.name)
     var menuOpen by remember { mutableStateOf(false) }
 
-    Card(onClick = onOpen, modifier = modifier.fillMaxWidth()) {
+    GymPulseCard(
+        onClick = onOpen,
+        modifier = modifier.fillMaxWidth(),
+        variant = GymPulseCardVariant.Filled,
+        contentPadding = PaddingValues(Spacing.none),
+        shape = MaterialTheme.shapes.extraLarge,
+    ) {
         Row(
             modifier = Modifier.padding(start = Spacing.m, top = Spacing.xs, bottom = Spacing.xs, end = Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
@@ -150,7 +162,7 @@ private fun PlanCard(
             ) {
                 Text(
                     text = plan.name,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,

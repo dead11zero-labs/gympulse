@@ -1,6 +1,6 @@
 package app.gympulse.feature.library
 
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,14 +15,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,10 +37,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.ui.labelRes
+import app.gympulse.core.designsystem.component.ListRow
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.EquipmentType
@@ -128,7 +130,8 @@ private fun ExerciseListContent(
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(horizontal = Spacing.screenMargin),
+                .padding(horizontal = Spacing.screenMargin)
+                .animateContentSize(),
             horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -177,6 +180,7 @@ private fun ExerciseListContent(
         when {
             state.isLoading -> LoadingIndicator(modifier = Modifier.weight(1f))
             state.totalCount == 0 -> EmptyState(
+                icon = Icons.Filled.Search,
                 title = stringResource(R.string.library_exercises_empty_title),
                 message = stringResource(R.string.library_exercises_empty_message),
                 modifier = Modifier.weight(1f),
@@ -191,17 +195,22 @@ private fun ExerciseListContent(
             else -> {
                 Text(
                     text = stringResource(R.string.library_exercise_count, state.exercises.size),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
                 )
                 LazyColumn(
                     modifier = Modifier.weight(1f),
                     // Platz unter der letzten Zeile, damit der Button nichts verdeckt.
-                    contentPadding = PaddingValues(bottom = Spacing.xxl * 2),
+                    contentPadding = listPadding(),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
                 ) {
                     items(items = state.exercises, key = { it.id }) { exercise ->
-                        ExerciseRow(exercise = exercise, onClick = { onOpenExercise(exercise.id) })
+                        ExerciseRow(
+                            exercise = exercise,
+                            onClick = { onOpenExercise(exercise.id) },
+                            modifier = Modifier.animateItem(),
+                        )
                     }
                 }
             }
@@ -209,27 +218,42 @@ private fun ExerciseListContent(
     }
 }
 
+/** Seitenrand oben/seitlich und Platz unter der letzten Zeile, damit der Button nichts verdeckt. */
+private fun listPadding() = PaddingValues(
+    start = Spacing.screenMargin,
+    end = Spacing.screenMargin,
+    top = Spacing.xs,
+    bottom = Spacing.xxl * 2,
+)
+
 @Composable
 private fun ExerciseRow(exercise: Exercise, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val muscle = exercise.primaryMuscles.firstOrNull()?.let { stringResource(it.labelRes()) }
     val equipment = stringResource(exercise.equipmentType.labelRes())
     val custom = if (exercise.isCustom) stringResource(R.string.library_custom_badge) else null
-    ListItem(
-        modifier = modifier.clickable(onClick = onClick),
-        headlineContent = { Text(exercise.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
-        supportingContent = {
-            Text(listOfNotNull(muscle, equipment, custom).joinToString(" · "), maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
-        trailingContent = {
-            if (exercise.isFavorite) {
-                Icon(
-                    Icons.Filled.Favorite,
-                    contentDescription = stringResource(R.string.library_favorite),
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
-        },
-    )
+    val favorite: (@Composable () -> Unit)? = if (exercise.isFavorite) {
+        {
+            Icon(
+                Icons.Filled.Favorite,
+                contentDescription = stringResource(R.string.library_favorite),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+    } else {
+        null
+    }
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+    ) {
+        ListRow(
+            headline = exercise.name,
+            supportingText = listOfNotNull(muscle, equipment, custom).joinToString(" · "),
+            trailingContent = favorite,
+            onClick = onClick,
+        )
+    }
 }
 
 @Composable
@@ -245,6 +269,7 @@ private fun EquipmentListContent(
         when {
             state.isLoading -> LoadingIndicator(modifier = Modifier.weight(1f))
             state.equipment.isEmpty() -> EmptyState(
+                icon = Icons.Filled.Settings,
                 title = stringResource(R.string.library_equipment_empty_title),
                 message = stringResource(R.string.library_equipment_empty_message),
                 modifier = Modifier.weight(1f),
@@ -253,10 +278,15 @@ private fun EquipmentListContent(
             )
             else -> LazyColumn(
                 modifier = Modifier.weight(1f),
-                contentPadding = PaddingValues(bottom = Spacing.xxl * 2),
+                contentPadding = listPadding(),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
             ) {
                 items(items = state.equipment, key = { it.id }) { equipment ->
-                    EquipmentRow(equipment = equipment, onClick = { onOpenEquipment(equipment.id) })
+                    EquipmentRow(
+                        equipment = equipment,
+                        onClick = { onOpenEquipment(equipment.id) },
+                        modifier = Modifier.animateItem(),
+                    )
                 }
             }
         }
@@ -266,15 +296,17 @@ private fun EquipmentListContent(
 @Composable
 private fun EquipmentRow(equipment: Equipment, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val settingsCount = stringResource(R.string.library_settings_count, equipment.settings.size)
-    ListItem(
-        modifier = modifier.clickable(onClick = onClick),
-        headlineContent = { Text(equipment.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
-        supportingContent = {
-            Text(
-                listOfNotNull(equipment.location?.takeIf { it.isNotBlank() }, settingsCount).joinToString(" · "),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
-    )
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+    ) {
+        ListRow(
+            headline = equipment.name,
+            supportingText = listOfNotNull(equipment.location?.takeIf { it.isNotBlank() }, settingsCount)
+                .joinToString(" · "),
+            leadingIcon = Icons.Filled.Settings,
+            onClick = onClick,
+        )
+    }
 }
