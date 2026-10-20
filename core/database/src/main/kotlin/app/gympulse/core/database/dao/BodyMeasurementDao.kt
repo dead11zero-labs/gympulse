@@ -47,4 +47,7 @@ interface BodyDao {
 
     @Upsert
     suspend fun upsertPhoto(photo: ProgressPhotoEntity)
+
+    @Query("UPDATE progress_photo SET deleted_at = :now, updated_at = :now WHERE id = :id")
+    suspend fun softDeletePhoto(id: String, now: Long)
 }

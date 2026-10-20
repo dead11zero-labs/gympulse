@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.PaddingValues
@@ -76,6 +77,7 @@ import kotlin.math.roundToInt
 /** Erfassung, Verlauf und Diagramm der Körpermaße. */
 @Composable
 internal fun BodyMetricsScreen(
+    onOpenPhotos: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BodyMetricsViewModel = hiltViewModel(),
 ) {
@@ -98,6 +100,13 @@ internal fun BodyMetricsScreen(
             item {
                 Button(onClick = { adding = true }, modifier = Modifier.fillMaxWidth()) {
                     Text(stringResource(R.string.body_add))
+                }
+            }
+            if (state.photosEnabled) {
+                item {
+                    OutlinedButton(onClick = onOpenPhotos, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.photos_open))
+                    }
                 }
             }
             item {

@@ -1,6 +1,8 @@
 package app.gympulse.feature.settings
 
 import app.gympulse.core.data.repository.BodyMeasurementRepository
+import app.gympulse.core.featuregate.Feature
+import app.gympulse.core.featuregate.FeatureGate
 import app.gympulse.core.model.BodyMeasurement
 import app.gympulse.core.model.MeasurementSource
 import app.gympulse.core.model.MeasurementType
@@ -47,7 +49,14 @@ class BodyMetricsViewModelTest {
         }
     }
 
+    private class FakeGate(enabled: Boolean) : FeatureGate {
+        val enabled = MutableStateFlow(enabled)
+        override fun isEnabled(feature: Feature): Boolean = enabled.value
+        override fun observe(feature: Feature): Flow<Boolean> = enabled
+    }
+
     private val repository = FakeRepository()
+    private val gate = FakeGate(true)
 
     @Before
     fun setUp() {
@@ -62,7 +71,7 @@ class BodyMetricsViewModelTest {
     private fun entry(id: String, type: MeasurementType, value: Double, at: Long) =
         BodyMeasurement(id, Instant.ofEpochMilli(at), type, value, MeasurementSource.MANUAL)
 
-    private fun createViewModel() = BodyMetricsViewModel(repository)
+    private fun createViewModel() = BodyMetricsViewModel(repository, gate)
 
     @Test
     fun defaultsToWeightWithNewestFirstHistoryAndOldestFirstChart() = runTest(UnconfinedTestDispatcher()) {

@@ -19,20 +19,24 @@ fun NavGraphBuilder.settingsScreen(onOpenAbout: () -> Unit) {
     }
 }
 
+private enum class SettingsPage { ROOT, BODY_METRICS, PHOTOS }
+
 /**
- * Einstellungen mit der Unterseite Körpermaße. Die Unterseite hängt an der Settings-Route,
- * damit NavHost und App-Scaffold unverändert bleiben; Zurück führt von ihr in die Einstellungen.
+ * Einstellungen mit den Unterseiten Körpermaße und Fortschrittsfotos. Die Unterseiten hängen an der
+ * Settings-Route, damit NavHost und App-Scaffold unverändert bleiben; Zurück führt eine Ebene hoch.
  */
 @Composable
 private fun SettingsHost(onOpenAbout: () -> Unit) {
-    var showBodyMetrics by rememberSaveable { mutableStateOf(false) }
-    BackHandler(enabled = showBodyMetrics) { showBodyMetrics = false }
-    if (showBodyMetrics) {
-        BodyMetricsScreen()
-    } else {
-        SettingsScreen(
-            onOpenBodyMetrics = { showBodyMetrics = true },
+    var page by rememberSaveable { mutableStateOf(SettingsPage.ROOT) }
+    BackHandler(enabled = page != SettingsPage.ROOT) {
+        page = if (page == SettingsPage.PHOTOS) SettingsPage.BODY_METRICS else SettingsPage.ROOT
+    }
+    when (page) {
+        SettingsPage.ROOT -> SettingsScreen(
+            onOpenBodyMetrics = { page = SettingsPage.BODY_METRICS },
             onOpenAbout = onOpenAbout,
         )
+        SettingsPage.BODY_METRICS -> BodyMetricsScreen(onOpenPhotos = { page = SettingsPage.PHOTOS })
+        SettingsPage.PHOTOS -> ProgressPhotosScreen()
     }
 }

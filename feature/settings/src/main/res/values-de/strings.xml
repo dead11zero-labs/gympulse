@@ -100,4 +100,33 @@
     <string name="about_source_free_exercise_db">Englische Übungsnamen, Anleitungen, Muskelgruppen und Bilder</string>
     <string name="about_source_gympulse_content">Deutsche Übungsnamen und Gerätevorlagen</string>
     <string name="about_license">Lizenz: %1$s</string>
+
+    <string name="photos_open">Fortschrittsfotos</string>
+    <string name="photos_title">Fortschrittsfotos</string>
+    <string name="photos_disabled">Fortschrittsfotos sind derzeit nicht verfügbar.</string>
+    <string name="photos_empty">Noch keine Fotos. Fotos bleiben auf diesem Gerät und sind nicht im JSON-Backup enthalten.</string>
+    <string name="photos_take">Foto aufnehmen</string>
+    <string name="photos_pick">Foto auswählen</string>
+    <string name="photos_compare">Zwei Fotos vergleichen</string>
+    <string name="photos_compare_with">Vergleichen mit…</string>
+    <string name="photos_compare_show">Vergleichen</string>
+    <string name="photos_select_hint">Wähle zwei Fotos zum Vergleichen.</string>
+    <string name="photos_item_description">Fortschrittsfoto vom %1$s</string>
+    <string name="photos_no_note">Keine Notiz</string>
+    <string name="photos_back">Zurück zur Galerie</string>
+    <string name="photos_before">Vorher</string>
+    <string name="photos_after">Nachher</string>
+    <plurals name="photos_days_apart">
+        <item quantity="one">%1$d Tag Abstand</item>
+        <item quantity="other">%1$d Tage Abstand</item>
+    </plurals>
+    <string name="photos_note_title">Foto speichern</string>
+    <string name="photos_note_label">Notiz (optional)</string>
+    <string name="photos_discard">Verwerfen</string>
+    <string name="photos_delete">Löschen</string>
+    <string name="photos_delete_title">Foto löschen?</string>
+    <string name="photos_delete_message">Das Foto vom %1$s wird von diesem Gerät entfernt.</string>
+    <string name="photos_error_title">Foto nicht verfügbar</string>
+    <string name="photos_error_message">Das Foto konnte nicht gespeichert werden. Prüfe, ob eine Kamera-App installiert ist, oder wähle ein anderes Foto.</string>
+    <string name="photos_error_ok">OK</string>
 </resources>

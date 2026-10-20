@@ -104,4 +104,33 @@
     <string name="about_source_free_exercise_db">English exercise names, instructions, muscle groups and images</string>
     <string name="about_source_gympulse_content">German exercise names and equipment templates</string>
     <string name="about_license">License: %1$s</string>
+
+    <string name="photos_open">Progress photos</string>
+    <string name="photos_title">Progress photos</string>
+    <string name="photos_disabled">Progress photos are currently unavailable.</string>
+    <string name="photos_empty">No photos yet. Photos stay on this device and are not part of the JSON backup.</string>
+    <string name="photos_take">Take photo</string>
+    <string name="photos_pick">Choose photo</string>
+    <string name="photos_compare">Compare two photos</string>
+    <string name="photos_compare_with">Compare with…</string>
+    <string name="photos_compare_show">Compare</string>
+    <string name="photos_select_hint">Select two photos to compare.</string>
+    <string name="photos_item_description">Progress photo from %1$s</string>
+    <string name="photos_no_note">No note</string>
+    <string name="photos_back">Back to gallery</string>
+    <string name="photos_before">Before</string>
+    <string name="photos_after">After</string>
+    <plurals name="photos_days_apart">
+        <item quantity="one">%1$d day apart</item>
+        <item quantity="other">%1$d days apart</item>
+    </plurals>
+    <string name="photos_note_title">Save photo</string>
+    <string name="photos_note_label">Note (optional)</string>
+    <string name="photos_discard">Discard</string>
+    <string name="photos_delete">Delete</string>
+    <string name="photos_delete_title">Delete photo?</string>
+    <string name="photos_delete_message">The photo from %1$s will be removed from this device.</string>
+    <string name="photos_error_title">Photo not available</string>
+    <string name="photos_error_message">The photo could not be saved. Check that a camera app is installed or choose another photo.</string>
+    <string name="photos_error_ok">OK</string>
 </resources>
