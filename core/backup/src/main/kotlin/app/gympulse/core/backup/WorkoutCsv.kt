@@ -21,7 +21,7 @@ data class WorkoutCsvRow(
  */
 object WorkoutCsv {
 
-    const val BOM = "﻿"
+    const val BOM = "\uFEFF"
     const val NEWLINE = "\r\n"
 
     val HEADER: List<String> = listOf("Datum", "Übung", "Satznr.", "Gewicht kg", "Wiederholungen", "Aufwärmsatz")
