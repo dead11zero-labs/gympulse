@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
@@ -239,6 +241,7 @@ private fun SetRow(
         SetLabel(
             label = label,
             isWarmup = isWarmup,
+            isCompleted = set.isCompleted,
             onToggleWarmup = { actions.onToggleWarmup(sessionExerciseId, set.id) },
             onDelete = { actions.onDeleteSet(set.id) },
             modifier = Modifier.weight(WEIGHT_SET),
@@ -246,14 +249,18 @@ private fun SetRow(
         Text(
             text = previousText(set.previous, fields),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (set.isCompleted) {
+                MaterialTheme.colorScheme.onSecondaryContainer
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant
+            },
             textAlign = TextAlign.Center,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.weight(WEIGHT_PREVIOUS),
         )
         fields.forEach { field ->
-            val fieldModifier = Modifier.weight(WEIGHT_FIELD)
+            val fieldModifier = Modifier.weight(WEIGHT_FIELD).heightIn(min = Sizing.minTouchTarget)
             val description = stringResource(field.labelRes())
             when (field) {
                 SetField.WEIGHT, SetField.EXTRA_WEIGHT -> SetInputField(
@@ -305,6 +312,7 @@ private fun SetRow(
 private fun SetLabel(
     label: String,
     isWarmup: Boolean,
+    isCompleted: Boolean,
     onToggleWarmup: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
@@ -322,7 +330,11 @@ private fun SetLabel(
             Text(
                 text = label,
                 style = MaterialTheme.typography.titleSmall,
-                color = if (isWarmup) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onSurface,
+                color = when {
+                    isCompleted -> MaterialTheme.colorScheme.onSecondaryContainer
+                    isWarmup -> MaterialTheme.colorScheme.tertiary
+                    else -> MaterialTheme.colorScheme.onSurface
+                },
             )
         }
         DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {

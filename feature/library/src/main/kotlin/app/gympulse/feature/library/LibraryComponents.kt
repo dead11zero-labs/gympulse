@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import app.gympulse.core.data.ui.labelRes
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.component.EmptyState as DesignEmptyState
 import app.gympulse.core.designsystem.component.GymPulseSearchField
 import app.gympulse.core.designsystem.component.ListRowDivider
@@ -72,10 +73,10 @@ internal fun FormColumn(
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         Column(
             modifier = Modifier
-                .widthIn(max = Spacing.maxContentWidth)
+                .widthIn(max = Spacing.maxFormWidth)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(Spacing.screenMargin),
+                .padding(currentWindowWidthClass().horizontalMargin),
             verticalArrangement = Arrangement.spacedBy(Spacing.m),
             content = content,
         )
