@@ -9,6 +9,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 
 /** "Über die App": Version sowie Quellen der Übungsdaten und Bibliotheken. */
@@ -30,26 +41,39 @@ internal fun AboutScreen(modifier: Modifier = Modifier) {
                 .widthIn(max = Spacing.maxContentWidth)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = Spacing.screenMargin, vertical = Spacing.m),
+                .padding(horizontal = currentWindowWidthClass().horizontalMargin, vertical = Spacing.m),
             verticalArrangement = Arrangement.spacedBy(Spacing.l),
         ) {
-            Column(
+            GymPulseCard(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+                variant = GymPulseCardVariant.Primary,
+                shape = ExpressiveShapes.extraLargeIncreased,
+                contentPadding = PaddingValues(Spacing.l),
+                verticalSpacing = Spacing.xxs,
             ) {
-                Text(
-                    text = stringResource(R.string.about_app_name),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    text = stringResource(R.string.about_version, version),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+                ) {
+                    ListRowIcon(
+                        icon = Icons.Filled.Info,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        size = Sizing.iconLarge + Spacing.l,
+                    )
+                    Spacer(Modifier.height(Spacing.xs))
+                    Text(
+                        text = stringResource(R.string.about_app_name),
+                        style = MaterialTheme.typography.headlineMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        text = stringResource(R.string.about_version, version),
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
 
             LicenseSection(

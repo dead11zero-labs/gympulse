@@ -5,6 +5,9 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +15,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +44,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.component.StatTile
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
@@ -59,30 +87,18 @@ internal fun SettingsScreen(
                 .widthIn(max = Spacing.maxContentWidth)
                 .fillMaxWidth()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = Spacing.screenMargin, vertical = Spacing.m),
+                .padding(horizontal = currentWindowWidthClass().horizontalMargin, vertical = Spacing.m),
             verticalArrangement = Arrangement.spacedBy(Spacing.l),
         ) {
-            SettingsSection(stringResource(R.string.settings_section_profile)) {
-                SettingsRow(
-                    headline = stringResource(R.string.settings_name),
-                    supporting = profile.name ?: notSet,
-                    onClick = { dialog = SettingsDialog.NAME },
-                )
-                SettingsDivider()
-                SettingsRow(
-                    headline = stringResource(R.string.settings_body_weight),
-                    supporting = profile.bodyWeightKg
-                        ?.let { stringResource(R.string.settings_value_kg, formatNumber(it)) }
-                        ?: notSet,
-                    onClick = { dialog = SettingsDialog.WEIGHT },
-                )
-                SettingsDivider()
-                SettingsRow(
-                    headline = stringResource(R.string.settings_height),
-                    supporting = profile.heightCm
-                        ?.let { stringResource(R.string.settings_value_cm, formatNumber(it)) }
-                        ?: notSet,
-                    onClick = { dialog = SettingsDialog.HEIGHT },
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                SettingsSectionHeader(stringResource(R.string.settings_section_profile))
+                ProfileHero(
+                    name = profile.name ?: notSet,
+                    weight = profile.bodyWeightKg?.let(::formatNumber),
+                    height = profile.heightCm?.let(::formatNumber),
+                    onEditName = { dialog = SettingsDialog.NAME },
+                    onEditWeight = { dialog = SettingsDialog.WEIGHT },
+                    onEditHeight = { dialog = SettingsDialog.HEIGHT },
                 )
             }
 
@@ -90,18 +106,21 @@ internal fun SettingsScreen(
                 SettingsRow(
                     headline = stringResource(R.string.settings_rest_timer),
                     supporting = stringResource(R.string.settings_value_seconds, settings.restTimerSeconds),
+                    icon = Icons.Filled.Notifications,
                     onClick = { dialog = SettingsDialog.REST_TIMER },
                 )
-                SettingsDivider()
+                SettingsDivider(withIcon = true)
                 SettingsRow(
                     headline = stringResource(R.string.settings_week_start),
                     supporting = weekStartLabel(settings.weekStart),
+                    icon = Icons.Filled.DateRange,
                     onClick = { dialog = SettingsDialog.WEEK_START },
                 )
-                SettingsDivider()
+                SettingsDivider(withIcon = true)
                 SettingsRow(
                     headline = stringResource(R.string.settings_weekly_goal),
                     supporting = stringResource(R.string.settings_value_per_week, settings.weeklyGoal),
+                    icon = Icons.Filled.CheckCircle,
                     onClick = { dialog = SettingsDialog.WEEKLY_GOAL },
                 )
             }
@@ -110,9 +129,10 @@ internal fun SettingsScreen(
                 SettingsRow(
                     headline = stringResource(R.string.settings_theme),
                     supporting = themeLabel(settings.themeMode),
+                    icon = Icons.Filled.Create,
                     onClick = { dialog = SettingsDialog.THEME },
                 )
-                SettingsDivider()
+                SettingsDivider(withIcon = true)
                 SettingsRow(
                     headline = stringResource(R.string.settings_dynamic_color),
                     supporting = stringResource(
@@ -122,6 +142,7 @@ internal fun SettingsScreen(
                             R.string.settings_dynamic_color_unavailable
                         },
                     ),
+                    icon = Icons.Filled.Star,
                     trailing = {
                         Switch(
                             checked = settings.dynamicColor && dynamicColorSupported,
@@ -141,6 +162,7 @@ internal fun SettingsScreen(
                 SettingsRow(
                     headline = stringResource(R.string.settings_language),
                     supporting = languageLabel(settings.language),
+                    icon = Icons.Filled.Place,
                     onClick = { dialog = SettingsDialog.LANGUAGE },
                 )
             }
@@ -149,6 +171,14 @@ internal fun SettingsScreen(
                 SettingsRow(
                     headline = stringResource(R.string.settings_body_measurements),
                     supporting = stringResource(R.string.settings_body_measurements_summary),
+                    icon = Icons.Filled.Face,
+                    trailing = {
+                        Icon(
+                            Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    },
                     onClick = onOpenBodyMetrics,
                 )
             }
@@ -157,11 +187,13 @@ internal fun SettingsScreen(
                 ComingSoonRow(
                     headline = stringResource(R.string.settings_health_connect),
                     supporting = stringResource(R.string.settings_health_connect_summary),
+                    icon = Icons.Filled.Favorite,
                 )
-                SettingsDivider()
+                SettingsDivider(withIcon = true)
                 ComingSoonRow(
                     headline = stringResource(R.string.settings_samsung_health),
                     supporting = stringResource(R.string.settings_samsung_health_summary),
+                    icon = Icons.Filled.Favorite,
                 )
             }
 
@@ -173,11 +205,13 @@ internal fun SettingsScreen(
                 SettingsRow(
                     headline = stringResource(R.string.settings_version),
                     supporting = appVersion(LocalContext.current),
+                    icon = Icons.Filled.Info,
                 )
-                SettingsDivider()
+                SettingsDivider(withIcon = true)
                 SettingsRow(
                     headline = stringResource(R.string.settings_licenses),
                     supporting = stringResource(R.string.settings_licenses_summary),
+                    icon = Icons.AutoMirrored.Filled.List,
                     onClick = onOpenAbout,
                 )
             }
@@ -264,6 +298,73 @@ internal fun SettingsScreen(
             onSelect = { viewModel.setLanguage(it); dismiss() },
             onDismiss = dismiss,
         )
+    }
+}
+
+/** Profilkopf: Name groß auf tonaler Fläche, darunter Gewicht und Größe als Kennzahlen. */
+@Composable
+private fun ProfileHero(
+    name: String,
+    weight: String?,
+    height: String?,
+    onEditName: () -> Unit,
+    onEditWeight: () -> Unit,
+    onEditHeight: () -> Unit,
+) {
+    val noValue = stringResource(R.string.settings_not_set)
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.gutter)) {
+        GymPulseCard(
+            modifier = Modifier.fillMaxWidth(),
+            variant = GymPulseCardVariant.Primary,
+            shape = ExpressiveShapes.extraLargeIncreased,
+            onClick = onEditName,
+            contentPadding = PaddingValues(Spacing.m),
+        ) {
+            Row(
+                modifier = Modifier.defaultMinSize(minHeight = Sizing.minTouchTarget),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.m),
+            ) {
+                ListRowIcon(
+                    icon = Icons.Filled.Person,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    size = Sizing.iconLarge + Spacing.l,
+                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = stringResource(R.string.settings_name),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.headlineSmall,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                Icon(
+                    Icons.Filled.Edit,
+                    contentDescription = null,
+                )
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.gutter)) {
+            StatTile(
+                value = weight ?: noValue,
+                unit = weight?.let { stringResource(R.string.settings_unit_kg) },
+                label = stringResource(R.string.settings_body_weight),
+                onClick = onEditWeight,
+                modifier = Modifier.weight(1f),
+            )
+            StatTile(
+                value = height ?: noValue,
+                unit = height?.let { stringResource(R.string.settings_unit_cm) },
+                label = stringResource(R.string.settings_height),
+                onClick = onEditHeight,
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
 }
 
