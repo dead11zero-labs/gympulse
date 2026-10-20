@@ -12,13 +12,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDate
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /** Datenzugriff des Kalenders; in Tests durch eine Fake-Implementierung ersetzbar. */
 interface CalendarDataSource {
@@ -73,16 +71,10 @@ class DefaultCalendarDataSource @Inject constructor(
 
 /**
  * Wochenstart laut Einstellungen. Eigene Schnittstelle des Kalenders, damit dieses Modul nicht vom
- * Dashboard abhängt; die Einstellungen binden später beide Schnittstellen an dieselbe Quelle.
+ * Dashboard abhängt; die App bindet beide Schnittstellen an die Einstellungen.
  */
 interface CalendarWeekStartProvider {
     val weekStartsOn: StateFlow<DayOfWeek>
-}
-
-/** Standardwert, bis die Einstellungen den Provider übernehmen: Montag. */
-@Singleton
-class DefaultCalendarWeekStart @Inject constructor() : CalendarWeekStartProvider {
-    override val weekStartsOn: StateFlow<DayOfWeek> = MutableStateFlow(DayOfWeek.MONDAY)
 }
 
 @Module
@@ -90,7 +82,4 @@ class DefaultCalendarWeekStart @Inject constructor() : CalendarWeekStartProvider
 abstract class CalendarModule {
     @Binds
     abstract fun bindDataSource(impl: DefaultCalendarDataSource): CalendarDataSource
-
-    @Binds
-    abstract fun bindWeekStartProvider(impl: DefaultCalendarWeekStart): CalendarWeekStartProvider
 }
