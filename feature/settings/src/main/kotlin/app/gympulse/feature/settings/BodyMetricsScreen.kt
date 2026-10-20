@@ -16,13 +16,17 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -40,6 +44,17 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.component.ChipRow
+import app.gympulse.core.designsystem.component.EmptyState
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.component.StatTile
+import app.gympulse.core.designsystem.component.StatTileStyle
+import app.gympulse.core.designsystem.component.StatTrend
+import app.gympulse.core.designsystem.component.TrendDirection
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.BodyMeasurement
 import app.gympulse.core.model.MeasurementType
@@ -75,7 +90,7 @@ internal fun BodyMetricsScreen(
                 .widthIn(max = Spacing.maxContentWidth)
                 .fillMaxWidth(),
             contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                horizontal = Spacing.screenMargin,
+                horizontal = currentWindowWidthClass().horizontalMargin,
                 vertical = Spacing.m,
             ),
             verticalArrangement = Arrangement.spacedBy(Spacing.m),
@@ -86,7 +101,11 @@ internal fun BodyMetricsScreen(
                 }
             }
             item {
-                TypeChips(selected = state.selectedType, onSelect = viewModel::selectType)
+                TypeChips(
+                    selected = state.selectedType,
+                    onSelect = viewModel::selectType,
+                    modifier = Modifier.padding(horizontal = Spacing.none),
+                )
             }
             item { SummaryCard(state) }
             item { ChartCard(state) }
@@ -95,16 +114,18 @@ internal fun BodyMetricsScreen(
             }
             if (state.history.isEmpty()) {
                 item {
-                    Text(
-                        text = stringResource(R.string.body_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = Spacing.m),
+                    EmptyState(
+                        icon = Icons.Filled.Face,
+                        title = stringResource(R.string.body_history),
+                        message = stringResource(R.string.body_empty),
+                        actionLabel = stringResource(R.string.body_add),
+                        onAction = { adding = true },
                     )
                 }
             } else {
                 items(state.history, key = { it.id }) { entry ->
                     HistoryRow(
+                        modifier = Modifier.animateItem(),
                         entry = entry,
                         onEdit = { editing = entry },
                         onDelete = { deleting = entry },
@@ -168,67 +189,57 @@ internal fun BodyMetricsScreen(
 }
 
 @Composable
-private fun TypeChips(selected: MeasurementType, onSelect: (MeasurementType) -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState()),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-    ) {
-        MeasurementType.entries.forEach { type ->
-            FilterChip(
-                selected = type == selected,
-                onClick = { onSelect(type) },
-                label = { Text(typeLabel(type)) },
-            )
-        }
-    }
+private fun TypeChips(selected: MeasurementType, onSelect: (MeasurementType) -> Unit, modifier: Modifier = Modifier) {
+    ChipRow(
+        items = MeasurementType.entries,
+        isSelected = { it == selected },
+        onClick = onSelect,
+        label = { typeLabel(it) },
+        modifier = modifier,
+        contentPadding = PaddingValues(horizontal = Spacing.none),
+    )
 }
 
 @Composable
 private fun SummaryCard(state: BodyMetricsUiState) {
     val latest = state.history.firstOrNull() ?: return
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-    ) {
-        Column(
-            modifier = Modifier.padding(Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
-        ) {
-            Text(
-                text = stringResource(R.string.body_latest),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Text(
-                text = formatValue(latest.type, latest.value),
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            state.change?.let { change ->
-                Text(
-                    text = stringResource(R.string.body_change, formatSigned(latest.type, change)),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
+    val trend = state.change?.let { change ->
+        StatTrend(
+            label = stringResource(R.string.body_change, formatSigned(latest.type, change)),
+            direction = when {
+                change > 0 -> TrendDirection.Up
+                change < 0 -> TrendDirection.Down
+                else -> TrendDirection.Flat
+            },
+        )
     }
+    StatTile(
+        value = formatValue(latest.type, latest.value),
+        label = stringResource(R.string.body_latest),
+        trend = trend,
+        style = StatTileStyle.Highlighted,
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+    )
 }
 
 @Composable
 private fun ChartCard(state: BodyMetricsUiState) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
+    GymPulseCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        variant = GymPulseCardVariant.Elevated,
+        shape = ExpressiveShapes.largeIncreased,
     ) {
-        Box(modifier = Modifier.padding(Spacing.m), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
             if (state.chart.size < 2) {
                 Text(
                     text = stringResource(R.string.body_chart_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(vertical = Spacing.l),
                 )
             } else {
                 MeasurementChart(state.chart)
@@ -272,18 +283,32 @@ private fun MeasurementChart(entries: List<BodyMeasurement>) {
 }
 
 @Composable
-private fun HistoryRow(entry: BodyMeasurement, onEdit: () -> Unit, onDelete: () -> Unit) {
-    ListItem(
-        headlineContent = { Text(formatValue(entry.type, entry.value)) },
-        supportingContent = { Text(formatDate(entry)) },
-        trailingContent = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = onEdit) { Text(stringResource(R.string.body_edit)) }
-                TextButton(onClick = onDelete) { Text(stringResource(R.string.body_delete)) }
-            }
-        },
-        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-    )
+private fun HistoryRow(
+    entry: BodyMeasurement,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
+        color = MaterialTheme.colorScheme.surfaceContainer,
+    ) {
+        ListRow(
+            headline = formatValue(entry.type, entry.value),
+            supportingText = formatDate(entry),
+            trailingContent = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onEdit) {
+                        Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.body_edit))
+                    }
+                    IconButton(onClick = onDelete) {
+                        Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.body_delete))
+                    }
+                }
+            },
+        )
+    }
 }
 
 /** Formular für eine neue Messung: Gewicht ist Pflicht, alle anderen Felder sind optional. */

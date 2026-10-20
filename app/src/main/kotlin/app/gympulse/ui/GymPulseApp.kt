@@ -1,11 +1,14 @@
 package app.gympulse.ui
 
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -15,11 +18,14 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
@@ -28,10 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -40,6 +43,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.gympulse.R
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.feature.settings.AboutRoute
 import app.gympulse.feature.settings.SettingsRoute
 import app.gympulse.feature.workout.bar.ActiveWorkoutBar
@@ -47,9 +52,6 @@ import app.gympulse.feature.workout.bar.ActiveWorkoutServiceEffect
 import app.gympulse.feature.workout.navigateToWorkout
 import app.gympulse.navigation.GymPulseNavHost
 import app.gympulse.navigation.TopLevelDestination
-
-/** Ab dieser Fensterbreite (Material 3 "Medium") wird die Navigation zur Rail an der Seite. */
-private val MediumWidthBreakpoint = 600.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,10 +65,9 @@ fun GymPulseApp(
 
     // Adaptive Navigation: Navigation Bar auf Handys, Navigation Rail auf Tablets und Foldables.
     // Im Workout und in den Einstellungen wird sie ausgeblendet.
-    val windowWidth = with(LocalDensity.current) { LocalWindowInfo.current.containerSize.width.toDp() }
     val layoutType = when {
         currentTopLevel == null -> NavigationSuiteType.None
-        windowWidth >= MediumWidthBreakpoint -> NavigationSuiteType.NavigationRail
+        currentWindowWidthClass().isAtLeastMedium -> NavigationSuiteType.NavigationRail
         else -> NavigationSuiteType.NavigationBar
     }
 
@@ -96,8 +97,15 @@ fun GymPulseApp(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(stringResource(currentTopLevel?.labelRes ?: R.string.app_name))
+                        Text(
+                            text = stringResource(currentTopLevel?.labelRes ?: R.string.app_name),
+                            style = MaterialTheme.typography.titleLarge,
+                        )
                     },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    ),
                     navigationIcon = {
                         if (currentTopLevel == null && navController.previousBackStackEntry != null) {
                             // Über den Dispatcher, damit BackHandler (z. B. "Änderungen verwerfen?" im Plan-Editor) greifen.
@@ -157,28 +165,41 @@ private fun NavHostController.navigateToTopLevel(destination: TopLevelDestinatio
 @Composable
 private fun AvatarMenu(onOpenSettings: () -> Unit, onOpenAbout: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    IconButton(onClick = { expanded = true }) {
-        Icon(
-            Icons.Filled.AccountCircle,
-            contentDescription = stringResource(R.string.action_account),
-        )
-    }
-    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.action_settings)) },
-            leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = null) },
-            onClick = {
-                expanded = false
-                onOpenSettings()
-            },
-        )
-        DropdownMenuItem(
-            text = { Text(stringResource(R.string.action_about)) },
-            leadingIcon = { Icon(Icons.Filled.Info, contentDescription = null) },
-            onClick = {
-                expanded = false
-                onOpenAbout()
-            },
-        )
+    // The Box anchors the dropdown to the avatar button instead of the top-left corner.
+    Box {
+        IconButton(
+            onClick = { expanded = true },
+            modifier = Modifier.sizeIn(minWidth = Sizing.minTouchTarget, minHeight = Sizing.minTouchTarget),
+        ) {
+            Icon(
+                Icons.Filled.AccountCircle,
+                contentDescription = stringResource(R.string.action_account),
+                modifier = Modifier.size(Sizing.iconLarge),
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            shape = MaterialTheme.shapes.large,
+        ) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.action_settings)) },
+                leadingIcon = { Icon(Icons.Filled.Settings, contentDescription = null) },
+                onClick = {
+                    expanded = false
+                    onOpenSettings()
+                },
+            )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.action_about)) },
+                leadingIcon = { Icon(Icons.Filled.Info, contentDescription = null) },
+                onClick = {
+                    expanded = false
+                    onOpenAbout()
+                },
+            )
+        }
     }
 }
