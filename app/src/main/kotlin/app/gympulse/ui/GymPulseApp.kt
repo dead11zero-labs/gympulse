@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -39,6 +40,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.gympulse.R
+import app.gympulse.feature.settings.AboutRoute
 import app.gympulse.feature.settings.SettingsRoute
 import app.gympulse.feature.workout.bar.ActiveWorkoutBar
 import app.gympulse.feature.workout.bar.ActiveWorkoutServiceEffect
@@ -109,7 +111,10 @@ fun GymPulseApp(
                     },
                     actions = {
                         if (currentTopLevel != null) {
-                            AvatarMenu(onOpenSettings = { navController.navigate(SettingsRoute) })
+                            AvatarMenu(
+                                onOpenSettings = { navController.navigate(SettingsRoute) },
+                                onOpenAbout = { navController.navigate(AboutRoute) },
+                            )
                         }
                     },
                 )
@@ -148,9 +153,9 @@ private fun NavHostController.navigateToTopLevel(destination: TopLevelDestinatio
     }
 }
 
-/** Avatar button in the top bar; its menu leads to the settings (more entries can follow). */
+/** Avatar button in the top bar; its menu leads to the settings and to "Über die App". */
 @Composable
-private fun AvatarMenu(onOpenSettings: () -> Unit) {
+private fun AvatarMenu(onOpenSettings: () -> Unit, onOpenAbout: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     IconButton(onClick = { expanded = true }) {
         Icon(
@@ -165,6 +170,14 @@ private fun AvatarMenu(onOpenSettings: () -> Unit) {
             onClick = {
                 expanded = false
                 onOpenSettings()
+            },
+        )
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.action_about)) },
+            leadingIcon = { Icon(Icons.Filled.Info, contentDescription = null) },
+            onClick = {
+                expanded = false
+                onOpenAbout()
             },
         )
     }

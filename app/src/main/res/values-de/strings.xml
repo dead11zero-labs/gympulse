@@ -5,6 +5,7 @@
     <string name="nav_library">Bibliothek</string>
     <string name="nav_calendar">Kalender</string>
     <string name="action_settings">Einstellungen</string>
+    <string name="action_about">Über die App</string>
     <string name="action_account">Kontomenü</string>
     <string name="action_back">Zurück</string>
 </resources>
