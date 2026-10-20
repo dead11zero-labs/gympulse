@@ -27,6 +27,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import app.gympulse.core.designsystem.theme.Spacing
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Surface
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import app.gympulse.core.designsystem.component.EmptyState
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListGroup
+import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.component.ListRowDivider
+import app.gympulse.core.designsystem.component.SectionHeader
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
+import app.gympulse.core.designsystem.theme.Sizing
 
 @Composable
 internal fun PlanSelectionContent(
@@ -41,74 +57,99 @@ internal fun PlanSelectionContent(
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = Spacing.screenMargin, vertical = Spacing.m),
-        verticalArrangement = Arrangement.spacedBy(Spacing.s),
+        verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
             Column(modifier = itemModifier, verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
                 Text(
                     text = stringResource(R.string.feature_workout_choose_title),
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.headlineLarge,
                     color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.semantics { heading() },
                 )
                 Text(
                     text = stringResource(R.string.feature_workout_choose_subtitle),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
         item {
-            Card(
+            GymPulseCard(
                 onClick = onStartEmpty,
                 modifier = itemModifier,
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                ),
+                variant = GymPulseCardVariant.Primary,
+                shape = ExpressiveShapes.extraLargeIncreased,
+                contentPadding = PaddingValues(Spacing.l),
             ) {
-                ListItem(
-                    headlineContent = { Text(stringResource(R.string.feature_workout_empty_workout)) },
-                    supportingContent = { Text(stringResource(R.string.feature_workout_empty_workout_description)) },
-                    leadingContent = { Icon(Icons.Filled.Add, contentDescription = null) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.m),
+                ) {
+                    Surface(
+                        shape = ExpressiveShapes.full,
+                        color = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.size(Sizing.minTouchTarget),
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(Icons.Filled.Add, contentDescription = null)
+                        }
+                    }
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = stringResource(R.string.feature_workout_empty_workout),
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                        Text(
+                            text = stringResource(R.string.feature_workout_empty_workout_description),
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
             }
         }
         item {
-            Text(
-                text = stringResource(R.string.feature_workout_plans_header),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = itemModifier.padding(top = Spacing.xs),
+            SectionHeader(
+                title = stringResource(R.string.feature_workout_plans_header),
+                modifier = itemModifier,
+                contentPadding = PaddingValues(vertical = Spacing.xs),
             )
         }
         if (plans.isEmpty()) {
             item {
-                Text(
-                    text = stringResource(R.string.feature_workout_no_plans),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = itemModifier,
-                )
+                GymPulseCard(variant = GymPulseCardVariant.Outlined, modifier = itemModifier) {
+                    EmptyState(
+                        icon = Icons.Filled.DateRange,
+                        title = stringResource(R.string.feature_workout_no_plans_title),
+                        message = stringResource(R.string.feature_workout_no_plans),
+                    )
+                }
             }
-        }
-        items(plans, key = { it.id }) { plan ->
-            OutlinedCard(onClick = { onStartPlan(plan.id) }, modifier = itemModifier) {
-                ListItem(
-                    headlineContent = { Text(plan.name) },
-                    supportingContent = {
-                        Text(
-                            pluralStringResource(
+        } else {
+            item(key = "plans") {
+                ListGroup(modifier = itemModifier) {
+                    plans.forEachIndexed { index, plan ->
+                        if (index > 0) ListRowDivider()
+                        ListRow(
+                            headline = plan.name,
+                            supportingText = pluralStringResource(
                                 R.plurals.feature_workout_exercise_count,
                                 plan.exerciseCount,
                                 plan.exerciseCount,
                             ),
+                            leadingIcon = Icons.Filled.DateRange,
+                            trailingContent = {
+                                Icon(
+                                    Icons.Filled.PlayArrow,
+                                    contentDescription = stringResource(R.string.feature_workout_start_plan, plan.name),
+                                )
+                            },
+                            onClick = { onStartPlan(plan.id) },
                         )
-                    },
-                    trailingContent = { Icon(Icons.Filled.PlayArrow, contentDescription = null) },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                )
+                    }
+                }
             }
         }
     }

@@ -18,13 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.stateDescription
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.feature.workout.timer.RestTimer
 import app.gympulse.feature.workout.timer.RestTimerState
 import java.time.Instant
+import androidx.compose.animation.animateContentSize
+import androidx.compose.material3.FilledTonalButton
+import app.gympulse.core.designsystem.component.GymPulseProgressBar
+import app.gympulse.core.designsystem.theme.metricMedium
 
 /** Rest countdown below the set list, with -15 s / +15 s and skip. */
 @Composable
@@ -36,20 +37,22 @@ internal fun RestTimerBar(
     modifier: Modifier = Modifier,
 ) {
     val step = RestTimer.ADJUST_STEP_SECONDS
-    val remainingLabel = stringResource(R.string.feature_workout_rest_remaining)
-    val remainingText = WorkoutFormat.formatElapsed(state.remainingSeconds(now()).toLong())
+    val remaining = WorkoutFormat.formatElapsed(state.remainingSeconds(now()).toLong())
     Surface(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize(),
         color = MaterialTheme.colorScheme.secondaryContainer,
         contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        shape = MaterialTheme.shapes.extraLarge,
     ) {
         Box(contentAlignment = Alignment.TopCenter) {
             Column(
                 modifier = Modifier
                     .widthIn(max = Spacing.maxContentWidth)
                     .fillMaxWidth()
-                    .padding(horizontal = Spacing.screenMargin, vertical = Spacing.s),
-                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    .padding(horizontal = Spacing.screenMargin, vertical = Spacing.m),
+                verticalArrangement = Arrangement.spacedBy(Spacing.s),
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -58,29 +61,24 @@ internal fun RestTimerBar(
                         modifier = Modifier.weight(1f),
                     )
                     Text(
-                        text = remainingText,
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = remaining,
+                        style = MaterialTheme.typography.metricMedium,
                     )
                 }
-                LinearProgressIndicator(
-                    progress = { state.remainingFraction(now()) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .semantics {
-                            contentDescription = remainingLabel
-                            stateDescription = remainingText
-                        },
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    trackColor = MaterialTheme.colorScheme.outlineVariant,
+                GymPulseProgressBar(
+                    progress = state.remainingFraction(now()),
+                    animate = false,
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.surfaceContainerLowest,
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    OutlinedButton(onClick = { onAdjust(-step) }) {
+                    FilledTonalButton(onClick = { onAdjust(-step) }) {
                         Text(stringResource(R.string.feature_workout_rest_minus, step))
                     }
-                    OutlinedButton(onClick = { onAdjust(step) }) {
+                    FilledTonalButton(onClick = { onAdjust(step) }) {
                         Text(stringResource(R.string.feature_workout_rest_plus, step))
                     }
                     Spacer(modifier = Modifier.weight(1f))

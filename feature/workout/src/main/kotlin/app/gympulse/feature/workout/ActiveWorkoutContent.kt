@@ -38,6 +38,16 @@ import app.gympulse.feature.workout.timer.RestTimerState
 import app.gympulse.feature.workout.timer.runningAt
 import java.time.Duration
 import java.time.Instant
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import app.gympulse.core.designsystem.component.EmptyState
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.GymPulseProgressBar
+import app.gympulse.core.designsystem.component.ProgressMath
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
+import app.gympulse.core.designsystem.theme.metricSmall
 
 /** Callbacks of the active workout, grouped to keep the composable signatures short. */
 internal data class WorkoutActions(
@@ -80,7 +90,7 @@ internal fun ActiveWorkoutContent(
                 .weight(1f)
                 .fillMaxWidth(),
             contentPadding = PaddingValues(horizontal = Spacing.screenMargin, vertical = Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.m),
+            verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             item(key = "header") {
@@ -94,10 +104,12 @@ internal fun ActiveWorkoutContent(
             }
             if (session.exercises.isEmpty()) {
                 item(key = "empty") {
-                    Text(
-                        text = stringResource(R.string.feature_workout_no_exercises),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    EmptyState(
+                        icon = Icons.Filled.Add,
+                        title = stringResource(R.string.feature_workout_no_exercises_title),
+                        message = stringResource(R.string.feature_workout_no_exercises),
+                        actionLabel = stringResource(R.string.feature_workout_add_exercise),
+                        onAction = { showPicker = true },
                         modifier = itemModifier,
                     )
                 }
@@ -110,7 +122,7 @@ internal fun ActiveWorkoutContent(
                 )
             }
             item(key = "add_exercise") {
-                OutlinedButton(onClick = { showPicker = true }, modifier = itemModifier) {
+                FilledTonalButton(onClick = { showPicker = true }, modifier = itemModifier) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                     Text(
                         text = stringResource(R.string.feature_workout_add_exercise),
@@ -185,73 +197,93 @@ private fun WorkoutHeader(
     onDiscard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    GymPulseCard(
         modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-        ),
+        variant = GymPulseCardVariant.Filled,
+        shape = ExpressiveShapes.extraLargeIncreased,
+        contentPadding = PaddingValues(Spacing.l),
+        verticalSpacing = Spacing.m,
     ) {
-        Column(
-            modifier = Modifier.padding(Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.s),
+        Text(
+            text = session.title ?: stringResource(R.string.feature_workout_empty_workout),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.semantics { heading() },
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.l),
         ) {
-            Text(
-                text = session.title ?: stringResource(R.string.feature_workout_empty_workout),
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onSurface,
+            val elapsed = Duration.between(session.startedAt, now()).seconds
+            HeaderStat(
+                label = stringResource(R.string.feature_workout_duration),
+                value = WorkoutFormat.formatElapsed(elapsed),
+                modifier = Modifier.weight(1f),
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(Spacing.l)) {
-                val elapsed = Duration.between(session.startedAt, now()).seconds
-                HeaderStat(
-                    label = stringResource(R.string.feature_workout_duration),
-                    value = WorkoutFormat.formatElapsed(elapsed),
-                )
-                HeaderStat(
-                    label = stringResource(R.string.feature_workout_volume),
-                    value = stringResource(R.string.feature_workout_kg_value, WorkoutFormat.formatKg(session.volumeKg)),
-                )
-                HeaderStat(
-                    label = stringResource(R.string.feature_workout_sets),
-                    value = stringResource(
-                        R.string.feature_workout_sets_progress,
-                        session.completedSets,
-                        session.completedSets + session.openSets,
-                    ),
-                )
+            HeaderStat(
+                label = stringResource(R.string.feature_workout_volume),
+                value = WorkoutFormat.formatKg(session.volumeKg),
+                unit = stringResource(R.string.feature_workout_column_kg),
+                modifier = Modifier.weight(1f),
+            )
+            HeaderStat(
+                label = stringResource(R.string.feature_workout_sets),
+                value = stringResource(
+                    R.string.feature_workout_sets_progress,
+                    session.completedSets,
+                    session.completedSets + session.openSets,
+                ),
+                modifier = Modifier.weight(1f),
+            )
+        }
+        val totalSets = session.completedSets + session.openSets
+        if (totalSets > 0) {
+            GymPulseProgressBar(progress = ProgressMath.fraction(session.completedSets.toDouble(), totalSets.toDouble()))
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs, Alignment.End),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            TextButton(onClick = onDiscard) {
+                Text(stringResource(R.string.feature_workout_discard))
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.xs, Alignment.End),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                TextButton(onClick = onDiscard) {
-                    Text(stringResource(R.string.feature_workout_discard))
-                }
-                Button(onClick = onFinish) {
-                    Icon(Icons.Filled.Check, contentDescription = null)
-                    Text(
-                        text = stringResource(R.string.feature_workout_finish),
-                        modifier = Modifier.padding(start = Spacing.xs),
-                    )
-                }
+            Button(onClick = onFinish) {
+                Icon(Icons.Filled.Check, contentDescription = null)
+                Text(
+                    text = stringResource(R.string.feature_workout_finish),
+                    modifier = Modifier.padding(start = Spacing.xs),
+                )
             }
         }
     }
 }
 
 @Composable
-private fun HeaderStat(label: String, value: String) {
-    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+private fun HeaderStat(label: String, value: String, modifier: Modifier = Modifier, unit: String? = null) {
+    Column(modifier = modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+            Text(
+                text = value,
+                style = MaterialTheme.typography.metricSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                modifier = Modifier.alignByBaseline(),
+            )
+            if (unit != null) {
+                Text(
+                    text = unit,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.alignByBaseline(),
+                )
+            }
+        }
     }
 }
 

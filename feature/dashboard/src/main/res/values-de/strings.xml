@@ -13,7 +13,7 @@
     <string name="feature_dashboard_free_workout">Freies Workout</string>
 
     <string name="feature_dashboard_volume_title">Wochenvolumen</string>
-    <string name="feature_dashboard_volume_total">%1$s kg</string>
+    <string name="feature_dashboard_unit_kg">kg</string>
     <string name="feature_dashboard_volume_vs_last_week">%1$s zur Vorwoche</string>
     <string name="feature_dashboard_volume_no_comparison">Noch kein Vergleich zur Vorwoche</string>
     <string name="feature_dashboard_volume_empty">Diese Woche noch kein Volumen. Schließe ein Workout ab, dann erscheinen hier die Balken.</string>
@@ -36,6 +36,7 @@
     </plurals>
 
     <string name="feature_dashboard_recent_title">Zuletzt trainiert</string>
+    <string name="feature_dashboard_recent_empty_title">Noch nichts hier</string>
     <string name="feature_dashboard_recent_empty">Noch keine abgeschlossenen Workouts. Deine letzten Sessions erscheinen hier.</string>
     <string name="feature_dashboard_recent_details">%1$s · %2$s kg</string>
     <string name="feature_dashboard_date_today">Heute</string>

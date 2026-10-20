@@ -60,6 +60,7 @@
     <string name="plans_picker_clear">Clear search</string>
     <string name="plans_picker_close">Close</string>
     <string name="plans_picker_empty">No exercises found</string>
+    <string name="plans_picker_empty_hint">Try a different search term.</string>
     <string name="plans_picker_select_hint">Select exercises</string>
     <plurals name="plans_picker_add_count">
         <item quantity="one">Add %d exercise</item>

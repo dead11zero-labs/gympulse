@@ -26,17 +26,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.adaptive.WindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
-
-/** Ab dieser Inhaltsbreite (Material 3 "Medium") stehen die Widgets nebeneinander. */
-private val TwoColumnBreakpoint = 600.dp
 
 @Composable
 internal fun DashboardScreen(
@@ -68,13 +64,15 @@ internal fun DashboardContent(
                 .widthIn(max = Spacing.maxContentWidth)
                 .fillMaxSize(),
         ) {
-            val twoColumns = maxWidth >= TwoColumnBreakpoint
+            // Ab Material-3-Klasse Medium stehen die Widgets nebeneinander.
+            val widthClass = WindowWidthClass.fromWidth(maxWidth)
+            val twoColumns = widthClass.isAtLeastMedium
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = currentWindowWidthClass().horizontalMargin, vertical = Spacing.m),
-                verticalArrangement = Arrangement.spacedBy(Spacing.m),
+                    .padding(horizontal = widthClass.horizontalMargin, vertical = Spacing.m),
+                verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
             ) {
                 Header(today = state.today, greeting = state.greeting)
                 state.activeWorkout?.let { active ->
@@ -83,7 +81,7 @@ internal fun DashboardContent(
                 if (twoColumns) {
                     Row(
                         modifier = Modifier.height(IntrinsicSize.Max),
-                        horizontalArrangement = Arrangement.spacedBy(Spacing.m),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.gutter),
                     ) {
                         WeeklyVolumeCard(
                             volume = state.weeklyVolume,
@@ -125,10 +123,10 @@ private fun Header(today: LocalDate, greeting: Greeting, modifier: Modifier = Mo
         Greeting.AFTERNOON -> R.string.feature_dashboard_greeting_afternoon
         Greeting.EVENING -> R.string.feature_dashboard_greeting_evening
     }
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+    Column(modifier = modifier.fillMaxWidth().padding(bottom = Spacing.xs), verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
         Text(
             text = stringResource(greetingRes),
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
         Text(

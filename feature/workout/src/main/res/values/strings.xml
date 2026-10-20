@@ -8,6 +8,8 @@
     <string name="feature_workout_empty_workout_description">Add exercises as you go</string>
     <string name="feature_workout_plans_header">Your plans</string>
     <string name="feature_workout_no_plans">No plans yet. Create one in the Plans tab.</string>
+    <string name="feature_workout_no_plans_title">No plans yet</string>
+    <string name="feature_workout_start_plan">Start %1$s</string>
     <plurals name="feature_workout_exercise_count">
         <item quantity="one">%1$d exercise</item>
         <item quantity="other">%1$d exercises</item>
@@ -22,6 +24,7 @@
     <string name="feature_workout_finish">Finish workout</string>
     <string name="feature_workout_discard">Discard</string>
     <string name="feature_workout_no_exercises">No exercises yet. Add one to get started.</string>
+    <string name="feature_workout_no_exercises_title">Empty so far</string>
     <string name="feature_workout_column_set">Set</string>
     <string name="feature_workout_column_previous">Previous</string>
     <string name="feature_workout_column_kg">kg</string>
@@ -50,7 +53,6 @@
 
     <!-- Rest timer -->
     <string name="feature_workout_rest">Rest</string>
-    <string name="feature_workout_rest_remaining">Rest time remaining</string>
     <string name="feature_workout_rest_minus" translatable="false">−%1$d s</string>
     <string name="feature_workout_rest_plus" translatable="false">+%1$d s</string>
     <string name="feature_workout_rest_skip">Skip</string>

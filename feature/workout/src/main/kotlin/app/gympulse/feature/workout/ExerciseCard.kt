@@ -55,6 +55,9 @@ import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
+import androidx.compose.animation.animateContentSize
+import androidx.compose.material3.CardDefaults
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
 
 // Relative column widths of the set table.
 private const val WEIGHT_SET = 0.6f
@@ -72,7 +75,14 @@ internal fun ExerciseCard(
     var showNotes by rememberSaveable(exercise.sessionExerciseId) { mutableStateOf(exercise.notes != null) }
     val fields = setFieldsFor(exercise.trackingType, exercise.isBodyweight)
 
-    Card(modifier = modifier) {
+    Card(
+        modifier = modifier.animateContentSize(),
+        shape = ExpressiveShapes.largeIncreased,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+        ),
+    ) {
         Column(modifier = Modifier.padding(vertical = Spacing.xs)) {
             Row(
                 modifier = Modifier
@@ -82,7 +92,7 @@ internal fun ExerciseCard(
             ) {
                 Text(
                     text = exercise.name,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f),
                 )

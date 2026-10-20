@@ -2,18 +2,19 @@ package app.gympulse.feature.dashboard
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.animation.animateContentSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,9 +29,26 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import app.gympulse.core.designsystem.component.EmptyState
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListGroup
+import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.component.ListRowDivider
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.component.ProgressRing
+import app.gympulse.core.designsystem.component.SectionHeader
+import app.gympulse.core.designsystem.component.StatTrend
+import app.gympulse.core.designsystem.component.TrendDirection
+import app.gympulse.core.designsystem.component.TrendLabel
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Spacing
+import app.gympulse.core.designsystem.theme.metricLarge
+import app.gympulse.core.designsystem.theme.metricMedium
+import app.gympulse.core.designsystem.theme.metricUnit
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.ZoneId
@@ -42,56 +60,81 @@ import kotlin.math.max
 
 private const val BAR_WIDTH_FRACTION = 0.5f
 
-/** Karte "Wochenvolumen": Balken je Tag, Summe in kg und Vergleich zur Vorwoche. */
+/** Karte "Wochenvolumen": große Summe in kg, Trend zur Vorwoche und Balken je Tag. */
 @Composable
 internal fun WeeklyVolumeCard(
     volume: WeeklyVolumeUi?,
     modifier: Modifier = Modifier,
 ) {
-    Card(modifier = modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.s),
-        ) {
-            Text(
-                text = stringResource(R.string.feature_dashboard_volume_title),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (volume != null) {
-                val kgFormat = remember { NumberFormat.getIntegerInstance() }
+    GymPulseCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        variant = GymPulseCardVariant.Filled,
+        shape = ExpressiveShapes.largeIncreased,
+        verticalSpacing = Spacing.s,
+    ) {
+        Text(
+            text = stringResource(R.string.feature_dashboard_volume_title),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        if (volume != null) {
+            val kgFormat = remember { NumberFormat.getIntegerInstance() }
+            Row(
+                modifier = Modifier.semantics(mergeDescendants = true) {},
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
+            ) {
                 Text(
-                    text = stringResource(
-                        R.string.feature_dashboard_volume_total,
-                        kgFormat.format(volume.totalKg),
-                    ),
-                    style = MaterialTheme.typography.headlineMedium,
+                    text = kgFormat.format(volume.totalKg),
+                    style = MaterialTheme.typography.metricLarge,
                     color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    modifier = Modifier.alignByBaseline(),
                 )
                 Text(
-                    text = comparisonText(volume.changePercent),
+                    text = stringResource(R.string.feature_dashboard_unit_kg),
+                    style = MaterialTheme.typography.metricUnit,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    modifier = Modifier.alignByBaseline(),
+                )
+            }
+            val change = volume.changePercent
+            if (change == null) {
+                Text(
+                    text = stringResource(R.string.feature_dashboard_volume_no_comparison),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                if (volume.isEmpty) {
-                    Text(
-                        text = stringResource(R.string.feature_dashboard_volume_empty),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                } else {
-                    WeeklyVolumeChart(volume = volume, formatKg = { kgFormat.format(it) })
-                }
+            } else {
+                TrendLabel(trend = volumeTrend(change))
+            }
+            if (volume.isEmpty) {
+                Text(
+                    text = stringResource(R.string.feature_dashboard_volume_empty),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            } else {
+                WeeklyVolumeChart(volume = volume, formatKg = { kgFormat.format(it) })
             }
         }
     }
 }
 
 @Composable
-private fun comparisonText(changePercent: Int?): String {
-    if (changePercent == null) return stringResource(R.string.feature_dashboard_volume_no_comparison)
+private fun volumeTrend(changePercent: Int): StatTrend {
     val signed = if (changePercent > 0) "+$changePercent %" else "$changePercent %"
-    return stringResource(R.string.feature_dashboard_volume_vs_last_week, signed)
+    val direction = when {
+        changePercent > 0 -> TrendDirection.Up
+        changePercent < 0 -> TrendDirection.Down
+        else -> TrendDirection.Flat
+    }
+    return StatTrend(
+        label = stringResource(R.string.feature_dashboard_volume_vs_last_week, signed),
+        direction = direction,
+    )
 }
 
 /**
@@ -123,7 +166,7 @@ private fun WeeklyVolumeChart(
         dayDescriptions.joinToString(", "),
     )
     val barColor = MaterialTheme.colorScheme.primary
-    val trackColor = MaterialTheme.colorScheme.outlineVariant
+    val trackColor = MaterialTheme.colorScheme.surfaceContainerLow
 
     Row(
         modifier = modifier
@@ -190,80 +233,72 @@ internal fun WeeklyProgressCard(
     progress: WeeklyProgressUi?,
     modifier: Modifier = Modifier,
 ) {
-    Card(modifier = modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.s),
-        ) {
-            Text(
-                text = stringResource(R.string.feature_dashboard_progress_title),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (progress != null) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.m),
+    GymPulseCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+        variant = if (progress?.goalReached == true) GymPulseCardVariant.Tertiary else GymPulseCardVariant.Filled,
+        shape = ExpressiveShapes.largeIncreased,
+        verticalSpacing = Spacing.s,
+    ) {
+        Text(
+            text = stringResource(R.string.feature_dashboard_progress_title),
+            style = MaterialTheme.typography.titleMedium,
+        )
+        if (progress != null) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.m),
+            ) {
+                val reached = progress.goalReached
+                ProgressRing(
+                    progress = progress.fraction,
+                    color = if (reached) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
+                    trackColor = if (reached) {
+                        MaterialTheme.colorScheme.surfaceContainerLowest
+                    } else {
+                        MaterialTheme.colorScheme.secondaryContainer
+                    },
+                    contentDescription = stringResource(
+                        R.string.feature_dashboard_progress_description,
+                        progress.completed,
+                        progress.goal,
+                    ),
                 ) {
-                    ProgressRing(progress)
-                    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
-                        Text(
-                            text = if (progress.goalReached) {
-                                stringResource(R.string.feature_dashboard_progress_goal_reached)
-                            } else {
-                                val remaining = (progress.goal - progress.completed).coerceAtLeast(0)
-                                pluralStringResource(R.plurals.feature_dashboard_progress_remaining, remaining, remaining)
-                            },
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                        )
-                        Text(
-                            text = if (progress.streakWeeks > 0) {
-                                pluralStringResource(
-                                    R.plurals.feature_dashboard_progress_streak,
-                                    progress.streakWeeks,
-                                    progress.streakWeeks,
-                                )
-                            } else {
-                                stringResource(R.string.feature_dashboard_progress_streak_none)
-                            },
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+                    Text(
+                        text = stringResource(
+                            R.string.feature_dashboard_progress_ring_value,
+                            progress.completed,
+                            progress.goal,
+                        ),
+                        style = MaterialTheme.typography.metricMedium,
+                    )
+                }
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+                    Text(
+                        text = if (reached) {
+                            stringResource(R.string.feature_dashboard_progress_goal_reached)
+                        } else {
+                            val remaining = (progress.goal - progress.completed).coerceAtLeast(0)
+                            pluralStringResource(R.plurals.feature_dashboard_progress_remaining, remaining, remaining)
+                        },
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                    Text(
+                        text = if (progress.streakWeeks > 0) {
+                            pluralStringResource(
+                                R.plurals.feature_dashboard_progress_streak,
+                                progress.streakWeeks,
+                                progress.streakWeeks,
+                            )
+                        } else {
+                            stringResource(R.string.feature_dashboard_progress_streak_none)
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ProgressRing(progress: WeeklyProgressUi, modifier: Modifier = Modifier) {
-    val description = stringResource(
-        R.string.feature_dashboard_progress_description,
-        progress.completed,
-        progress.goal,
-    )
-    Box(
-        modifier = modifier.clearAndSetSemantics { contentDescription = description },
-        contentAlignment = Alignment.Center,
-    ) {
-        CircularProgressIndicator(
-            progress = { progress.fraction },
-            modifier = Modifier.size(Spacing.xxl * 2),
-            color = MaterialTheme.colorScheme.primary,
-            strokeWidth = Spacing.xs,
-            trackColor = MaterialTheme.colorScheme.outlineVariant,
-        )
-        Text(
-            text = stringResource(
-                R.string.feature_dashboard_progress_ring_value,
-                progress.completed,
-                progress.goal,
-            ),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
     }
 }
 
@@ -278,105 +313,85 @@ internal fun ActiveWorkoutCard(
     val startedAt = remember(workout.startedAt, zone) {
         DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).format(workout.startedAt.atZone(zone))
     }
-    Card(
+    GymPulseCard(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        ),
+        variant = GymPulseCardVariant.Primary,
+        shape = ExpressiveShapes.extraLargeIncreased,
+        contentPadding = PaddingValues(Spacing.l),
     ) {
-        Column(
-            modifier = Modifier.padding(Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        Text(
+            text = stringResource(R.string.feature_dashboard_active_title),
+            style = MaterialTheme.typography.titleLarge,
+        )
+        Text(
+            text = stringResource(
+                R.string.feature_dashboard_active_subtitle,
+                workout.title ?: stringResource(R.string.feature_dashboard_free_workout),
+                startedAt,
+            ),
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Spacer(Modifier.height(Spacing.xs))
+        Button(
+            onClick = onResume,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
         ) {
-            Text(
-                text = stringResource(R.string.feature_dashboard_active_title),
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(
-                text = stringResource(
-                    R.string.feature_dashboard_active_subtitle,
-                    workout.title ?: stringResource(R.string.feature_dashboard_free_workout),
-                    startedAt,
-                ),
-                style = MaterialTheme.typography.bodyMedium,
-            )
-            Button(onClick = onResume) {
-                Text(stringResource(R.string.feature_dashboard_resume_workout))
-            }
+            Text(stringResource(R.string.feature_dashboard_resume_workout))
         }
     }
 }
 
-/** Liste "Zuletzt trainiert" mit leerem Zustand. */
+/** Liste "Zuletzt trainiert" auf einer tonalen Fläche, mit Leerzustand. */
 @Composable
 internal fun RecentSessionsSection(
     sessions: List<RecentSessionUi>,
     today: LocalDate,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-        Text(
-            text = stringResource(R.string.feature_dashboard_recent_title),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
+    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+        SectionHeader(
+            title = stringResource(R.string.feature_dashboard_recent_title),
+            contentPadding = PaddingValues(vertical = Spacing.xs),
         )
         if (sessions.isEmpty()) {
-            Text(
-                text = stringResource(R.string.feature_dashboard_recent_empty),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+            GymPulseCard(variant = GymPulseCardVariant.Outlined, modifier = Modifier.fillMaxWidth()) {
+                EmptyState(
+                    icon = Icons.Filled.DateRange,
+                    title = stringResource(R.string.feature_dashboard_recent_empty_title),
+                    message = stringResource(R.string.feature_dashboard_recent_empty),
+                )
+            }
         } else {
             val kgFormat = remember { NumberFormat.getIntegerInstance() }
-            sessions.forEach { session ->
-                RecentSessionCard(session = session, today = today, kgFormat = kgFormat)
+            ListGroup(modifier = Modifier.fillMaxWidth()) {
+                sessions.forEachIndexed { index, session ->
+                    if (index > 0) ListRowDivider()
+                    RecentSessionRow(session = session, today = today, kgFormat = kgFormat)
+                }
             }
         }
     }
 }
 
 @Composable
-private fun RecentSessionCard(
+private fun RecentSessionRow(
     session: RecentSessionUi,
     today: LocalDate,
     kgFormat: NumberFormat,
-    modifier: Modifier = Modifier,
 ) {
-    Card(modifier = modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = session.title ?: stringResource(R.string.feature_dashboard_free_workout),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.weight(1f),
-                    maxLines = 1,
-                )
-                Text(
-                    text = relativeDateText(session.date, today),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            Text(
-                text = stringResource(
-                    R.string.feature_dashboard_recent_details,
-                    durationText(session.durationMinutes),
-                    kgFormat.format(session.volumeKg),
-                ),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
+    ListRow(
+        headline = session.title ?: stringResource(R.string.feature_dashboard_free_workout),
+        supportingText = stringResource(
+            R.string.feature_dashboard_recent_details,
+            durationText(session.durationMinutes),
+            kgFormat.format(session.volumeKg),
+        ),
+        leadingContent = { ListRowIcon(Icons.Filled.DateRange) },
+        trailingText = relativeDateText(session.date, today),
+    )
 }
 
 @Composable

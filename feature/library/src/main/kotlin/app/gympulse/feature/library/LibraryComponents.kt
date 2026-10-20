@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,18 +15,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,11 +30,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import app.gympulse.core.data.ui.labelRes
 import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.component.EmptyState as DesignEmptyState
+import app.gympulse.core.designsystem.component.GymPulseSearchField
+import app.gympulse.core.designsystem.component.ListRowDivider
+import app.gympulse.core.designsystem.component.SectionHeader
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.ExerciseCategory
@@ -87,46 +90,34 @@ internal fun LoadingIndicator(modifier: Modifier = Modifier) {
     }
 }
 
+/** Leerzustand mit Icon, zentriert in der verfügbaren Fläche; baut auf dem Designsystem-Baustein auf. */
 @Composable
 internal fun EmptyState(
     title: String,
     message: String,
     modifier: Modifier = Modifier,
+    icon: ImageVector = Icons.Filled.Search,
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(Spacing.l),
-        verticalArrangement = Arrangement.spacedBy(Spacing.xs, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            textAlign = TextAlign.Center,
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        DesignEmptyState(
+            icon = icon,
+            title = title,
+            message = message,
+            actionLabel = actionLabel,
+            onAction = onAction,
         )
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
-        if (actionLabel != null && onAction != null) {
-            TextButton(onClick = onAction) { Text(actionLabel) }
-        }
     }
 }
 
+/** Abschnittsüberschrift ohne eigenen Seitenrand; der Aufrufer bestimmt das Padding. */
 @Composable
 internal fun SectionTitle(text: String, modifier: Modifier = Modifier) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleMedium,
-        color = MaterialTheme.colorScheme.primary,
+    SectionHeader(
+        title = text,
         modifier = modifier,
+        contentPadding = PaddingValues(vertical = Spacing.xs),
     )
 }
 
@@ -134,8 +125,12 @@ internal fun SectionTitle(text: String, modifier: Modifier = Modifier) {
 @Composable
 internal fun InfoRow(label: String, value: String, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = Sizing.minTouchTarget)
+            .padding(horizontal = Spacing.m, vertical = Spacing.xs),
         horizontalArrangement = Arrangement.spacedBy(Spacing.m),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = label,
@@ -152,6 +147,12 @@ internal fun InfoRow(label: String, value: String, modifier: Modifier = Modifier
     }
 }
 
+/** Trenner zwischen [InfoRow]s innerhalb einer ListGroup. */
+@Composable
+internal fun InfoRowDivider(modifier: Modifier = Modifier) {
+    ListRowDivider(modifier = modifier, inset = Spacing.m)
+}
+
 @Composable
 internal fun SearchField(
     value: String,
@@ -159,20 +160,12 @@ internal fun SearchField(
     label: String,
     modifier: Modifier = Modifier,
 ) {
-    OutlinedTextField(
+    GymPulseSearchField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.fillMaxWidth(),
-        singleLine = true,
-        label = { Text(label) },
-        leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
-        trailingIcon = {
-            if (value.isNotEmpty()) {
-                IconButton(onClick = { onValueChange("") }) {
-                    Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.library_clear_search))
-                }
-            }
-        },
+        placeholder = label,
+        clearContentDescription = stringResource(R.string.library_clear_search),
+        modifier = modifier,
     )
 }
 

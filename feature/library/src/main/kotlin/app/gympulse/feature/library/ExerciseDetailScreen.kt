@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.AlertDialog
@@ -36,6 +38,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.ListGroup
+import app.gympulse.core.designsystem.component.ListRow
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.SetEntry
@@ -97,7 +103,7 @@ private fun ExerciseDetailContent(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
                 text = exercise.name,
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.headlineMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.weight(1f),
             )
@@ -137,26 +143,30 @@ private fun ExerciseDetailContent(
             }
         }
 
-        Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+        ListGroup(modifier = Modifier.fillMaxWidth()) {
             InfoRow(
                 label = stringResource(R.string.library_label_category),
                 value = stringResource(exercise.category.categoryLabelRes()),
             )
+            InfoRowDivider()
             InfoRow(
                 label = stringResource(R.string.library_label_equipment_type),
                 value = equipmentTypeName(exercise.equipmentType),
             )
+            InfoRowDivider()
             InfoRow(
                 label = stringResource(R.string.library_label_tracking),
                 value = stringResource(exercise.trackingType.trackingLabelRes()),
             )
             if (exercise.primaryMuscles.isNotEmpty()) {
+                InfoRowDivider()
                 InfoRow(
                     label = stringResource(R.string.library_label_primary_muscles),
                     value = muscleNames(exercise.primaryMuscles),
                 )
             }
             if (exercise.secondaryMuscles.isNotEmpty()) {
+                InfoRowDivider()
                 InfoRow(
                     label = stringResource(R.string.library_label_secondary_muscles),
                     value = muscleNames(exercise.secondaryMuscles),
@@ -164,6 +174,7 @@ private fun ExerciseDetailContent(
             }
             val bodyweightFactor = exercise.bodyweightFactor
             if (bodyweightFactor != null) {
+                InfoRowDivider()
                 InfoRow(
                     label = stringResource(R.string.library_label_bodyweight_factor),
                     value = formatNumber(bodyweightFactor, locale),
@@ -171,6 +182,7 @@ private fun ExerciseDetailContent(
             }
             val restSeconds = exercise.defaultRestSeconds
             if (restSeconds != null) {
+                InfoRowDivider()
                 InfoRow(
                     label = stringResource(R.string.library_label_rest),
                     value = stringResource(R.string.library_seconds_value, restSeconds),
@@ -192,19 +204,25 @@ private fun ExerciseDetailContent(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
-                exercise.instructions.forEachIndexed { index, step ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-                        Text(
-                            text = stringResource(R.string.library_step_number, index + 1),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                        Text(
-                            text = step,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.weight(1f),
-                        )
+                GymPulseCard(
+                    modifier = Modifier.fillMaxWidth(),
+                    variant = GymPulseCardVariant.Filled,
+                    verticalSpacing = Spacing.s,
+                ) {
+                    exercise.instructions.forEachIndexed { index, step ->
+                        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                            Text(
+                                text = stringResource(R.string.library_step_number, index + 1),
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
+                            Text(
+                                text = step,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.weight(1f),
+                            )
+                        }
                     }
                 }
             }
@@ -214,29 +232,33 @@ private fun ExerciseDetailContent(
         if (!notes.isNullOrBlank()) {
             Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                 SectionTitle(stringResource(R.string.library_notes))
-                Text(
-                    text = notes,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
+                GymPulseCard(modifier = Modifier.fillMaxWidth(), variant = GymPulseCardVariant.Secondary) {
+                    Text(text = notes, style = MaterialTheme.typography.bodyMedium)
+                }
             }
         }
 
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
             SectionTitle(stringResource(R.string.library_last_session))
-            if (previousSets.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.library_last_session_empty),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            } else {
-                previousSets.forEachIndexed { index, set ->
+            GymPulseCard(
+                modifier = Modifier.fillMaxWidth(),
+                variant = GymPulseCardVariant.Filled,
+                verticalSpacing = Spacing.xxs,
+            ) {
+                if (previousSets.isEmpty()) {
                     Text(
-                        text = setLine(index = index, set = set, locale = locale),
+                        text = stringResource(R.string.library_last_session_empty),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                } else {
+                    previousSets.forEachIndexed { index, set ->
+                        Text(
+                            text = setLine(index = index, set = set, locale = locale),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
                 }
             }
         }
@@ -278,13 +300,16 @@ private fun ExerciseDetailContent(
 private fun EquipmentBlock(equipment: Equipment, modifier: Modifier = Modifier) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         SectionTitle(stringResource(R.string.library_machine))
-        Text(
-            text = listOfNotNull(equipment.name, equipment.location?.takeIf { it.isNotBlank() }).joinToString(" · "),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-        equipment.settings.forEach { setting ->
-            InfoRow(label = setting.key, value = setting.value.ifBlank { stringResource(R.string.library_unknown) })
+        ListGroup(modifier = Modifier.fillMaxWidth()) {
+            ListRow(
+                headline = equipment.name,
+                supportingText = equipment.location?.takeIf { it.isNotBlank() },
+                leadingIcon = Icons.Filled.Settings,
+            )
+            equipment.settings.forEach { setting ->
+                InfoRowDivider()
+                InfoRow(label = setting.key, value = setting.value.ifBlank { stringResource(R.string.library_unknown) })
+            }
         }
     }
 }
@@ -311,7 +336,7 @@ private fun ExerciseImage(url: String, contentDescription: String, modifier: Mod
     Box(
         modifier = modifier
             .aspectRatio(IMAGE_ASPECT_RATIO)
-            .clip(MaterialTheme.shapes.medium)
+            .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.surfaceContainerHighest),
         contentAlignment = Alignment.Center,
     ) {
