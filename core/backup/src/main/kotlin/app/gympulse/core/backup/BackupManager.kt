@@ -78,17 +78,32 @@ class BackupManager internal constructor(
     /** Schreibt ein Backup in das per Storage Access Framework gewählte Dokument. */
     suspend fun exportTo(uri: Uri): ExportResult {
         val file = createBackup()
-        val text = BackupCodec.encode(file)
+        writeText(uri, BackupCodec.encode(file), "backup")
+        return ExportResult(rows = file.tables.values.sumOf { it.size })
+    }
+
+    /**
+     * Schreibt die Trainingshistorie (ein Satz pro Zeile) als CSV in das per Storage Access Framework
+     * gewählte Dokument. Die Übungsnamen folgen der App-Sprache.
+     */
+    suspend fun exportCsvTo(uri: Uri): ExportResult {
+        val locale = settingsRepository.settings.first().language.languageTag
+            .ifEmpty { java.util.Locale.getDefault().language }
+        val rows = withContext(ioDispatcher) { store.inTransaction { store.readWorkoutHistory(locale) } }
+        writeText(uri, WorkoutCsv.encode(rows), "CSV")
+        return ExportResult(rows = rows.size)
+    }
+
+    private suspend fun writeText(uri: Uri, text: String, what: String) {
         withContext(ioDispatcher) {
             try {
                 openOutput(uri).bufferedWriter(Charsets.UTF_8).use { it.write(text) }
             } catch (e: IOException) {
-                throw BackupException(BackupException.Reason.IO, "Could not write backup", e)
+                throw BackupException(BackupException.Reason.IO, "Could not write $what", e)
             } catch (e: SecurityException) {
-                throw BackupException(BackupException.Reason.IO, "No permission to write backup", e)
+                throw BackupException(BackupException.Reason.IO, "No permission to write $what", e)
             }
         }
-        return ExportResult(rows = file.tables.values.sumOf { it.size })
     }
 
     /** Liest ein Backup aus einem Dokument und bereitet die Vorschau vor. */
@@ -208,6 +223,10 @@ class BackupManager internal constructor(
         /** Vorgeschlagener Dateiname für den Export, z. B. "gympulse-backup-2026-10-20.json". */
         fun suggestedFileName(date: java.time.LocalDate = java.time.LocalDate.now()): String =
             "gympulse-backup-$date.json"
+
+        /** Vorgeschlagener Dateiname für den CSV-Export, z. B. "gympulse-history-2026-10-20.csv". */
+        fun suggestedCsvFileName(date: java.time.LocalDate = java.time.LocalDate.now()): String =
+            "gympulse-history-$date.csv"
     }
 }
 

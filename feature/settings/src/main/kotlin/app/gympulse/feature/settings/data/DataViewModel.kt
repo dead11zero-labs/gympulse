@@ -51,6 +51,10 @@ internal class DataViewModel @Inject constructor(
         DataUiState.ExportDone(backupManager.exportTo(uri).rows)
     }
 
+    fun exportCsv(uri: Uri) = launchOperation(DataOperation.EXPORT) {
+        DataUiState.ExportDone(backupManager.exportCsvTo(uri).rows)
+    }
+
     fun openImport(uri: Uri) = launchOperation(DataOperation.READ) {
         val preview = backupManager.readFrom(uri)
         val strategy = ConflictStrategy.NEWER_WINS
