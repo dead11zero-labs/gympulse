@@ -96,4 +96,12 @@
     <string name="settings_version">Version</string>
     <string name="settings_licenses">Open-source licenses</string>
     <string name="settings_licenses_summary">Exercise data and libraries used by GymPulse</string>
+
+    <string name="about_app_name" translatable="false">GymPulse</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_section_exercise_data">Exercise data</string>
+    <string name="about_section_libraries">Libraries</string>
+    <string name="about_source_free_exercise_db">English exercise names, instructions, muscle groups and images</string>
+    <string name="about_source_gympulse_content">German exercise names and equipment templates</string>
+    <string name="about_license">License: %1$s</string>
 </resources>

@@ -13,9 +13,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object SettingsRoute
 
-fun NavGraphBuilder.settingsScreen() {
+fun NavGraphBuilder.settingsScreen(onOpenAbout: () -> Unit) {
     composable<SettingsRoute> {
-        SettingsHost()
+        SettingsHost(onOpenAbout = onOpenAbout)
     }
 }
 
@@ -24,12 +24,15 @@ fun NavGraphBuilder.settingsScreen() {
  * damit NavHost und App-Scaffold unverändert bleiben; Zurück führt von ihr in die Einstellungen.
  */
 @Composable
-private fun SettingsHost() {
+private fun SettingsHost(onOpenAbout: () -> Unit) {
     var showBodyMetrics by rememberSaveable { mutableStateOf(false) }
     BackHandler(enabled = showBodyMetrics) { showBodyMetrics = false }
     if (showBodyMetrics) {
         BodyMetricsScreen()
     } else {
-        SettingsScreen(onOpenBodyMetrics = { showBodyMetrics = true })
+        SettingsScreen(
+            onOpenBodyMetrics = { showBodyMetrics = true },
+            onOpenAbout = onOpenAbout,
+        )
     }
 }

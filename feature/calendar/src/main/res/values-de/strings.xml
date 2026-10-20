@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_calendar_title">Kalender</string>
-    <string name="feature_calendar_placeholder">Hier weist du Pläne Wochentagen zu und siehst deine Trainingshistorie.</string>
+
+    <string name="feature_calendar_premium_title">Der Kalender ist ein Premium-Feature</string>
+    <string name="feature_calendar_premium_body">Weise Pläne Wochentagen zu, verschiebe einzelne Trainingstage und sieh deine Historie nach Woche oder Monat. Dein bestehendes Schema bleibt gespeichert und lesbar.</string>
+
+    <string name="feature_calendar_previous">Voriger Zeitraum</string>
+    <string name="feature_calendar_next">Nächster Zeitraum</string>
+    <string name="feature_calendar_mode_week">Woche</string>
+    <string name="feature_calendar_mode_month">Monat</string>
+    <string name="feature_calendar_today">Heute</string>
+
+    <string name="feature_calendar_rest_day">Ruhetag</string>
+    <string name="feature_calendar_unknown_plan">Gelöschter Plan</string>
+    <string name="feature_calendar_free_workout">Freies Workout</string>
+    <string name="feature_calendar_status_completed">Erledigt</string>
+    <string name="feature_calendar_status_planned">Geplant</string>
+    <string name="feature_calendar_status_missed">Verpasst</string>
+    <string name="feature_calendar_status_skipped">Ausgefallen</string>
+    <string name="feature_calendar_override_skipped">Ausnahme: ausgefallen</string>
+    <string name="feature_calendar_override_moved">Ausnahme: hierher verschoben</string>
+    <string name="feature_calendar_override_added">Ausnahme: hinzugefügt</string>
+
+    <string name="feature_calendar_history">Abgeschlossene Workouts</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d Min. · %3$s kg</string>
+
+    <string name="feature_calendar_action_skip">Tag ausfallen lassen</string>
+    <string name="feature_calendar_action_move">Auf anderen Tag verschieben</string>
+    <string name="feature_calendar_action_add">Plan hinzufügen</string>
+    <string name="feature_calendar_action_reset">Auf Wochenschema zurücksetzen</string>
+    <string name="feature_calendar_move_title">Verschieben auf</string>
+    <string name="feature_calendar_add_plan_title">Plan hinzufügen</string>
+
+    <string name="feature_calendar_scheme_title">Wochenschema</string>
+    <string name="feature_calendar_scheme_hint">Wiederholt sich jede Woche, ab heute.</string>
+    <string name="feature_calendar_pick_plan_for">Plan für %1$s</string>
+    <string name="feature_calendar_edit">Plan ändern</string>
+    <string name="feature_calendar_no_plans">Noch keine Pläne. Lege einen im Tab Pläne an.</string>
+    <string name="feature_calendar_cancel">Abbrechen</string>
 </resources>

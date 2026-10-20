@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="feature_calendar_title">Calendar</string>
-    <string name="feature_calendar_placeholder">Assign plans to weekdays and review your training history here.</string>
+
+    <string name="feature_calendar_premium_title">Calendar is a Premium feature</string>
+    <string name="feature_calendar_premium_body">Assign plans to weekdays, move single training days and browse your history by week or month. Your existing schedule stays saved and readable.</string>
+
+    <string name="feature_calendar_previous">Previous period</string>
+    <string name="feature_calendar_next">Next period</string>
+    <string name="feature_calendar_mode_week">Week</string>
+    <string name="feature_calendar_mode_month">Month</string>
+    <string name="feature_calendar_today">Today</string>
+
+    <string name="feature_calendar_rest_day">Rest day</string>
+    <string name="feature_calendar_unknown_plan">Deleted plan</string>
+    <string name="feature_calendar_free_workout">Free workout</string>
+    <string name="feature_calendar_status_completed">Completed</string>
+    <string name="feature_calendar_status_planned">Planned</string>
+    <string name="feature_calendar_status_missed">Missed</string>
+    <string name="feature_calendar_status_skipped">Skipped</string>
+    <string name="feature_calendar_override_skipped">Exception: skipped</string>
+    <string name="feature_calendar_override_moved">Exception: moved here</string>
+    <string name="feature_calendar_override_added">Exception: added</string>
+
+    <string name="feature_calendar_history">Completed workouts</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d min · %3$s kg</string>
+
+    <string name="feature_calendar_action_skip">Skip this day</string>
+    <string name="feature_calendar_action_move">Move to another day</string>
+    <string name="feature_calendar_action_add">Add a plan</string>
+    <string name="feature_calendar_action_reset">Reset to weekly schedule</string>
+    <string name="feature_calendar_move_title">Move to</string>
+    <string name="feature_calendar_add_plan_title">Add a plan</string>
+
+    <string name="feature_calendar_scheme_title">Weekly schedule</string>
+    <string name="feature_calendar_scheme_hint">Repeats every week, starting today.</string>
+    <string name="feature_calendar_pick_plan_for">Plan for %1$s</string>
+    <string name="feature_calendar_edit">Change plan</string>
+    <string name="feature_calendar_no_plans">No plans yet. Create one in the Plans tab.</string>
+    <string name="feature_calendar_cancel">Cancel</string>
 </resources>

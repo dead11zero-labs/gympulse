@@ -54,6 +54,21 @@ class StatsRepository @Inject constructor(
             }
         }
 
+    /** Abgeschlossene Sessions mit Ende in [from, to), älteste zuerst. */
+    fun observeCompletedSessions(from: Instant, to: Instant): Flow<List<CompletedSessionSummary>> =
+        sessionDao.observeCompletedBetween(from.toEpochMilli(), to.toEpochMilli()).map { rows ->
+            rows.mapNotNull { row ->
+                val endedAt = row.endedAt ?: return@mapNotNull null
+                CompletedSessionSummary(
+                    id = row.id,
+                    title = row.title,
+                    startedAt = Instant.ofEpochMilli(row.startedAt),
+                    endedAt = Instant.ofEpochMilli(endedAt),
+                    volumeKg = row.totalVolumeKg ?: 0.0,
+                )
+            }
+        }
+
     /**
      * @param weekOffset 0 = aktuelle Woche, -1 = Vorwoche
      * @param weekStartsOn Wochenstart laut Einstellungen
