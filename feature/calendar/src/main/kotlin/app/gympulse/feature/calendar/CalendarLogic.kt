@@ -137,7 +137,10 @@ fun buildCalendarWeeks(
 
 /** Plan, der laut Wochenschema heute für [weekday] gilt, sonst null. */
 fun currentPlanForWeekday(rules: List<ScheduleRule>, weekday: DayOfWeek, today: LocalDate): String? =
-    rules.firstOrNull { it.weekday == weekday.value && it.appliesTo(today) }?.planId
+    rules.firstOrNull { rule ->
+        val until = rule.validUntil
+        rule.weekday == weekday.value && !rule.validFrom.isAfter(today) && (until == null || !until.isBefore(today))
+    }?.planId
 
 /** Standardauswahl nach Blättern: heute, falls im Zeitraum, sonst der erste Tag. */
 fun defaultSelection(periodDays: List<LocalDate>, today: LocalDate, firstOfPeriod: LocalDate): LocalDate =

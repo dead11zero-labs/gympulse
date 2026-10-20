@@ -114,7 +114,7 @@ class CalendarViewModelTest {
     private fun viewModel() = CalendarViewModel(data, gate, weekStart, time)
 
     private fun kotlinx.coroutines.test.TestScope.collectState(vm: CalendarViewModel): StateFlow<CalendarUiState> {
-        backgroundScope.launch { vm.uiState.collect { } }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect { } }
         return vm.uiState
     }
 
