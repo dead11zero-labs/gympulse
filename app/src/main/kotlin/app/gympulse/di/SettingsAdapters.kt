@@ -2,6 +2,7 @@ package app.gympulse.di
 
 import app.gympulse.core.settings.SettingsLimits
 import app.gympulse.core.settings.UserSettingsRepository
+import app.gympulse.feature.calendar.CalendarWeekStartProvider
 import app.gympulse.feature.dashboard.WeekStartProvider
 import app.gympulse.feature.dashboard.WeeklyGoalProvider
 import app.gympulse.feature.workout.timer.RestTimerSettings
@@ -35,7 +36,7 @@ class UserRestTimerSettings @Inject constructor(
 @Singleton
 class UserDashboardSettings @Inject constructor(
     repository: UserSettingsRepository,
-) : WeeklyGoalProvider, WeekStartProvider {
+) : WeeklyGoalProvider, WeekStartProvider, CalendarWeekStartProvider {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     override val weeklyGoal: StateFlow<Int> = repository.weeklyGoal
@@ -57,4 +58,7 @@ abstract class SettingsAdaptersModule {
 
     @Binds
     abstract fun bindWeekStartProvider(impl: UserDashboardSettings): WeekStartProvider
+
+    @Binds
+    abstract fun bindCalendarWeekStartProvider(impl: UserDashboardSettings): CalendarWeekStartProvider
 }
