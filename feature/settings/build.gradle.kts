@@ -11,6 +11,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.backup)
     implementation(projects.core.health)
+    implementation(projects.core.cloud)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.coil.compose)

@@ -52,6 +52,14 @@ class DefaultFeatureGateTest {
     }
 
     @Test
+    fun cloudBackupIsOffByDefaultAndUserToggleable() = runTest {
+        val gate = gate()
+        assertFalse(gate.isEnabled(Feature.CLOUD_BACKUP))
+        toggles.setEnabled(Feature.CLOUD_BACKUP, true)
+        assertTrue(gate.observe(Feature.CLOUD_BACKUP).first())
+    }
+
+    @Test
     fun userChoiceEnablesToggleableFeature() = runTest {
         val gate = gate()
         toggles.setEnabled(Feature.HEALTH_CONNECT, true)

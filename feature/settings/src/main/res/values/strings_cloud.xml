@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_cloud">Cloud backup</string>
+    <string name="cloud_backup">Cloud backup</string>
+    <string name="cloud_backup_summary">Optional: save a copy of your data to your account</string>
+    <string name="cloud_backup_summary_on">Back up and restore your data with your Google account</string>
+    <string name="cloud_backup_unavailable">Not available in this version of the app</string>
+    <string name="cloud_sign_in">Sign in with Google</string>
+    <string name="cloud_sign_in_summary">Required to back up and restore</string>
+    <string name="cloud_sign_in_not_configured">Google sign-in is not set up yet in this version</string>
+    <string name="cloud_sign_in_action">Sign in</string>
+    <string name="cloud_account">Account</string>
+    <string name="cloud_account_unknown_email">Signed in with Google</string>
+    <string name="cloud_sign_out_action">Sign out</string>
+    <string name="cloud_backup_now">Back up now</string>
+    <string name="cloud_backup_last">Last backup: %1$s</string>
+    <string name="cloud_backup_none">No backup in the cloud yet</string>
+    <string name="cloud_restore">Restore</string>
+    <string name="cloud_restore_summary">Load the cloud backup onto this device</string>
+    <string name="cloud_delete">Delete cloud backup</string>
+    <string name="cloud_delete_summary">Removes the backup from the server</string>
+
+    <string name="cloud_working_sign_in">Signing in…</string>
+    <string name="cloud_working_sign_out">Signing out…</string>
+    <string name="cloud_working_backup">Uploading backup…</string>
+    <string name="cloud_working_restore">Restoring backup…</string>
+    <string name="cloud_working_delete">Deleting cloud backup…</string>
+
+    <string name="cloud_restore_confirm_title">Restore cloud backup?</string>
+    <string name="cloud_restore_confirm_message">The backup from %1$s is loaded onto this device. Missing entries are added and newer versions win, so changes made on this device later are kept. Your settings are replaced by those in the backup.</string>
+    <string name="cloud_restore_confirm_action">Restore</string>
+    <string name="cloud_delete_confirm_title">Delete cloud backup?</string>
+    <string name="cloud_delete_confirm_message">The backup is removed from the server. The data on this device stays as it is.</string>
+    <string name="cloud_delete_confirm_action">Delete</string>
+
+    <string name="cloud_backup_done_title">Backup saved</string>
+    <string name="cloud_backup_done_message">Your data was saved to the cloud.</string>
+    <string name="cloud_restore_done_title">Backup restored</string>
+    <string name="cloud_restore_done_message">New: %1$d · Updated: %2$d · Unchanged: %3$d</string>
+    <string name="cloud_deleted_title">Cloud backup deleted</string>
+    <string name="cloud_deleted_message">The backup was removed from the server.</string>
+    <string name="cloud_failed_title">That did not work</string>
+    <string name="cloud_error_not_configured">Cloud backup is not set up in this version of the app.</string>
+    <string name="cloud_error_no_account">No Google account was found on this device. Add one in the Android settings and try again.</string>
+    <string name="cloud_error_sign_in">Sign-in failed. Please try again later.</string>
+    <string name="cloud_error_not_signed_in">You are no longer signed in. Please sign in again.</string>
+    <string name="cloud_error_network">The server could not be reached. Check your internet connection and try again.</string>
+    <string name="cloud_error_no_backup">There is no backup in the cloud yet.</string>
+    <string name="cloud_error_invalid">The cloud backup could not be read.</string>
+    <string name="cloud_error_restore">The backup could not be restored. Your data on this device was not changed.</string>
+    <string name="cloud_error_unknown">Something went wrong. Please try again.</string>
+    <string name="cloud_action_ok">OK</string>
+</resources>
