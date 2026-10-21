@@ -16,6 +16,9 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 - `core:featuregate` – `Feature`, `FeatureGate` und Hilt-Bindings; entscheidet aus lokalen Defaults, Remote-Config und Entitlements, ob ein Feature aktiv ist.
 - `core:health` – Health Connect (`connect-client`): Implementierung von `HealthDataSource` aus `core:data/health`,
   Manifest-Berechtigungen; hinter `Feature.HEALTH_CONNECT` (Opt-in, Default aus).
+- `core:cloud` – optionales Cloud-Backup: Supabase (auth-kt, postgrest-kt), Google-Login per Credential Manager. Schnittstellen
+  (`CloudAuth`, `CloudBackupRemote`, `LocalBackupSource`) und `CloudBackupSync` liegen in `core:data`. Konfiguration über
+  gradle.properties (`gympulseSupabaseUrl`, `gympulseSupabasePublishableKey`, `gympulseGoogleWebClientId`), SQL unter `supabase/migrations/`.
 - `feature:*` – je ein Feature; stellt eine `@Serializable`-Route und `NavGraphBuilder.xyzScreen()` bereit.
 - Convention-Plugins in `build-logic/convention`: `gympulse.android.application`, `.library`, `.compose`,
   `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`.

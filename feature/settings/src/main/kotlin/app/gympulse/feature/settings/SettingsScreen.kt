@@ -58,6 +58,7 @@ import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.WeekStart
+import app.gympulse.feature.settings.cloud.CloudBackupSettingsRows
 import app.gympulse.feature.settings.data.DataSettingsRows
 import app.gympulse.feature.settings.health.HealthConnectSettingsRows
 import java.text.NumberFormat
@@ -196,6 +197,10 @@ internal fun SettingsScreen(
 
             SettingsSection(stringResource(R.string.settings_section_data)) {
                 DataSettingsRows()
+            }
+
+            SettingsSection(stringResource(R.string.settings_section_cloud)) {
+                CloudBackupSettingsRows()
             }
 
             SettingsSection(stringResource(R.string.settings_section_about)) {

@@ -19,4 +19,7 @@ enum class Feature(
 
     /** Workouts nach Health Connect schreiben und Körpergewicht lesen; Opt-in in den Einstellungen. */
     HEALTH_CONNECT(premium = false, enabledByDefault = false, userToggleable = true),
+
+    /** Google-Anmeldung und manuelles Cloud-Backup über Supabase; Opt-in in den Einstellungen. */
+    CLOUD_BACKUP(premium = false, enabledByDefault = false, userToggleable = true),
 }

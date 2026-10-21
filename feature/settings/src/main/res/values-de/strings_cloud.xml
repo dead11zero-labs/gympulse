@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_cloud">Cloud-Backup</string>
+    <string name="cloud_backup">Cloud-Backup</string>
+    <string name="cloud_backup_summary">Optional: Kopie deiner Daten in deinem Konto sichern</string>
+    <string name="cloud_backup_summary_on">Daten mit deinem Google-Konto sichern und wiederherstellen</string>
+    <string name="cloud_backup_unavailable">In dieser App-Version nicht verfügbar</string>
+    <string name="cloud_sign_in">Mit Google anmelden</string>
+    <string name="cloud_sign_in_summary">Nötig zum Sichern und Wiederherstellen</string>
+    <string name="cloud_sign_in_not_configured">Die Google-Anmeldung ist in dieser Version noch nicht eingerichtet</string>
+    <string name="cloud_sign_in_action">Anmelden</string>
+    <string name="cloud_account">Konto</string>
+    <string name="cloud_account_unknown_email">Mit Google angemeldet</string>
+    <string name="cloud_sign_out_action">Abmelden</string>
+    <string name="cloud_backup_now">Jetzt sichern</string>
+    <string name="cloud_backup_last">Letzte Sicherung: %1$s</string>
+    <string name="cloud_backup_none">Noch keine Sicherung in der Cloud</string>
+    <string name="cloud_restore">Wiederherstellen</string>
+    <string name="cloud_restore_summary">Cloud-Sicherung auf dieses Gerät laden</string>
+    <string name="cloud_delete">Cloud-Sicherung löschen</string>
+    <string name="cloud_delete_summary">Entfernt die Sicherung vom Server</string>
+
+    <string name="cloud_working_sign_in">Anmeldung läuft …</string>
+    <string name="cloud_working_sign_out">Abmeldung läuft …</string>
+    <string name="cloud_working_backup">Sicherung wird hochgeladen …</string>
+    <string name="cloud_working_restore">Sicherung wird wiederhergestellt …</string>
+    <string name="cloud_working_delete">Cloud-Sicherung wird gelöscht …</string>
+
+    <string name="cloud_restore_confirm_title">Cloud-Sicherung wiederherstellen?</string>
+    <string name="cloud_restore_confirm_message">Die Sicherung vom %1$s wird auf dieses Gerät geladen. Fehlende Einträge werden ergänzt und neuere Stände gewinnen, spätere Änderungen auf diesem Gerät bleiben also erhalten. Deine Einstellungen werden durch die aus der Sicherung ersetzt.</string>
+    <string name="cloud_restore_confirm_action">Wiederherstellen</string>
+    <string name="cloud_delete_confirm_title">Cloud-Sicherung löschen?</string>
+    <string name="cloud_delete_confirm_message">Die Sicherung wird vom Server entfernt. Die Daten auf diesem Gerät bleiben unverändert.</string>
+    <string name="cloud_delete_confirm_action">Löschen</string>
+
+    <string name="cloud_backup_done_title">Sicherung gespeichert</string>
+    <string name="cloud_backup_done_message">Deine Daten wurden in der Cloud gesichert.</string>
+    <string name="cloud_restore_done_title">Sicherung wiederhergestellt</string>
+    <string name="cloud_restore_done_message">Neu: %1$d · Aktualisiert: %2$d · Unverändert: %3$d</string>
+    <string name="cloud_deleted_title">Cloud-Sicherung gelöscht</string>
+    <string name="cloud_deleted_message">Die Sicherung wurde vom Server entfernt.</string>
+    <string name="cloud_failed_title">Das hat nicht geklappt</string>
+    <string name="cloud_error_not_configured">Das Cloud-Backup ist in dieser App-Version nicht eingerichtet.</string>
+    <string name="cloud_error_no_account">Auf diesem Gerät wurde kein Google-Konto gefunden. Füge eines in den Android-Einstellungen hinzu und versuche es erneut.</string>
+    <string name="cloud_error_sign_in">Die Anmeldung ist fehlgeschlagen. Bitte versuche es später erneut.</string>
+    <string name="cloud_error_not_signed_in">Du bist nicht mehr angemeldet. Bitte melde dich erneut an.</string>
+    <string name="cloud_error_network">Der Server ist nicht erreichbar. Prüfe deine Internetverbindung und versuche es erneut.</string>
+    <string name="cloud_error_no_backup">In der Cloud gibt es noch keine Sicherung.</string>
+    <string name="cloud_error_invalid">Die Cloud-Sicherung konnte nicht gelesen werden.</string>
+    <string name="cloud_error_restore">Die Sicherung konnte nicht wiederhergestellt werden. Deine Daten auf diesem Gerät wurden nicht verändert.</string>
+    <string name="cloud_error_unknown">Etwas ist schiefgelaufen. Bitte versuche es erneut.</string>
+    <string name="cloud_action_ok">OK</string>
+</resources>
