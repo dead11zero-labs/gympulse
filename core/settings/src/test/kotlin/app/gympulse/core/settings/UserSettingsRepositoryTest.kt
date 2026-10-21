@@ -45,8 +45,8 @@ class UserSettingsRepositoryTest {
         assertEquals(90, settings.restTimerSeconds)
         assertEquals(WeekStart.MONDAY, settings.weekStart)
         assertEquals(3, settings.weeklyGoal)
-        assertEquals(ThemeMode.SYSTEM, settings.themeMode)
-        assertEquals(true, settings.dynamicColor)
+        assertEquals(ThemeMode.DARK, settings.themeMode)
+        assertEquals(false, settings.dynamicColor)
         assertEquals(AppLanguage.SYSTEM, settings.language)
         assertEquals(false, settings.onboardingCompleted)
     }
@@ -96,7 +96,7 @@ class UserSettingsRepositoryTest {
 
         val settings = repository.settings.first()
 
-        assertEquals(ThemeMode.SYSTEM, settings.themeMode)
+        assertEquals(ThemeMode.DARK, settings.themeMode)
         assertEquals(WeekStart.MONDAY, settings.weekStart)
     }
 

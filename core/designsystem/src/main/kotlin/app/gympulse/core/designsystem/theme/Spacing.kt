@@ -18,14 +18,32 @@ object Spacing {
     val xxl: Dp = 48.dp
     val xxxl: Dp = 64.dp
 
-    /** Seitenrand von Inhalten auf kompakten Screens. */
-    val screenMargin: Dp = m
+    /** Seitenrand auf kompakten Fenstern (< 600 dp), DESIGN.md `margin-mobile`. */
+    val marginCompact: Dp = m
+
+    /** Seitenrand ab mittlerer Fensterbreite (≥ 600 dp), DESIGN.md `margin-tablet`. */
+    val marginMedium: Dp = xl
+
+    /** Spaltenabstand auf kompakten Fenstern, DESIGN.md `gutter-mobile`. */
+    val gutterCompact: Dp = s
+
+    /** Spaltenabstand ab mittlerer Fensterbreite, DESIGN.md `gutter-tablet`. */
+    val gutterMedium: Dp = 20.dp
+
+    /**
+     * Seitenrand von Inhalten auf kompakten Screens. Fensterabhängig:
+     * [app.gympulse.core.designsystem.adaptive.WindowWidthClass.horizontalMargin].
+     */
+    val screenMargin: Dp = marginCompact
 
     /** Seitenrand ab mittlerer Fensterbreite (≥ 600 dp). */
-    val screenMarginWide: Dp = l
+    val screenMarginWide: Dp = marginMedium
 
-    /** Abstand zwischen Karten und Kacheln in Rastern und Listen. */
-    val gutter: Dp = s
+    /**
+     * Abstand zwischen Karten und Kacheln in Rastern und Listen (kompakt). Fensterabhängig:
+     * [app.gympulse.core.designsystem.adaptive.WindowWidthClass.gutter].
+     */
+    val gutter: Dp = gutterCompact
 
     /** Maximale Inhaltsbreite auf großen Screens, damit Zeilen lesbar bleiben. */
     val maxContentWidth: Dp = 840.dp
@@ -79,4 +97,22 @@ object Sizing {
 
     /** Maximale Breite eines Bottom Sheets auf großen Screens. */
     val sheetMaxWidth: Dp = 640.dp
+
+    /** Sichtbares Kästchen einer [app.gympulse.core.designsystem.component.SetCheckbox]. */
+    val setCheckbox: Dp = 40.dp
+
+    /** Rand des nicht abgehakten [setCheckbox]. */
+    val setCheckboxBorder: Dp = 1.5.dp
+
+    /** Höhe von [app.gympulse.core.designsystem.component.StatusChip]. */
+    val statusChipHeight: Dp = 32.dp
+
+    /** Status-Punkt in einem Status-Chip. */
+    val statusDot: Dp = 8.dp
+
+    /** Rand von Karten der Ebenen 1 und 2 und von Status-Chips. */
+    val hairline: Dp = 1.dp
+
+    /** Mindestbreite des Werts in einem [app.gympulse.core.designsystem.component.NumberStepper]. */
+    val stepperValueMinWidth: Dp = 72.dp
 }

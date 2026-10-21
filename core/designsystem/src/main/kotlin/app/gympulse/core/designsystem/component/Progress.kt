@@ -58,7 +58,7 @@ object ProgressMath {
  * @param size Durchmesser, Standard [Sizing.progressRing].
  * @param strokeWidth Linienstärke, Standard [Sizing.progressRingStroke].
  * @param color Farbe des Fortschritts, Standard `primary`.
- * @param trackColor Farbe der Spur, Standard `secondaryContainer`.
+ * @param trackColor Farbe der Spur, Standard `surfaceContainerHighest`.
  * @param animate Änderungen weich animieren.
  * @param contentDescription optionaler Text für TalkBack statt "NN Prozent".
  * @param content Inhalt der Mitte, z. B. eine Zahl in `metricMedium`.
@@ -70,7 +70,7 @@ fun ProgressRing(
     size: Dp = Sizing.progressRing,
     strokeWidth: Dp = Sizing.progressRingStroke,
     color: Color = MaterialTheme.colorScheme.primary,
-    trackColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    trackColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
     animate: Boolean = true,
     contentDescription: String? = null,
     content: @Composable BoxScope.() -> Unit = {},
@@ -107,7 +107,7 @@ fun ProgressRing(
  * @param valueText optionaler Wert rechts über dem Balken.
  * @param height Balkenhöhe, Standard [Sizing.progressBar].
  * @param color Farbe des Fortschritts, Standard `primary`.
- * @param trackColor Farbe der Spur, Standard `secondaryContainer`.
+ * @param trackColor Farbe der Spur, Standard `surfaceContainerHighest`.
  * @param animate Änderungen weich animieren.
  */
 @Composable
@@ -118,7 +118,7 @@ fun GymPulseProgressBar(
     valueText: String? = null,
     height: Dp = Sizing.progressBar,
     color: Color = MaterialTheme.colorScheme.primary,
-    trackColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    trackColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
     animate: Boolean = true,
 ) {
     val target = ProgressMath.clamp(progress)

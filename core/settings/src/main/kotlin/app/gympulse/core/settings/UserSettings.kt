@@ -44,8 +44,10 @@ data class UserSettings(
     val restTimerSeconds: Int = SettingsLimits.DEFAULT_REST_TIMER_SECONDS,
     val weekStart: WeekStart = WeekStart.MONDAY,
     val weeklyGoal: Int = SettingsLimits.DEFAULT_WEEKLY_GOAL,
-    val themeMode: ThemeMode = ThemeMode.SYSTEM,
-    val dynamicColor: Boolean = true,
+    /** Standard dunkel: Kinetic Material ist AMOLED-first. */
+    val themeMode: ThemeMode = ThemeMode.DARK,
+    /** Material You ist optional; Standard ist das eigene Kinetic-Schema. */
+    val dynamicColor: Boolean = false,
     val language: AppLanguage = AppLanguage.SYSTEM,
     /** Ob das Onboarding beim ersten Start abgeschlossen oder übersprungen wurde. */
     val onboardingCompleted: Boolean = false,

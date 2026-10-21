@@ -17,13 +17,15 @@ import app.gympulse.core.designsystem.theme.Spacing
 /**
  * Fensterbreiten-Klassen nach Material 3 (m3.material.io/foundations/layout).
  *
- * | Klasse      | Breite         | Navigation | Rand  | Spalten |
- * |-------------|----------------|------------|-------|---------|
- * | Compact     | < 600 dp       | Bar        | 16 dp | 4       |
- * | Medium      | 600–839 dp     | Rail       | 24 dp | 8       |
- * | Expanded    | 840–1199 dp    | Rail       | 24 dp | 12      |
- * | Large       | 1200–1599 dp   | Rail       | 24 dp | 12      |
- * | ExtraLarge  | ≥ 1600 dp      | Rail       | 24 dp | 12      |
+ * | Klasse      | Breite         | Navigation | Rand  | Gutter | Spalten |
+ * |-------------|----------------|------------|-------|--------|---------|
+ * | Compact     | < 600 dp       | Bar        | 16 dp | 12 dp  | 4       |
+ * | Medium      | 600–839 dp     | Rail       | 32 dp | 20 dp  | 8       |
+ * | Expanded    | 840–1199 dp    | Rail       | 32 dp | 20 dp  | 12      |
+ * | Large       | 1200–1599 dp   | Rail       | 32 dp | 20 dp  | 12      |
+ * | ExtraLarge  | ≥ 1600 dp      | Rail       | 32 dp | 20 dp  | 12      |
+ *
+ * Rand und Gutter folgen Kinetic Material (DESIGN.md `margin-*`, `gutter-*`).
  */
 enum class WindowWidthClass(val minWidth: Dp) {
     Compact(0.dp),
@@ -40,7 +42,10 @@ enum class WindowWidthClass(val minWidth: Dp) {
     val isAtLeastExpanded: Boolean get() = this >= Expanded
 
     /** Horizontaler Seitenrand für Inhalte. */
-    val horizontalMargin: Dp get() = if (this == Compact) Spacing.screenMargin else Spacing.screenMarginWide
+    val horizontalMargin: Dp get() = if (this == Compact) Spacing.marginCompact else Spacing.marginMedium
+
+    /** Abstand zwischen Spalten, Karten und Kacheln. */
+    val gutter: Dp get() = if (this == Compact) Spacing.gutterCompact else Spacing.gutterMedium
 
     /** Spalten des Layout-Rasters. */
     val gridColumns: Int

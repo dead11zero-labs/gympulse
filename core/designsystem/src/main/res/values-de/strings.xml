@@ -4,4 +4,8 @@
     <string name="designsystem_trend_down">Trend fallend: %1$s</string>
     <string name="designsystem_trend_flat">Trend unverändert: %1$s</string>
     <string name="designsystem_progress_percent">%1$d Prozent</string>
+    <string name="designsystem_stepper_decrease">Verringern</string>
+    <string name="designsystem_stepper_increase">Erhöhen</string>
+    <string name="designsystem_set_checkbox">Satz %1$s</string>
+    <string name="designsystem_pr_badge">PR</string>
 </resources>

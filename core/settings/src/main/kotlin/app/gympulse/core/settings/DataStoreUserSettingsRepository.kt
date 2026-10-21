@@ -74,8 +74,8 @@ class DataStoreUserSettingsRepository @Inject constructor(
         weekStart = enumOrDefault(this[Keys.WEEK_START], WeekStart.MONDAY),
         weeklyGoal = (this[Keys.WEEKLY_GOAL] ?: SettingsLimits.DEFAULT_WEEKLY_GOAL)
             .coerceIn(SettingsLimits.WEEKLY_GOAL),
-        themeMode = enumOrDefault(this[Keys.THEME_MODE], ThemeMode.SYSTEM),
-        dynamicColor = this[Keys.DYNAMIC_COLOR] ?: true,
+        themeMode = enumOrDefault(this[Keys.THEME_MODE], ThemeMode.DARK),
+        dynamicColor = this[Keys.DYNAMIC_COLOR] ?: false,
         language = enumOrDefault(this[Keys.LANGUAGE], AppLanguage.SYSTEM),
         onboardingCompleted = this[Keys.ONBOARDING_COMPLETED] ?: false,
     )

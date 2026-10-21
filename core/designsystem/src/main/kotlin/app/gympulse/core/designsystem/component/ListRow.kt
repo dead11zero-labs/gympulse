@@ -1,5 +1,6 @@
 package app.gympulse.core.designsystem.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -93,15 +94,15 @@ fun ListRow(
 }
 
 /**
- * Icon in einem tonalen Kreis (`secondaryContainer`/`onSecondaryContainer`) für den
+ * Icon in einem tonalen Kreis (`surfaceContainerHighest`/`onSurface`) für den
  * führenden Slot von [ListRow]. Dekorativ, die Zeile trägt die Aussage.
  */
 @Composable
 fun ListRowIcon(
     icon: ImageVector,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.secondaryContainer,
-    contentColor: Color = MaterialTheme.colorScheme.onSecondaryContainer,
+    containerColor: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
+    contentColor: Color = MaterialTheme.colorScheme.onSurface,
     size: Dp = Sizing.iconContainer,
 ) {
     Surface(
@@ -117,21 +118,25 @@ fun ListRowIcon(
 }
 
 /**
- * Gruppiert [ListRow]s auf einer gemeinsamen tonalen Fläche (`surfaceContainer`) mit großen
- * Ecken, wie Einstellungs- oder Übungslisten in M3 Expressive. Trenner zwischen den Zeilen
- * mit [ListRowDivider] setzen.
+ * Gruppiert [ListRow]s auf einer gemeinsamen tonalen Fläche (`surfaceContainer`) mit
+ * 16-dp-Ecken und 1 dp `outlineVariant`-Rand, wie die Einstellungs- und Übungslisten in
+ * Kinetic Material. Trenner zwischen den Zeilen mit [ListRowDivider] setzen.
+ *
+ * @param bordered 1-dp-Rand in `outlineVariant` (Standard an).
  */
 @Composable
 fun ListGroup(
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+    bordered: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Surface(
         modifier = modifier,
-        shape = MaterialTheme.shapes.large,
+        shape = MaterialTheme.shapes.medium,
         color = containerColor,
         contentColor = MaterialTheme.colorScheme.onSurface,
+        border = if (bordered) BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant) else null,
     ) {
         Column(content = content)
     }

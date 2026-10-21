@@ -26,7 +26,7 @@ import app.gympulse.core.designsystem.theme.Spacing
 
 /**
  * Leerzustand für Listen und Screens ohne Daten: großes Icon in einem tonalen Kreis
- * (`secondaryContainer`), Titel (Headline Small), erklärender Text und optional eine
+ * (`primaryContainer`), Titel (Headline Small), erklärender Text und optional eine
  * Hauptaktion (gefüllter Button) sowie eine Nebenaktion (Text-Button).
  *
  * Füllt nur die Breite; zum vertikalen Zentrieren den Aufrufer `Modifier.fillMaxSize()` und
@@ -61,8 +61,8 @@ fun EmptyState(
         ) {
             Surface(
                 shape = ExpressiveShapes.full,
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                color = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.size(Sizing.emptyStateIconContainer),
             ) {
                 Box(contentAlignment = Alignment.Center) {

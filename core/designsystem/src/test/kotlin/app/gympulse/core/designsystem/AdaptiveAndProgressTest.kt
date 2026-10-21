@@ -34,6 +34,8 @@ class AdaptiveAndProgressTest {
         assertTrue(WindowWidthClass.Expanded.isAtLeastExpanded)
         assertEquals(Spacing.screenMargin, WindowWidthClass.Compact.horizontalMargin)
         assertEquals(Spacing.screenMarginWide, WindowWidthClass.Large.horizontalMargin)
+        assertEquals(listOf(16.dp, 32.dp, 32.dp, 32.dp, 32.dp), WindowWidthClass.entries.map { it.horizontalMargin })
+        assertEquals(listOf(12.dp, 20.dp, 20.dp, 20.dp, 20.dp), WindowWidthClass.entries.map { it.gutter })
         assertEquals(listOf(4, 8, 12, 12, 12), WindowWidthClass.entries.map { it.gridColumns })
         assertEquals(listOf(2, 3, 4, 4, 4), WindowWidthClass.entries.map { it.statTileColumns })
         // Maximale Inhaltsbreite entspricht dem Expanded-Breakpoint.

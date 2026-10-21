@@ -1,5 +1,6 @@
 package app.gympulse.core.designsystem.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +24,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import app.gympulse.core.designsystem.R
-import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.designsystem.theme.metricLarge
@@ -50,7 +50,7 @@ data class StatTrend(
 
 /** Optik einer [StatTile]. */
 enum class StatTileStyle {
-    /** Neutrale tonale Fläche (`surfaceContainerHigh`/`onSurface`), Standard für Raster. */
+    /** Neutrale tonale Fläche (`surfaceContainer`/`onSurface`, 1 dp `outlineVariant`-Rand), Standard für Raster. */
     Standard,
 
     /** Hervorgehoben (`primaryContainer`/`onPrimaryContainer`), für die eine Hauptkennzahl. */
@@ -86,13 +86,23 @@ fun StatTile(
 ) {
     val colors = when (style) {
         StatTileStyle.Standard -> CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            containerColor = MaterialTheme.colorScheme.surfaceContainer,
             contentColor = MaterialTheme.colorScheme.onSurface,
         )
         StatTileStyle.Highlighted -> CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         )
+    }
+    val border: BorderStroke? = if (style == StatTileStyle.Standard) {
+        BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant)
+    } else {
+        null
+    }
+    val labelColor = if (style == StatTileStyle.Standard) {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    } else {
+        MaterialTheme.colorScheme.onPrimaryContainer
     }
     // Kachel als ein TalkBack-Element: Zahl, Einheit, Beschriftung, Trend.
     val semanticsModifier = modifier.semantics(mergeDescendants = true) {}
@@ -123,7 +133,8 @@ fun StatTile(
             }
             Text(
                 text = label,
-                style = MaterialTheme.typography.labelLarge,
+                style = MaterialTheme.typography.labelMedium,
+                color = labelColor,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -137,14 +148,16 @@ fun StatTile(
         Card(
             onClick = onClick,
             modifier = semanticsModifier,
-            shape = ExpressiveShapes.largeIncreased,
+            shape = MaterialTheme.shapes.large,
             colors = colors,
+            border = border,
         ) { content() }
     } else {
         Card(
             modifier = semanticsModifier,
-            shape = ExpressiveShapes.largeIncreased,
+            shape = MaterialTheme.shapes.large,
             colors = colors,
+            border = border,
         ) { content() }
     }
 }

@@ -59,7 +59,7 @@ class BackupManagerTest {
     private lateinit var source: GymPulseDatabase
     private lateinit var target: GymPulseDatabase
     private val sourceSettings = FakeSettings(
-        UserSettings(restTimerSeconds = 150, weekStart = WeekStart.SUNDAY, weeklyGoal = 5, themeMode = ThemeMode.DARK),
+        UserSettings(restTimerSeconds = 150, weekStart = WeekStart.SUNDAY, weeklyGoal = 5, themeMode = ThemeMode.LIGHT),
     )
     private val targetSettings = FakeSettings()
 
@@ -96,7 +96,7 @@ class BackupManagerTest {
         assertTrue(result.settingsApplied)
         assertEquals(150, targetSettings.state.value.restTimerSeconds)
         assertEquals(WeekStart.SUNDAY, targetSettings.state.value.weekStart)
-        assertEquals(ThemeMode.DARK, targetSettings.state.value.themeMode)
+        assertEquals(ThemeMode.LIGHT, targetSettings.state.value.themeMode)
 
         // Ein zweiter Export aus der Zieldatenbank muss inhaltlich identisch sein.
         val again = manager(target, targetSettings).createBackup(Instant.parse("2026-10-20T08:00:00Z"))

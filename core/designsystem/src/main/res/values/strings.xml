@@ -6,4 +6,11 @@
     <string name="designsystem_trend_flat">Trend unchanged: %1$s</string>
     <!-- Accessibility description of a progress ring or bar; %1$d is the percentage. -->
     <string name="designsystem_progress_percent">%1$d percent</string>
+    <!-- Accessibility labels of the − / + buttons of a number stepper. -->
+    <string name="designsystem_stepper_decrease">Decrease</string>
+    <string name="designsystem_stepper_increase">Increase</string>
+    <!-- Accessibility label of a set checkbox; %1$s is the set number, e.g. "2". -->
+    <string name="designsystem_set_checkbox">Set %1$s</string>
+    <!-- Personal record badge. -->
+    <string name="designsystem_pr_badge">PR</string>
 </resources>
