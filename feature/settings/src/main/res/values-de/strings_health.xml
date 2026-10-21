@@ -19,6 +19,10 @@
     <string name="health_connect_sleep">Schlaf</string>
     <string name="health_connect_sleep_summary">Den letzten Schlaf vor einem Workout in der Zusammenfassung zeigen</string>
     <string name="health_connect_sleep_denied">Der Zugriff auf Schlafdaten wurde nicht erlaubt. Schlaf bleibt ausgeblendet.</string>
+    <string name="health_connect_chip_connected">Verbunden</string>
+    <string name="health_connect_chip_unavailable">Nicht verfügbar</string>
+    <string name="health_connect_chip_permission_missing">Berechtigung fehlt</string>
+    <string name="health_connect_chip_off">Aus</string>
     <string name="health_connect_action_ok">OK</string>
 
     <string name="health_privacy_title">So nutzt GymPulse Health Connect</string>

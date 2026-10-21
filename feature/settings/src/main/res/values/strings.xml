@@ -55,7 +55,7 @@
 
     <string name="body_add">Add measurement</string>
     <string name="body_add_title">New measurement</string>
-    <string name="body_add_hint">Weight is required. Leave other fields empty to skip them.</string>
+    <string name="body_add_hint">Weight is required. Other fields are optional.</string>
     <string name="body_type_weight">Weight</string>
     <string name="body_type_body_fat">Body fat</string>
     <string name="body_type_chest">Chest</string>
@@ -69,10 +69,20 @@
     <string name="body_value_percent" translatable="false">%1$s %%</string>
     <string name="body_error_body_fat">Enter a value between 3 and 60 percent</string>
     <string name="body_error_circumference">Enter a value between 10 and 300 cm</string>
-    <string name="body_latest">Latest</string>
+    <string name="body_latest">Current value</string>
     <string name="body_change">Change since previous entry: %1$s</string>
     <string name="body_chart_description">Chart of %1$s over time</string>
     <string name="body_chart_empty">Add at least two measurements to see a chart.</string>
+    <string name="body_last_update">Last update: %1$s</string>
+    <string name="body_chart_empty_hint">Log more data to analyze trends</string>
+    <string name="body_required">Required</string>
+    <string name="body_circumferences">Measurements (cm)</string>
+    <string name="body_example_weight">e.g. 95.0</string>
+    <string name="body_example_body_fat">e.g. 18.5</string>
+    <plurals name="body_history_count">
+        <item quantity="one">%1$d entry</item>
+        <item quantity="other">%1$d entries</item>
+    </plurals>
     <string name="body_history">History</string>
     <string name="body_empty">No measurements yet</string>
     <string name="body_edit">Edit</string>
@@ -105,7 +115,10 @@
     <string name="photos_open">Progress photos</string>
     <string name="photos_title">Progress photos</string>
     <string name="photos_disabled">Progress photos are currently unavailable.</string>
-    <string name="photos_empty">No photos yet. Photos stay on this device and are not part of the JSON backup.</string>
+    <string name="photos_empty">No photos yet. Photos stay safely stored on this device and are not part of the JSON backup.</string>
+    <string name="photos_local_only">Stored locally on this device</string>
+    <string name="photos_tip_title">Tip for best results</string>
+    <string name="photos_tip_body">Keep lighting, time of day and angle consistent. Ideally take photos in the morning before your first meal.</string>
     <string name="photos_take">Take photo</string>
     <string name="photos_pick">Choose photo</string>
     <string name="photos_compare">Compare two photos</string>

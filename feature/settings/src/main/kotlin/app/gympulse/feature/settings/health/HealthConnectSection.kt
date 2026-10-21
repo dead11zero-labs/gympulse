@@ -3,6 +3,8 @@ package app.gympulse.feature.settings.health
 import android.content.ActivityNotFoundException
 import android.content.Context
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Face
@@ -15,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -24,6 +27,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.health.HealthAvailability
 import app.gympulse.core.data.health.HealthReadType
 import app.gympulse.core.data.health.HealthWeight
+import app.gympulse.core.designsystem.component.StatusChip
+import app.gympulse.core.designsystem.theme.Sizing
+import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.health.HealthConnectPermissions
 import app.gympulse.feature.settings.R
 import app.gympulse.feature.settings.SettingsDivider
@@ -102,6 +108,24 @@ internal fun HealthConnectSettingsRows(viewModel: HealthConnectViewModel = hiltV
             else -> null
         },
     )
+
+    // Zustand als Chip unter der Zeile, eingerückt auf Höhe des Texts.
+    Box(
+        modifier = Modifier
+            .padding(start = Spacing.m + Sizing.iconContainer + Spacing.m, bottom = Spacing.s),
+    ) {
+        StatusChip(
+            text = stringResource(
+                when {
+                    state.active -> R.string.health_connect_chip_connected
+                    !state.available -> R.string.health_connect_chip_unavailable
+                    state.enabled -> R.string.health_connect_chip_permission_missing
+                    else -> R.string.health_connect_chip_off
+                },
+            ),
+            active = state.active,
+        )
+    }
 
     if (state.available && state.enabled && !state.permissionsGranted) {
         SettingsDivider(withIcon = true)

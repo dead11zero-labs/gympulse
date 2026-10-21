@@ -53,7 +53,7 @@
 
     <string name="body_add">Messung hinzufügen</string>
     <string name="body_add_title">Neue Messung</string>
-    <string name="body_add_hint">Das Gewicht ist Pflicht. Andere Felder können leer bleiben.</string>
+    <string name="body_add_hint">Das Gewicht ist Pflicht. Andere Felder können optional leer bleiben.</string>
     <string name="body_type_weight">Gewicht</string>
     <string name="body_type_body_fat">Körperfett</string>
     <string name="body_type_chest">Brust</string>
@@ -65,10 +65,20 @@
     <string name="body_type_neck">Nacken</string>
     <string name="body_error_body_fat">Bitte einen Wert zwischen 3 und 60 Prozent eingeben</string>
     <string name="body_error_circumference">Bitte einen Wert zwischen 10 und 300 cm eingeben</string>
-    <string name="body_latest">Aktuell</string>
+    <string name="body_latest">Aktueller Wert</string>
     <string name="body_change">Änderung zum vorherigen Eintrag: %1$s</string>
     <string name="body_chart_description">Diagramm: %1$s im Zeitverlauf</string>
     <string name="body_chart_empty">Mit mindestens zwei Messungen erscheint ein Diagramm.</string>
+    <string name="body_last_update">Letztes Update: %1$s</string>
+    <string name="body_chart_empty_hint">Erfasse weitere Daten, um Trends zu analysieren</string>
+    <string name="body_required">Pflichtfeld</string>
+    <string name="body_circumferences">Umfänge (cm)</string>
+    <string name="body_example_weight">z. B. 95,0</string>
+    <string name="body_example_body_fat">z. B. 18,5</string>
+    <plurals name="body_history_count">
+        <item quantity="one">%1$d Eintrag</item>
+        <item quantity="other">%1$d Einträge</item>
+    </plurals>
     <string name="body_history">Verlauf</string>
     <string name="body_empty">Noch keine Messungen</string>
     <string name="body_edit">Bearbeiten</string>
@@ -101,7 +111,10 @@
     <string name="photos_open">Fortschrittsfotos</string>
     <string name="photos_title">Fortschrittsfotos</string>
     <string name="photos_disabled">Fortschrittsfotos sind derzeit nicht verfügbar.</string>
-    <string name="photos_empty">Noch keine Fotos. Fotos bleiben auf diesem Gerät und sind nicht im JSON-Backup enthalten.</string>
+    <string name="photos_empty">Noch keine Fotos vorhanden. Fotos bleiben sicher auf diesem Gerät gespeichert und sind nicht im JSON-Backup enthalten.</string>
+    <string name="photos_local_only">Lokal auf diesem Gerät gespeichert</string>
+    <string name="photos_tip_title">Tipp für beste Ergebnisse</string>
+    <string name="photos_tip_body">Halte Lichtverhältnisse, Uhrzeit und Winkel konsistent. Am besten morgens vor der ersten Mahlzeit fotografieren.</string>
     <string name="photos_take">Foto aufnehmen</string>
     <string name="photos_pick">Foto auswählen</string>
     <string name="photos_compare">Zwei Fotos vergleichen</string>

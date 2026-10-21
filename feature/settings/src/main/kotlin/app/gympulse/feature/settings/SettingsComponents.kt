@@ -28,19 +28,24 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.graphics.Color
+import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListGroup
 import app.gympulse.core.designsystem.component.ListRow
 import app.gympulse.core.designsystem.component.ListRowDivider
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 
-/** Überschrift einer Einstellungsgruppe. */
+/** Überschrift einer Einstellungsgruppe: Großbuchstaben-Label in `tertiary` (Kinetic Material). */
 @Composable
-internal fun SettingsSectionHeader(title: String, modifier: Modifier = Modifier) {
-    Text(
+internal fun SettingsSectionHeader(
+    title: String,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.tertiary,
+) {
+    LabelCaps(
         text = title,
-        style = MaterialTheme.typography.titleSmall,
-        color = MaterialTheme.colorScheme.primary,
+        color = color,
         modifier = modifier
             .padding(horizontal = Spacing.m, vertical = Spacing.xs)
             .semantics { heading() },

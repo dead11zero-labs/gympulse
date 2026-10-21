@@ -49,6 +49,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListRowIcon
 import app.gympulse.core.designsystem.component.StatTile
 import app.gympulse.core.designsystem.theme.ExpressiveShapes
@@ -327,9 +328,9 @@ private fun ProfileHero(
                     size = Sizing.iconLarge + Spacing.l,
                 )
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(
+                    LabelCaps(
                         text = stringResource(R.string.settings_name),
-                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                     )
                     Text(
                         text = name,
