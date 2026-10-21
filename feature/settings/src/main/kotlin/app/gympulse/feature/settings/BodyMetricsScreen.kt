@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.style.TextAlign
 import app.gympulse.core.designsystem.component.GymPulseBottomSheet
@@ -432,6 +433,7 @@ private fun HistoryRow(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 /**
  * Formular für eine neue Messung im Bottom Sheet: Gewicht ist Pflicht, alle anderen Felder sind
  * optional. Körperfett steht einzeln, die Umfänge sind darunter gruppiert.
