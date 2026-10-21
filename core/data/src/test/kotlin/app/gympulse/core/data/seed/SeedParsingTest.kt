@@ -6,6 +6,7 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.File
 
 class SeedParsingTest {
     private val json = """
@@ -55,5 +56,47 @@ class SeedParsingTest {
         assertNull(tr.getValue("de").instructions)
         val mu = e.toMuscles(emptyList(), 10L)
         assertEquals(listOf("chest" to true, "triceps" to false), mu.map { it.muscle to it.isPrimary })
+    }
+
+    private fun realSeed(): SeedFile {
+        val file = File("../database/src/main/assets/seed/exercises_v1.json")
+        return parseSeed(file.readText(Charsets.UTF_8))
+    }
+
+    @Test
+    fun realSeedHasUniqueSlugsAndIds() {
+        val exercises = realSeed().exercises
+        assertEquals(exercises.size, exercises.map { it.slug }.toSet().size)
+        assertEquals(exercises.size, exercises.map { exerciseId(it.slug) }.toSet().size)
+    }
+
+    @Test
+    fun realSeedContainsMachinesFromJoerg() {
+        val seed = realSeed()
+        assertTrue(seed.schemaVersion >= 2)
+        val machines = seed.exercises.filter { it.source == "gympulse" }
+        assertEquals(18, machines.size)
+        machines.forEach {
+            assertEquals("CC0-1.0", it.license)
+            assertTrue(it.name.containsKey("de") && it.name.containsKey("en"))
+            assertTrue(it.primaryMuscles.isNotEmpty())
+        }
+        val pendulum = machines.single { it.slug == "pendulum_squat" }
+        assertEquals("Pendel-Kniebeuge", pendulum.name["de"])
+        assertEquals("Pendulum Squat", pendulum.name["en"])
+        assertEquals("machine", pendulum.equipmentType)
+        assertEquals("WEIGHT_REPS", pendulum.trackingType)
+        assertEquals(listOf("quadriceps", "glutes"), pendulum.primaryMuscles)
+        val chair = machines.single { it.slug == "captains_chair" }
+        assertEquals("bodyweight", chair.equipmentType)
+        assertEquals("REPS", chair.trackingType)
+        assertEquals(0.35, chair.bodyweightFactor!!, 0.0)
+    }
+
+    @Test
+    fun machineDuplicatesAreNotAddedTwice() {
+        val slugs = realSeed().exercises.map { it.slug }.toSet()
+        assertTrue("leg_press" in slugs && "45_degree_leg_press" in slugs)
+        assertTrue("wide_grip_lat_pulldown" in slugs && "lat_pulldown" !in slugs)
     }
 }
