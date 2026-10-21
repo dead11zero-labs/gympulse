@@ -17,8 +17,14 @@ enum class Feature(
     WEAR_APP(premium = true),
     PROGRESS_PHOTOS(premium = true),
 
-    /** Workouts nach Health Connect schreiben und Körpergewicht lesen; Opt-in in den Einstellungen. */
+    /**
+     * Workouts nach Health Connect schreiben, Körpergewicht, Herzfrequenz, Schritte und aktive
+     * Kalorien lesen; Opt-in in den Einstellungen.
+     */
     HEALTH_CONNECT(premium = false, enabledByDefault = false, userToggleable = true),
+
+    /** Unterschalter zu [HEALTH_CONNECT]: Schlafdaten lesen; wirkt nur, wenn Health Connect aktiv ist. */
+    HEALTH_SLEEP(premium = false, enabledByDefault = false, userToggleable = true),
 
     /** Google-Anmeldung und manuelles Cloud-Backup über Supabase; Opt-in in den Einstellungen. */
     CLOUD_BACKUP(premium = false, enabledByDefault = false, userToggleable = true),

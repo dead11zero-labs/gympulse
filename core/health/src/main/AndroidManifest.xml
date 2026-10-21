@@ -4,6 +4,12 @@
     <!-- Health Connect: Workouts schreiben, Körpergewicht lesen. -->
     <uses-permission android:name="android.permission.health.WRITE_EXERCISE" />
     <uses-permission android:name="android.permission.health.READ_WEIGHT" />
+    <!-- Optional: Werte für die Workout-Zusammenfassung. -->
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED" />
+    <!-- Optional, eigener Unterschalter: letzte Schlafphase vor dem Workout. -->
+    <uses-permission android:name="android.permission.health.READ_SLEEP" />
 
     <!-- Android 9 bis 13: Health Connect ist eine eigene App, die sichtbar sein muss. -->
     <queries>

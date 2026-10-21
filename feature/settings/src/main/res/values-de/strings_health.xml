@@ -13,11 +13,17 @@
     <string name="health_connect_weight_import">Übernehmen</string>
     <string name="health_connect_weight_imported">Das Körpergewicht wurde als Körpermaß gespeichert.</string>
     <string name="health_connect_weight_already_imported">Dieses Körpergewicht wurde bereits übernommen.</string>
+    <string name="health_connect_sources_hint">Apps wie Samsung Health liefern ihre Daten über Health Connect. Erlaube das in Samsung Health unter Einstellungen → Health Connect.</string>
+    <string name="health_connect_activity_access">Herzfrequenz, Schritte und Kalorien</string>
+    <string name="health_connect_activity_access_missing">Noch nicht erlaubt. Tippe, um diese Werte in der Workout-Zusammenfassung zu zeigen.</string>
+    <string name="health_connect_sleep">Schlaf</string>
+    <string name="health_connect_sleep_summary">Den letzten Schlaf vor einem Workout in der Zusammenfassung zeigen</string>
+    <string name="health_connect_sleep_denied">Der Zugriff auf Schlafdaten wurde nicht erlaubt. Schlaf bleibt ausgeblendet.</string>
     <string name="health_connect_action_ok">OK</string>
 
     <string name="health_privacy_title">So nutzt GymPulse Health Connect</string>
     <string name="health_privacy_write">Wenn du ein Workout beendest, schreibt GymPulse es als Trainingseinheit mit Start- und Endzeit, Titel und Notizen nach Health Connect.</string>
-    <string name="health_privacy_read">GymPulse liest dein Körpergewicht aus Health Connect nur, um es in den Einstellungen anzuzeigen. Als Körpermaß gespeichert wird es erst, wenn du auf Übernehmen tippst.</string>
+    <string name="health_privacy_read">GymPulse liest dein Körpergewicht aus Health Connect nur, um es in den Einstellungen anzuzeigen. Als Körpermaß gespeichert wird es erst, wenn du auf Übernehmen tippst. Wenn du es erlaubst, liest GymPulse außerdem Herzfrequenz, Schritte und aktive Kalorien für die Dauer eines beendeten Workouts und, mit dem eigenen Schlaf-Schalter, deinen letzten Schlaf vor dem Workout. Diese Werte werden nur in der Workout-Zusammenfassung angezeigt und nicht gespeichert. Sie können von jeder App stammen, die nach Health Connect schreibt.</string>
     <string name="health_privacy_storage">Deine Daten bleiben auf deinem Gerät. GymPulse sendet keine Gesundheitsdaten an Server, nutzt sie nicht für Werbung und gibt sie nicht weiter.</string>
     <string name="health_privacy_revoke">Du kannst die Anbindung jederzeit in den GymPulse-Einstellungen ausschalten und die Berechtigungen in Health Connect widerrufen.</string>
     <string name="health_privacy_close">Schließen</string>

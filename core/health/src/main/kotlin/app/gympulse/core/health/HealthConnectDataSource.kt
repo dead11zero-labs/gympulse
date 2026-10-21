@@ -8,12 +8,21 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.health.connect.client.permission.HealthPermission
+import androidx.health.connect.client.aggregate.AggregateMetric
+import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
 import androidx.health.connect.client.records.ExerciseSessionRecord
+import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.SleepSessionRecord
+import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.WeightRecord
+import androidx.health.connect.client.request.AggregateRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
+import app.gympulse.core.data.health.HealthActivity
 import app.gympulse.core.data.health.HealthAvailability
 import app.gympulse.core.data.health.HealthDataSource
+import app.gympulse.core.data.health.HealthReadType
+import app.gympulse.core.data.health.HealthSleep
 import app.gympulse.core.data.health.HealthWeight
 import app.gympulse.core.data.health.HealthWorkout
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -28,6 +37,8 @@ class HealthConnectDataSource @Inject constructor(
 ) : HealthDataSource {
 
     override val requiredPermissions: Set<String> = HealthConnectPermissions.REQUIRED
+
+    override fun readPermission(type: HealthReadType): String = HealthConnectPermissions.read(type)
 
     override fun availability(): HealthAvailability =
         when (HealthConnectClient.getSdkStatus(context, HealthConnectPermissions.PROVIDER_PACKAGE)) {
@@ -64,8 +75,54 @@ class HealthConnectDataSource @Inject constructor(
         return response.records.firstOrNull()?.let(HealthRecordMapper::toHealthWeight)
     }
 
+    override suspend fun aggregateActivity(
+        start: Instant,
+        end: Instant,
+        types: Set<HealthReadType>,
+    ): HealthActivity {
+        val client = clientOrNull() ?: return HealthActivity()
+        val metrics = buildSet<AggregateMetric<*>> {
+            if (HealthReadType.HEART_RATE in types) {
+                add(HeartRateRecord.BPM_AVG)
+                add(HeartRateRecord.BPM_MAX)
+            }
+            if (HealthReadType.STEPS in types) add(StepsRecord.COUNT_TOTAL)
+            if (HealthReadType.ACTIVE_CALORIES in types) add(ActiveCaloriesBurnedRecord.ACTIVE_CALORIES_TOTAL)
+        }
+        if (metrics.isEmpty()) return HealthActivity()
+        val result = client.aggregate(
+            AggregateRequest(metrics = metrics, timeRangeFilter = TimeRangeFilter.between(start, end)),
+        )
+        return HealthActivity(
+            averageHeartRateBpm = result[HeartRateRecord.BPM_AVG],
+            maxHeartRateBpm = result[HeartRateRecord.BPM_MAX],
+            steps = result[StepsRecord.COUNT_TOTAL],
+            activeCaloriesKcal = result[ActiveCaloriesBurnedRecord.ACTIVE_CALORIES_TOTAL]?.inKilocalories,
+        )
+    }
+
+    override suspend fun readLatestSleep(from: Instant, to: Instant): HealthSleep? {
+        val client = clientOrNull() ?: return null
+        val response = client.readRecords(
+            ReadRecordsRequest(
+                recordType = SleepSessionRecord::class,
+                timeRangeFilter = TimeRangeFilter.between(from, to),
+                ascendingOrder = false,
+                pageSize = SLEEP_PAGE_SIZE,
+            ),
+        )
+        return response.records
+            .filter { it.endTime.isAfter(from) && !it.endTime.isAfter(to) }
+            .maxByOrNull { it.endTime }
+            ?.let(HealthRecordMapper::toHealthSleep)
+    }
+
     private fun clientOrNull(): HealthConnectClient? =
         if (availability() == HealthAvailability.AVAILABLE) HealthConnectClient.getOrCreate(context) else null
+
+    private companion object {
+        const val SLEEP_PAGE_SIZE = 10
+    }
 }
 
 /** Berechtigungen und Berechtigungsdialog von Health Connect. */
@@ -77,6 +134,9 @@ object HealthConnectPermissions {
         HealthPermission.getWritePermission(ExerciseSessionRecord::class),
         HealthPermission.getReadPermission(WeightRecord::class),
     )
+
+    /** Lese-Berechtigung je Datentyp; Herzfrequenz, Schritte, Kalorien und Schlaf sind optional. */
+    fun read(type: HealthReadType): String = HealthPermission.getReadPermission(HealthRecordMapper.recordType(type))
 
     /** Vertrag für `rememberLauncherForActivityResult`; Ergebnis sind die erteilten Berechtigungen. */
     fun requestContract(): ActivityResultContract<Set<String>, Set<String>> =

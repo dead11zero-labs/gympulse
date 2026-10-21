@@ -5,7 +5,6 @@
 
     <string name="settings_action_save">Speichern</string>
     <string name="settings_action_cancel">Abbrechen</string>
-    <string name="settings_coming_soon">Kommt bald</string>
     <string name="settings_not_set">Nicht festgelegt</string>
 
     <string name="settings_value_kg">%1$s kg</string>
@@ -80,9 +79,7 @@
 
     <string name="settings_section_health">Gesundheitsdaten</string>
     <string name="settings_health_connect">Health Connect</string>
-    <string name="settings_health_connect_summary">Workouts teilen und Körperdaten aus Android Health Connect lesen</string>
-    <string name="settings_samsung_health">Samsung Health</string>
-    <string name="settings_samsung_health_summary">Synchronisiert über Health Connect</string>
+    <string name="settings_health_connect_summary">Workouts teilen und Körpergewicht, Herzfrequenz, Schritte und Kalorien aus Android Health Connect lesen</string>
 
     <string name="settings_section_data">Daten</string>
     <string name="settings_export_import">Export und Import</string>

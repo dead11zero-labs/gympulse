@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.health.HealthAvailability
+import app.gympulse.core.data.health.HealthReadType
 import app.gympulse.core.data.health.HealthWeight
 import app.gympulse.core.health.HealthConnectPermissions
 import app.gympulse.feature.settings.R
@@ -33,8 +35,10 @@ import java.time.format.FormatStyle
 
 /**
  * Zeilen für Health Connect im Abschnitt "Gesundheitsdaten": Schalter mit Berechtigungsdialog,
- * Hinweis auf fehlende Berechtigungen und Übernahme des Körpergewichts. Ist der Client nicht
- * verfügbar, bleibt der Schalter deaktiviert und ein Hinweis erklärt den Grund.
+ * Hinweis auf fehlende Berechtigungen, Unterschalter für Schlafdaten und Übernahme des
+ * Körpergewichts. Ist der Client nicht verfügbar, bleibt der Schalter deaktiviert und ein Hinweis
+ * erklärt den Grund. Apps wie Samsung Health liefern ihre Daten über Health Connect; eine eigene
+ * Anbindung gibt es nicht.
  */
 @Composable
 internal fun HealthConnectSettingsRows(viewModel: HealthConnectViewModel = hiltViewModel()) {
@@ -44,6 +48,16 @@ internal fun HealthConnectSettingsRows(viewModel: HealthConnectViewModel = hiltV
         viewModel.onPermissionResult(granted)
     }
     val requestPermissions = { permissionLauncher.launch(viewModel.permissions) }
+    val sleepPermissionLauncher = rememberLauncherForActivityResult(HealthConnectPermissions.requestContract()) { granted ->
+        viewModel.onSleepPermissionResult(granted)
+    }
+    val onSleepToggle: (Boolean) -> Unit = { checked ->
+        if (checked && HealthReadType.SLEEP !in state.grantedReadTypes) {
+            sleepPermissionLauncher.launch(viewModel.sleepPermissions)
+        } else {
+            viewModel.setSleepEnabled(checked)
+        }
+    }
 
     // Berechtigungen können in Health Connect jederzeit geändert werden.
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { viewModel.refresh() }
@@ -54,17 +68,22 @@ internal fun HealthConnectSettingsRows(viewModel: HealthConnectViewModel = hiltV
     val installable = state.availability == HealthAvailability.NOT_INSTALLED ||
         state.availability == HealthAvailability.UPDATE_REQUIRED
 
+    val status = stringResource(
+        when (state.availability) {
+            HealthAvailability.AVAILABLE ->
+                if (state.active) R.string.health_connect_summary_on else R.string.settings_health_connect_summary
+            HealthAvailability.NOT_INSTALLED -> R.string.health_connect_not_installed
+            HealthAvailability.UPDATE_REQUIRED -> R.string.health_connect_update_required
+            HealthAvailability.UNSUPPORTED -> R.string.health_connect_unsupported
+        },
+    )
     SettingsRow(
         headline = stringResource(R.string.settings_health_connect),
-        supporting = stringResource(
-            when (state.availability) {
-                HealthAvailability.AVAILABLE ->
-                    if (state.active) R.string.health_connect_summary_on else R.string.settings_health_connect_summary
-                HealthAvailability.NOT_INSTALLED -> R.string.health_connect_not_installed
-                HealthAvailability.UPDATE_REQUIRED -> R.string.health_connect_update_required
-                HealthAvailability.UNSUPPORTED -> R.string.health_connect_unsupported
-            },
-        ),
+        supporting = if (state.availability == HealthAvailability.UNSUPPORTED) {
+            status
+        } else {
+            status + "\n" + stringResource(R.string.health_connect_sources_hint)
+        },
         icon = Icons.Filled.Favorite,
         trailing = {
             Switch(
@@ -91,6 +110,29 @@ internal fun HealthConnectSettingsRows(viewModel: HealthConnectViewModel = hiltV
             supporting = stringResource(R.string.health_connect_permissions_missing),
             icon = Icons.Filled.Lock,
             onClick = requestPermissions,
+        )
+    }
+
+    if (state.activityAccessMissing) {
+        SettingsDivider(withIcon = true)
+        SettingsRow(
+            headline = stringResource(R.string.health_connect_activity_access),
+            supporting = stringResource(R.string.health_connect_activity_access_missing),
+            icon = Icons.Filled.Lock,
+            onClick = requestPermissions,
+        )
+    }
+
+    if (state.active) {
+        SettingsDivider(withIcon = true)
+        SettingsRow(
+            headline = stringResource(R.string.health_connect_sleep),
+            supporting = stringResource(R.string.health_connect_sleep_summary),
+            icon = Icons.Filled.DateRange,
+            trailing = {
+                Switch(checked = state.sleepActive, onCheckedChange = onSleepToggle)
+            },
+            onClick = { onSleepToggle(!state.sleepActive) },
         )
     }
 
@@ -127,6 +169,7 @@ internal fun HealthConnectSettingsRows(viewModel: HealthConnectViewModel = hiltV
                             HealthMessage.WEIGHT_IMPORTED -> R.string.health_connect_weight_imported
                             HealthMessage.WEIGHT_ALREADY_IMPORTED -> R.string.health_connect_weight_already_imported
                             HealthMessage.PERMISSIONS_DENIED -> R.string.health_connect_permissions_denied
+                            HealthMessage.SLEEP_DENIED -> R.string.health_connect_sleep_denied
                         },
                     ),
                     style = MaterialTheme.typography.bodyMedium,

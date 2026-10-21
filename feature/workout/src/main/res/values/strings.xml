@@ -98,6 +98,12 @@
     <string name="feature_workout_summary_record_one_rm">Estimated 1RM</string>
     <string name="feature_workout_summary_record_set_volume">Best set volume</string>
     <string name="feature_workout_summary_record_previous">before: %1$s kg</string>
+    <string name="feature_workout_summary_health_title">From Health Connect</string>
+    <string name="feature_workout_summary_health_avg_hr">Avg %1$s bpm</string>
+    <string name="feature_workout_summary_health_max_hr">Max %1$s bpm</string>
+    <string name="feature_workout_summary_health_steps">%1$s steps</string>
+    <string name="feature_workout_summary_health_calories">%1$s kcal active</string>
+    <string name="feature_workout_summary_health_sleep">Sleep %1$d h %2$02d min</string>
 
     <!-- Notification and mini bar -->
     <string name="feature_workout_notification_channel">Active workout</string>

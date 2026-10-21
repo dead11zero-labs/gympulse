@@ -64,7 +64,7 @@ internal fun SettingsDivider(withIcon: Boolean = false) {
 }
 
 /**
- * Eine Einstellungszeile. Ohne [onClick] ist sie nicht bedienbar (z. B. "Kommt bald").
+ * Eine Einstellungszeile. Ohne [onClick] ist sie nicht bedienbar.
  */
 @Composable
 internal fun SettingsRow(
@@ -82,29 +82,6 @@ internal fun SettingsRow(
         trailingContent = trailing,
         onClick = onClick,
         modifier = if (onClick != null) modifier.semantics { role = Role.Button } else modifier,
-    )
-}
-
-/** Zeile für Funktionen, die noch nicht umgesetzt sind. */
-@Composable
-internal fun ComingSoonRow(
-    headline: String,
-    supporting: String,
-    modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
-) {
-    SettingsRow(
-        headline = headline,
-        supporting = supporting,
-        modifier = modifier,
-        icon = icon,
-        trailing = {
-            Text(
-                text = stringResource(R.string.settings_coming_soon),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        },
     )
 }
 

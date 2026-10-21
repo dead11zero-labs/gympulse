@@ -13,11 +13,17 @@
     <string name="health_connect_weight_import">Import</string>
     <string name="health_connect_weight_imported">The body weight was saved as a body measurement.</string>
     <string name="health_connect_weight_already_imported">This body weight has already been imported.</string>
+    <string name="health_connect_sources_hint">Apps like Samsung Health share their data through Health Connect. In Samsung Health, allow it under Settings → Health Connect.</string>
+    <string name="health_connect_activity_access">Heart rate, steps and calories</string>
+    <string name="health_connect_activity_access_missing">Not allowed yet. Tap to show these values in the workout summary.</string>
+    <string name="health_connect_sleep">Sleep</string>
+    <string name="health_connect_sleep_summary">Show the last sleep before a workout in its summary</string>
+    <string name="health_connect_sleep_denied">Access to sleep data was not granted. Sleep stays hidden.</string>
     <string name="health_connect_action_ok">OK</string>
 
     <string name="health_privacy_title">How GymPulse uses Health Connect</string>
     <string name="health_privacy_write">When you finish a workout, GymPulse writes it to Health Connect as an exercise session with start and end time, title and notes.</string>
-    <string name="health_privacy_read">GymPulse reads your body weight from Health Connect only to show it in the settings. It is saved as a body measurement only when you tap Import.</string>
+    <string name="health_privacy_read">GymPulse reads your body weight from Health Connect only to show it in the settings. It is saved as a body measurement only when you tap Import. If you allow it, GymPulse also reads heart rate, steps and active calories for the time of a finished workout and, with the separate sleep switch, your last sleep before the workout. These values are only shown in the workout summary and are not saved. They can come from any app that writes to Health Connect.</string>
     <string name="health_privacy_storage">Your data stays on your device. GymPulse does not send health data to servers, does not use it for advertising and does not share it with others.</string>
     <string name="health_privacy_revoke">You can turn the connection off in the GymPulse settings at any time and revoke the permissions in Health Connect.</string>
     <string name="health_privacy_close">Close</string>
