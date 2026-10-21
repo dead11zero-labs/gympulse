@@ -2,17 +2,23 @@ package app.gympulse.feature.library
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
@@ -22,10 +28,8 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -36,11 +40,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.ui.labelRes
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.EquipmentType
@@ -83,18 +95,10 @@ internal fun LibraryScreen(
         },
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
-            PrimaryTabRow(selectedTabIndex = tab) {
-                Tab(
-                    selected = tab == TAB_EXERCISES,
-                    onClick = { tab = TAB_EXERCISES },
-                    text = { Text(stringResource(R.string.library_tab_exercises)) },
-                )
-                Tab(
-                    selected = tab == TAB_EQUIPMENT,
-                    onClick = { tab = TAB_EQUIPMENT },
-                    text = { Text(stringResource(R.string.library_tab_equipment)) },
-                )
-            }
+            LibraryHeader(
+                selectedTab = tab,
+                onSelectTab = { tab = it },
+            )
             if (tab == TAB_EXERCISES) {
                 ExerciseListContent(onOpenExercise = onOpenExercise, modifier = Modifier.weight(1f))
             } else {
@@ -193,10 +197,8 @@ private fun ExerciseListContent(
                 onAction = viewModel::clearFilters,
             )
             else -> {
-                Text(
+                LabelCaps(
                     text = stringResource(R.string.library_exercise_count, state.exercises.size),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
                 )
                 LazyColumn(
@@ -231,28 +233,112 @@ private fun ExerciseRow(exercise: Exercise, onClick: () -> Unit, modifier: Modif
     val muscle = exercise.primaryMuscles.firstOrNull()?.let { stringResource(it.labelRes()) }
     val equipment = stringResource(exercise.equipmentType.labelRes())
     val custom = if (exercise.isCustom) stringResource(R.string.library_custom_badge) else null
-    val favorite: (@Composable () -> Unit)? = if (exercise.isFavorite) {
-        {
-            Icon(
-                Icons.Filled.Favorite,
-                contentDescription = stringResource(R.string.library_favorite),
-                tint = MaterialTheme.colorScheme.primary,
-            )
-        }
-    } else {
-        null
-    }
-    Surface(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surfaceContainer,
+    val scheme = MaterialTheme.colorScheme
+    GymPulseCard(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
+        variant = GymPulseCardVariant.Filled,
+        shape = MaterialTheme.shapes.medium,
+        contentPadding = PaddingValues(Spacing.none),
     ) {
         ListRow(
             headline = exercise.name,
             supportingText = listOfNotNull(muscle, equipment, custom).joinToString(" · "),
-            trailingContent = favorite,
-            onClick = onClick,
+            trailingContent = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (exercise.isFavorite) {
+                        Icon(
+                            Icons.Filled.Favorite,
+                            contentDescription = stringResource(R.string.library_favorite),
+                            tint = scheme.secondary,
+                        )
+                    }
+                    Icon(
+                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = scheme.onSurfaceVariant,
+                    )
+                }
+            },
         )
+    }
+}
+
+/**
+ * Kopf der Bibliothek: Titel und Umschalter Übungen/Geräte als tonale Fläche, die aktive Seite
+ * als hellere Pille (Kinetic Material, Tabs in `surfaceContainerLow`).
+ */
+@Composable
+private fun LibraryHeader(
+    selectedTab: Int,
+    onSelectTab: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+        Column(
+            modifier = Modifier
+                .widthIn(max = Spacing.maxContentWidth)
+                .fillMaxWidth()
+                .padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
+            verticalArrangement = Arrangement.spacedBy(Spacing.s),
+        ) {
+            Text(
+                text = stringResource(R.string.feature_library_title),
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.semantics { heading() },
+            )
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.large,
+                color = MaterialTheme.colorScheme.surfaceContainerLow,
+            ) {
+                Row(
+                    modifier = Modifier.padding(Spacing.xxs),
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
+                ) {
+                    LibraryTab(
+                        label = stringResource(R.string.library_tab_exercises),
+                        selected = selectedTab == TAB_EXERCISES,
+                        onClick = { onSelectTab(TAB_EXERCISES) },
+                        modifier = Modifier.weight(1f),
+                    )
+                    LibraryTab(
+                        label = stringResource(R.string.library_tab_equipment),
+                        selected = selectedTab == TAB_EQUIPMENT,
+                        onClick = { onSelectTab(TAB_EQUIPMENT) },
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun LibraryTab(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val scheme = MaterialTheme.colorScheme
+    Surface(
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        color = if (selected) scheme.surfaceContainerHighest else Color.Transparent,
+        contentColor = if (selected) scheme.onSurface else scheme.onSurfaceVariant,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .selectable(selected = selected, role = Role.Tab, onClick = onClick)
+                .heightIn(min = Sizing.minTouchTarget)
+                .padding(horizontal = Spacing.s),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(text = label, style = MaterialTheme.typography.titleSmall)
+        }
     }
 }
 
@@ -296,17 +382,18 @@ private fun EquipmentListContent(
 @Composable
 private fun EquipmentRow(equipment: Equipment, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val settingsCount = stringResource(R.string.library_settings_count, equipment.settings.size)
-    Surface(
-        modifier = modifier,
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surfaceContainer,
+    GymPulseCard(
+        onClick = onClick,
+        modifier = modifier.fillMaxWidth(),
+        variant = GymPulseCardVariant.Filled,
+        shape = MaterialTheme.shapes.medium,
+        contentPadding = PaddingValues(Spacing.none),
     ) {
         ListRow(
             headline = equipment.name,
             supportingText = listOfNotNull(equipment.location?.takeIf { it.isNotBlank() }, settingsCount)
                 .joinToString(" · "),
             leadingIcon = Icons.Filled.Settings,
-            onClick = onClick,
         )
     }
 }

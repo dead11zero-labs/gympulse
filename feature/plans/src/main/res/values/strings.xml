@@ -4,6 +4,12 @@
 
     <!-- Plan list -->
     <string name="plans_new">New plan</string>
+    <string name="plans_title">Training plans</string>
+    <plurals name="plans_subtitle">
+        <item quantity="one">%d plan</item>
+        <item quantity="other">%d plans</item>
+    </plurals>
+    <string name="plans_more_exercises">+%1$d more</string>
     <string name="plans_empty_title">No plans yet</string>
     <string name="plans_empty_body">Create a plan to organize your workouts.</string>
     <string name="plans_no_exercises_yet">No exercises yet</string>
@@ -30,7 +36,12 @@
     <!-- Plan editor -->
     <string name="plans_editor_title_new">New plan</string>
     <string name="plans_editor_title_edit">Edit plan</string>
-    <string name="plans_field_name">Plan name</string>
+    <string name="plans_editor_subtitle">Create a tailor-made workout routine</string>
+    <string name="plans_back">Back</string>
+    <string name="plans_field_name_required">Plan name *</string>
+    <string name="plans_field_name_hint">e.g. Push Day A, Full body…</string>
+    <string name="plans_field_notes_hint">Goals, rest times, warm-up details…</string>
+    <string name="plans_no_exercises_body">Pick from exercises for chest, back, legs and more.</string>
     <string name="plans_field_name_error">Enter a name</string>
     <string name="plans_field_notes">Notes (optional)</string>
     <string name="plans_exercises_header">Exercises</string>

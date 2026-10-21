@@ -87,6 +87,7 @@ internal fun PlanEditorScreen(
             else -> EditorContent(
                 state = state,
                 viewModel = viewModel,
+                onBack = { if (state.isDirty && !state.isSaved) showDiscardDialog = true else onClose() },
                 modifier = Modifier.padding(padding),
             )
         }

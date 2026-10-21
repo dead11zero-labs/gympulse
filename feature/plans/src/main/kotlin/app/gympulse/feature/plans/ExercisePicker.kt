@@ -1,5 +1,6 @@
 package app.gympulse.feature.plans
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,10 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import app.gympulse.core.data.ui.labelRes
 import app.gympulse.core.designsystem.component.EmptyState
 import app.gympulse.core.designsystem.component.GymPulseSearchField
 import app.gympulse.core.designsystem.component.ListRow
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.Exercise
 
@@ -63,6 +67,7 @@ internal fun ExercisePicker(
                     text = stringResource(R.string.plans_add_exercises),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.semantics { heading() },
                 )
             }
             GymPulseSearchField(
@@ -83,7 +88,7 @@ internal fun ExercisePicker(
                 LazyColumn(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
                     contentPadding = PaddingValues(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
                     items(filtered, key = { it.id }) { exercise ->
                         val selected = exercise.id in state.selectedIds
@@ -96,15 +101,13 @@ internal fun ExercisePicker(
                                     onValueChange = { onToggle(exercise.id) },
                                 ),
                             shape = MaterialTheme.shapes.large,
-                            color = if (selected) {
-                                MaterialTheme.colorScheme.secondaryContainer
+                            color = MaterialTheme.colorScheme.surfaceContainer,
+                            contentColor = MaterialTheme.colorScheme.onSurface,
+                            // Gewählte Zeilen bekommen einen Rand in primary statt einer anderen Fläche.
+                            border = if (selected) {
+                                BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.primary)
                             } else {
-                                MaterialTheme.colorScheme.surfaceContainer
-                            },
-                            contentColor = if (selected) {
-                                MaterialTheme.colorScheme.onSecondaryContainer
-                            } else {
-                                MaterialTheme.colorScheme.onSurface
+                                null
                             },
                         ) {
                             ListRow(

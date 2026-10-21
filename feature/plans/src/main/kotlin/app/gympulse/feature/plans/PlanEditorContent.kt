@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -36,13 +38,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
-import app.gympulse.core.designsystem.component.SectionHeader
+import app.gympulse.core.designsystem.component.LabelCaps
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Spacing
+import app.gympulse.core.designsystem.theme.tabularNumbers
 
 private const val DESCRIPTION_MIN_LINES = 2
 private const val NAME_MAX_LINES = 2
@@ -54,6 +62,7 @@ private const val REST_DIGITS = 4
 internal fun EditorContent(
     state: PlanEditorUiState,
     viewModel: PlanEditorViewModel,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val draft = state.draft
@@ -70,51 +79,106 @@ internal fun EditorContent(
                 top = Spacing.m,
                 bottom = FabClearance,
             ),
-            verticalArrangement = Arrangement.spacedBy(Spacing.s),
+            verticalArrangement = Arrangement.spacedBy(Spacing.m),
         ) {
+            item(key = "back") {
+                IconButton(onClick = onBack, modifier = Modifier.offset(x = -Spacing.xs)) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.plans_back),
+                    )
+                }
+            }
             item(key = "title") {
-                Text(
-                    text = stringResource(
-                        if (state.isNew) R.string.plans_editor_title_new else R.string.plans_editor_title_edit,
-                    ),
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+                    Text(
+                        text = stringResource(
+                            if (state.isNew) R.string.plans_editor_title_new else R.string.plans_editor_title_edit,
+                        ),
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.semantics { heading() },
+                    )
+                    if (state.isNew) {
+                        Text(
+                            text = stringResource(R.string.plans_editor_subtitle),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                }
             }
             item(key = "name") {
                 val nameError = showErrors && validation.nameBlank
-                OutlinedTextField(
-                    value = draft.name,
-                    onValueChange = viewModel::onNameChange,
-                    label = { Text(stringResource(R.string.plans_field_name)) },
-                    singleLine = true,
-                    isError = nameError,
-                    supportingText = if (nameError) {
-                        { Text(stringResource(R.string.plans_field_name_error)) }
-                    } else {
-                        null
-                    },
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                    LabelCaps(
+                        text = stringResource(R.string.plans_field_name_required),
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = Spacing.xs),
+                    )
+                    OutlinedTextField(
+                        value = draft.name,
+                        onValueChange = viewModel::onNameChange,
+                        placeholder = { Text(stringResource(R.string.plans_field_name_hint)) },
+                        singleLine = true,
+                        shape = MaterialTheme.shapes.medium,
+                        isError = nameError,
+                        supportingText = if (nameError) {
+                            { Text(stringResource(R.string.plans_field_name_error)) }
+                        } else {
+                            null
+                        },
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
             item(key = "description") {
-                OutlinedTextField(
-                    value = draft.description,
-                    onValueChange = viewModel::onDescriptionChange,
-                    label = { Text(stringResource(R.string.plans_field_notes)) },
-                    minLines = DESCRIPTION_MIN_LINES,
-                    keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
-                    modifier = Modifier.fillMaxWidth(),
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                    LabelCaps(
+                        text = stringResource(R.string.plans_field_notes),
+                        modifier = Modifier.padding(horizontal = Spacing.xs),
+                    )
+                    OutlinedTextField(
+                        value = draft.description,
+                        onValueChange = viewModel::onDescriptionChange,
+                        placeholder = { Text(stringResource(R.string.plans_field_notes_hint)) },
+                        minLines = DESCRIPTION_MIN_LINES,
+                        shape = MaterialTheme.shapes.medium,
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
             }
             item(key = "header") {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    SectionHeader(
-                        title = stringResource(R.string.plans_exercises_header),
+                Row(
+                    modifier = Modifier.padding(top = Spacing.xs),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                ) {
+                    Row(
                         modifier = Modifier.weight(1f),
-                        contentPadding = PaddingValues(vertical = Spacing.xs),
-                    )
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                    ) {
+                        Text(
+                            text = stringResource(R.string.plans_exercises_header),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.semantics { heading() },
+                        )
+                        Surface(
+                            shape = ExpressiveShapes.full,
+                            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        ) {
+                            Text(
+                                text = draft.items.size.toString(),
+                                style = MaterialTheme.typography.labelMedium.tabularNumbers(),
+                                modifier = Modifier.padding(horizontal = Spacing.xs, vertical = Spacing.xxs),
+                            )
+                        }
+                    }
                     FilledTonalButton(onClick = viewModel::openPicker) {
                         Icon(
                             Icons.Filled.Add,
@@ -128,20 +192,36 @@ internal fun EditorContent(
             }
             if (draft.items.isEmpty()) {
                 item(key = "empty") {
-                    val color = if (showErrors && validation.noExercises) {
-                        MaterialTheme.colorScheme.error
-                    } else {
-                        MaterialTheme.colorScheme.onSurfaceVariant
-                    }
+                    val invalid = showErrors && validation.noExercises
                     GymPulseCard(
                         modifier = Modifier.fillMaxWidth().animateItem(),
-                        variant = GymPulseCardVariant.Outlined,
+                        variant = GymPulseCardVariant.Level1,
+                        contentPadding = PaddingValues(Spacing.l),
+                        verticalSpacing = Spacing.xs,
                     ) {
-                        Text(
-                            text = stringResource(R.string.plans_no_exercises_hint),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = color,
-                        )
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+                        ) {
+                            ListRowIcon(icon = Icons.Filled.Add)
+                            Text(
+                                text = stringResource(R.string.plans_no_exercises_hint),
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = if (invalid) {
+                                    MaterialTheme.colorScheme.error
+                                } else {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                },
+                                textAlign = TextAlign.Center,
+                            )
+                            Text(
+                                text = stringResource(R.string.plans_no_exercises_body),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
                     }
                 }
             }
@@ -187,9 +267,9 @@ private fun ExerciseCard(
 
     GymPulseCard(
         modifier = modifier.fillMaxWidth(),
-        variant = if (inSuperset) GymPulseCardVariant.Secondary else GymPulseCardVariant.Filled,
+        variant = if (inSuperset) GymPulseCardVariant.Secondary else GymPulseCardVariant.Level2,
         contentPadding = PaddingValues(Spacing.none),
-        shape = MaterialTheme.shapes.extraLarge,
+        shape = MaterialTheme.shapes.large,
     ) {
         val bracketColor = MaterialTheme.colorScheme.primary
         Column {
