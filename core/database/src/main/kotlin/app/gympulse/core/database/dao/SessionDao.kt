@@ -115,6 +115,13 @@ interface SessionDao {
         upsertSets(sets)
     }
 
+    /** Writes an exercise and its sets atomically so observers never see the exercise without sets. */
+    @Transaction
+    suspend fun insertExerciseWithSets(exercise: SessionExerciseEntity, sets: List<SetEntryEntity>) {
+        upsertSessionExercises(listOf(exercise))
+        upsertSets(sets)
+    }
+
     @Query("UPDATE set_entry SET deleted_at = :now, updated_at = :now WHERE id = :id")
     suspend fun softDeleteSet(id: String, now: Long)
 

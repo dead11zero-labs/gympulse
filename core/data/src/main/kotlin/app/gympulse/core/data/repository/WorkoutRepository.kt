@@ -152,22 +152,20 @@ class WorkoutRepository @Inject constructor(
                 updatedAt = now,
             )
         }
-        sessionDao.upsertSessionExercises(
-            listOf(
-                SessionExerciseEntity(
-                    id = sessionExerciseId,
-                    sessionId = sessionId,
-                    exerciseId = exerciseId,
-                    sortOrder = nextSortOrder,
-                    supersetGroup = null,
-                    notes = null,
-                    equipmentSettingsSnapshot = equipmentSnapshot(exerciseId),
-                    createdAt = now,
-                    updatedAt = now,
-                ),
+        sessionDao.insertExerciseWithSets(
+            SessionExerciseEntity(
+                id = sessionExerciseId,
+                sessionId = sessionId,
+                exerciseId = exerciseId,
+                sortOrder = nextSortOrder,
+                supersetGroup = null,
+                notes = null,
+                equipmentSettingsSnapshot = equipmentSnapshot(exerciseId),
+                createdAt = now,
+                updatedAt = now,
             ),
+            sets,
         )
-        sessionDao.upsertSets(sets)
         return sessionExerciseId
     }
 
