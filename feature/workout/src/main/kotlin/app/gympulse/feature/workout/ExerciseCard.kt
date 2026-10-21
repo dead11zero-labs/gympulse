@@ -1,11 +1,16 @@
 package app.gympulse.feature.workout
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -18,20 +23,21 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -41,22 +47,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.LabelCaps
+import app.gympulse.core.designsystem.component.NumberStepper
+import app.gympulse.core.designsystem.component.SetCheckbox
 import app.gympulse.core.designsystem.theme.Sizing
+import app.gympulse.core.designsystem.theme.setValue as setValueStyle
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
 import androidx.compose.animation.animateContentSize
-import androidx.compose.material3.CardDefaults
 import app.gympulse.core.designsystem.theme.ExpressiveShapes
 
 // Relative column widths of the set table.
@@ -65,25 +74,30 @@ private const val WEIGHT_PREVIOUS = 1.2f
 private const val WEIGHT_FIELD = 1f
 private const val WEIGHT_DONE = 0.8f
 
+/**
+ * Exercise block with its set table. The active exercise (the first one with an open set) sits on a
+ * level-2 card and shows the stepper panel under its current set; all others use level 1.
+ */
 @Composable
 internal fun ExerciseCard(
     exercise: ExerciseUi,
     actions: WorkoutActions,
     modifier: Modifier = Modifier,
+    isActive: Boolean = false,
 ) {
     var menuOpen by remember { mutableStateOf(false) }
     var showNotes by rememberSaveable(exercise.sessionExerciseId) { mutableStateOf(exercise.notes != null) }
     val fields = setFieldsFor(exercise.trackingType, exercise.isBodyweight)
+    val activeSetId = if (isActive) exercise.sets.firstOrNull { !it.isCompleted }?.id else null
 
-    Card(
+    GymPulseCard(
         modifier = modifier.animateContentSize(),
+        variant = if (isActive) GymPulseCardVariant.Level2 else GymPulseCardVariant.Level1,
         shape = ExpressiveShapes.largeIncreased,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
-            contentColor = MaterialTheme.colorScheme.onSurface,
-        ),
+        contentPadding = PaddingValues(vertical = Spacing.xs),
+        verticalSpacing = Spacing.none,
     ) {
-        Column(modifier = Modifier.padding(vertical = Spacing.xs)) {
+        run {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -144,6 +158,7 @@ internal fun ExerciseCard(
                         set = set,
                         fields = fields,
                         actions = actions,
+                        isActive = set.id == activeSetId,
                     )
                 }
             }
@@ -202,15 +217,9 @@ private fun SetTableHeader(fields: List<SetField>) {
 
 @Composable
 private fun HeaderCell(text: String, modifier: Modifier) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.labelMedium,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-        textAlign = TextAlign.Center,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = modifier,
-    )
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+        LabelCaps(text = text)
+    }
 }
 
 @Composable
@@ -219,100 +228,258 @@ private fun SetRow(
     set: SetUi,
     fields: List<SetField>,
     actions: WorkoutActions,
+    isActive: Boolean,
 ) {
     val isWarmup = set.setType == SetType.WARMUP
-    val rowColor = if (set.isCompleted) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
     val label = if (isWarmup) {
         stringResource(R.string.feature_workout_warmup_short) + set.number
     } else {
         set.number.toString()
     }
     val doneDescription = stringResource(R.string.feature_workout_set_done)
+    val scheme = MaterialTheme.colorScheme
+    val activeModifier = if (isActive) {
+        Modifier
+            .background(color = scheme.surfaceContainerHigh, shape = MaterialTheme.shapes.medium)
+            .border(
+                border = BorderStroke(Sizing.hairline, scheme.primary.copy(alpha = ACTIVE_BORDER_ALPHA)),
+                shape = MaterialTheme.shapes.medium,
+            )
+            .padding(Spacing.xs)
+    } else {
+        Modifier
+    }
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = Spacing.xs, vertical = Spacing.xxs)
-            .background(color = rowColor, shape = MaterialTheme.shapes.small)
-            .padding(vertical = Spacing.xxs),
-        horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
-        verticalAlignment = Alignment.CenterVertically,
+            .then(activeModifier),
     ) {
-        SetLabel(
-            label = label,
-            isWarmup = isWarmup,
-            isCompleted = set.isCompleted,
-            onToggleWarmup = { actions.onToggleWarmup(sessionExerciseId, set.id) },
-            onDelete = { actions.onDeleteSet(set.id) },
-            modifier = Modifier.weight(WEIGHT_SET),
-        )
-        Text(
-            text = previousText(set.previous, fields),
-            style = MaterialTheme.typography.bodyMedium,
-            color = if (set.isCompleted) {
-                MaterialTheme.colorScheme.onSecondaryContainer
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            },
-            textAlign = TextAlign.Center,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(WEIGHT_PREVIOUS),
-        )
-        fields.forEach { field ->
-            val fieldModifier = Modifier.weight(WEIGHT_FIELD).heightIn(min = Sizing.minTouchTarget)
-            val description = stringResource(field.labelRes())
-            when (field) {
-                SetField.WEIGHT, SetField.EXTRA_WEIGHT -> SetInputField(
-                    storedValue = WorkoutFormat.formatDecimalInput(set.weightKg),
-                    onValueChange = { actions.onWeightChange(sessionExerciseId, set.id, it) },
-                    sanitize = WorkoutFormat::sanitizeDecimal,
-                    keyboardType = KeyboardType.Decimal,
-                    contentDescription = description,
-                    modifier = fieldModifier,
-                )
-                SetField.REPS -> SetInputField(
-                    storedValue = WorkoutFormat.formatIntegerInput(set.reps),
-                    onValueChange = { actions.onRepsChange(sessionExerciseId, set.id, it) },
-                    sanitize = WorkoutFormat::sanitizeInteger,
-                    keyboardType = KeyboardType.Number,
-                    contentDescription = description,
-                    modifier = fieldModifier,
-                )
-                SetField.DURATION -> SetInputField(
-                    storedValue = WorkoutFormat.formatIntegerInput(set.durationSeconds),
-                    onValueChange = { actions.onDurationChange(sessionExerciseId, set.id, it) },
-                    sanitize = WorkoutFormat::sanitizeInteger,
-                    keyboardType = KeyboardType.Number,
-                    contentDescription = description,
-                    modifier = fieldModifier,
-                )
-                SetField.DISTANCE -> SetInputField(
-                    storedValue = WorkoutFormat.formatDecimalInput(set.distanceMeters),
-                    onValueChange = { actions.onDistanceChange(sessionExerciseId, set.id, it) },
-                    sanitize = WorkoutFormat::sanitizeDecimal,
-                    keyboardType = KeyboardType.Decimal,
-                    contentDescription = description,
-                    modifier = fieldModifier,
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            SetLabel(
+                label = label,
+                isWarmup = isWarmup,
+                isActive = isActive,
+                onToggleWarmup = { actions.onToggleWarmup(sessionExerciseId, set.id) },
+                onDelete = { actions.onDeleteSet(set.id) },
+                modifier = Modifier.weight(WEIGHT_SET),
+            )
+            Text(
+                text = previousText(set.previous, fields),
+                style = MaterialTheme.typography.bodyMedium,
+                color = scheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(WEIGHT_PREVIOUS),
+            )
+            fields.forEachIndexed { index, field ->
+                val fieldModifier = Modifier.weight(WEIGHT_FIELD).heightIn(min = Sizing.minTouchTarget)
+                // The first field of the active set carries the accent (weight in the mockup).
+                val highlighted = isActive && index == 0
+                val description = stringResource(field.labelRes())
+                when (field) {
+                    SetField.WEIGHT, SetField.EXTRA_WEIGHT -> SetInputField(
+                        storedValue = WorkoutFormat.formatDecimalInput(set.weightKg),
+                        onValueChange = { actions.onWeightChange(sessionExerciseId, set.id, it) },
+                        sanitize = WorkoutFormat::sanitizeDecimal,
+                        keyboardType = KeyboardType.Decimal,
+                        contentDescription = description,
+                        highlighted = highlighted,
+                        modifier = fieldModifier,
+                    )
+                    SetField.REPS -> SetInputField(
+                        storedValue = WorkoutFormat.formatIntegerInput(set.reps),
+                        onValueChange = { actions.onRepsChange(sessionExerciseId, set.id, it) },
+                        sanitize = WorkoutFormat::sanitizeInteger,
+                        keyboardType = KeyboardType.Number,
+                        contentDescription = description,
+                        highlighted = highlighted,
+                        modifier = fieldModifier,
+                    )
+                    SetField.DURATION -> SetInputField(
+                        storedValue = WorkoutFormat.formatIntegerInput(set.durationSeconds),
+                        onValueChange = { actions.onDurationChange(sessionExerciseId, set.id, it) },
+                        sanitize = WorkoutFormat::sanitizeInteger,
+                        keyboardType = KeyboardType.Number,
+                        contentDescription = description,
+                        highlighted = highlighted,
+                        modifier = fieldModifier,
+                    )
+                    SetField.DISTANCE -> SetInputField(
+                        storedValue = WorkoutFormat.formatDecimalInput(set.distanceMeters),
+                        onValueChange = { actions.onDistanceChange(sessionExerciseId, set.id, it) },
+                        sanitize = WorkoutFormat::sanitizeDecimal,
+                        keyboardType = KeyboardType.Decimal,
+                        contentDescription = description,
+                        highlighted = highlighted,
+                        modifier = fieldModifier,
+                    )
+                }
+            }
+            Box(modifier = Modifier.weight(WEIGHT_DONE), contentAlignment = Alignment.Center) {
+                SetCheckbox(
+                    checked = set.isCompleted,
+                    onCheckedChange = { actions.onToggleCompleted(sessionExerciseId, set.id) },
+                    contentDescription = doneDescription,
                 )
             }
         }
-        Box(modifier = Modifier.weight(WEIGHT_DONE), contentAlignment = Alignment.Center) {
-            Checkbox(
-                checked = set.isCompleted,
-                onCheckedChange = { actions.onToggleCompleted(sessionExerciseId, set.id) },
-                modifier = Modifier.semantics { contentDescription = doneDescription },
+        if (isActive) {
+            ActiveSetPanel(sessionExerciseId = sessionExerciseId, set = set, fields = fields, actions = actions)
+        }
+    }
+}
+
+/**
+ * Panel under the current set: weight and reps steppers (hold to repeat faster), plate shortcuts
+ * and a "Done" button. Only shown for tracking types that have weight or reps.
+ */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ActiveSetPanel(
+    sessionExerciseId: String,
+    set: SetUi,
+    fields: List<SetField>,
+    actions: WorkoutActions,
+) {
+    val weightField = fields.firstOrNull { it == SetField.WEIGHT || it == SetField.EXTRA_WEIGHT }
+    val hasReps = SetField.REPS in fields
+    if (weightField == null && !hasReps) return
+    val weight = rememberOptimistic(set.weightKg, set.id)
+    val reps = rememberOptimistic(set.reps, set.id)
+    val changeWeight = { delta: Double ->
+        val next = WorkoutFormat.adjustDecimal(weight.value, delta)
+        weight.onStep(next)
+        actions.onWeightChange(sessionExerciseId, set.id, WorkoutFormat.formatDecimalInput(next))
+    }
+    val changeReps = { delta: Int ->
+        val next = WorkoutFormat.adjustInteger(reps.value, delta)
+        reps.onStep(next)
+        actions.onRepsChange(sessionExerciseId, set.id, WorkoutFormat.formatIntegerInput(next))
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = Spacing.xs)
+            .background(color = MaterialTheme.colorScheme.surfaceContainerLow, shape = MaterialTheme.shapes.medium)
+            .padding(Spacing.s),
+        verticalArrangement = Arrangement.spacedBy(Spacing.s),
+    ) {
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Spacing.m, Alignment.CenterHorizontally),
+            verticalArrangement = Arrangement.spacedBy(Spacing.s),
+        ) {
+            if (weightField != null) {
+                NumberStepper(
+                    value = WorkoutFormat.formatDecimalInput(weight.value ?: 0.0),
+                    unit = stringResource(R.string.feature_workout_column_kg),
+                    label = stringResource(
+                        if (weightField == SetField.EXTRA_WEIGHT) {
+                            R.string.feature_workout_stepper_extra_weight
+                        } else {
+                            R.string.feature_workout_stepper_weight
+                        },
+                    ),
+                    onDecrement = { changeWeight(-WEIGHT_STEP_KG) },
+                    onIncrement = { changeWeight(WEIGHT_STEP_KG) },
+                    decrementEnabled = (weight.value ?: 0.0) > 0.0,
+                )
+            }
+            if (hasReps) {
+                NumberStepper(
+                    value = WorkoutFormat.formatIntegerInput(reps.value ?: 0),
+                    label = stringResource(R.string.feature_workout_stepper_reps),
+                    onDecrement = { changeReps(-1) },
+                    onIncrement = { changeReps(1) },
+                    decrementEnabled = (reps.value ?: 0) > 0,
+                )
+            }
+        }
+        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+        if (weightField != null) {
+            FlowRow(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+                itemVerticalAlignment = Alignment.CenterVertically,
+            ) {
+                LabelCaps(text = stringResource(R.string.feature_workout_plates))
+                PLATES_KG.forEach { plate ->
+                    AssistChip(
+                        onClick = { changeWeight(plate) },
+                        label = {
+                            Text(
+                                stringResource(R.string.feature_workout_plate_chip, WorkoutFormat.formatDecimalInput(plate)),
+                            )
+                        },
+                    )
+                }
+            }
+        }
+        Button(
+            onClick = { actions.onToggleCompleted(sessionExerciseId, set.id) },
+            modifier = Modifier.align(Alignment.End),
+        ) {
+            Icon(Icons.Filled.Check, contentDescription = null)
+            Text(
+                text = stringResource(R.string.feature_workout_set_finish),
+                modifier = Modifier.padding(start = Spacing.xs),
             )
         }
     }
 }
+
+/**
+ * Value shown while stepping. Stored values echo back with a delay, so rapid taps would otherwise
+ * start again from a stale number; echoes of our own steps are ignored, foreign changes win.
+ */
+@Stable
+internal class OptimisticValue<T>(initial: T) {
+    var value: T by mutableStateOf(initial)
+        private set
+    private val sent = ArrayDeque<T>()
+
+    fun onStep(next: T) {
+        value = next
+        sent.addLast(next)
+    }
+
+    fun onStored(stored: T) {
+        val index = sent.indexOf(stored)
+        if (index >= 0) {
+            repeat(index + 1) { sent.removeFirst() }
+        } else {
+            sent.clear()
+            value = stored
+        }
+    }
+}
+
+@Composable
+private fun <T> rememberOptimistic(stored: T, key: Any): OptimisticValue<T> {
+    val state = remember(key) { OptimisticValue(stored) }
+    LaunchedEffect(stored) { state.onStored(stored) }
+    return state
+}
+
+private const val WEIGHT_STEP_KG = 2.5
+private const val ACTIVE_BORDER_ALPHA = 0.4f
+private val PLATES_KG = listOf(1.25, 2.5, 5.0)
 
 /** Set number; tapping opens a menu to switch warm-up / working set or delete the set. */
 @Composable
 private fun SetLabel(
     label: String,
     isWarmup: Boolean,
-    isCompleted: Boolean,
+    isActive: Boolean,
     onToggleWarmup: () -> Unit,
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
@@ -331,7 +498,7 @@ private fun SetLabel(
                 text = label,
                 style = MaterialTheme.typography.titleSmall,
                 color = when {
-                    isCompleted -> MaterialTheme.colorScheme.onSecondaryContainer
+                    isActive -> MaterialTheme.colorScheme.primary
                     isWarmup -> MaterialTheme.colorScheme.tertiary
                     else -> MaterialTheme.colorScheme.onSurface
                 },
@@ -374,6 +541,7 @@ private fun SetInputField(
     sanitize: (String) -> String?,
     keyboardType: KeyboardType,
     contentDescription: String,
+    highlighted: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var text by rememberSaveable { mutableStateOf(storedValue) }
@@ -383,7 +551,7 @@ private fun SetInputField(
         }
     }
     val interactionSource = remember { MutableInteractionSource() }
-    val colors = OutlinedTextFieldDefaults.colors()
+    val scheme = MaterialTheme.colorScheme
     BasicTextField(
         value = text,
         onValueChange = { input ->
@@ -392,8 +560,8 @@ private fun SetInputField(
             onValueChange(sanitized)
         },
         modifier = modifier.semantics { this.contentDescription = contentDescription },
-        textStyle = MaterialTheme.typography.bodyLarge.copy(
-            color = MaterialTheme.colorScheme.onSurface,
+        textStyle = MaterialTheme.typography.setValueStyle.copy(
+            color = if (highlighted) scheme.primary else scheme.onSurface,
             textAlign = TextAlign.Center,
         ),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = ImeAction.Next),
@@ -401,21 +569,22 @@ private fun SetInputField(
         interactionSource = interactionSource,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = { innerTextField ->
-            OutlinedTextFieldDefaults.DecorationBox(
-                value = text,
-                innerTextField = innerTextField,
-                enabled = true,
-                singleLine = true,
-                visualTransformation = VisualTransformation.None,
-                interactionSource = interactionSource,
-                colors = colors,
-                contentPadding = OutlinedTextFieldDefaults.contentPadding(
-                    start = Spacing.xxs,
-                    top = Spacing.xs,
-                    end = Spacing.xxs,
-                    bottom = Spacing.xs,
-                ),
-            )
+            val shape = MaterialTheme.shapes.small
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = Sizing.minTouchTarget)
+                    .background(color = scheme.surfaceContainerHigh, shape = shape)
+                    .border(
+                        width = if (highlighted) Sizing.setCheckboxBorder else Sizing.hairline,
+                        color = if (highlighted) scheme.primary else scheme.outlineVariant,
+                        shape = shape,
+                    )
+                    .padding(horizontal = Spacing.xxs),
+                contentAlignment = Alignment.Center,
+            ) {
+                innerTextField()
+            }
         },
     )
 }

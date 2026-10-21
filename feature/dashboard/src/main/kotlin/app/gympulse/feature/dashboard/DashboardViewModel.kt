@@ -2,14 +2,19 @@ package app.gympulse.feature.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.gympulse.core.data.health.HealthSteps
+import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.util.TimeProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import java.time.DayOfWeek
 import java.time.Duration
@@ -59,6 +64,8 @@ data class DashboardUiState(
     val weeklyProgress: WeeklyProgressUi? = null,
     val recentSessions: List<RecentSessionUi> = emptyList(),
     val activeWorkout: ActiveWorkout? = null,
+    /** Schritte aus Health Connect; die Kachel erscheint nur bei [HealthSteps.Available]. */
+    val steps: HealthSteps = HealthSteps.Unavailable,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -67,6 +74,7 @@ class DashboardViewModel @Inject constructor(
     private val data: DashboardDataSource,
     private val goalProvider: WeeklyGoalProvider,
     private val weekStartProvider: WeekStartProvider,
+    private val stepsReader: HealthStepsReader,
     private val time: TimeProvider,
 ) : ViewModel() {
 
@@ -76,11 +84,25 @@ class DashboardViewModel @Inject constructor(
         buildWeekWidgets(weekStartsOn)
     }
 
+    private val stepsRefresh = MutableStateFlow(0)
+
+    /** Liest die Schritte neu, z. B. wenn der Screen wieder sichtbar wird. Startet ohne Kachel, bis Werte da sind. */
+    private val steps: Flow<HealthSteps> = combine(weekStartProvider.weekStartsOn, stepsRefresh) { weekStartsOn, _ ->
+        weekStartsOn
+    }.flatMapLatest { weekStartsOn ->
+        flow { emit(stepsReader.steps(weekStartsOn)) }
+    }.onStart { emit(HealthSteps.Unavailable) }
+
+    fun refreshSteps() {
+        stepsRefresh.value += 1
+    }
+
     val uiState: StateFlow<DashboardUiState> = combine(
         weekWidgets,
         data.observeRecentSessions(RECENT_LIMIT),
         data.observeActiveWorkout(),
-    ) { widgets, recent, active ->
+        steps,
+    ) { widgets, recent, active, steps ->
         val zone = time.zone()
         val now = time.now().atZone(zone)
         DashboardUiState(
@@ -100,6 +122,7 @@ class DashboardViewModel @Inject constructor(
                 )
             },
             activeWorkout = active,
+            steps = steps,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), initialState())
 

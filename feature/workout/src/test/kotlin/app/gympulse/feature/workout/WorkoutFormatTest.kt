@@ -75,4 +75,21 @@ class WorkoutFormatTest {
         assertEquals(listOf("2"), filterExercises(options, "press incl").map { it.id })
         assertEquals(3, filterExercises(options, "  ").size)
     }
+
+    @Test
+    fun adjustDecimal_stepsAndClamps() {
+        assertEquals(52.5, WorkoutFormat.adjustDecimal(50.0, 2.5), 0.0001)
+        assertEquals(2.5, WorkoutFormat.adjustDecimal(null, 2.5), 0.0001)
+        assertEquals(0.0, WorkoutFormat.adjustDecimal(1.0, -2.5), 0.0001)
+        assertEquals(51.25, WorkoutFormat.adjustDecimal(50.0, 1.25), 0.0001)
+        assertEquals(9_999.0, WorkoutFormat.adjustDecimal(9_998.0, 5.0), 0.0001)
+    }
+
+    @Test
+    fun adjustInteger_stepsAndClamps() {
+        assertEquals(13, WorkoutFormat.adjustInteger(12, 1))
+        assertEquals(1, WorkoutFormat.adjustInteger(null, 1))
+        assertEquals(0, WorkoutFormat.adjustInteger(0, -1))
+        assertEquals(9_999, WorkoutFormat.adjustInteger(9_999, 1))
+    }
 }

@@ -39,7 +39,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListGroup
+import app.gympulse.core.designsystem.component.PrBadge
+import app.gympulse.core.designsystem.component.StatusChip
 import app.gympulse.core.designsystem.component.StatTile
 import app.gympulse.core.designsystem.component.StatTileStyle
 import app.gympulse.core.designsystem.theme.ExpressiveShapes
@@ -117,8 +120,8 @@ private fun SummaryHeader(summary: WorkoutSummary, modifier: Modifier = Modifier
     ) {
         Surface(
             shape = ExpressiveShapes.full,
-            color = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.size(Sizing.emptyStateIconContainer),
         ) {
             Box(contentAlignment = Alignment.Center) {
@@ -137,11 +140,9 @@ private fun SummaryHeader(summary: WorkoutSummary, modifier: Modifier = Modifier
             textAlign = TextAlign.Center,
         )
         if (summary.title != null) {
-            Text(
+            LabelCaps(
                 text = summary.title,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.labelLarge,
             )
         }
     }
@@ -165,7 +166,7 @@ private fun SummaryStats(summary: WorkoutSummary, modifier: Modifier = Modifier)
             label = stringResource(R.string.feature_workout_summary_volume_label),
             value = WorkoutFormat.formatKg(summary.volumeKg),
             unit = stringResource(R.string.feature_workout_column_kg),
-            style = StatTileStyle.Highlighted,
+            style = StatTileStyle.Accent,
             compact = true,
             modifier = Modifier
                 .weight(1f)
@@ -202,42 +203,25 @@ private fun HealthMetricsCard(metrics: WorkoutHealthMetrics, modifier: Modifier 
             add(stringResource(R.string.feature_workout_summary_health_sleep, it / MINUTES_PER_HOUR, it % MINUTES_PER_HOUR))
         }
     }
-    ListGroup(modifier = modifier) {
-        Column(
-            modifier = Modifier.padding(horizontal = Spacing.m, vertical = Spacing.s),
+    GymPulseCard(
+        modifier = modifier,
+        variant = GymPulseCardVariant.Level1,
+        verticalSpacing = Spacing.s,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+            Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary)
+            Text(
+                text = stringResource(R.string.feature_workout_summary_health_title),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
             verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-                Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-                Text(
-                    text = stringResource(R.string.feature_workout_summary_health_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
-            ) {
-                chips.forEach { label -> HealthValueChip(label) }
-            }
+            chips.forEach { label -> StatusChip(text = label) }
         }
-    }
-}
-
-/** Non-interactive value pill in the style of [RecordBadge]. */
-@Composable
-private fun HealthValueChip(label: String) {
-    Surface(
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        shape = ExpressiveShapes.full,
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xs),
-        )
     }
 }
 
@@ -315,32 +299,15 @@ private fun SummaryExerciseCard(exercise: SummaryExercise, modifier: Modifier = 
                 )
             }
             if (exercise.records.isNotEmpty()) {
-                RecordBadge()
+                PrBadge(
+                    text = stringResource(R.string.feature_workout_summary_record_badge),
+                    icon = Icons.Filled.Star,
+                    onSurface = MaterialTheme.colorScheme.surfaceContainer,
+                )
             }
         }
         HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         exercise.sets.forEach { set -> SummarySetRow(set) }
-    }
-}
-
-@Composable
-private fun RecordBadge() {
-    Surface(
-        color = MaterialTheme.colorScheme.tertiaryContainer,
-        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
-        shape = ExpressiveShapes.full,
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xxs),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(Spacing.xxs),
-        ) {
-            Icon(Icons.Filled.Star, contentDescription = null)
-            Text(
-                text = stringResource(R.string.feature_workout_summary_record_badge),
-                style = MaterialTheme.typography.labelMedium,
-            )
-        }
     }
 }
 

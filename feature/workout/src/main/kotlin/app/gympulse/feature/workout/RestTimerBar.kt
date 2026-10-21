@@ -1,5 +1,6 @@
 package app.gympulse.feature.workout
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,8 @@ import java.time.Instant
 import androidx.compose.animation.animateContentSize
 import androidx.compose.material3.FilledTonalButton
 import app.gympulse.core.designsystem.component.GymPulseProgressBar
+import app.gympulse.core.designsystem.component.LabelCaps
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.metricMedium
 
 /** Rest countdown below the set list, with -15 s / +15 s and skip. */
@@ -42,9 +45,10 @@ internal fun RestTimerBar(
         modifier = modifier
             .fillMaxWidth()
             .animateContentSize(),
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         shape = MaterialTheme.shapes.extraLarge,
+        border = BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant),
     ) {
         Box(contentAlignment = Alignment.TopCenter) {
             Column(
@@ -55,21 +59,22 @@ internal fun RestTimerBar(
                 verticalArrangement = Arrangement.spacedBy(Spacing.s),
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
+                    LabelCaps(
                         text = stringResource(R.string.feature_workout_rest),
-                        style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.weight(1f),
                     )
+                    // Active timers are shown in the accent color.
                     Text(
                         text = remaining,
                         style = MaterialTheme.typography.metricMedium,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 }
                 GymPulseProgressBar(
                     progress = state.remainingFraction(now()),
                     animate = false,
                     color = MaterialTheme.colorScheme.primary,
-                    trackColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    trackColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                 )
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(Spacing.xs),

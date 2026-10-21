@@ -98,6 +98,9 @@ object Sizing {
     /** Maximale Breite eines Bottom Sheets auf großen Screens. */
     val sheetMaxWidth: Dp = 640.dp
 
+    /** Abgerundete Icon-Kachel in Hero-Karten, z. B. das Plus auf "Leeres Workout". */
+    val iconTile: Dp = 56.dp
+
     /** Sichtbares Kästchen einer [app.gympulse.core.designsystem.component.SetCheckbox]. */
     val setCheckbox: Dp = 40.dp
 

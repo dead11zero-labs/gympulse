@@ -47,4 +47,8 @@
     </plurals>
     <string name="feature_dashboard_duration_minutes">%d Min.</string>
     <string name="feature_dashboard_duration_hours_minutes">%1$d Std. %2$d Min.</string>
+
+    <string name="feature_dashboard_steps_title">Schritte</string>
+    <string name="feature_dashboard_steps_today">Heute</string>
+    <string name="feature_dashboard_steps_week">Diese Woche</string>
 </resources>

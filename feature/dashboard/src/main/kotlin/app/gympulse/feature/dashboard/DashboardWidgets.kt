@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import app.gympulse.core.designsystem.component.EmptyState
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListGroup
 import app.gympulse.core.designsystem.component.ListRow
 import app.gympulse.core.designsystem.component.ListRowDivider
@@ -44,6 +45,7 @@ import app.gympulse.core.designsystem.component.SectionHeader
 import app.gympulse.core.designsystem.component.StatTrend
 import app.gympulse.core.designsystem.component.TrendDirection
 import app.gympulse.core.designsystem.component.TrendLabel
+import app.gympulse.core.data.health.HealthSteps
 import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.designsystem.theme.metricLarge
@@ -166,7 +168,7 @@ private fun WeeklyVolumeChart(
         dayDescriptions.joinToString(", "),
     )
     val barColor = MaterialTheme.colorScheme.primary
-    val trackColor = MaterialTheme.colorScheme.surfaceContainerLow
+    val trackColor = MaterialTheme.colorScheme.surfaceContainerHighest
 
     Row(
         modifier = modifier
@@ -186,7 +188,7 @@ private fun WeeklyVolumeChart(
                 Text(
                     text = if (value > 0.0) formatCompactKg(value, locale) else noValue,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = if (isToday) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                 )
                 Canvas(
@@ -418,3 +420,53 @@ private fun durationText(totalMinutes: Long): String {
 
 private const val DAYS_IN_WEEK = 7
 private const val MINUTES_PER_HOUR = 60L
+
+/**
+ * Kachel "Schritte" aus Health Connect (heute und Woche). Erscheint nur, wenn Werte vorliegen;
+ * bei jedem anderen Zustand (nicht verfügbar, aus, Berechtigung fehlt, nicht lesbar) bleibt der Platz leer.
+ */
+@Composable
+internal fun StepsCard(steps: HealthSteps, modifier: Modifier = Modifier) {
+    if (steps !is HealthSteps.Available) return
+    val numbers = remember { NumberFormat.getIntegerInstance() }
+    GymPulseCard(
+        modifier = modifier.fillMaxWidth(),
+        variant = GymPulseCardVariant.Filled,
+        shape = ExpressiveShapes.largeIncreased,
+        verticalSpacing = Spacing.s,
+    ) {
+        Text(
+            text = stringResource(R.string.feature_dashboard_steps_title),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.m)) {
+            StepsValue(
+                label = stringResource(R.string.feature_dashboard_steps_today),
+                value = numbers.format(steps.today),
+                modifier = Modifier.weight(1f),
+            )
+            StepsValue(
+                label = stringResource(R.string.feature_dashboard_steps_week),
+                value = numbers.format(steps.week),
+                modifier = Modifier.weight(1f),
+            )
+        }
+    }
+}
+
+@Composable
+private fun StepsValue(label: String, value: String, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.semantics(mergeDescendants = true) {},
+        verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+    ) {
+        LabelCaps(text = label)
+        Text(
+            text = value,
+            style = MaterialTheme.typography.metricMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+        )
+    }
+}

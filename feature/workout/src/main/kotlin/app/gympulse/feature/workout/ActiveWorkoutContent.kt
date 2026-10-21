@@ -2,6 +2,7 @@ package app.gympulse.feature.workout
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import app.gympulse.core.designsystem.adaptive.WindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.feature.workout.timer.RestTimerState
 import app.gympulse.feature.workout.timer.runningAt
@@ -45,9 +47,9 @@ import app.gympulse.core.designsystem.component.EmptyState
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
 import app.gympulse.core.designsystem.component.GymPulseProgressBar
+import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ProgressMath
-import app.gympulse.core.designsystem.theme.ExpressiveShapes
-import app.gympulse.core.designsystem.theme.metricSmall
+import app.gympulse.core.designsystem.theme.metricMedium
 
 /** Callbacks of the active workout, grouped to keep the composable signatures short. */
 internal data class WorkoutActions(
@@ -84,60 +86,68 @@ internal fun ActiveWorkoutContent(
         .widthIn(max = Spacing.maxContentWidth)
         .fillMaxWidth()
 
-    Column(modifier = modifier.fillMaxSize().imePadding()) {
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            contentPadding = PaddingValues(horizontal = Spacing.screenMargin, vertical = Spacing.m),
-            verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            item(key = "header") {
-                WorkoutHeader(
-                    session = session,
-                    now = now,
-                    onFinish = { showFinishDialog = true },
-                    onDiscard = { showDiscardDialog = true },
-                    modifier = itemModifier,
-                )
-            }
-            if (session.exercises.isEmpty()) {
-                item(key = "empty") {
-                    EmptyState(
-                        icon = Icons.Filled.Add,
-                        title = stringResource(R.string.feature_workout_no_exercises_title),
-                        message = stringResource(R.string.feature_workout_no_exercises),
-                        actionLabel = stringResource(R.string.feature_workout_add_exercise),
-                        onAction = { showPicker = true },
+    // The first exercise with an open set is the active one (level-2 card with the stepper panel).
+    val activeExerciseId = session.exercises.firstOrNull { exercise -> exercise.sets.any { !it.isCompleted } }
+        ?.sessionExerciseId
+
+    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
+        val widthClass = WindowWidthClass.fromWidth(maxWidth)
+        Column(modifier = Modifier.fillMaxSize().imePadding()) {
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentPadding = PaddingValues(horizontal = widthClass.horizontalMargin, vertical = Spacing.m),
+                verticalArrangement = Arrangement.spacedBy(widthClass.gutter),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                item(key = "header") {
+                    WorkoutHeader(
+                        session = session,
+                        now = now,
+                        onFinish = { showFinishDialog = true },
+                        onDiscard = { showDiscardDialog = true },
                         modifier = itemModifier,
                     )
                 }
-            }
-            items(session.exercises, key = { it.sessionExerciseId }) { exercise ->
-                ExerciseCard(
-                    exercise = exercise,
-                    actions = actions,
-                    modifier = itemModifier,
-                )
-            }
-            item(key = "add_exercise") {
-                FilledTonalButton(onClick = { showPicker = true }, modifier = itemModifier) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
-                    Text(
-                        text = stringResource(R.string.feature_workout_add_exercise),
-                        modifier = Modifier.padding(start = Spacing.xs),
+                if (session.exercises.isEmpty()) {
+                    item(key = "empty") {
+                        EmptyState(
+                            icon = Icons.Filled.Add,
+                            title = stringResource(R.string.feature_workout_no_exercises_title),
+                            message = stringResource(R.string.feature_workout_no_exercises),
+                            actionLabel = stringResource(R.string.feature_workout_add_exercise),
+                            onAction = { showPicker = true },
+                            modifier = itemModifier,
+                        )
+                    }
+                }
+                items(session.exercises, key = { it.sessionExerciseId }) { exercise ->
+                    ExerciseCard(
+                        exercise = exercise,
+                        actions = actions,
+                        isActive = exercise.sessionExerciseId == activeExerciseId,
+                        modifier = itemModifier,
                     )
                 }
+                item(key = "add_exercise") {
+                    FilledTonalButton(onClick = { showPicker = true }, modifier = itemModifier) {
+                        Icon(Icons.Filled.Add, contentDescription = null)
+                        Text(
+                            text = stringResource(R.string.feature_workout_add_exercise),
+                            modifier = Modifier.padding(start = Spacing.xs),
+                        )
+                    }
+                }
             }
-        }
 
-        RestTimerSection(
-            restTimer = restTimer,
-            now = now,
-            onSkip = actions.onSkipRest,
-            onAdjust = actions.onAdjustRest,
-        )
+            RestTimerSection(
+                restTimer = restTimer,
+                now = now,
+                onSkip = actions.onSkipRest,
+                onAdjust = actions.onAdjustRest,
+            )
+        }
     }
 
     if (showPicker) {
@@ -199,8 +209,8 @@ private fun WorkoutHeader(
 ) {
     GymPulseCard(
         modifier = modifier,
-        variant = GymPulseCardVariant.Filled,
-        shape = ExpressiveShapes.extraLargeIncreased,
+        variant = GymPulseCardVariant.Level1,
+        shape = MaterialTheme.shapes.large,
         contentPadding = PaddingValues(Spacing.l),
         verticalSpacing = Spacing.m,
     ) {
@@ -262,15 +272,11 @@ private fun WorkoutHeader(
 @Composable
 private fun HeaderStat(label: String, value: String, modifier: Modifier = Modifier, unit: String? = null) {
     Column(modifier = modifier.semantics(mergeDescendants = true) {}, verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        LabelCaps(text = label)
         Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
             Text(
                 text = value,
-                style = MaterialTheme.typography.metricSmall,
+                style = MaterialTheme.typography.metricMedium,
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1,
                 modifier = Modifier.alignByBaseline(),
