@@ -232,7 +232,7 @@ private fun ExerciseDetailContent(
         if (!notes.isNullOrBlank()) {
             Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
                 SectionTitle(stringResource(R.string.library_notes))
-                GymPulseCard(modifier = Modifier.fillMaxWidth(), variant = GymPulseCardVariant.Secondary) {
+                GymPulseCard(modifier = Modifier.fillMaxWidth(), variant = GymPulseCardVariant.Level2) {
                     Text(text = notes, style = MaterialTheme.typography.bodyMedium)
                 }
             }

@@ -3,6 +3,8 @@ package app.gympulse.feature.plans
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -25,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -36,12 +39,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.designsystem.component.EmptyState
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.WorkoutPlan
 
@@ -49,6 +55,7 @@ import app.gympulse.core.model.WorkoutPlan
 internal val FabClearance = Spacing.xxl + Spacing.xl + Spacing.xs
 
 private const val DESCRIPTION_MAX_LINES = 2
+private const val MAX_PREVIEW_CHIPS = 3
 
 @Composable
 internal fun PlansScreen(
@@ -93,11 +100,14 @@ internal fun PlansScreen(
                         contentPadding = PaddingValues(
                             start = Spacing.screenMargin,
                             end = Spacing.screenMargin,
-                            top = Spacing.m,
+                            top = Spacing.xs,
                             bottom = FabClearance,
                         ),
                         verticalArrangement = Arrangement.spacedBy(Spacing.gutter),
                     ) {
+                        item(key = "header") {
+                            PlansHeader(planCount = current.plans.size)
+                        }
                         items(current.plans, key = { it.plan.id }) { item ->
                             PlanCard(
                                 item = item,
@@ -148,9 +158,9 @@ private fun PlanCard(
     GymPulseCard(
         onClick = onOpen,
         modifier = modifier.fillMaxWidth(),
-        variant = GymPulseCardVariant.Filled,
+        variant = GymPulseCardVariant.Level2,
         contentPadding = PaddingValues(Spacing.none),
-        shape = MaterialTheme.shapes.extraLarge,
+        shape = MaterialTheme.shapes.large,
     ) {
         Row(
             modifier = Modifier.padding(start = Spacing.m, top = Spacing.xs, bottom = Spacing.xs, end = Spacing.xs),
@@ -178,9 +188,15 @@ private fun PlanCard(
                 }
                 Text(
                     text = planMeta(item.summary),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
+                if (item.exerciseNames.isNotEmpty()) {
+                    ExerciseNameChips(
+                        names = item.exerciseNames,
+                        modifier = Modifier.padding(top = Spacing.xs),
+                    )
+                }
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
@@ -211,6 +227,57 @@ private fun PlanCard(
                 }
             }
         }
+    }
+}
+
+/** Titel und Anzahl der Pläne über der Liste. */
+@Composable
+private fun PlansHeader(planCount: Int, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+        Text(
+            text = stringResource(R.string.plans_title),
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.semantics { heading() },
+        )
+        Text(
+            text = pluralStringResource(R.plurals.plans_subtitle, planCount, planCount),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+/** Vorschau der ersten Übungen als kleine Pillen, der Rest als "+N weitere". */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun ExerciseNameChips(names: List<String>, modifier: Modifier = Modifier) {
+    val shown = names.take(MAX_PREVIEW_CHIPS)
+    val rest = names.size - shown.size
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+        verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+    ) {
+        shown.forEach { name -> NamePill(name) }
+        if (rest > 0) NamePill(stringResource(R.string.plans_more_exercises, rest))
+    }
+}
+
+@Composable
+private fun NamePill(text: String) {
+    Surface(
+        shape = ExpressiveShapes.full,
+        color = MaterialTheme.colorScheme.surfaceContainerHigh,
+        contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xxs),
+        )
     }
 }
 
