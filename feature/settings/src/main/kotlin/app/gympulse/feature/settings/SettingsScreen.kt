@@ -23,7 +23,6 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -187,12 +186,6 @@ internal fun SettingsScreen(
 
             SettingsSection(stringResource(R.string.settings_section_health)) {
                 HealthConnectSettingsRows()
-                SettingsDivider(withIcon = true)
-                ComingSoonRow(
-                    headline = stringResource(R.string.settings_samsung_health),
-                    supporting = stringResource(R.string.settings_samsung_health_summary),
-                    icon = Icons.Filled.Favorite,
-                )
             }
 
             SettingsSection(stringResource(R.string.settings_section_data)) {

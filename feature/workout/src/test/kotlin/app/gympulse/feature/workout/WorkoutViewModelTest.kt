@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import app.gympulse.core.data.health.WorkoutHealthMetrics
 import app.gympulse.core.data.repository.ExerciseRepository
 import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.repository.WorkoutRepository
@@ -53,6 +54,8 @@ class WorkoutViewModelTest {
     private lateinit var exerciseRepository: ExerciseRepository
     private lateinit var restTimer: RestTimer
     private val exportedSession = CompletableDeferred<String>()
+    private var healthMetrics: WorkoutHealthMetrics? = null
+    private val healthWindows = mutableListOf<Pair<Instant, Instant>>()
 
     @Before
     fun setUp() {
@@ -227,9 +230,32 @@ class WorkoutViewModelTest {
         val stored = db.sessionDao().observeRecentCompleted(1).first().single()
         assertEquals(SessionStatus.COMPLETED, stored.status)
         assertEquals(stored.id, exportedSession.await())
+        assertNull(summary.health)
 
         viewModel.dismissSummary()
         assertNull(viewModel.summary.value)
+    }
+
+    @Test
+    fun finish_addsHealthConnectValuesForTheSessionWindow() = runTest {
+        healthMetrics = WorkoutHealthMetrics(averageHeartRateBpm = 128, maxHeartRateBpm = 165, steps = 2_340)
+        seedPlan()
+        val viewModel = viewModel()
+        val startedAt = time.now()
+        viewModel.startWorkout(PLAN_ID)
+        val exercise = viewModel.awaitActive().exercises.single()
+        viewModel.onWeightChange(exercise.sessionExerciseId, exercise.sets[0].id, "100")
+        viewModel.toggleSetCompleted(exercise.sessionExerciseId, exercise.sets[0].id)
+        viewModel.awaitActive { it.completedSets == 1 }
+        time.advanceSeconds(1800)
+
+        viewModel.finishWorkout()
+        val summary = viewModel.summary.first { it?.health != null }!!
+
+        assertEquals(128L, summary.health?.averageHeartRateBpm)
+        assertEquals(2_340L, summary.health?.steps)
+        assertEquals(1, summary.completedSets)
+        assertEquals(listOf(startedAt to startedAt.plusSeconds(1800)), healthWindows)
     }
 
     @Test
@@ -316,6 +342,10 @@ class WorkoutViewModelTest {
         },
         time = time,
         healthExporter = { exportedSession.complete(it) },
+        healthReader = { start, end ->
+            healthWindows += start to end
+            healthMetrics
+        },
     )
 
     private suspend fun WorkoutViewModel.awaitActive(

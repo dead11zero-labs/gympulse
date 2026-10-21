@@ -1,5 +1,6 @@
 package app.gympulse.feature.workout
 
+import app.gympulse.core.data.health.WorkoutHealthMetrics
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
 import app.gympulse.core.model.TrackingType
@@ -73,6 +74,8 @@ internal data class WorkoutSummary(
     val volumeKg: Double,
     /** Exercises with at least one completed set, in session order. */
     val exercises: List<SummaryExercise> = emptyList(),
+    /** Values from Health Connect for the session window; null until loaded or if there are none. */
+    val health: WorkoutHealthMetrics? = null,
 ) {
     val recordCount: Int get() = exercises.sumOf { it.records.size }
 }

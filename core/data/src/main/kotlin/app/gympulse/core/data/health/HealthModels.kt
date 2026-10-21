@@ -44,3 +44,67 @@ data class HealthWeight(
     val measuredAt: Instant,
     val weightKg: Double,
 )
+
+/** Datentypen, die GymPulse aus Health Connect lesen kann. */
+enum class HealthReadType {
+    WEIGHT,
+    HEART_RATE,
+    STEPS,
+    ACTIVE_CALORIES,
+
+    /** Nur mit eigenem Unterschalter ([app.gympulse.core.featuregate.Feature.HEALTH_SLEEP]). */
+    SLEEP,
+}
+
+/**
+ * Aggregierte Aktivitätswerte eines Zeitraums, aus allen Apps, die nach Health Connect schreiben
+ * (z. B. Samsung Health oder Smartwatch-Apps). Felder sind null, wenn keine Daten vorliegen oder
+ * die Berechtigung fehlt.
+ */
+data class HealthActivity(
+    val averageHeartRateBpm: Long? = null,
+    val maxHeartRateBpm: Long? = null,
+    val steps: Long? = null,
+    val activeCaloriesKcal: Double? = null,
+)
+
+/** Eine Schlafphase aus Health Connect. */
+data class HealthSleep(
+    val start: Instant,
+    val end: Instant,
+)
+
+/**
+ * Werte aus Health Connect im Zeitfenster eines Workouts, für die Zusammenfassung.
+ *
+ * @param sleepMinutes Dauer der letzten Schlafphase vor dem Workout, nur mit Schlaf-Unterschalter.
+ */
+data class WorkoutHealthMetrics(
+    val averageHeartRateBpm: Long? = null,
+    val maxHeartRateBpm: Long? = null,
+    val steps: Long? = null,
+    val activeCaloriesKcal: Double? = null,
+    val sleepMinutes: Long? = null,
+) {
+    val isEmpty: Boolean
+        get() = averageHeartRateBpm == null && maxHeartRateBpm == null && steps == null &&
+            activeCaloriesKcal == null && sleepMinutes == null
+}
+
+/** Schritte für heute und die laufende Woche, oder warum es keine gibt. Wirft nie. */
+sealed interface HealthSteps {
+    /** Health Connect ist auf diesem Gerät nicht nutzbar. */
+    data object Unavailable : HealthSteps
+
+    /** Health Connect ist in GymPulse aus oder die Kernberechtigungen fehlen. */
+    data object Disabled : HealthSteps
+
+    /** Health Connect ist aktiv, aber die Lese-Berechtigung für Schritte fehlt. */
+    data object PermissionMissing : HealthSteps
+
+    /** Health Connect hat die Anfrage abgelehnt oder gedrosselt; später erneut versuchen. */
+    data object Unreadable : HealthSteps
+
+    /** Schritte seit Mitternacht ([today]) und seit Wochenbeginn ([week]), jeweils bis jetzt. */
+    data class Available(val today: Long, val week: Long) : HealthSteps
+}

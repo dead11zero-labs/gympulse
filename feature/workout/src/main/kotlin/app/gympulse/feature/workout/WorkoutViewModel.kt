@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.gympulse.core.data.health.FinishedWorkoutExporter
+import app.gympulse.core.data.health.WorkoutHealthReader
 import app.gympulse.core.data.repository.ExerciseRepository
 import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.repository.WorkoutRepository
@@ -28,6 +29,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -51,6 +53,7 @@ internal class WorkoutViewModel @Inject constructor(
     ticker: Ticker,
     time: TimeProvider,
     private val healthExporter: FinishedWorkoutExporter,
+    private val healthReader: WorkoutHealthReader,
 ) : ViewModel() {
 
     private val writeMutex = Mutex()
@@ -188,15 +191,21 @@ internal class WorkoutViewModel @Inject constructor(
         val finished = workoutRepository.observeSession(session.id).first()
         val endedAt = finished?.endedAt ?: session.startedAt
         val history = workoutRepository.setHistory(session.exercises.map { it.exerciseId }.distinct())
-        _summary.value = buildWorkoutSummary(
+        val summary = buildWorkoutSummary(
             session = session,
             endedAt = endedAt,
             volumeKg = finished?.totalVolumeKg ?: 0.0,
             catalog = catalog.first(),
             records = PersonalRecordDetector().detect(session.id, history),
         )
+        _summary.value = summary
         // Health Connect (opt-in); runs outside the write lock and never blocks the summary.
         viewModelScope.launch { healthExporter.export(session.id) }
+        viewModelScope.launch {
+            val metrics = healthReader.read(session.startedAt, endedAt) ?: return@launch
+            // Only fill in the summary of this session, if it is still shown.
+            _summary.update { current -> current?.takeIf { it === summary }?.copy(health = metrics) ?: current }
+        }
     }
 
     fun discardWorkout() = mutate {

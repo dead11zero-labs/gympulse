@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -43,6 +44,11 @@ import app.gympulse.core.designsystem.component.StatTile
 import app.gympulse.core.designsystem.component.StatTileStyle
 import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Sizing
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import app.gympulse.core.data.health.WorkoutHealthMetrics
+import java.text.NumberFormat
+import kotlin.math.roundToLong
 
 /** Full-screen summary after finishing a workout: totals, sets per exercise and new records. */
 @Composable
@@ -67,6 +73,10 @@ internal fun WorkoutSummaryScreen(
         ) {
             item(key = "header") { SummaryHeader(summary, itemModifier) }
             item(key = "stats") { SummaryStats(summary, itemModifier) }
+            val health = summary.health
+            if (health != null && !health.isEmpty) {
+                item(key = "health") { HealthMetricsCard(health, itemModifier) }
+            }
             if (summary.recordCount > 0) {
                 item(key = "records") { RecordsCard(summary, itemModifier) }
             }
@@ -171,6 +181,67 @@ private fun SummaryStats(summary: WorkoutSummary, modifier: Modifier = Modifier)
         )
     }
 }
+
+/** Heart rate, steps, active calories and sleep from Health Connect, shown only for values that exist. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun HealthMetricsCard(metrics: WorkoutHealthMetrics, modifier: Modifier = Modifier) {
+    val numbers = NumberFormat.getIntegerInstance()
+    val chips = buildList {
+        metrics.averageHeartRateBpm?.let {
+            add(stringResource(R.string.feature_workout_summary_health_avg_hr, numbers.format(it)))
+        }
+        metrics.maxHeartRateBpm?.let {
+            add(stringResource(R.string.feature_workout_summary_health_max_hr, numbers.format(it)))
+        }
+        metrics.steps?.let { add(stringResource(R.string.feature_workout_summary_health_steps, numbers.format(it))) }
+        metrics.activeCaloriesKcal?.let {
+            add(stringResource(R.string.feature_workout_summary_health_calories, numbers.format(it.roundToLong())))
+        }
+        metrics.sleepMinutes?.let {
+            add(stringResource(R.string.feature_workout_summary_health_sleep, it / MINUTES_PER_HOUR, it % MINUTES_PER_HOUR))
+        }
+    }
+    ListGroup(modifier = modifier) {
+        Column(
+            modifier = Modifier.padding(horizontal = Spacing.m, vertical = Spacing.s),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                Text(
+                    text = stringResource(R.string.feature_workout_summary_health_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            ) {
+                chips.forEach { label -> HealthValueChip(label) }
+            }
+        }
+    }
+}
+
+/** Non-interactive value pill in the style of [RecordBadge]. */
+@Composable
+private fun HealthValueChip(label: String) {
+    Surface(
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        shape = ExpressiveShapes.full,
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xs),
+        )
+    }
+}
+
+private const val MINUTES_PER_HOUR = 60L
 
 @Composable
 private fun RecordsCard(summary: WorkoutSummary, modifier: Modifier = Modifier) {
