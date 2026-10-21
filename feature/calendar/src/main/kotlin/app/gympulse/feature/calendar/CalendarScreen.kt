@@ -1,6 +1,12 @@
 package app.gympulse.feature.calendar
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import app.gympulse.core.designsystem.component.StatusChip
+import java.time.temporal.WeekFields
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,8 +44,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.FilledTonalButton
-import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
@@ -209,9 +213,23 @@ private fun CalendarBody(state: CalendarUiState, actions: CalendarActions) {
                     locale = locale,
                     onSkip = { actions.onSkipDay(day.date) },
                     onMove = { planId -> dialog = CalendarDialog.MoveTarget(day.date, planId) },
-                    onAdd = { dialog = CalendarDialog.AddPlan(day.date) },
                     onClear = { actions.onClearOverride(day.date) },
                 )
+            }
+        }
+        item {
+            val selected = state.selectedDay
+            if (selected != null && !selected.date.isBefore(state.today)) {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    Button(
+                        onClick = { dialog = CalendarDialog.AddPlan(selected.date) },
+                        modifier = Modifier.heightIn(min = Sizing.minTouchTarget),
+                    ) {
+                        Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                        Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+                        Text(stringResource(R.string.feature_calendar_action_add))
+                    }
+                }
             }
         }
         item {
@@ -265,21 +283,34 @@ private fun CalendarBody(state: CalendarUiState, actions: CalendarActions) {
 @Composable
 private fun PeriodHeader(state: CalendarUiState, actions: CalendarActions, locale: Locale) {
     val title = periodTitle(state, locale)
+    val subtitle = periodSubtitle(state, locale)
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            FilledTonalIconButton(onClick = actions.onPrevious) {
+            IconButton(onClick = actions.onPrevious) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                     contentDescription = stringResource(R.string.feature_calendar_previous),
                 )
             }
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
+            Column(
                 modifier = Modifier.weight(1f),
-            )
-            FilledTonalIconButton(onClick = actions.onNext) {
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center,
+                )
+                if (subtitle != null) {
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+            IconButton(onClick = actions.onNext) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                     contentDescription = stringResource(R.string.feature_calendar_next),
@@ -317,9 +348,23 @@ private fun PeriodHeader(state: CalendarUiState, actions: CalendarActions, local
     }
 }
 
+/** Wochenansicht: Kalenderwoche ("KW 43"), Monatsansicht: Monat und Jahr. */
+@Composable
 private fun periodTitle(state: CalendarUiState, locale: Locale): String =
     if (state.mode == CalendarMode.MONTH) {
         DateTimeFormatter.ofPattern("LLLL yyyy", locale).format(state.periodStart)
+    } else {
+        val first = state.weeks.firstOrNull()?.firstOrNull()?.date ?: state.periodStart
+        stringResource(
+            R.string.feature_calendar_week_number,
+            first.get(WeekFields.of(locale).weekOfWeekBasedYear()),
+        )
+    }
+
+/** Datumsbereich unter der Kalenderwoche; die Monatsansicht braucht keinen. */
+private fun periodSubtitle(state: CalendarUiState, locale: Locale): String? =
+    if (state.mode == CalendarMode.MONTH) {
+        null
     } else {
         val formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(locale)
         val first = state.weeks.firstOrNull()?.firstOrNull()?.date ?: state.periodStart
@@ -367,18 +412,19 @@ private fun WeekList(state: CalendarUiState, actions: CalendarActions, locale: L
     Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
         state.weeks.firstOrNull().orEmpty().forEach { day ->
             val isSelected = day.date == state.selectedDate
-            val contentColor = if (isSelected) {
-                MaterialTheme.colorScheme.onSecondaryContainer
-            } else {
-                MaterialTheme.colorScheme.onSurface
-            }
+            val isRest = day.status == DayStatus.REST && day.plannedPlanIds.isEmpty() && day.sessions.isEmpty()
+            val minutes = day.sessions.sumOf { sessionMinutes(it) }
+            val volume = day.sessions.sumOf { it.volumeKg }
             GymPulseCard(
                 onClick = { actions.onSelectDate(day.date) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .semantics { selected = isSelected },
-                variant = if (isSelected) GymPulseCardVariant.Secondary else GymPulseCardVariant.Elevated,
-                shape = ExpressiveShapes.largeIncreased,
+                variant = when {
+                    isSelected -> GymPulseCardVariant.Level2
+                    isRest -> GymPulseCardVariant.Outlined
+                    else -> GymPulseCardVariant.Level1
+                },
                 contentPadding = PaddingValues(horizontal = Spacing.m, vertical = Spacing.s),
             ) {
                 Row(
@@ -394,24 +440,57 @@ private fun WeekList(state: CalendarUiState, actions: CalendarActions, locale: L
                         isToday = day.isToday,
                     )
                     Column(modifier = Modifier.weight(1f)) {
-                        Text(
-                            text = planSummary(day, names),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = contentColor,
-                        )
-                        if (day.plannedPlanIds.isNotEmpty()) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                        ) {
+                            Text(
+                                text = planSummary(day, names),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = if (isRest) {
+                                    MaterialTheme.colorScheme.onSurfaceVariant
+                                } else {
+                                    MaterialTheme.colorScheme.onSurface
+                                },
+                                modifier = Modifier.weight(1f, fill = false),
+                            )
+                            if (minutes > 0) {
+                                StatusChip(
+                                    text = stringResource(R.string.feature_calendar_duration_min, minutes),
+                                    active = false,
+                                )
+                            }
+                        }
+                        if (day.sessions.isNotEmpty()) {
+                            Text(
+                                text = stringResource(
+                                    R.string.feature_calendar_status_volume,
+                                    statusLabel(day.status),
+                                    String.format(locale, "%,.0f", volume),
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = statusColor(day.status),
+                            )
+                        } else if (day.plannedPlanIds.isNotEmpty()) {
                             Text(
                                 text = statusLabel(day.status),
-                                style = MaterialTheme.typography.labelLarge,
-                                color = if (isSelected) contentColor else statusColor(day.status),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = statusColor(day.status),
                             )
                         }
                     }
-                    statusIcon(day.status)?.let { icon ->
+                    val icon = statusIcon(day.status)
+                    if (icon != null) {
                         Icon(
                             imageVector = icon,
                             contentDescription = null,
-                            tint = if (isSelected) contentColor else statusColor(day.status),
+                            tint = statusColor(day.status),
+                        )
+                    } else {
+                        Box(
+                            modifier = Modifier
+                                .size(Sizing.statusDot)
+                                .background(color = MaterialTheme.colorScheme.outlineVariant, shape = CircleShape),
                         )
                     }
                 }
@@ -420,24 +499,30 @@ private fun WeekList(state: CalendarUiState, actions: CalendarActions, locale: L
     }
 }
 
-/** Wochentag über Tageszahl; heute als gefüllter Kreis in Primärfarbe. */
+private fun sessionMinutes(session: CompletedSessionSummary): Long =
+    Duration.between(session.startedAt, session.endedAt).toMinutes().coerceAtLeast(0)
+
+/** Wochentag über Tageszahl; heute als gefülltes Feld in `primary`. */
 @Composable
 private fun DayBadge(label: String, number: String, isToday: Boolean) {
-    Column(
-        modifier = Modifier.width(Sizing.minTouchTarget),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = if (isToday) MaterialTheme.colorScheme.primary else Color.Transparent,
+        contentColor = if (isToday) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
     ) {
-        Text(text = label, style = MaterialTheme.typography.labelMedium)
-        Surface(
-            shape = CircleShape,
-            color = if (isToday) MaterialTheme.colorScheme.primary else Color.Transparent,
-            contentColor = if (isToday) MaterialTheme.colorScheme.onPrimary else LocalContentColor.current,
+        Column(
+            modifier = Modifier
+                .width(Sizing.minTouchTarget)
+                .padding(vertical = Spacing.xxs),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = number,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(horizontal = Spacing.s, vertical = Spacing.xxs),
+                text = label,
+                style = MaterialTheme.typography.labelSmall,
+                color = if (isToday) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
             )
+            Text(text = number, style = MaterialTheme.typography.headlineSmall)
         }
     }
 }
@@ -446,12 +531,13 @@ private fun DayBadge(label: String, number: String, isToday: Boolean) {
 private fun MonthGrid(state: CalendarUiState, actions: CalendarActions, locale: Locale) {
     val fullDate = remember(locale) { DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale) }
     Surface(
-        shape = ExpressiveShapes.extraLargeIncreased,
+        shape = MaterialTheme.shapes.large,
         color = MaterialTheme.colorScheme.surfaceContainerLow,
+        border = BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant),
         modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.xs),
+            modifier = Modifier.padding(Spacing.s),
             verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -492,14 +578,14 @@ private fun MonthCell(
     modifier: Modifier = Modifier,
 ) {
     val background = when {
-        isSelected -> MaterialTheme.colorScheme.secondaryContainer
-        day.isToday -> MaterialTheme.colorScheme.primaryContainer
+        day.isToday -> MaterialTheme.colorScheme.primary
+        isSelected -> MaterialTheme.colorScheme.surfaceContainerHighest
         else -> Color.Transparent
     }
     Box(
         modifier = modifier
             .defaultMinSize(minHeight = Sizing.minTouchTarget)
-            .clip(MaterialTheme.shapes.large)
+            .clip(MaterialTheme.shapes.medium)
             .background(background)
             .clickable(role = Role.Button, onClick = onClick)
             .clearAndSetSemantics {
@@ -517,8 +603,7 @@ private fun MonthCell(
                     MaterialTheme.typography.bodyLarge
                 },
                 color = when {
-                    isSelected -> MaterialTheme.colorScheme.onSecondaryContainer
-                    day.isToday -> MaterialTheme.colorScheme.onPrimaryContainer
+                    day.isToday -> MaterialTheme.colorScheme.onPrimary
                     day.inPeriod -> MaterialTheme.colorScheme.onSurface
                     else -> MaterialTheme.colorScheme.outline
                 },
@@ -527,7 +612,11 @@ private fun MonthCell(
                 modifier = Modifier
                     .size(Spacing.xs)
                     .background(
-                        color = if (day.status == DayStatus.REST) Color.Transparent else statusColor(day.status),
+                        color = when {
+                            day.status == DayStatus.REST -> Color.Transparent
+                            day.isToday -> MaterialTheme.colorScheme.onPrimary
+                            else -> statusColor(day.status)
+                        },
                         shape = CircleShape,
                     ),
             )
@@ -542,7 +631,6 @@ private fun DayDetailCard(
     locale: Locale,
     onSkip: () -> Unit,
     onMove: (planId: String) -> Unit,
-    onAdd: () -> Unit,
     onClear: () -> Unit,
 ) {
     val fullDate = remember(locale) { DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL).withLocale(locale) }
@@ -561,8 +649,7 @@ private fun DayDetailCard(
         modifier = Modifier
             .fillMaxWidth()
             .animateContentSize(),
-        variant = GymPulseCardVariant.Elevated,
-        shape = ExpressiveShapes.extraLargeIncreased,
+        variant = GymPulseCardVariant.Level2,
         contentPadding = PaddingValues(vertical = Spacing.xs),
         verticalSpacing = Spacing.none,
     ) {
@@ -588,7 +675,6 @@ private fun DayDetailCard(
                     stringResource(R.string.feature_calendar_action_move),
                 ) { onMove(movablePlanId) }
             }
-            ActionRow(Icons.Filled.Add, stringResource(R.string.feature_calendar_action_add), onAdd)
             if (day.override != null) {
                 ActionRow(Icons.Filled.Refresh, stringResource(R.string.feature_calendar_action_reset), onClear)
             }
@@ -653,8 +739,7 @@ private fun WeekSchemeCard(state: CalendarUiState, locale: Locale, onEdit: (DayO
     val editLabel = stringResource(R.string.feature_calendar_edit)
     GymPulseCard(
         modifier = Modifier.fillMaxWidth(),
-        variant = GymPulseCardVariant.Filled,
-        shape = ExpressiveShapes.extraLargeIncreased,
+        variant = GymPulseCardVariant.Level1,
         contentPadding = PaddingValues(vertical = Spacing.xs),
         verticalSpacing = Spacing.none,
     ) {

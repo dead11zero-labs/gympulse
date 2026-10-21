@@ -11,6 +11,9 @@
     <string name="feature_calendar_mode_month">Month</string>
     <string name="feature_calendar_today">Today</string>
 
+    <string name="feature_calendar_week_number">Week %1$d</string>
+    <string name="feature_calendar_duration_min">%1$d min</string>
+    <string name="feature_calendar_status_volume">%1$s · %2$s kg volume</string>
     <string name="feature_calendar_rest_day">Rest day</string>
     <string name="feature_calendar_unknown_plan">Deleted plan</string>
     <string name="feature_calendar_free_workout">Free workout</string>

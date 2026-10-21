@@ -5,6 +5,22 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.text.style.TextAlign
+import app.gympulse.core.designsystem.component.GymPulseCard
+import app.gympulse.core.designsystem.component.GymPulseCardVariant
+import app.gympulse.core.designsystem.component.LabelCaps
+import app.gympulse.core.designsystem.component.ListRowIcon
+import app.gympulse.core.designsystem.component.StatusChip
+import app.gympulse.core.designsystem.theme.Sizing
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -272,8 +288,30 @@ private fun GalleryGrid(
                     }
                 } else {
                     Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-                        Button(onClick = onTake) { Text(stringResource(R.string.photos_take)) }
-                        OutlinedButton(onClick = onPick) { Text(stringResource(R.string.photos_pick)) }
+                        Button(
+                            onClick = onTake,
+                            modifier = Modifier
+                                .weight(1f)
+                                .heightIn(min = Sizing.minTouchTarget),
+                        ) {
+                            Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                            Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+                            Text(text = stringResource(R.string.photos_take), textAlign = TextAlign.Center)
+                        }
+                        OutlinedButton(
+                            onClick = onPick,
+                            modifier = Modifier
+                                .weight(1f)
+                                .heightIn(min = Sizing.minTouchTarget),
+                        ) {
+                            Icon(
+                                Icons.AutoMirrored.Filled.List,
+                                contentDescription = null,
+                                modifier = Modifier.size(ButtonDefaults.IconSize),
+                            )
+                            Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+                            Text(text = stringResource(R.string.photos_pick), textAlign = TextAlign.Center)
+                        }
                     }
                     if (photos.size >= 2) {
                         TextButton(onClick = onStartCompare) { Text(stringResource(R.string.photos_compare)) }
@@ -282,13 +320,8 @@ private fun GalleryGrid(
             }
         }
         if (photos.isEmpty()) {
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                EmptyState(
-                    icon = Icons.Filled.Face,
-                    title = stringResource(R.string.photos_title),
-                    message = stringResource(R.string.photos_empty),
-                )
-            }
+            item(span = { GridItemSpan(maxLineSpan) }) { PhotosEmptyState() }
+            item(span = { GridItemSpan(maxLineSpan) }) { PhotoTipCard() }
         } else {
             items(photos, key = { it.id }) { photo ->
                 PhotoCell(
@@ -297,6 +330,67 @@ private fun GalleryGrid(
                     selecting = selecting,
                     selected = photo.id in selectedIds,
                     onClick = { onPhotoClick(photo) },
+                )
+            }
+        }
+    }
+}
+
+/** Leerzustand: Symbol auf Ring, Titel, Erklärung und ein Chip zur lokalen Speicherung. */
+@Composable
+private fun PhotosEmptyState() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = Spacing.xl),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(Spacing.s),
+    ) {
+        Surface(
+            shape = ExpressiveShapes.full,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.primary,
+            border = BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant),
+            modifier = Modifier.size(Sizing.emptyStateIconContainer + Spacing.l),
+        ) {
+            Box(contentAlignment = Alignment.Center) {
+                Icon(Icons.Filled.Face, contentDescription = null, modifier = Modifier.size(Sizing.emptyStateIcon))
+            }
+        }
+        Text(
+            text = stringResource(R.string.photos_title),
+            style = MaterialTheme.typography.headlineMedium,
+            textAlign = TextAlign.Center,
+        )
+        Text(
+            text = stringResource(R.string.photos_empty),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.widthIn(max = Spacing.maxFormWidth),
+        )
+        StatusChip(text = stringResource(R.string.photos_local_only), icon = Icons.Filled.Lock)
+    }
+}
+
+/** Hinweis für gleichbleibende Aufnahmebedingungen, damit Vorher/Nachher vergleichbar bleibt. */
+@Composable
+private fun PhotoTipCard() {
+    GymPulseCard(
+        modifier = Modifier.fillMaxWidth(),
+        variant = GymPulseCardVariant.Level1,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(Spacing.s),
+            verticalAlignment = Alignment.Top,
+        ) {
+            ListRowIcon(icon = Icons.Filled.Info, containerColor = MaterialTheme.colorScheme.surfaceContainerHighest)
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+                LabelCaps(text = stringResource(R.string.photos_tip_title), color = MaterialTheme.colorScheme.onSurface)
+                Text(
+                    text = stringResource(R.string.photos_tip_body),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }

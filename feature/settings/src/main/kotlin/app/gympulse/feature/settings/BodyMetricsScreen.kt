@@ -1,6 +1,23 @@
 package app.gympulse.feature.settings
 
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.text.style.TextAlign
+import app.gympulse.core.designsystem.component.GymPulseBottomSheet
+import app.gympulse.core.designsystem.component.LabelCaps
+import app.gympulse.core.designsystem.component.StatusChip
+import app.gympulse.core.designsystem.theme.Sizing
+import app.gympulse.core.designsystem.theme.metricLarge
+import app.gympulse.core.designsystem.theme.metricSmall
+import app.gympulse.core.designsystem.theme.metricUnit
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,12 +67,6 @@ import app.gympulse.core.designsystem.component.ChipRow
 import app.gympulse.core.designsystem.component.EmptyState
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
-import app.gympulse.core.designsystem.component.ListRow
-import app.gympulse.core.designsystem.component.StatTile
-import app.gympulse.core.designsystem.component.StatTileStyle
-import app.gympulse.core.designsystem.component.StatTrend
-import app.gympulse.core.designsystem.component.TrendDirection
-import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.model.BodyMeasurement
 import app.gympulse.core.model.MeasurementType
@@ -98,13 +109,32 @@ internal fun BodyMetricsScreen(
             verticalArrangement = Arrangement.spacedBy(Spacing.m),
         ) {
             item {
-                Button(onClick = { adding = true }, modifier = Modifier.fillMaxWidth()) {
+                Button(
+                    onClick = { adding = true },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = Sizing.minTouchTarget),
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                    Spacer(Modifier.width(ButtonDefaults.IconSpacing))
                     Text(stringResource(R.string.body_add))
                 }
             }
             if (state.photosEnabled) {
                 item {
-                    OutlinedButton(onClick = onOpenPhotos, modifier = Modifier.fillMaxWidth()) {
+                    OutlinedButton(
+                        onClick = onOpenPhotos,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = Sizing.minTouchTarget),
+                    ) {
+                        Icon(
+                            Icons.Filled.Face,
+                            contentDescription = null,
+                            modifier = Modifier.size(ButtonDefaults.IconSize),
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                        Spacer(Modifier.width(ButtonDefaults.IconSpacing))
                         Text(stringResource(R.string.photos_open))
                     }
                 }
@@ -119,7 +149,22 @@ internal fun BodyMetricsScreen(
             item { SummaryCard(state) }
             item { ChartCard(state) }
             item {
-                SettingsSectionHeader(stringResource(R.string.body_history))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    SettingsSectionHeader(
+                        title = stringResource(R.string.body_history),
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                    Text(
+                        text = pluralStringResource(R.plurals.body_history_count, state.history.size, state.history.size),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = Spacing.m),
+                    )
+                }
             }
             if (state.history.isEmpty()) {
                 item {
@@ -209,28 +254,59 @@ private fun TypeChips(selected: MeasurementType, onSelect: (MeasurementType) -> 
     )
 }
 
+/** Hero-Karte: aktueller Wert groß, Änderung als Chip rechts oben, darunter das Datum der letzten Messung. */
 @Composable
 private fun SummaryCard(state: BodyMetricsUiState) {
     val latest = state.history.firstOrNull() ?: return
-    val trend = state.change?.let { change ->
-        StatTrend(
-            label = stringResource(R.string.body_change, formatSigned(latest.type, change)),
-            direction = when {
-                change > 0 -> TrendDirection.Up
-                change < 0 -> TrendDirection.Down
-                else -> TrendDirection.Flat
-            },
-        )
-    }
-    StatTile(
-        value = formatValue(latest.type, latest.value),
-        label = stringResource(R.string.body_latest),
-        trend = trend,
-        style = StatTileStyle.Highlighted,
+    val change = state.change
+    val changeDescription = change?.let { stringResource(R.string.body_change, formatSigned(latest.type, it)) }
+    val changeText = change?.let { formatSigned(latest.type, it) }
+    val lastUpdate = stringResource(R.string.body_last_update, formatShortDate(latest))
+    GymPulseCard(
         modifier = Modifier
             .fillMaxWidth()
             .animateContentSize(),
-    )
+        variant = GymPulseCardVariant.Level2,
+        contentPadding = PaddingValues(Spacing.l),
+        verticalSpacing = Spacing.xs,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            LabelCaps(text = stringResource(R.string.body_latest))
+            if (change != null && changeText != null && changeDescription != null) {
+                StatusChip(
+                    text = changeText,
+                    icon = when {
+                        change > 0 -> Icons.Filled.KeyboardArrowUp
+                        change < 0 -> Icons.Filled.KeyboardArrowDown
+                        else -> null
+                    },
+                    modifier = Modifier.semantics { contentDescription = changeDescription },
+                )
+            }
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+            Text(
+                text = formatNumber(latest.value),
+                style = MaterialTheme.typography.metricLarge,
+                modifier = Modifier.alignByBaseline(),
+            )
+            Text(
+                text = unitLabel(latest.type),
+                style = MaterialTheme.typography.metricUnit,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.alignByBaseline(),
+            )
+        }
+        Text(
+            text = lastUpdate,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
 }
 
 @Composable
@@ -239,20 +315,39 @@ private fun ChartCard(state: BodyMetricsUiState) {
         modifier = Modifier
             .fillMaxWidth()
             .animateContentSize(),
-        variant = GymPulseCardVariant.Elevated,
-        shape = ExpressiveShapes.largeIncreased,
+        variant = GymPulseCardVariant.Level1,
+        contentPadding = PaddingValues(Spacing.l),
     ) {
-        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-            if (state.chart.size < 2) {
+        if (state.chart.size < 2) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+            ) {
+                Surface(
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(Sizing.iconContainer + Spacing.xs),
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(Icons.Filled.Add, contentDescription = null)
+                    }
+                }
                 Text(
                     text = stringResource(R.string.body_chart_empty),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(vertical = Spacing.l),
+                    textAlign = TextAlign.Center,
                 )
-            } else {
-                MeasurementChart(state.chart)
+                Text(
+                    text = stringResource(R.string.body_chart_empty_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                )
             }
+        } else {
+            MeasurementChart(state.chart)
         }
     }
 }
@@ -298,29 +393,49 @@ private fun HistoryRow(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Surface(
+    GymPulseCard(
         modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.large,
-        color = MaterialTheme.colorScheme.surfaceContainer,
+        variant = GymPulseCardVariant.Level1,
+        contentPadding = PaddingValues(start = Spacing.m, top = Spacing.xs, end = Spacing.xs, bottom = Spacing.xs),
     ) {
-        ListRow(
-            headline = formatValue(entry.type, entry.value),
-            supportingText = formatDate(entry),
-            trailingContent = {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(onClick = onEdit) {
-                        Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.body_edit))
-                    }
-                    IconButton(onClick = onDelete) {
-                        Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.body_delete))
-                    }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+                    Text(
+                        text = formatNumber(entry.value),
+                        style = MaterialTheme.typography.metricSmall,
+                        modifier = Modifier.alignByBaseline(),
+                    )
+                    Text(
+                        text = unitLabel(entry.type),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.alignByBaseline(),
+                    )
                 }
-            },
-        )
+                Text(
+                    text = formatDate(entry),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            IconButton(onClick = onEdit) {
+                Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.body_edit))
+            }
+            IconButton(onClick = onDelete) {
+                Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.body_delete))
+            }
+        }
     }
 }
 
-/** Formular für eine neue Messung: Gewicht ist Pflicht, alle anderen Felder sind optional. */
+/**
+ * Formular für eine neue Messung im Bottom Sheet: Gewicht ist Pflicht, alle anderen Felder sind
+ * optional. Körperfett steht einzeln, die Umfänge sind darunter gruppiert.
+ */
 @Composable
 private fun AddMeasurementDialog(
     onConfirm: (Map<MeasurementType, Double>) -> Unit,
@@ -338,41 +453,12 @@ private fun AddMeasurementDialog(
     }
     val valid = results.all { it is Validated.Ok }
 
-    AlertDialog(
+    GymPulseBottomSheet(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.body_add_title)) },
-        text = {
-            Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(Spacing.xs),
-            ) {
-                Text(
-                    text = stringResource(R.string.body_add_hint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                types.forEachIndexed { index, type ->
-                    val showError = results[index] is Validated.Invalid && texts[index].value.isNotEmpty()
-                    OutlinedTextField(
-                        value = texts[index].value,
-                        onValueChange = { texts[index].value = it },
-                        label = { Text(typeLabel(type)) },
-                        suffix = { Text(unitLabel(type)) },
-                        singleLine = true,
-                        isError = showError,
-                        supportingText = if (showError) {
-                            { Text(errorMessage(type)) }
-                        } else {
-                            null
-                        },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            TextButton(
+        title = stringResource(R.string.body_add_title),
+        actions = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.settings_action_cancel)) }
+            Button(
                 enabled = valid,
                 onClick = {
                     val values = buildMap {
@@ -382,12 +468,109 @@ private fun AddMeasurementDialog(
                     }
                     onConfirm(values)
                 },
-            ) { Text(stringResource(R.string.settings_action_save)) }
+                modifier = Modifier.heightIn(min = Sizing.minTouchTarget),
+            ) {
+                Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(ButtonDefaults.IconSize))
+                Spacer(Modifier.width(ButtonDefaults.IconSpacing))
+                Text(stringResource(R.string.settings_action_save))
+            }
         },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text(stringResource(R.string.settings_action_cancel)) }
-        },
-    )
+    ) {
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(Spacing.s),
+        ) {
+            Text(
+                text = stringResource(R.string.body_add_hint),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            types.forEachIndexed { index, type ->
+                if (type == MeasurementType.CHEST) {
+                    LabelCaps(
+                        text = stringResource(R.string.body_circumferences),
+                        modifier = Modifier.padding(top = Spacing.xs),
+                    )
+                }
+                val showError = results[index] is Validated.Invalid && texts[index].value.isNotEmpty()
+                MeasurementField(
+                    type = type,
+                    value = texts[index].value,
+                    onValueChange = { texts[index].value = it },
+                    showError = showError,
+                )
+            }
+        }
+    }
+}
+
+/** Ein Eingabefeld mit Einheit als Pille rechts; Gewicht trägt zusätzlich die Pflichtfeld-Markierung. */
+@Composable
+private fun MeasurementField(
+    type: MeasurementType,
+    value: String,
+    onValueChange: (String) -> Unit,
+    showError: Boolean,
+) {
+    val label = typeLabel(type)
+    val isWeight = type == MeasurementType.WEIGHT
+    val hasHeader = isWeight || type == MeasurementType.BODY_FAT
+    Column(verticalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+        if (isWeight) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                LabelCaps(text = label, color = MaterialTheme.colorScheme.primary)
+                StatusChip(text = stringResource(R.string.body_required))
+            }
+        } else if (hasHeader) {
+            Text(text = label, style = MaterialTheme.typography.labelLarge)
+        }
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = if (hasHeader) {
+                Modifier
+                    .fillMaxWidth()
+                    .semantics { contentDescription = label }
+            } else {
+                Modifier.fillMaxWidth()
+            },
+            label = if (hasHeader) null else { { Text(label) } },
+            placeholder = if (isWeight) {
+                { Text(stringResource(R.string.body_example_weight)) }
+            } else if (type == MeasurementType.BODY_FAT) {
+                { Text(stringResource(R.string.body_example_body_fat)) }
+            } else {
+                null
+            },
+            trailingIcon = {
+                Surface(
+                    shape = MaterialTheme.shapes.small,
+                    color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(end = Spacing.s),
+                ) {
+                    Text(
+                        text = unitLabel(type),
+                        style = MaterialTheme.typography.labelMedium,
+                        modifier = Modifier.padding(horizontal = Spacing.xs, vertical = Spacing.xxs),
+                    )
+                }
+            },
+            singleLine = true,
+            isError = showError,
+            supportingText = if (showError) {
+                { Text(errorMessage(type)) }
+            } else {
+                null
+            },
+            shape = MaterialTheme.shapes.medium,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        )
+    }
 }
 
 @Composable
@@ -447,5 +630,11 @@ private fun formatSigned(type: MeasurementType, value: Double): String {
 @Composable
 private fun formatDate(entry: BodyMeasurement): String {
     val formatter = remember { DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.SHORT) }
+    return formatter.format(entry.measuredAt.atZone(ZoneId.systemDefault()))
+}
+
+@Composable
+private fun formatShortDate(entry: BodyMeasurement): String {
+    val formatter = remember { DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM) }
     return formatter.format(entry.measuredAt.atZone(ZoneId.systemDefault()))
 }
