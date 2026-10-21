@@ -8,6 +8,9 @@ import java.util.Locale
 internal object WorkoutFormat {
     private const val MAX_INTEGER_DIGITS = 4
     private const val MAX_FRACTION_DIGITS = 2
+    private const val MAX_DECIMAL_VALUE = 9_999.0
+    private const val MAX_INTEGER_VALUE = 9_999
+    private const val ROUNDING_FACTOR = 100.0
 
     /**
      * Keeps only digits and a single decimal separator (comma or dot), with at most
@@ -41,6 +44,15 @@ internal object WorkoutFormat {
         value?.let { DecimalFormat("0.##", DecimalFormatSymbols.getInstance(locale)).format(it) }.orEmpty()
 
     fun formatIntegerInput(value: Int?): String = value?.toString().orEmpty()
+
+    /** Steps a weight or distance by [delta]; blank counts as 0, the result stays within 0 and 9999.99. */
+    fun adjustDecimal(current: Double?, delta: Double): Double {
+        val next = ((current ?: 0.0) + delta).coerceIn(0.0, MAX_DECIMAL_VALUE)
+        return Math.round(next * ROUNDING_FACTOR) / ROUNDING_FACTOR
+    }
+
+    /** Steps a rep count by [delta]; blank counts as 0, the result stays within 0 and 9999. */
+    fun adjustInteger(current: Int?, delta: Int): Int = ((current ?: 0) + delta).coerceIn(0, MAX_INTEGER_VALUE)
 
     /** Display of a weight or volume, with grouping, e.g. "1.234,5" in German. */
     fun formatKg(value: Double, locale: Locale = Locale.getDefault()): String =

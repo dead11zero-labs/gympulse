@@ -1,5 +1,7 @@
 package app.gympulse.core.designsystem.component
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,10 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,6 +32,7 @@ import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.designsystem.theme.metricUnit
 import app.gympulse.core.designsystem.theme.stepperValue
+import kotlinx.coroutines.delay
 
 /**
  * Taktiler Zahlen-Stepper "− Wert +" für Gewicht und Wiederholungen (Kinetic Material,
@@ -53,6 +60,8 @@ import app.gympulse.core.designsystem.theme.stepperValue
  * @param onIncrement Klick auf "+".
  * @param unit optionale Einheit neben dem Wert, z. B. "kg".
  * @param label optionales Label über dem Stepper, wird als [LabelCaps] dargestellt.
+ * @param repeatOnLongPress Halten eines Knopfes wiederholt die Aktion und wird dabei schneller
+ *   (siehe [nextStepperRepeatDelayMillis]); ein einfacher Tipp löst genau einmal aus.
  * @param decrementEnabled ob "−" aktiv ist (z. B. nicht unter 0).
  * @param incrementEnabled ob "+" aktiv ist.
  * @param decrementDescription TalkBack-Text für "−"; Standard "Verringern"/"Decrease" plus Label.
@@ -68,6 +77,7 @@ fun NumberStepper(
     label: String? = null,
     decrementEnabled: Boolean = true,
     incrementEnabled: Boolean = true,
+    repeatOnLongPress: Boolean = true,
     decrementDescription: String = stepperDescription(R.string.designsystem_stepper_decrease, label),
     incrementDescription: String = stepperDescription(R.string.designsystem_stepper_increase, label),
 ) {
@@ -86,6 +96,7 @@ fun NumberStepper(
             StepperButton(
                 onClick = onDecrement,
                 enabled = decrementEnabled,
+                repeatOnLongPress = repeatOnLongPress,
                 description = decrementDescription,
             ) {
                 // Material Icons Core hat kein Minus; das typografische Minuszeichen passt zum "+".
@@ -123,6 +134,7 @@ fun NumberStepper(
             StepperButton(
                 onClick = onIncrement,
                 enabled = incrementEnabled,
+                repeatOnLongPress = repeatOnLongPress,
                 description = incrementDescription,
             ) {
                 Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(Sizing.icon))
@@ -139,17 +151,54 @@ private fun stepperDescription(res: Int, label: String?): String {
     return if (label != null) "$action: $label" else action
 }
 
+/** Verzögerung bis zur ersten Wiederholung beim Halten eines Stepper-Knopfs. */
+internal const val STEPPER_REPEAT_INITIAL_DELAY_MILLIS = 500L
+
+/** Pause zwischen den ersten Wiederholungen. */
+internal const val STEPPER_REPEAT_START_INTERVAL_MILLIS = 250L
+
+/** Schnellste Pause zwischen zwei Wiederholungen. */
+internal const val STEPPER_REPEAT_MIN_INTERVAL_MILLIS = 50L
+
+private const val STEPPER_REPEAT_ACCELERATION = 0.8f
+
+/** Pause nach einer Wiederholung: jedes Mal kürzer, nie unter [STEPPER_REPEAT_MIN_INTERVAL_MILLIS]. */
+internal fun nextStepperRepeatDelayMillis(currentMillis: Long): Long =
+    (currentMillis * STEPPER_REPEAT_ACCELERATION).toLong().coerceAtLeast(STEPPER_REPEAT_MIN_INTERVAL_MILLIS)
+
 @Composable
 private fun StepperButton(
     onClick: () -> Unit,
     enabled: Boolean,
+    repeatOnLongPress: Boolean,
     description: String,
     content: @Composable () -> Unit,
 ) {
     val scheme = MaterialTheme.colorScheme
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressed by interactionSource.collectIsPressedAsState()
+    val currentOnClick by rememberUpdatedState(onClick)
+    // Nach Wiederholungen darf das Loslassen nicht noch einen Klick auslösen.
+    val repeated = remember { booleanArrayOf(false) }
+    LaunchedEffect(pressed, enabled, repeatOnLongPress) {
+        if (pressed) repeated[0] = false
+        if (pressed && enabled && repeatOnLongPress) {
+            delay(STEPPER_REPEAT_INITIAL_DELAY_MILLIS)
+            var interval = STEPPER_REPEAT_START_INTERVAL_MILLIS
+            while (true) {
+                repeated[0] = true
+                currentOnClick()
+                delay(interval)
+                interval = nextStepperRepeatDelayMillis(interval)
+            }
+        }
+    }
     FilledIconButton(
-        onClick = onClick,
+        onClick = {
+            if (repeated[0]) repeated[0] = false else onClick()
+        },
         enabled = enabled,
+        interactionSource = interactionSource,
         shape = ExpressiveShapes.full,
         colors = IconButtonDefaults.filledIconButtonColors(
             containerColor = scheme.surfaceContainerHigh,

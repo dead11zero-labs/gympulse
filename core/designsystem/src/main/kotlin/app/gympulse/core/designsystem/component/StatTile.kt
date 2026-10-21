@@ -55,6 +55,12 @@ enum class StatTileStyle {
 
     /** Hervorgehoben (`primaryContainer`/`onPrimaryContainer`), für die eine Hauptkennzahl. */
     Highlighted,
+
+    /**
+     * Akzentfläche (`primary`/`onPrimary`, Neon-Mint ohne Rand) für die eine Kennzahl, die auf
+     * dem Screen hervorsticht, z. B. das Volumen in der Workout-Zusammenfassung.
+     */
+    Accent,
 }
 
 /**
@@ -93,16 +99,20 @@ fun StatTile(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
         )
+        StatTileStyle.Accent -> CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+        )
     }
     val border: BorderStroke? = if (style == StatTileStyle.Standard) {
         BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant)
     } else {
         null
     }
-    val labelColor = if (style == StatTileStyle.Standard) {
-        MaterialTheme.colorScheme.onSurfaceVariant
-    } else {
-        MaterialTheme.colorScheme.onPrimaryContainer
+    val labelColor = when (style) {
+        StatTileStyle.Standard -> MaterialTheme.colorScheme.onSurfaceVariant
+        StatTileStyle.Highlighted -> MaterialTheme.colorScheme.onPrimaryContainer
+        StatTileStyle.Accent -> MaterialTheme.colorScheme.onPrimary
     }
     // Kachel als ein TalkBack-Element: Zahl, Einheit, Beschriftung, Trend.
     val semanticsModifier = modifier.semantics(mergeDescendants = true) {}

@@ -1,5 +1,7 @@
 package app.gympulse.feature.dashboard
 
+import app.gympulse.core.data.health.HealthSteps
+import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.repository.CompletedSessionSummary
 import app.gympulse.core.data.repository.WeeklyVolume
 import app.gympulse.core.data.util.TimeProvider
@@ -64,6 +66,8 @@ class DashboardViewModelTest {
     }
 
     private val data = FakeDataSource()
+    private var stepsResult: HealthSteps = HealthSteps.Unavailable
+    private val stepsReader = HealthStepsReader { stepsResult }
 
     @Before
     fun setUp() {
@@ -75,7 +79,7 @@ class DashboardViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun viewModel(goal: Int = 3) = DashboardViewModel(data, FakeSettings(goal), FakeSettings(goal), time)
+    private fun viewModel(goal: Int = 3) = DashboardViewModel(data, FakeSettings(goal), FakeSettings(goal), stepsReader, time)
 
     private fun end(date: LocalDate): Instant = date.atTime(18, 0).atZone(zone).toInstant()
 
@@ -183,5 +187,20 @@ class DashboardViewModelTest {
 
         data.active.value = null
         assertNull(vm.uiState.value.activeWorkout)
+    }
+
+    @Test
+    fun stepsAreHiddenUntilHealthConnectDeliversThem() = runTest {
+        val vm = viewModel()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
+        assertEquals(HealthSteps.Unavailable, vm.uiState.value.steps)
+
+        stepsResult = HealthSteps.Available(today = 4_200, week = 31_000)
+        vm.refreshSteps()
+        assertEquals(HealthSteps.Available(today = 4_200, week = 31_000), vm.uiState.value.steps)
+
+        stepsResult = HealthSteps.PermissionMissing
+        vm.refreshSteps()
+        assertEquals(HealthSteps.PermissionMissing, vm.uiState.value.steps)
     }
 }

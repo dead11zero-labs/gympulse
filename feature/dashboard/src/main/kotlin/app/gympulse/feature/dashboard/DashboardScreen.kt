@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.designsystem.adaptive.WindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
@@ -42,6 +43,11 @@ internal fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    // Schritte ändern sich außerhalb der App; beim Zurückkehren neu lesen.
+    LifecycleResumeEffect(viewModel) {
+        viewModel.refreshSteps()
+        onPauseOrDispose { }
+    }
     DashboardContent(
         state = state,
         // TODO: Sobald der Kalender den heutigen Plan liefert, hier dessen planId übergeben.
@@ -100,6 +106,7 @@ internal fun DashboardContent(
                     WeeklyVolumeCard(volume = state.weeklyVolume)
                     WeeklyProgressCard(progress = state.weeklyProgress)
                 }
+                StepsCard(steps = state.steps)
                 RecentSessionsSection(sessions = state.recentSessions, today = state.today)
                 // Platz, damit der FAB den letzten Eintrag nicht verdeckt.
                 Box(modifier = Modifier.height(Spacing.xxl + Spacing.l))
@@ -144,9 +151,10 @@ private fun StartWorkoutButton(isResume: Boolean, onClick: () -> Unit, modifier:
         icon = { Icon(Icons.Filled.PlayArrow, contentDescription = null) },
         text = {
             Text(
-                stringResource(
+                text = stringResource(
                     if (isResume) R.string.feature_dashboard_resume_workout else R.string.feature_dashboard_start_workout,
-                ),
+                ).uppercase(),
+                style = MaterialTheme.typography.labelLarge,
             )
         },
         modifier = modifier,

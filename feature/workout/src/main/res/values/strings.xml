@@ -7,6 +7,10 @@
     <string name="feature_workout_empty_workout">Empty workout</string>
     <string name="feature_workout_empty_workout_description">Add exercises as you go</string>
     <string name="feature_workout_plans_header">Your plans</string>
+    <plurals name="feature_workout_plans_available">
+        <item quantity="one">%1$d available</item>
+        <item quantity="other">%1$d available</item>
+    </plurals>
     <string name="feature_workout_no_plans">No plans yet. Create one in the Plans tab.</string>
     <string name="feature_workout_no_plans_title">No plans yet</string>
     <string name="feature_workout_start_plan">Start %1$s</string>
@@ -33,6 +37,12 @@
     <string name="feature_workout_column_duration">Sec</string>
     <string name="feature_workout_column_distance">m</string>
     <string name="feature_workout_set_done">Set done</string>
+    <string name="feature_workout_set_finish">Done</string>
+    <string name="feature_workout_stepper_weight">Weight</string>
+    <string name="feature_workout_stepper_extra_weight">Extra weight</string>
+    <string name="feature_workout_stepper_reps">Reps</string>
+    <string name="feature_workout_plates">Plates</string>
+    <string name="feature_workout_plate_chip" translatable="false">+%1$s</string>
     <string name="feature_workout_warmup_short">W</string>
     <string name="feature_workout_set_options">Options for set %1$s</string>
     <string name="feature_workout_mark_warmup">Mark as warm-up</string>
