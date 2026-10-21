@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
+import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 
 /**
@@ -22,13 +23,25 @@ import app.gympulse.core.designsystem.theme.Spacing
  * Kontrast auch mit Dynamic Color stimmt.
  */
 enum class GymPulseCardVariant {
-    /** Gefüllt: `surfaceContainerHighest`/`onSurface`. Standard für gruppierte Inhalte. */
+    /** Gefüllt: `surfaceContainer`/`onSurface` ohne Rand. Standard für gruppierte Inhalte (Dashboard-Karten). */
     Filled,
+
+    /**
+     * Ebene 1 (Kinetic Material): `surfaceContainerLow` mit 1 dp `outlineVariant`-Rand.
+     * Für inaktive, erledigte oder kommende Übungsblöcke und ruhige Listen.
+     */
+    Level1,
+
+    /**
+     * Ebene 2 (Kinetic Material): `surfaceContainer` mit 1 dp `outlineVariant`-Rand.
+     * Für die aktive Übungskarte und aktive Eingabegruppen.
+     */
+    Level2,
 
     /** Umrandet: `surface` mit `outlineVariant`-Rand. Für ruhige, gleichrangige Elemente. */
     Outlined,
 
-    /** Erhöht: `surfaceContainerLow` mit Level-1-Elevation, z. B. über Bildern oder Verläufen. */
+    /** Erhöht: `surfaceContainerHigh` mit Level-1-Elevation, z. B. über Bildern oder Verläufen. */
     Elevated,
 
     /** Akzent primär: `primaryContainer`/`onPrimaryContainer`, für die wichtigste Karte eines Screens. */
@@ -47,8 +60,8 @@ enum class GymPulseCardVariant {
  * @param variant Optik, siehe [GymPulseCardVariant].
  * @param onClick macht die ganze Karte klickbar (Ripple, Touch-Ziel, TalkBack-Aktion).
  * @param enabled nur mit [onClick] relevant.
- * @param shape Standard `MaterialTheme.shapes.large` (16 dp); für Hero-Karten
- *   [app.gympulse.core.designsystem.theme.ExpressiveShapes.largeIncreased].
+ * @param shape Standard `MaterialTheme.shapes.large` (24 dp, DESIGN.md `md`); für Hero-Karten
+ *   `MaterialTheme.shapes.extraLarge` (32 dp).
  * @param contentPadding Innenabstand des Inhalts, Standard 16 dp.
  * @param verticalSpacing Abstand zwischen den Kindern der Inhaltsspalte.
  * @param content Inhalt in einer [Column].
@@ -66,10 +79,11 @@ fun GymPulseCard(
 ) {
     val colors = cardColorsFor(variant)
     val elevation = cardElevationFor(variant)
-    val border: BorderStroke? = if (variant == GymPulseCardVariant.Outlined) {
-        CardDefaults.outlinedCardBorder(enabled)
-    } else {
-        null
+    val border: BorderStroke? = when (variant) {
+        GymPulseCardVariant.Outlined -> CardDefaults.outlinedCardBorder(enabled)
+        GymPulseCardVariant.Level1, GymPulseCardVariant.Level2 ->
+            BorderStroke(Sizing.hairline, MaterialTheme.colorScheme.outlineVariant)
+        else -> null
     }
     val inner: @Composable ColumnScope.() -> Unit = {
         Column(
@@ -106,7 +120,15 @@ private fun cardColorsFor(variant: GymPulseCardVariant): CardColors {
     val scheme = MaterialTheme.colorScheme
     return when (variant) {
         GymPulseCardVariant.Filled -> CardDefaults.cardColors(
-            containerColor = scheme.surfaceContainerHighest,
+            containerColor = scheme.surfaceContainer,
+            contentColor = scheme.onSurface,
+        )
+        GymPulseCardVariant.Level1 -> CardDefaults.cardColors(
+            containerColor = scheme.surfaceContainerLow,
+            contentColor = scheme.onSurface,
+        )
+        GymPulseCardVariant.Level2 -> CardDefaults.cardColors(
+            containerColor = scheme.surfaceContainer,
             contentColor = scheme.onSurface,
         )
         GymPulseCardVariant.Outlined -> CardDefaults.outlinedCardColors(
@@ -114,7 +136,7 @@ private fun cardColorsFor(variant: GymPulseCardVariant): CardColors {
             contentColor = scheme.onSurface,
         )
         GymPulseCardVariant.Elevated -> CardDefaults.elevatedCardColors(
-            containerColor = scheme.surfaceContainerLow,
+            containerColor = scheme.surfaceContainerHigh,
             contentColor = scheme.onSurface,
         )
         GymPulseCardVariant.Primary -> CardDefaults.cardColors(

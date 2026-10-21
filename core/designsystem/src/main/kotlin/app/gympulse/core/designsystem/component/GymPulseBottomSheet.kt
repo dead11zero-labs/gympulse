@@ -22,8 +22,8 @@ import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 
 /**
- * Modales Bottom Sheet im GymPulse-Stil: `surfaceContainerLow`, große obere Ecken
- * (Material-Standard 28 dp), Drag-Handle, optionaler Titel, Inhalt mit Seitenrand und
+ * Modales Bottom Sheet im GymPulse-Stil: `surfaceContainerHigh` (Ebene 3), große obere Ecken
+ * (`shapes.extraLarge`, 32 dp), Drag-Handle, optionaler Titel, Inhalt mit Seitenrand und
  * Aktionsleiste unten. System-Insets behandelt [ModalBottomSheet] selbst. Auf großen Screens
  * auf [Sizing.sheetMaxWidth] begrenzt.
  *
@@ -51,7 +51,7 @@ fun GymPulseBottomSheet(
         modifier = modifier,
         sheetState = sheetState,
         sheetMaxWidth = Sizing.sheetMaxWidth,
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
         contentColor = MaterialTheme.colorScheme.onSurface,
     ) {
         Column(

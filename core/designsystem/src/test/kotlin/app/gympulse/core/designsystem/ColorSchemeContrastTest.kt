@@ -2,6 +2,7 @@ package app.gympulse.core.designsystem
 
 import androidx.compose.ui.graphics.Color
 import app.gympulse.core.designsystem.theme.ColorContrast
+import app.gympulse.core.designsystem.theme.GymPulseSeedColor
 import app.gympulse.core.designsystem.theme.contrastPairs
 import app.gympulse.core.designsystem.theme.gymPulseColorScheme
 import org.junit.Assert.assertEquals
@@ -72,6 +73,43 @@ class ColorSchemeContrastTest {
             dark.surfaceContainerHigh, dark.surfaceContainerHighest,
         ).map(ColorContrast::relativeLuminance)
         assertEquals(darkSteps.sorted(), darkSteps)
+    }
+
+    @Test
+    fun `dark scheme follows Kinetic Material`() {
+        val dark = gymPulseColorScheme(darkTheme = true)
+        // Leuchtende Akzente laut DESIGN.md auf den Rollen, die Material3-Komponenten nutzen.
+        assertEquals(Color(0xFF0DF5A4), dark.primary)
+        assertEquals(Color(0xFFFF7F1C), dark.secondary)
+        assertEquals(Color(0xFF47D6FF), dark.tertiary)
+        // Flächen 1:1 aus dem YAML-Frontmatter.
+        assertEquals(Color(0xFF0E141C), dark.surface)
+        assertEquals(Color(0xFF161C24), dark.surfaceContainerLow)
+        assertEquals(Color(0xFF1A2028), dark.surfaceContainer)
+        assertEquals(Color(0xFF242A33), dark.surfaceContainerHigh)
+        assertEquals(Color(0xFF3B4A40), dark.outlineVariant)
+        assertEquals(0xFF0DF5A4, GymPulseSeedColor)
+    }
+
+    @Test
+    fun `tinted badge and chip pairs are checked in both schemes`() {
+        listOf(true, false).forEach { dark ->
+            val names = gymPulseColorScheme(darkTheme = dark).contrastPairs().map { it.name }
+            assertTrue(names.any { it.startsWith("secondary/prBadge") })
+            assertTrue("tertiary/statusChip" in names)
+            assertTrue("onSurface/statusChip" in names)
+            assertTrue("secondary/surfaceContainer" in names)
+        }
+    }
+
+    @Test
+    fun `navigation indicator pair has enough contrast`() {
+        listOf(true, false).forEach { dark ->
+            val scheme = gymPulseColorScheme(darkTheme = dark)
+            assertTrue(ColorContrast.ratio(scheme.onPrimary, scheme.primary) >= ColorContrast.MIN_TEXT)
+            // Pille hebt sich von der Leiste ab (Bedienelement-Grenze 3:1).
+            assertTrue(ColorContrast.ratio(scheme.primary, scheme.surfaceContainerLowest) >= ColorContrast.MIN_NON_TEXT)
+        }
     }
 
     private fun assertAllPairsPass(dark: Boolean) {

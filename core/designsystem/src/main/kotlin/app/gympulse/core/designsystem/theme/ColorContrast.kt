@@ -2,6 +2,7 @@ package app.gympulse.core.designsystem.theme
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.toArgb
 import kotlin.math.max
 import kotlin.math.min
@@ -46,7 +47,8 @@ data class ContrastPair(
 
 /**
  * Alle Tonpaare, die laut Material 3 kombiniert werden dürfen, mit ihrem Mindestkontrast.
- * Text-Paare brauchen 4.5:1, `outline` als Grenze von Bedienelementen 3:1.
+ * Text-Paare brauchen 4.5:1, `outline` als Grenze von Bedienelementen 3:1. Dazu kommen die
+ * getönten Flächen von PR-Badge und Status-Chip.
  */
 fun ColorScheme.contrastPairs(): List<ContrastPair> {
     val text = ColorContrast.MIN_TEXT
@@ -78,9 +80,29 @@ fun ColorScheme.contrastPairs(): List<ContrastPair> {
             add(ContrastPair("onSurfaceVariant/$name", onSurfaceVariant, color, text))
             // Akzentfarben als Text/Icon direkt auf Flächen (z. B. Trends, Links).
             add(ContrastPair("primary/$name", primary, color, text))
+            add(ContrastPair("secondary/$name", secondary, color, text))
             add(ContrastPair("tertiary/$name", tertiary, color, text))
             add(ContrastPair("error/$name", error, color, text))
             add(ContrastPair("outline/$name", outline, color, ColorContrast.MIN_NON_TEXT))
         }
+        // PR-Badge: Secondary-Text auf 20 % Secondary-Tönung über den Karten- und Seitenflächen.
+        listOf(
+            "surface" to surface,
+            "surfaceContainerLow" to surfaceContainerLow,
+            "surfaceContainer" to surfaceContainer,
+        ).forEach { (name, color) ->
+            add(ContrastPair("secondary/prBadge($name)", secondary, prBadgeContainer(color), text))
+        }
+        // Status-Chip: Text und Metrik auf Tertiary-Tönung über surfaceContainer.
+        add(ContrastPair("onSurface/statusChip", onSurface, statusChipContainer(), text))
+        add(ContrastPair("tertiary/statusChip", tertiary, statusChipContainer(), text))
     }
 }
+
+/** Hintergrund eines PR-Badges: Secondary mit [PR_BADGE_TINT_ALPHA] über [base], deckend. */
+fun ColorScheme.prBadgeContainer(base: Color = surfaceContainer): Color =
+    secondary.copy(alpha = PR_BADGE_TINT_ALPHA).compositeOver(base)
+
+/** Hintergrund eines aktiven Status-Chips: Tertiary mit [STATUS_CHIP_TINT_ALPHA] über [base], deckend. */
+fun ColorScheme.statusChipContainer(base: Color = surfaceContainer): Color =
+    tertiary.copy(alpha = STATUS_CHIP_TINT_ALPHA).compositeOver(base)

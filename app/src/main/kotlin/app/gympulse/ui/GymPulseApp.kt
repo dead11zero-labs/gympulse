@@ -44,6 +44,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.gympulse.R
 import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
+import app.gympulse.core.designsystem.component.GymPulseNavigationDefaults
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.feature.settings.AboutRoute
 import app.gympulse.feature.settings.SettingsRoute
@@ -74,8 +75,10 @@ fun GymPulseApp(
     // Keeps the workout notification running while a session is active.
     ActiveWorkoutServiceEffect()
 
+    val navigationItemColors = GymPulseNavigationDefaults.itemColors()
     NavigationSuiteScaffold(
         layoutType = layoutType,
+        navigationSuiteColors = GymPulseNavigationDefaults.suiteColors(),
         navigationSuiteItems = {
             TopLevelDestination.entries.forEach { destination ->
                 val selected = destination == currentTopLevel
@@ -89,6 +92,7 @@ fun GymPulseApp(
                         )
                     },
                     label = { Text(stringResource(destination.labelRes)) },
+                    colors = navigationItemColors,
                 )
             }
         },

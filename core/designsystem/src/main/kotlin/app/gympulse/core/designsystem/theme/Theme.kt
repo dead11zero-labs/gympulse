@@ -15,13 +15,14 @@ import androidx.compose.ui.platform.LocalContext
  * und [ExpressiveShapes]; keine hartcodierten Farben oder Größen.
  *
  * @param darkTheme dunkles Schema; die App reicht hier die Wahl aus den Einstellungen durch.
- * @param dynamicColor Material You: Farben aus dem Hintergrundbild (Android 12+). Ist es aus
- *   oder das Gerät älter, greift das eigene GymPulse-Schema (Seed [GymPulseSeedColor]).
+ * @param dynamicColor Material You: Farben aus dem Hintergrundbild (Android 12+), optional per
+ *   Einstellung. Standard ist aus: Dann (und auf älteren Geräten) gilt das eigene
+ *   Kinetic-Material-Schema (Seed [GymPulseSeedColor], dunkel als Standard der App).
  */
 @Composable
 fun GymPulseTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -39,6 +40,6 @@ fun GymPulseTheme(
     )
 }
 
-/** Das eigene (nicht dynamische) Farbschema von GymPulse. */
+/** Das eigene (nicht dynamische) Kinetic-Material-Farbschema von GymPulse. */
 fun gymPulseColorScheme(darkTheme: Boolean): ColorScheme =
     if (darkTheme) GymPulseDarkColors else GymPulseLightColors
