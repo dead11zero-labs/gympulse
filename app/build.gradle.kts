@@ -54,6 +54,7 @@ dependencies {
     implementation(projects.core.settings)
     implementation(projects.core.health)
     implementation(projects.core.cloud)
+    implementation(projects.core.workout)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)

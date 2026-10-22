@@ -15,12 +15,20 @@ import app.gympulse.core.model.PlanExercise
 import app.gympulse.core.model.SessionStatus
 import app.gympulse.core.model.TrackingType
 import app.gympulse.core.model.WorkoutPlan
-import app.gympulse.feature.workout.timer.RestTimer
-import app.gympulse.feature.workout.timer.RestTimerSettings
+import app.gympulse.core.workout.ActiveWorkoutController
+import app.gympulse.core.workout.RecordType
+import app.gympulse.core.workout.WorkoutSummary
+import app.gympulse.core.workout.timer.RestTimer
+import app.gympulse.core.workout.timer.RestTimerSettings
+import app.gympulse.core.workout.timer.RestTimerState
+import app.gympulse.core.workout.timer.RestTimerStore
 import app.gympulse.feature.workout.timer.Ticker
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -53,6 +61,7 @@ class WorkoutViewModelTest {
     private lateinit var planRepository: PlanRepository
     private lateinit var exerciseRepository: ExerciseRepository
     private lateinit var restTimer: RestTimer
+    private lateinit var controllerScope: CoroutineScope
     private val exportedSession = CompletableDeferred<String>()
     private var healthMetrics: WorkoutHealthMetrics? = null
     private val healthWindows = mutableListOf<Pair<Instant, Instant>>()
@@ -74,11 +83,13 @@ class WorkoutViewModelTest {
         )
         planRepository = PlanRepository(db.planDao(), time)
         exerciseRepository = ExerciseRepository(db.exerciseDao(), time)
-        restTimer = RestTimer(time)
+        controllerScope = CoroutineScope(SupervisorJob() + UnconfinedTestDispatcher())
+        restTimer = RestTimer(time, InMemoryRestTimerStore(), controllerScope)
     }
 
     @After
     fun tearDown() {
+        controllerScope.cancel()
         db.close()
         Dispatchers.resetMain()
     }
@@ -384,22 +395,28 @@ class WorkoutViewModelTest {
 
     private fun viewModel(handle: SavedStateHandle = SavedStateHandle()) = WorkoutViewModel(
         savedStateHandle = handle,
+        controller = ActiveWorkoutController(
+            workoutRepository = workoutRepository,
+            exerciseRepository = exerciseRepository,
+            restTimer = restTimer,
+            restTimerSettings = object : RestTimerSettings {
+                override val restSeconds: Flow<Int> = flowOf(REST_SECONDS)
+            },
+            healthExporter = { exportedSession.complete(it) },
+            healthReader = { start, end ->
+                healthWindows += start to end
+                healthMetrics
+            },
+            time = time,
+            scope = controllerScope,
+        ),
         workoutRepository = workoutRepository,
         planRepository = planRepository,
         exerciseRepository = exerciseRepository,
-        restTimer = restTimer,
-        restTimerSettings = object : RestTimerSettings {
-            override val restSeconds: Flow<Int> = flowOf(REST_SECONDS)
-        },
         ticker = object : Ticker {
             override fun ticks(): Flow<Instant> = flowOf(time.now())
         },
         time = time,
-        healthExporter = { exportedSession.complete(it) },
-        healthReader = { start, end ->
-            healthWindows += start to end
-            healthMetrics
-        },
     )
 
     private suspend fun WorkoutViewModel.awaitActive(
@@ -445,6 +462,14 @@ class WorkoutViewModelTest {
         isCustom = false, isFavorite = false, defaultRestSeconds = null, equipmentId = null,
         source = null, license = null, createdAt = 0, updatedAt = 0,
     )
+
+    private class InMemoryRestTimerStore : RestTimerStore {
+        private var stored: RestTimerState? = null
+        override suspend fun read(): RestTimerState? = stored
+        override suspend fun write(state: RestTimerState?) {
+            stored = state
+        }
+    }
 
     private class FakeTime(var instant: Instant) : TimeProvider {
         override fun now(): Instant = instant

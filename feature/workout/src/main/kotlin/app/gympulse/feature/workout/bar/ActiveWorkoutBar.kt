@@ -19,15 +19,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
-import app.gympulse.core.data.repository.WorkoutRepository
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.feature.workout.R
 import app.gympulse.feature.workout.WorkoutFormat
 import app.gympulse.feature.workout.service.ActiveWorkoutService
-import app.gympulse.feature.workout.timer.RestTimer
-import app.gympulse.feature.workout.timer.RestTimerState
+import app.gympulse.core.workout.ActiveWorkoutController
+import app.gympulse.core.workout.timer.RestTimerState
 import app.gympulse.feature.workout.timer.Ticker
-import app.gympulse.feature.workout.timer.runningAt
+import app.gympulse.core.workout.timer.runningAt
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -51,16 +50,15 @@ internal data class ActiveWorkoutBarState(
 
 @HiltViewModel
 internal class ActiveWorkoutBarViewModel @Inject constructor(
-    workoutRepository: WorkoutRepository,
-    restTimer: RestTimer,
+    controller: ActiveWorkoutController,
     ticker: Ticker,
     time: TimeProvider,
 ) : ViewModel() {
     val state: StateFlow<ActiveWorkoutBarState?> = combine(
-        workoutRepository.observeActiveSession()
+        controller.activeSession
             .map { session -> session?.let { Triple(it.id, it.title, it.startedAt) } }
             .distinctUntilChanged(),
-        restTimer.state,
+        controller.restTimerState,
     ) { session, rest ->
         session?.let { (id, title, startedAt) -> ActiveWorkoutBarState(id, title, startedAt, rest) }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS), null)

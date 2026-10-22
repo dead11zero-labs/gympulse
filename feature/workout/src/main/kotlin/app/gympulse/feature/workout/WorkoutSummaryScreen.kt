@@ -50,6 +50,11 @@ import app.gympulse.core.designsystem.theme.Sizing
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import app.gympulse.core.data.health.WorkoutHealthMetrics
+import app.gympulse.core.workout.PersonalRecord
+import app.gympulse.core.workout.RecordType
+import app.gympulse.core.workout.SummaryExercise
+import app.gympulse.core.workout.SummarySet
+import app.gympulse.core.workout.WorkoutSummary
 import java.text.NumberFormat
 import kotlin.math.roundToLong
 

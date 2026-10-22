@@ -1,4 +1,4 @@
-package app.gympulse.feature.workout
+package app.gympulse.core.workout
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

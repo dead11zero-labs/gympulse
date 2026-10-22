@@ -1,14 +1,14 @@
-package app.gympulse.feature.workout
+package app.gympulse.core.workout
 
 import app.gympulse.core.data.repository.HistorySet
 import app.gympulse.core.model.SetType
 import app.gympulse.core.model.estimatedOneRepMax
 import app.gympulse.core.model.setVolumeKg
 
-internal enum class RecordType { BEST_WEIGHT, ESTIMATED_ONE_REP_MAX, BEST_SET_VOLUME }
+enum class RecordType { BEST_WEIGHT, ESTIMATED_ONE_REP_MAX, BEST_SET_VOLUME }
 
 /** A new best of [type]: [valueKg] beats [previousKg] (0 if there was nothing to beat). */
-internal data class PersonalRecord(
+data class PersonalRecord(
     val type: RecordType,
     val valueKg: Double,
     val previousKg: Double,
@@ -27,7 +27,7 @@ internal data class PersonalRecord(
  * - An exercise without any earlier eligible set has nothing to compare with: no records
  *   (the first session sets the baseline).
  */
-internal class PersonalRecordDetector {
+class PersonalRecordDetector {
 
     /**
      * @param sessionId the session to check

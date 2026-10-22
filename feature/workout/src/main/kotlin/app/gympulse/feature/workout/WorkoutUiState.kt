@@ -1,6 +1,5 @@
 package app.gympulse.feature.workout
 
-import app.gympulse.core.data.health.WorkoutHealthMetrics
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
 import app.gympulse.core.model.TrackingType
@@ -64,35 +63,4 @@ internal data class ExerciseOption(
     val id: String,
     val name: String,
     val isFavorite: Boolean,
-)
-
-/** Shown after finishing a workout. */
-internal data class WorkoutSummary(
-    val title: String?,
-    val durationSeconds: Long,
-    val completedSets: Int,
-    val volumeKg: Double,
-    /** Exercises with at least one completed set, in session order. */
-    val exercises: List<SummaryExercise> = emptyList(),
-    /** Values from Health Connect for the session window; null until loaded or if there are none. */
-    val health: WorkoutHealthMetrics? = null,
-) {
-    val recordCount: Int get() = exercises.sumOf { it.records.size }
-}
-
-internal data class SummaryExercise(
-    val exerciseId: String,
-    /** Null if the exercise is not in the catalog (the screen shows a generic label). */
-    val name: String?,
-    val sets: List<SummarySet>,
-    val records: List<PersonalRecord>,
-)
-
-internal data class SummarySet(
-    /** Number among the working sets; null for a warm-up set. */
-    val number: Int?,
-    val weightKg: Double?,
-    val reps: Int?,
-    val durationSeconds: Int?,
-    val distanceMeters: Double?,
 )

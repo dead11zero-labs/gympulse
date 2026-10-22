@@ -1,4 +1,4 @@
-package app.gympulse.feature.workout
+package app.gympulse.core.workout
 
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.SetType
@@ -13,7 +13,7 @@ import java.time.Instant
  * @param volumeKg stored total volume of the finished session
  * @param records records per exercise id from [PersonalRecordDetector]
  */
-internal fun buildWorkoutSummary(
+fun buildWorkoutSummary(
     session: WorkoutSession,
     endedAt: Instant,
     volumeKg: Double,
