@@ -100,9 +100,10 @@ class WearCommandProcessorTest {
     fun invalidValues_areRejected() = runTest {
         workout.activeSession.value = session()
         val negative = WearCommands.updateSet(SESSION_ID, "k1", weightKg = -5.0, now = now)
-        val nan = WearCommands.updateSet(SESSION_ID, "k1", weightKg = Double.NaN, now = now + 1)
+        // NaN/Infinity lassen sich in JSON gar nicht kodieren; negative Werte sind der realistische Fall.
+        val negativeReps = WearCommands.updateSet(SESSION_ID, "k1", reps = -1, now = now + 1)
 
-        processor.process(listOf(data.putCommand(negative), data.putCommand(nan)))
+        processor.process(listOf(data.putCommand(negative), data.putCommand(negativeReps)))
 
         assertEquals(listOf(AckResult.INVALID, AckResult.INVALID), acks().map { it.result })
         assertEquals(100.0, workout.set("k1").weightKg!!, 0.0)

@@ -156,7 +156,7 @@ class ActiveWorkoutControllerTest {
         val changed = controller.editSet(sessionId, set.id) { it.copy(weightKg = 82.5) }
         assertEquals(SetEditStatus.CHANGED, changed.status)
         assertEquals(82.5, changed.set!!.weightKg!!, 0.001)
-        assertEquals(time.now(), changed.set!!.updatedAt)
+        assertEquals(time.now(), changed.set.updatedAt)
 
         assertEquals(SetEditStatus.UNCHANGED, controller.editSet(sessionId, set.id) { it }.status)
         assertEquals(SetEditStatus.REJECTED, controller.editSet(sessionId, set.id) { null }.status)
