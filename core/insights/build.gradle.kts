@@ -17,7 +17,9 @@ kotlin {
 
 dependencies {
     api(projects.core.model)
+    api(libs.kotlinx.coroutines.core)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 // CI ruft `testDebugUnitTest` auf; reine JVM-Module kennen diese Task nicht. Der Alias sorgt

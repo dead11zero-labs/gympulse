@@ -25,6 +25,7 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
   `applicationId` wie `app` (Data Layer). Plugin `gympulse.wear.application`. Das Telefon bleibt Source of Truth, Plan siehe `wearos-plan.md`.
   **Ausnahme:** Das Wear-Theme (`app.gympulse.wear.theme`) hat eigene Tokens (Wear-`ColorScheme`, Kinetic-Farben), weil Wear Material 3 ein
   eigenes Token-System hat; sonst gelten dieselben Regeln (keine hartcodierten Farben/Größen außerhalb des Themes, Strings DE+EN).
+- `core:insights` – reines Kotlin/JVM (keine Android-Abhängigkeit): klassische Trainingsauswertung (e1RM, Trend, Progression, Volumen → `TrainingInsights`). Unterpaket `narration`: `InsightSummaryBuilder` (kompakte Zusammenfassung unter 800 Token, nur Schlussfolgerungen), `InsightPrompt` (DE/EN je nach `AppLanguage`), `InsightNarrator` (`Flow<String>`) und `TemplateNarrator` (Textbausteine ohne Modell; Texte über `NarrationTexts`, eingebaut DE/EN). Pläne: `lokale-ki-plan.md`.
 - `feature:*` – je ein Feature; stellt eine `@Serializable`-Route und `NavGraphBuilder.xyzScreen()` bereit.
 - Convention-Plugins in `build-logic/convention`: `gympulse.android.application`, `.library`, `.compose`,
   `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`, `gympulse.wear.application` (Wear-App, ohne Phone-Material3).
