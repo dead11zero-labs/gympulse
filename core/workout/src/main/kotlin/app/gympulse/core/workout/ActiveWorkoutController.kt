@@ -87,9 +87,11 @@ class ActiveWorkoutController @Inject constructor(
         val exercise = session.exercises.firstOrNull { it.id == sessionExerciseId } ?: return@write
         val set = exercise.sets.firstOrNull { it.id == setId } ?: return@write
         val completed = !set.isCompleted
+        // Resolved before saving, so the timer starts right when the completed set is stored.
+        val restSeconds = if (completed) restSecondsFor(exercise.exerciseId) else null
         workoutRepository.saveSet(sessionExerciseId, set.copy(isCompleted = completed, completedAt = null))
-        if (completed) {
-            restTimer.start(restSecondsFor(exercise.exerciseId))
+        if (restSeconds != null) {
+            restTimer.start(restSeconds)
         }
     }
 
