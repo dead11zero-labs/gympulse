@@ -4,6 +4,8 @@ import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.featuregate.Feature
 import app.gympulse.core.featuregate.FeatureGate
 import app.gympulse.core.featuregate.UserFeatureToggles
+import app.gympulse.core.settings.HealthMetric
+import app.gympulse.core.settings.IntegrationSettings
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.Instant
@@ -17,6 +19,9 @@ import kotlinx.coroutines.flow.Flow
  * Die Werte stammen von allen Apps, die nach Health Connect schreiben, etwa Samsung Health oder
  * Smartwatch-Apps; GymPulse bindet keine dieser Apps direkt an.
  *
+ * Jeder Datentyp lässt sich einzeln abschalten ([HealthMetric], Schlaf über [Feature.HEALTH_SLEEP]);
+ * ein abgeschalteter Typ wird nie gelesen.
+ *
  * Alles läuft nur bei aktivem [Feature.HEALTH_CONNECT], verfügbarem Client und erteilten
  * Kernberechtigungen. Lese-Berechtigungen für Aktivitätsdaten sind optional: fehlen sie, bleiben
  * die jeweiligen Werte leer. Fehler des Dienstes führen nie zu Abbrüchen.
@@ -25,6 +30,7 @@ class HealthInsights @Inject constructor(
     private val dataSource: HealthDataSource,
     private val featureGate: FeatureGate,
     private val userToggles: UserFeatureToggles,
+    private val integrationSettings: IntegrationSettings,
     private val time: TimeProvider,
 ) : WorkoutHealthReader, HealthStepsReader, HealthSleepReader {
 
@@ -40,6 +46,9 @@ class HealthInsights @Inject constructor(
         addAll(activityPermissions)
         if (includeSleep) add(sleepPermission)
     }
+
+    /** Lese-Berechtigung für [type]. */
+    fun readPermission(type: HealthReadType): String = dataSource.readPermission(type)
 
     fun observeSleepEnabled(): Flow<Boolean> = featureGate.observe(Feature.HEALTH_SLEEP)
 
@@ -96,6 +105,7 @@ class HealthInsights @Inject constructor(
         if (availability != HealthAvailability.AVAILABLE) return HealthSteps.Unavailable
         val types = grantedReadTypes()
         if (types.isEmpty()) return HealthSteps.Disabled
+        if (!integrationSettings.isHealthMetricEnabled(HealthMetric.STEPS)) return HealthSteps.Disabled
         if (HealthReadType.STEPS !in types) return HealthSteps.PermissionMissing
 
         val now = time.now()
@@ -141,10 +151,17 @@ class HealthInsights @Inject constructor(
         return dataSource.aggregateActivity(start, end, setOf(HealthReadType.STEPS)).steps ?: 0
     }
 
-    /** Erteilte Lesetypen; Schlaf nur mit eingeschaltetem Unterschalter. */
+    /** Erteilte Lesetypen, die der Nutzer nicht abgeschaltet hat; Schlaf nur mit eingeschaltetem Unterschalter. */
     private suspend fun readableTypes(): Set<HealthReadType> {
         val granted = grantedReadTypes()
-        return if (featureGate.isEnabled(Feature.HEALTH_SLEEP)) granted else granted - HealthReadType.SLEEP
+        if (granted.isEmpty()) return granted
+        val disabled = buildSet {
+            METRIC_TYPES.forEach { (metric, type) ->
+                if (!integrationSettings.isHealthMetricEnabled(metric)) add(type)
+            }
+            if (!featureGate.isEnabled(Feature.HEALTH_SLEEP)) add(HealthReadType.SLEEP)
+        }
+        return granted - disabled
     }
 
     private inline fun <T> guarded(fallback: T, block: () -> T): T = try {
@@ -159,6 +176,13 @@ class HealthInsights @Inject constructor(
     companion object {
         val ACTIVITY_TYPES: Set<HealthReadType> =
             setOf(HealthReadType.HEART_RATE, HealthReadType.STEPS, HealthReadType.ACTIVE_CALORIES)
+
+        /** Lesbare Datentypen mit eigenem Schalter; Schlaf läuft über das Feature-Gate. */
+        private val METRIC_TYPES: Map<HealthMetric, HealthReadType> = mapOf(
+            HealthMetric.HEART_RATE to HealthReadType.HEART_RATE,
+            HealthMetric.STEPS to HealthReadType.STEPS,
+            HealthMetric.CALORIES to HealthReadType.ACTIVE_CALORIES,
+        )
 
         /** Schlaf, der bis zu so lange vor dem Workout endet, zählt als "letzte Nacht". */
         val SLEEP_LOOKBACK: Duration = Duration.ofHours(18)

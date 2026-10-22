@@ -9,6 +9,7 @@ import app.gympulse.core.data.cloud.CloudException
 import app.gympulse.core.data.cloud.CloudUser
 import app.gympulse.core.data.cloud.GoogleIdTokenRequester
 import app.gympulse.core.data.cloud.RestoreSummary
+import app.gympulse.core.settings.IntegrationSettings
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
@@ -43,6 +44,8 @@ internal sealed interface CloudMessage {
 internal data class CloudBackupUiState(
     val configuration: CloudConfiguration = CloudConfiguration.NONE,
     val enabled: Boolean = false,
+    /** Beim App-Start automatisch sichern (wirkt nur mit aktivem Cloud-Backup und Anmeldung). */
+    val autoBackup: Boolean = false,
     val user: CloudUser? = null,
     val latest: CloudBackupInfo? = null,
     val working: CloudOperation? = null,
@@ -69,6 +72,7 @@ private data class LocalState(
 @HiltViewModel
 internal class CloudBackupViewModel @Inject constructor(
     private val sync: CloudBackupSync,
+    private val integrationSettings: IntegrationSettings,
 ) : ViewModel() {
 
     private val local = MutableStateFlow(LocalState())
@@ -82,10 +86,11 @@ internal class CloudBackupViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val uiState: StateFlow<CloudBackupUiState> =
-        combine(local, sync.observeEnabled(), user) { current, enabled, account ->
+        combine(local, sync.observeEnabled(), user, integrationSettings.autoCloudBackup) { current, enabled, account, auto ->
             CloudBackupUiState(
                 configuration = sync.configuration,
                 enabled = enabled,
+                autoBackup = auto,
                 user = account,
                 latest = current.latest.takeIf { account != null },
                 working = current.working,
@@ -108,6 +113,10 @@ internal class CloudBackupViewModel @Inject constructor(
     fun setEnabled(enabled: Boolean) {
         if (enabled && !sync.configuration.backendConfigured) return
         sync.setEnabled(enabled)
+    }
+
+    fun setAutoBackup(enabled: Boolean) {
+        viewModelScope.launch { integrationSettings.setAutoCloudBackup(enabled) }
     }
 
     fun signIn(requester: GoogleIdTokenRequester) {

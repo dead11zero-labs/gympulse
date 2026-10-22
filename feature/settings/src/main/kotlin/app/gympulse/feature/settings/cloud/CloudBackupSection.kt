@@ -5,12 +5,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -20,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.DialogProperties
@@ -27,110 +24,126 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.cloud.GoogleSignIn
 import app.gympulse.core.data.cloud.CloudException
+import app.gympulse.core.designsystem.icon.ActionIcons
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.feature.settings.R
 import app.gympulse.feature.settings.SettingsDivider
 import app.gympulse.feature.settings.SettingsRow
+import app.gympulse.feature.settings.SettingsSection
+import app.gympulse.feature.settings.SettingsSubpage
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 /**
- * Zeilen für das optionale Cloud-Backup: Opt-in-Schalter, Google-Anmeldung und die manuellen
- * Aktionen "Jetzt sichern", "Wiederherstellen" und "Löschen". Fehlt die Konfiguration im Build,
- * bleiben Schalter bzw. Anmeldung deaktiviert und ein Hinweis erklärt den Grund.
+ * Untermenü "Cloud-Backup": Opt-in-Schalter, Google-Anmeldung und -Abmeldung, "Sichern",
+ * "Wiederherstellen", automatisches Backup beim App-Start und "Löschen". Fehlt die Konfiguration
+ * im Build, bleiben Schalter bzw. Anmeldung deaktiviert und ein Hinweis erklärt den Grund.
  */
 @Composable
-internal fun CloudBackupSettingsRows(viewModel: CloudBackupViewModel = hiltViewModel()) {
+internal fun CloudBackupScreen(modifier: Modifier = Modifier, viewModel: CloudBackupViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val requester = remember(context) { GoogleSignIn.requester(context) }
 
-    SettingsRow(
-        headline = stringResource(R.string.cloud_backup),
-        supporting = stringResource(
-            when {
-                !state.available -> R.string.cloud_backup_unavailable
-                state.enabled -> R.string.cloud_backup_summary_on
-                else -> R.string.cloud_backup_summary
-            },
-        ),
-        icon = Icons.Filled.Refresh,
-        trailing = {
-            Switch(
-                checked = state.active,
-                onCheckedChange = viewModel::setEnabled,
-                enabled = state.available,
-            )
-        },
-        onClick = if (state.available) {
-            { viewModel.setEnabled(!state.enabled) }
-        } else {
-            null
-        },
-    )
-
-    if (!state.active) return
-
-    SettingsDivider(withIcon = true)
-    val user = state.user
-    if (user == null) {
-        SettingsRow(
-            headline = stringResource(R.string.cloud_sign_in),
-            supporting = stringResource(
-                if (state.configuration.googleSignInConfigured) {
-                    R.string.cloud_sign_in_summary
-                } else {
-                    R.string.cloud_sign_in_not_configured
+    SettingsSubpage(modifier = modifier) {
+        SettingsSection(stringResource(R.string.settings_section_cloud)) {
+            SettingsRow(
+                headline = stringResource(R.string.cloud_backup),
+                supporting = stringResource(
+                    when {
+                        !state.available -> R.string.cloud_backup_unavailable
+                        state.enabled -> R.string.cloud_backup_summary_on
+                        else -> R.string.cloud_backup_summary
+                    },
+                ),
+                icon = Icons.Filled.Refresh,
+                trailing = {
+                    Switch(
+                        checked = state.active,
+                        onCheckedChange = viewModel::setEnabled,
+                        enabled = state.available,
+                    )
                 },
-            ),
-            icon = Icons.Filled.Lock,
-            trailing = {
-                Button(onClick = { viewModel.signIn(requester) }, enabled = state.canSignIn) {
-                    Text(stringResource(R.string.cloud_sign_in_action))
+                onClick = if (state.available) {
+                    { viewModel.setEnabled(!state.enabled) }
+                } else {
+                    null
+                },
+            )
+            if (state.active) {
+                SettingsDivider(withIcon = true)
+                val user = state.user
+                if (user == null) {
+                    SettingsRow(
+                        headline = stringResource(R.string.cloud_sign_in),
+                        supporting = stringResource(
+                            if (state.configuration.googleSignInConfigured) {
+                                R.string.cloud_sign_in_summary
+                            } else {
+                                R.string.cloud_sign_in_not_configured
+                            },
+                        ),
+                        icon = ActionIcons.Login,
+                        onClick = if (state.canSignIn) {
+                            { viewModel.signIn(requester) }
+                        } else {
+                            null
+                        },
+                    )
+                } else {
+                    SettingsRow(
+                        headline = stringResource(R.string.cloud_account),
+                        supporting = user.email ?: stringResource(R.string.cloud_account_unknown_email),
+                        icon = Icons.Filled.AccountCircle,
+                    )
+                    SettingsDivider(withIcon = true)
+                    SettingsRow(
+                        headline = stringResource(R.string.cloud_sign_out_action),
+                        icon = ActionIcons.Logout,
+                        onClick = if (state.idle) viewModel::signOut else null,
+                    )
                 }
-            },
-            onClick = if (state.canSignIn) {
-                { viewModel.signIn(requester) }
-            } else {
-                null
-            },
-        )
-    } else {
-        SettingsRow(
-            headline = stringResource(R.string.cloud_account),
-            supporting = user.email ?: stringResource(R.string.cloud_account_unknown_email),
-            icon = Icons.Filled.AccountCircle,
-            trailing = {
-                TextButton(onClick = viewModel::signOut, enabled = state.idle) {
-                    Text(stringResource(R.string.cloud_sign_out_action))
-                }
-            },
-        )
-        SettingsDivider(withIcon = true)
-        val latest = state.latest
-        SettingsRow(
-            headline = stringResource(R.string.cloud_backup_now),
-            supporting = latest?.updatedAt?.let { stringResource(R.string.cloud_backup_last, formatDateTime(it)) }
-                ?: stringResource(R.string.cloud_backup_none),
-            icon = Icons.Filled.KeyboardArrowUp,
-            onClick = if (state.canBackup) viewModel::backupNow else null,
-        )
-        SettingsDivider(withIcon = true)
-        SettingsRow(
-            headline = stringResource(R.string.cloud_restore),
-            supporting = stringResource(R.string.cloud_restore_summary),
-            icon = Icons.Filled.KeyboardArrowDown,
-            onClick = if (state.canRestore) viewModel::requestRestore else null,
-        )
-        SettingsDivider(withIcon = true)
-        SettingsRow(
-            headline = stringResource(R.string.cloud_delete),
-            supporting = stringResource(R.string.cloud_delete_summary),
-            icon = Icons.Filled.Delete,
-            onClick = if (state.canRestore) viewModel::requestDelete else null,
-        )
+            }
+        }
+
+        if (state.active && state.signedIn) {
+            SettingsSection(stringResource(R.string.cloud_section_backup)) {
+                val latest = state.latest
+                SettingsRow(
+                    headline = stringResource(R.string.cloud_backup_now),
+                    supporting = latest?.updatedAt?.let { stringResource(R.string.cloud_backup_last, formatDateTime(it)) }
+                        ?: stringResource(R.string.cloud_backup_none),
+                    icon = ActionIcons.CloudUpload,
+                    onClick = if (state.canBackup) viewModel::backupNow else null,
+                )
+                SettingsDivider(withIcon = true)
+                SettingsRow(
+                    headline = stringResource(R.string.cloud_restore),
+                    supporting = stringResource(R.string.cloud_restore_summary),
+                    icon = ActionIcons.CloudDownload,
+                    onClick = if (state.canRestore) viewModel::requestRestore else null,
+                )
+                SettingsDivider(withIcon = true)
+                SettingsRow(
+                    headline = stringResource(R.string.cloud_auto_backup),
+                    supporting = stringResource(R.string.cloud_auto_backup_summary),
+                    icon = ActionIcons.CloudSync,
+                    trailing = {
+                        Switch(checked = state.autoBackup, onCheckedChange = viewModel::setAutoBackup)
+                    },
+                    onClick = { viewModel.setAutoBackup(!state.autoBackup) },
+                )
+                SettingsDivider(withIcon = true)
+                SettingsRow(
+                    headline = stringResource(R.string.cloud_delete),
+                    supporting = stringResource(R.string.cloud_delete_summary),
+                    icon = Icons.Filled.Delete,
+                    onClick = if (state.canRestore) viewModel::requestDelete else null,
+                )
+            }
+        }
     }
 
     state.working?.let { WorkingDialog(it) }

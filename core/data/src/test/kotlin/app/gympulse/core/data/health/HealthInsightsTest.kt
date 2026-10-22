@@ -1,9 +1,11 @@
 package app.gympulse.core.data.health
 
+import app.gympulse.core.data.FakeIntegrationSettings
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.featuregate.Feature
 import app.gympulse.core.featuregate.FeatureGate
 import app.gympulse.core.featuregate.UserFeatureToggles
+import app.gympulse.core.settings.HealthMetric
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -29,10 +31,12 @@ class HealthInsightsTest {
     private val toggles = FakeToggles()
     private val gate = FakeGate(toggles)
     private val source = FakeHealthDataSource()
+    private val metrics = FakeIntegrationSettings()
     private val insights = HealthInsights(
         dataSource = source,
         featureGate = gate,
         userToggles = toggles,
+        integrationSettings = metrics,
         time = object : TimeProvider {
             override fun now(): Instant = now
             override fun zone(): ZoneId = ZoneOffset.UTC
@@ -74,6 +78,46 @@ class HealthInsightsTest {
 
         toggles.setEnabled(Feature.HEALTH_SLEEP, true)
         assertEquals(480L, insights.read(start, end)?.sleepMinutes)
+    }
+
+    @Test
+    fun read_skipsMetricsTheUserTurnedOff() = runTest {
+        activate(HealthReadType.HEART_RATE, HealthReadType.STEPS, HealthReadType.ACTIVE_CALORIES)
+        source.activity = HealthActivity(averageHeartRateBpm = 120, steps = 500, activeCaloriesKcal = 40.0)
+        metrics.setHealthMetricEnabled(HealthMetric.HEART_RATE, false)
+        metrics.setHealthMetricEnabled(HealthMetric.CALORIES, false)
+
+        val result = insights.read(start, end)!!
+
+        assertEquals(setOf(HealthReadType.STEPS), source.lastAggregateTypes)
+        assertNull(result.averageHeartRateBpm)
+        assertNull(result.activeCaloriesKcal)
+        assertEquals(500L, result.steps)
+    }
+
+    @Test
+    fun read_returnsNullWhenAllActivityMetricsAreOff() = runTest {
+        activate(HealthReadType.HEART_RATE, HealthReadType.STEPS, HealthReadType.ACTIVE_CALORIES)
+        source.activity = HealthActivity(averageHeartRateBpm = 120, steps = 500)
+        metrics.setHealthMetricEnabled(HealthMetric.HEART_RATE, false)
+        metrics.setHealthMetricEnabled(HealthMetric.STEPS, false)
+        metrics.setHealthMetricEnabled(HealthMetric.CALORIES, false)
+
+        assertNull(insights.read(start, end))
+        assertNull(source.lastAggregateTypes)
+    }
+
+    @Test
+    fun steps_isDisabledWhenMetricIsOff() = runTest {
+        activate(HealthReadType.STEPS)
+        source.stepsByStart = mapOf(Instant.parse("2026-07-02T00:00:00Z") to 4_200L)
+        metrics.setHealthMetricEnabled(HealthMetric.STEPS, false)
+
+        assertEquals(HealthSteps.Disabled, insights.steps(DayOfWeek.MONDAY))
+        assertNull(source.lastAggregateTypes)
+
+        metrics.setHealthMetricEnabled(HealthMetric.STEPS, true)
+        assertTrue(insights.steps(DayOfWeek.MONDAY) is HealthSteps.Available)
     }
 
     @Test
