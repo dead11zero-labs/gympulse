@@ -51,4 +51,7 @@
     <string name="feature_dashboard_steps_title">Schritte</string>
     <string name="feature_dashboard_steps_today">Heute</string>
     <string name="feature_dashboard_steps_week">Diese Woche</string>
+    <string name="feature_dashboard_sleep_title">Schlaf letzte Nacht</string>
+    <string name="feature_dashboard_sleep_unit_hours">Std.</string>
+    <string name="feature_dashboard_sleep_unit_minutes">Min.</string>
 </resources>

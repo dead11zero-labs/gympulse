@@ -32,6 +32,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import app.gympulse.core.data.health.HealthLastNightSleep
 import app.gympulse.core.designsystem.component.EmptyState
 import app.gympulse.core.designsystem.component.GymPulseCard
 import app.gympulse.core.designsystem.component.GymPulseCardVariant
@@ -301,6 +302,63 @@ internal fun WeeklyProgressCard(
                 }
             }
         }
+    }
+}
+
+/**
+ * Karte "Schlaf letzte Nacht" aus Health Connect. Wie die Schritte-Kachel erscheint sie nur bei
+ * [HealthLastNightSleep.Available]; bei jedem anderen Zustand (nicht verfügbar, aus, Berechtigung
+ * fehlt, keine Daten, nicht lesbar) bleibt der Platz leer.
+ */
+@Composable
+internal fun SleepCard(
+    sleep: HealthLastNightSleep,
+    modifier: Modifier = Modifier,
+) {
+    if (sleep !is HealthLastNightSleep.Available) return
+    val hours = sleep.minutes / MINUTES_PER_HOUR
+    val minutes = sleep.minutes % MINUTES_PER_HOUR
+    GymPulseCard(
+        modifier = modifier.fillMaxWidth(),
+        variant = GymPulseCardVariant.Filled,
+        shape = ExpressiveShapes.largeIncreased,
+        verticalSpacing = Spacing.s,
+    ) {
+        Text(
+            text = stringResource(R.string.feature_dashboard_sleep_title),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Row(
+            modifier = Modifier.semantics(mergeDescendants = true) {},
+            horizontalArrangement = Arrangement.spacedBy(Spacing.s),
+        ) {
+            SleepValue(value = hours.toString(), unit = stringResource(R.string.feature_dashboard_sleep_unit_hours))
+            SleepValue(
+                value = minutes.toString().padStart(2, '0'),
+                unit = stringResource(R.string.feature_dashboard_sleep_unit_minutes),
+            )
+        }
+    }
+}
+
+@Composable
+private fun SleepValue(value: String, unit: String) {
+    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xxs)) {
+        Text(
+            text = value,
+            style = MaterialTheme.typography.metricLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            modifier = Modifier.alignByBaseline(),
+        )
+        Text(
+            text = unit,
+            style = MaterialTheme.typography.metricUnit,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            modifier = Modifier.alignByBaseline(),
+        )
     }
 }
 

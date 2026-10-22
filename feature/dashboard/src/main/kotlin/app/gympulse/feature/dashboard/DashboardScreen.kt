@@ -45,7 +45,7 @@ internal fun DashboardScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     // Schritte ändern sich außerhalb der App; beim Zurückkehren neu lesen.
     LifecycleResumeEffect(viewModel) {
-        viewModel.refreshSteps()
+        viewModel.refreshHealth()
         onPauseOrDispose { }
     }
     DashboardContent(
@@ -107,6 +107,7 @@ internal fun DashboardContent(
                     WeeklyProgressCard(progress = state.weeklyProgress)
                 }
                 StepsCard(steps = state.steps)
+                SleepCard(sleep = state.sleep)
                 RecentSessionsSection(sessions = state.recentSessions, today = state.today)
                 // Platz, damit der FAB den letzten Eintrag nicht verdeckt.
                 Box(modifier = Modifier.height(Spacing.xxl + Spacing.l))

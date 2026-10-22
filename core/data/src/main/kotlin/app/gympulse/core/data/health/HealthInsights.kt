@@ -26,7 +26,7 @@ class HealthInsights @Inject constructor(
     private val featureGate: FeatureGate,
     private val userToggles: UserFeatureToggles,
     private val time: TimeProvider,
-) : WorkoutHealthReader, HealthStepsReader {
+) : WorkoutHealthReader, HealthStepsReader, HealthSleepReader {
 
     /** Optionale Lese-Berechtigungen für Herzfrequenz, Schritte und aktive Kalorien. */
     val activityPermissions: Set<String>
@@ -112,6 +112,30 @@ class HealthInsights @Inject constructor(
         }
     }
 
+    /**
+     * Dauer der jüngsten Schlafphase, die in den letzten 24 Stunden endete. Liefert statt eines
+     * Fehlers einen Zustand, wenn Health Connect fehlt, aus ist, der Schlaf-Unterschalter aus ist
+     * oder die Schlaf-Berechtigung nicht erteilt wurde.
+     */
+    override suspend fun lastNight(): HealthLastNightSleep {
+        val availability = guarded(HealthAvailability.UNSUPPORTED) { dataSource.availability() }
+        if (availability != HealthAvailability.AVAILABLE) return HealthLastNightSleep.Unavailable
+        val types = grantedReadTypes()
+        if (types.isEmpty() || !featureGate.isEnabled(Feature.HEALTH_SLEEP)) return HealthLastNightSleep.Disabled
+        if (HealthReadType.SLEEP !in types) return HealthLastNightSleep.PermissionMissing
+
+        val now = time.now()
+        return try {
+            val sleep = dataSource.readLatestSleep(now.minus(LAST_NIGHT_LOOKBACK), now)
+            val minutes = sleep?.let { Duration.between(it.start, it.end).toMinutes() }
+            if (minutes != null && minutes > 0) HealthLastNightSleep.Available(minutes) else HealthLastNightSleep.NoData
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            HealthLastNightSleep.Unreadable
+        }
+    }
+
     private suspend fun stepsBetween(start: Instant, end: Instant): Long {
         if (!end.isAfter(start)) return 0
         return dataSource.aggregateActivity(start, end, setOf(HealthReadType.STEPS)).steps ?: 0
@@ -138,6 +162,9 @@ class HealthInsights @Inject constructor(
 
         /** Schlaf, der bis zu so lange vor dem Workout endet, zählt als "letzte Nacht". */
         val SLEEP_LOOKBACK: Duration = Duration.ofHours(18)
+
+        /** Für die Dashboard-Kachel zählt Schlaf, der in den letzten 24 Stunden endete, als "letzte Nacht". */
+        val LAST_NIGHT_LOOKBACK: Duration = Duration.ofHours(24)
 
         private const val MIN_CALORIES_KCAL = 1.0
     }

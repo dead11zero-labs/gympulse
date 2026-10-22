@@ -3,6 +3,7 @@ package app.gympulse.core.data.di
 import app.gympulse.core.data.health.FinishedWorkoutExporter
 import app.gympulse.core.data.health.HealthConnectSync
 import app.gympulse.core.data.health.HealthInsights
+import app.gympulse.core.data.health.HealthSleepReader
 import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.health.WorkoutHealthReader
 import dagger.Binds
@@ -22,4 +23,7 @@ abstract class HealthModule {
 
     @Binds
     abstract fun bindHealthStepsReader(impl: HealthInsights): HealthStepsReader
+
+    @Binds
+    abstract fun bindHealthSleepReader(impl: HealthInsights): HealthSleepReader
 }
