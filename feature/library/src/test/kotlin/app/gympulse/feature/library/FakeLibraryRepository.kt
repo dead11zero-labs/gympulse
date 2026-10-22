@@ -2,14 +2,14 @@ package app.gympulse.feature.library
 
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.EquipmentSetting
-import app.gympulse.core.model.EquipmentTemplate
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.MuscleGroup
+import app.gympulse.core.model.PlanExercise
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.TrackingType
-import app.gympulse.feature.library.data.EquipmentDraft
+import app.gympulse.core.model.WorkoutPlan
 import app.gympulse.feature.library.data.ExerciseDetail
 import app.gympulse.feature.library.data.ExerciseDraft
 import app.gympulse.feature.library.data.LibraryExercise
@@ -30,7 +30,7 @@ data class UserFieldUpdate(
 class FakeLibraryRepository : LibraryRepository {
     val exercises = MutableStateFlow<List<LibraryExercise>>(emptyList())
     val equipment = MutableStateFlow<List<Equipment>>(emptyList())
-    var templateList: List<EquipmentTemplate> = emptyList()
+    val plans = MutableStateFlow<List<WorkoutPlan>>(emptyList())
     var previous: List<SetEntry> = emptyList()
 
     val requestedLocales = mutableListOf<String>()
@@ -38,8 +38,8 @@ class FakeLibraryRepository : LibraryRepository {
     val savedExercises = mutableListOf<ExerciseDraft>()
     val userFieldUpdates = mutableListOf<UserFieldUpdate>()
     val deletedExercises = mutableListOf<String>()
-    val savedEquipment = mutableListOf<EquipmentDraft>()
-    val deletedEquipment = mutableListOf<String>()
+    val planAdds = mutableListOf<Pair<String, String>>()
+    var planAddFails = false
 
     override fun observeExercises(locale: String): Flow<List<LibraryExercise>> {
         requestedLocales += locale
@@ -54,15 +54,21 @@ class FakeLibraryRepository : LibraryRepository {
 
     override fun observeEquipment(): Flow<List<Equipment>> = equipment
 
-    override fun observeEquipmentById(id: String): Flow<Equipment?> =
-        equipment.map { list -> list.firstOrNull { it.id == id } }
+    override fun observePlans(): Flow<List<WorkoutPlan>> = plans
 
-    override suspend fun templates(locale: String): List<EquipmentTemplate> = templateList
+    override suspend fun addExerciseToPlan(planId: String, exercise: Exercise): Boolean {
+        if (planAddFails) throw IllegalStateException("db down")
+        planAdds += planId to exercise.id
+        return plans.value.any { it.id == planId }
+    }
 
     override suspend fun previousSets(exerciseId: String): List<SetEntry> = previous
 
     override suspend fun setFavorite(id: String, favorite: Boolean) {
         favoriteCalls += id to favorite
+        exercises.value = exercises.value.map {
+            if (it.exercise.id == id) it.copy(exercise = it.exercise.copy(isFavorite = favorite)) else it
+        }
     }
 
     override suspend fun saveCustomExercise(draft: ExerciseDraft, locale: String): String {
@@ -81,15 +87,6 @@ class FakeLibraryRepository : LibraryRepository {
 
     override suspend fun deleteCustomExercise(id: String) {
         deletedExercises += id
-    }
-
-    override suspend fun saveEquipment(draft: EquipmentDraft): String {
-        savedEquipment += draft
-        return draft.id ?: "new-equipment"
-    }
-
-    override suspend fun deleteEquipment(id: String) {
-        deletedEquipment += id
     }
 
     private fun Exercise.toDetail() = ExerciseDetail(
@@ -148,5 +145,26 @@ fun testEquipment(id: String, name: String, settings: List<Pair<String, String>>
     templateKey = null,
     settings = settings.mapIndexed { index, (key, value) ->
         EquipmentSetting(id = "$id-s$index", key = key, value = value, sortOrder = index)
+    },
+)
+
+fun testPlan(id: String, name: String, exerciseCount: Int = 0) = WorkoutPlan(
+    id = id,
+    name = name,
+    description = null,
+    color = null,
+    isArchived = false,
+    exercises = List(exerciseCount) { index ->
+        PlanExercise(
+            id = "$id-$index",
+            exerciseId = "x$index",
+            sortOrder = index,
+            supersetGroup = null,
+            targetSets = 3,
+            targetRepsMin = 8,
+            targetRepsMax = 12,
+            targetWeightKg = null,
+            restSeconds = null,
+        )
     },
 )

@@ -5,6 +5,8 @@ import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.database.dao.PlanDao
 import app.gympulse.core.database.entity.PlanExerciseEntity
 import app.gympulse.core.database.entity.WorkoutPlanEntity
+import app.gympulse.core.model.Exercise
+import app.gympulse.core.model.Ids
 import app.gympulse.core.model.WorkoutPlan
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -52,6 +54,22 @@ class PlanRepository @Inject constructor(
             },
             now = now,
         )
+    }
+
+    /**
+     * Hängt [exercise] mit den Standardwerten des Plan-Editors ans Ende des Plans.
+     * Liefert false, wenn der Plan nicht (mehr) existiert.
+     */
+    suspend fun appendExercise(planId: String, exercise: Exercise): Boolean {
+        val existing = planDao.getById(planId)?.takeIf { it.plan.deletedAt == null } ?: return false
+        val plan = existing.toModel()
+        val entry = PlanExerciseDefaults.newEntry(
+            exercise = exercise,
+            id = Ids.newId(time.now().toEpochMilli()),
+            sortOrder = plan.exercises.size,
+        )
+        save(plan.copy(exercises = plan.exercises + entry))
+        return true
     }
 
     suspend fun delete(id: String) = planDao.softDelete(id, time.now().toEpochMilli())

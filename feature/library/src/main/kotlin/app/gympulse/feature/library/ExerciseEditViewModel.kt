@@ -3,7 +3,6 @@ package app.gympulse.feature.library
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.ExerciseCategory
@@ -41,7 +40,6 @@ data class ExerciseFormState(
     val notes: String = "",
     val defaultRestSeconds: String = "",
     val equipmentId: String? = null,
-    val equipmentOptions: List<Equipment> = emptyList(),
     val showErrors: Boolean = false,
     val isSaving: Boolean = false,
     val notFound: Boolean = false,
@@ -95,11 +93,6 @@ class ExerciseEditViewModel @Inject constructor(
     val state: StateFlow<ExerciseFormState> = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            repository.observeEquipment().collect { options ->
-                _state.update { it.copy(equipmentOptions = options) }
-            }
-        }
         if (exerciseId != null) {
             viewModelScope.launch {
                 val detail = repository.getExercise(exerciseId, language)

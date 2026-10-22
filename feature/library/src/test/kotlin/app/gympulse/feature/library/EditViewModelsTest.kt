@@ -2,8 +2,6 @@ package app.gympulse.feature.library
 
 import androidx.lifecycle.SavedStateHandle
 import app.gympulse.core.model.EquipmentType
-import app.gympulse.core.model.EquipmentTemplate
-import app.gympulse.core.model.EquipmentTemplateSetting
 import app.gympulse.core.model.MuscleGroup
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,11 +33,6 @@ class EditViewModelsTest {
 
     private fun exerciseVm(id: String? = null) =
         ExerciseEditViewModel(SavedStateHandle(mapOf("exerciseId" to id)), repository)
-
-    private fun equipmentVm(id: String? = null, template: String? = null) = EquipmentEditViewModel(
-        SavedStateHandle(mapOf("equipmentId" to id, "templateKey" to template)),
-        repository,
-    )
 
     @Test
     fun blankNameIsRejected() = runTest {
@@ -130,75 +123,5 @@ class EditViewModelsTest {
     fun missingExerciseIsReported() = runTest {
         val vm = exerciseVm("nope")
         assertTrue(vm.state.value.notFound)
-    }
-
-    @Test
-    fun equipmentFromTemplatePrefillsSettings() = runTest {
-        repository.templateList = listOf(
-            EquipmentTemplate(
-                key = "leg_press",
-                equipmentType = EquipmentType.MACHINE,
-                name = "Leg press",
-                muscleGroups = emptyList(),
-                settingKeys = listOf(EquipmentTemplateSetting("seat", "Seat position", "e.g. 5")),
-            ),
-        )
-        val vm = equipmentVm(template = "leg_press")
-        val state = vm.state.value
-        assertEquals("Leg press", state.name)
-        assertEquals("leg_press", state.templateKey)
-        assertEquals("Seat position", state.settings.single().key)
-        assertEquals("e.g. 5", state.settings.single().hint)
-        assertTrue(state.isNew)
-    }
-
-    @Test
-    fun equipmentNeedsNameAndSavesSettings() = runTest {
-        val vm = equipmentVm()
-        vm.save()
-        assertTrue(vm.state.value.showErrors)
-        assertTrue(repository.savedEquipment.isEmpty())
-
-        vm.setName("Leg press")
-        vm.addSetting()
-        vm.addSetting()
-        val rows = vm.state.value.settings
-        vm.setSettingKey(rows[0].rowId, "Seat height")
-        vm.setSettingValue(rows[0].rowId, "4")
-        vm.removeSetting(rows[1].rowId)
-        vm.save()
-
-        val draft = repository.savedEquipment.single()
-        assertNull(draft.id)
-        assertEquals(listOf("Seat height" to "4"), draft.settings.map { it.key to it.value })
-        assertTrue(vm.state.value.finished)
-    }
-
-    @Test
-    fun existingEquipmentLoadsLinkedExercisesAndCanBeDeleted() = runTest {
-        repository.equipment.value = listOf(testEquipment("m1", "Press", listOf("Seat" to "3")))
-        repository.exercises.value = listOf(
-            testLibraryExercise(testExercise("e1", "Leg Press", equipmentId = "m1")),
-            testLibraryExercise(testExercise("e2", "Curl")),
-        )
-        val vm = equipmentVm("m1")
-        val state = vm.state.value
-        assertEquals("Press", state.name)
-        assertEquals("m1-s0", state.settings.single().id)
-        assertEquals(listOf("e1"), state.linkedExercises.map { it.id })
-
-        vm.delete()
-        assertEquals(listOf("m1"), repository.deletedEquipment)
-        assertTrue(vm.state.value.finished)
-    }
-
-    @Test
-    fun templateFilterMatchesNames() {
-        val templates = listOf(
-            EquipmentTemplate("a", EquipmentType.MACHINE, "Beinpresse", emptyList(), emptyList()),
-            EquipmentTemplate("b", EquipmentType.CABLE, "Kabelzug", emptyList(), emptyList()),
-        )
-        assertEquals(listOf("a"), filterTemplates(templates, "BEIN").map { it.key })
-        assertEquals(2, filterTemplates(templates, " ").size)
     }
 }

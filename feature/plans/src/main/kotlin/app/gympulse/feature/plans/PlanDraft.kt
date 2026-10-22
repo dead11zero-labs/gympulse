@@ -1,8 +1,8 @@
 package app.gympulse.feature.plans
 
+import app.gympulse.core.data.repository.PlanExerciseDefaults
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.PlanExercise
-import app.gympulse.core.model.TrackingType
 import app.gympulse.core.model.WorkoutPlan
 
 /**
@@ -22,9 +22,9 @@ internal data class DraftExercise(
     val rest: String = "",
 ) {
     companion object {
-        const val DEFAULT_SETS = "3"
-        const val DEFAULT_REPS_MIN = "8"
-        const val DEFAULT_REPS_MAX = "12"
+        val DEFAULT_SETS = PlanExerciseDefaults.SETS.toString()
+        val DEFAULT_REPS_MIN = PlanExerciseDefaults.REPS_MIN.toString()
+        val DEFAULT_REPS_MAX = PlanExerciseDefaults.REPS_MAX.toString()
     }
 }
 
@@ -75,7 +75,7 @@ internal data class PlanDraft(
 
     fun addExercises(exercises: List<Exercise>, newId: () -> String): PlanDraft {
         val added = exercises.map { exercise ->
-            val usesReps = exercise.trackingType == TrackingType.WEIGHT_REPS || exercise.trackingType == TrackingType.REPS
+            val usesReps = PlanExerciseDefaults.usesReps(exercise.trackingType)
             DraftExercise(
                 id = newId(),
                 exerciseId = exercise.id,
