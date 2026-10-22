@@ -33,6 +33,10 @@ gradlePlugin {
             id = libs.plugins.gympulse.android.feature.get().pluginId
             implementationClass = "AndroidFeatureConventionPlugin"
         }
+        register("wearApplication") {
+            id = libs.plugins.gympulse.wear.application.get().pluginId
+            implementationClass = "WearApplicationConventionPlugin"
+        }
         register("hilt") {
             id = libs.plugins.gympulse.hilt.get().pluginId
             implementationClass = "HiltConventionPlugin"

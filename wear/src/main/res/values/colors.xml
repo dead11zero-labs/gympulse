@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Seed-Farbe des Designsystems (GymPulseSeedColor, #FF5A1F). -->
+    <color name="ic_launcher_background">#FF5A1F</color>
+</resources>
