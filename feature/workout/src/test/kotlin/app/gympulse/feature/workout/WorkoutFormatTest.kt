@@ -92,4 +92,25 @@ class WorkoutFormatTest {
         assertEquals(0, WorkoutFormat.adjustInteger(0, -1))
         assertEquals(9_999, WorkoutFormat.adjustInteger(9_999, 1))
     }
+
+    @Test
+    fun snapWeight_roundsToHalfKilogramAndNeverGoesNegative() {
+        assertEquals(62.5, WorkoutFormat.snapWeight(62.4), 0.0)
+        assertEquals(62.0, WorkoutFormat.snapWeight(62.2), 0.0)
+        assertEquals(0.0, WorkoutFormat.snapWeight(-3.0), 0.0)
+    }
+
+    @Test
+    fun sliderMax_isAtLeast200AndFollowsHigherTypedWeights() {
+        assertEquals(200.0, WorkoutFormat.sliderMax(0.0), 0.0)
+        assertEquals(200.0, WorkoutFormat.sliderMax(80.0), 0.0)
+        assertEquals(250.0, WorkoutFormat.sliderMax(250.0), 0.0)
+    }
+
+    @Test
+    fun sliderWeightText_isAcceptedWithDecimalComma() {
+        val text = WorkoutFormat.formatDecimalInput(WorkoutFormat.snapWeight(62.5), Locale.GERMANY)
+        assertEquals("62,5", text)
+        assertEquals(62.5, WorkoutFormat.parseDecimal(text)!!, 0.0)
+    }
 }

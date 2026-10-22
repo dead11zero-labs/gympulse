@@ -35,6 +35,11 @@
     <string name="feature_workout_column_reps">Wdh.</string>
     <string name="feature_workout_column_duration">Sek.</string>
     <string name="feature_workout_column_distance">m</string>
+    <string name="feature_workout_weight_adjust">Gewicht anpassen</string>
+    <string name="feature_workout_weight_edit">Gewicht per Tastatur eingeben</string>
+    <string name="feature_workout_weight_slider">Gewicht in Kilogramm</string>
+    <string name="feature_workout_weight_close">Gewichts-Slider schließen</string>
+    <string name="feature_workout_weight_empty">–</string>
     <string name="feature_workout_set_done">Satz erledigt</string>
     <string name="feature_workout_set_finish">Fertig</string>
     <string name="feature_workout_stepper_weight">Gewicht</string>

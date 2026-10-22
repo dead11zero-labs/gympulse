@@ -36,6 +36,11 @@
     <string name="feature_workout_column_reps">Reps</string>
     <string name="feature_workout_column_duration">Sec</string>
     <string name="feature_workout_column_distance">m</string>
+    <string name="feature_workout_weight_adjust">Adjust weight</string>
+    <string name="feature_workout_weight_edit">Enter weight with keyboard</string>
+    <string name="feature_workout_weight_slider">Weight in kilograms</string>
+    <string name="feature_workout_weight_close">Close weight slider</string>
+    <string name="feature_workout_weight_empty">–</string>
     <string name="feature_workout_set_done">Set done</string>
     <string name="feature_workout_set_finish">Done</string>
     <string name="feature_workout_stepper_weight">Weight</string>

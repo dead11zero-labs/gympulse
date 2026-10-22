@@ -12,6 +12,18 @@ internal object WorkoutFormat {
     private const val MAX_INTEGER_VALUE = 9_999
     private const val ROUNDING_FACTOR = 100.0
 
+    /** Step of the weight slider in kg. */
+    const val WEIGHT_SLIDER_STEP_KG = 0.5
+    private const val WEIGHT_SLIDER_MIN_MAX_KG = 200.0
+
+    /** Snaps a raw slider position to [WEIGHT_SLIDER_STEP_KG], never below 0. */
+    fun snapWeight(raw: Double): Double =
+        (Math.round(raw / WEIGHT_SLIDER_STEP_KG) * WEIGHT_SLIDER_STEP_KG).coerceAtLeast(0.0)
+
+    /** Upper end of the slider: at least 200 kg, or the current weight if typed higher (stable while dragging). */
+    fun sliderMax(currentKg: Double): Double =
+        maxOf(WEIGHT_SLIDER_MIN_MAX_KG, snapWeight(currentKg))
+
     /**
      * Keeps only digits and a single decimal separator (comma or dot), with at most
      * four integer and two fraction digits. Returns null if the input cannot be accepted.
