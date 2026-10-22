@@ -5,6 +5,8 @@
     <!-- specialUse needs no runtime permission; "health" would require body sensor or activity recognition permissions. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Rest end on the phone; suppressed while a watch with GymPulse is connected. -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application>
         <service

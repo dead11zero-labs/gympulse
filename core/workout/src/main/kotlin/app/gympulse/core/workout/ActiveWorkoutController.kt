@@ -86,12 +86,87 @@ class ActiveWorkoutController @Inject constructor(
         val session = workoutRepository.getActiveSession() ?: return@write
         val exercise = session.exercises.firstOrNull { it.id == sessionExerciseId } ?: return@write
         val set = exercise.sets.firstOrNull { it.id == setId } ?: return@write
-        val completed = !set.isCompleted
+        saveCompletion(exercise.id, exercise.exerciseId, set, completed = !set.isCompleted, completedAt = null)
+    }
+
+    /**
+     * Changes a set of the session [sessionId], found by its ID alone (as the watch knows it).
+     * [transform] runs inside the write lock on the latest stored set; returning null rejects the
+     * change (e.g. because of a conflict rule).
+     *
+     * @return the outcome and, if the set exists, the stored set afterwards
+     */
+    suspend fun editSet(sessionId: String, setId: String, transform: (SetEntry) -> SetEntry?): SetEditResult =
+        editLocked(sessionId, setId) { sessionExerciseId, _, set ->
+            val updated = transform(set)
+            when {
+                updated == null -> SetEditStatus.REJECTED
+                updated == set -> SetEditStatus.UNCHANGED
+                else -> {
+                    workoutRepository.saveSet(sessionExerciseId, updated)
+                    SetEditStatus.CHANGED
+                }
+            }
+        }
+
+    /**
+     * Sets the completion state of a set of the session [sessionId] (instead of toggling it).
+     * Ticking it off starts the rest timer like [toggleSetCompleted], counted from [completedAt].
+     * [accept] runs inside the write lock on the latest stored set; false rejects the change.
+     */
+    suspend fun setSetCompleted(
+        sessionId: String,
+        setId: String,
+        completed: Boolean,
+        completedAt: Instant? = null,
+        accept: (SetEntry) -> Boolean = { true },
+    ): SetEditResult = editLocked(sessionId, setId) { sessionExerciseId, exerciseId, set ->
+        when {
+            !accept(set) -> SetEditStatus.REJECTED
+            set.isCompleted == completed -> SetEditStatus.UNCHANGED
+            else -> {
+                saveCompletion(sessionExerciseId, exerciseId, set, completed, completedAt)
+                SetEditStatus.CHANGED
+            }
+        }
+    }
+
+    private suspend fun editLocked(
+        sessionId: String,
+        setId: String,
+        block: suspend (sessionExerciseId: String, exerciseId: String, set: SetEntry) -> SetEditStatus,
+    ): SetEditResult = writeMutex.withLock {
+        val session = workoutRepository.getActiveSession()
+            ?: return@withLock SetEditResult(SetEditStatus.NO_SESSION)
+        if (session.id != sessionId) return@withLock SetEditResult(SetEditStatus.OTHER_SESSION)
+        val exercise = session.exercises.firstOrNull { exercise -> exercise.sets.any { it.id == setId } }
+            ?: return@withLock SetEditResult(SetEditStatus.SET_NOT_FOUND)
+        val set = exercise.sets.first { it.id == setId }
+        val status = block(exercise.id, exercise.exerciseId, set)
+        val stored = if (status == SetEditStatus.CHANGED) {
+            workoutRepository.getActiveSession()?.exercises?.flatMap { it.sets }?.firstOrNull { it.id == setId }
+        } else {
+            set
+        }
+        SetEditResult(status, stored)
+    }
+
+    /** Stores the completion state; ticking off starts the rest timer. Must run inside the write lock. */
+    private suspend fun saveCompletion(
+        sessionExerciseId: String,
+        exerciseId: String,
+        set: SetEntry,
+        completed: Boolean,
+        completedAt: Instant?,
+    ) {
         // Resolved before saving, so the timer starts right when the completed set is stored.
-        val restSeconds = if (completed) restSecondsFor(exercise.exerciseId) else null
-        workoutRepository.saveSet(sessionExerciseId, set.copy(isCompleted = completed, completedAt = null))
+        val restSeconds = if (completed) restSecondsFor(exerciseId) else null
+        workoutRepository.saveSet(
+            sessionExerciseId,
+            set.copy(isCompleted = completed, completedAt = if (completed) completedAt else null),
+        )
         if (restSeconds != null) {
-            restTimer.start(restSeconds)
+            restTimer.start(restSeconds, startedAt = completedAt)
         }
     }
 
