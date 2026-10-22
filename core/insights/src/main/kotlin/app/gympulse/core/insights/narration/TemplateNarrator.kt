@@ -37,8 +37,11 @@ class TemplateNarrator(
     private fun relevantFindings(findings: List<SummaryFinding>): List<SummaryFinding> {
         val progressionSubjects = findings.filter { it.code in PROGRESSION_CODES }.mapNotNull { it.subject }.toSet()
         val deloadSubjects = findings.filter { it.code == InsightCode.DELOAD }.mapNotNull { it.subject }.toSet()
+        var volumePoints = 0
         return findings.filter { f ->
             when (f.code) {
+                // Volumen-Hinweise begrenzen, damit Übungs-Empfehlungen nicht verdrängt werden
+                InsightCode.LOW_VOLUME, InsightCode.HIGH_VOLUME -> ++volumePoints <= MAX_VOLUME_POINTS
                 InsightCode.PROGRESS -> f.subject !in progressionSubjects
                 InsightCode.PLATEAU, InsightCode.DECLINE -> f.subject !in deloadSubjects
                 else -> true
@@ -65,6 +68,7 @@ class TemplateNarrator(
     }
 
     private companion object {
+        const val MAX_VOLUME_POINTS = 2
         val PROGRESSION_CODES = setOf(InsightCode.INCREASE_WEIGHT, InsightCode.INCREASE_REPS, InsightCode.HOLD)
     }
 }
