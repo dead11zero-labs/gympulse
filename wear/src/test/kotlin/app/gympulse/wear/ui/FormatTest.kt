@@ -22,8 +22,8 @@ class FormatTest {
     @Test
     fun `rest remaining rounds up and ends at zero`() {
         assertNull(restRemainingSeconds(null, 1_000))
-        assertEquals(2, restRemainingSeconds(2_000, 1_001))
-        assertEquals(1, restRemainingSeconds(2_000, 1_000 + 999 - 0))
+        assertEquals(2, restRemainingSeconds(3_000, 1_001))
+        assertEquals(1, restRemainingSeconds(2_000, 1_001))
         assertNull(restRemainingSeconds(2_000, 2_000))
         assertNull(restRemainingSeconds(2_000, 5_000))
     }
