@@ -29,7 +29,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.time.Instant
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.CancellationException
 
 /** [HealthDataSource] auf Basis des Jetpack-Clients `androidx.health.connect:connect-client`. */
 @Singleton
@@ -60,21 +59,9 @@ class HealthConnectDataSource @Inject constructor(
 
     override suspend fun insertWorkout(workout: HealthWorkout) {
         val client = clientOrNull() ?: return
-        val record = HealthRecordMapper.toExerciseSessionRecord(workout)
-        if (record.segments.isEmpty()) {
-            client.insertRecords(listOf(record))
-            return
-        }
-        try {
-            client.insertRecords(listOf(record))
-        } catch (e: CancellationException) {
-            throw e
-        } catch (e: SecurityException) {
-            throw e
-        } catch (e: Exception) {
-            // Lehnt Health Connect die Abschnitte ab, zählt wenigstens die Einheit selbst.
-            client.insertRecords(listOf(HealthRecordMapper.toExerciseSessionRecordWithoutSegments(workout)))
-        }
+        // Ohne Abschnitte: Samsung Health übernimmt Einheiten mit Abschnitten anderer Apps nicht
+        // zuverlässig. Die Übungen stehen in den Notizen.
+        client.insertRecords(listOf(HealthRecordMapper.toExerciseSessionRecordWithoutSegments(workout)))
     }
 
     override suspend fun readLatestWeight(since: Instant): HealthWeight? {
