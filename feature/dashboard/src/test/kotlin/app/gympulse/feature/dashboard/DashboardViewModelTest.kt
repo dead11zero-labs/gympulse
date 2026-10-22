@@ -1,5 +1,7 @@
 package app.gympulse.feature.dashboard
 
+import app.gympulse.core.data.health.HealthLastNightSleep
+import app.gympulse.core.data.health.HealthSleepReader
 import app.gympulse.core.data.health.HealthSteps
 import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.repository.CompletedSessionSummary
@@ -65,9 +67,14 @@ class DashboardViewModelTest {
         override val weekStartsOn: StateFlow<DayOfWeek> = MutableStateFlow(DayOfWeek.MONDAY)
     }
 
+    private class FakeSleepReader(var result: HealthLastNightSleep = HealthLastNightSleep.Disabled) : HealthSleepReader {
+        override suspend fun lastNight(): HealthLastNightSleep = result
+    }
+
     private val data = FakeDataSource()
     private var stepsResult: HealthSteps = HealthSteps.Unavailable
     private val stepsReader = HealthStepsReader { stepsResult }
+    private val sleepReader = FakeSleepReader()
 
     @Before
     fun setUp() {
@@ -79,7 +86,7 @@ class DashboardViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun viewModel(goal: Int = 3) = DashboardViewModel(data, FakeSettings(goal), FakeSettings(goal), stepsReader, time)
+    private fun viewModel(goal: Int = 3) = DashboardViewModel(data, FakeSettings(goal), FakeSettings(goal), stepsReader, sleepReader, time)
 
     private fun end(date: LocalDate): Instant = date.atTime(18, 0).atZone(zone).toInstant()
 
@@ -176,6 +183,34 @@ class DashboardViewModelTest {
     }
 
     @Test
+    fun sleepIsHiddenByDefaultAndShowsLastNightWhenAvailable() = runTest {
+        val hidden = viewModel()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { hidden.uiState.collect {} }
+        assertEquals(HealthLastNightSleep.Disabled, hidden.uiState.value.sleep)
+
+        sleepReader.result = HealthLastNightSleep.Available(minutes = 425)
+        val vm = viewModel()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
+        assertEquals(HealthLastNightSleep.Available(425), vm.uiState.value.sleep)
+        assertFalse(vm.uiState.value.isLoading)
+    }
+
+    @Test
+    fun sleepIsReReadOnRefresh() = runTest {
+        val vm = viewModel()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
+        assertEquals(HealthLastNightSleep.Disabled, vm.uiState.value.sleep)
+
+        sleepReader.result = HealthLastNightSleep.Available(minutes = 480)
+        vm.refreshHealth()
+        assertEquals(HealthLastNightSleep.Available(480), vm.uiState.value.sleep)
+
+        sleepReader.result = HealthLastNightSleep.PermissionMissing
+        vm.refreshHealth()
+        assertEquals(HealthLastNightSleep.PermissionMissing, vm.uiState.value.sleep)
+    }
+
+    @Test
     fun activeWorkoutIsExposedAndClearedWhenFinished() = runTest {
         val vm = viewModel()
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
@@ -196,11 +231,11 @@ class DashboardViewModelTest {
         assertEquals(HealthSteps.Unavailable, vm.uiState.value.steps)
 
         stepsResult = HealthSteps.Available(today = 4_200, week = 31_000)
-        vm.refreshSteps()
+        vm.refreshHealth()
         assertEquals(HealthSteps.Available(today = 4_200, week = 31_000), vm.uiState.value.steps)
 
         stepsResult = HealthSteps.PermissionMissing
-        vm.refreshSteps()
+        vm.refreshHealth()
         assertEquals(HealthSteps.PermissionMissing, vm.uiState.value.steps)
     }
 }

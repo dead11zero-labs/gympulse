@@ -160,6 +160,49 @@ class HealthInsightsTest {
     }
 
     @Test
+    fun lastNight_reportsStateInsteadOfFailing() = runTest {
+        source.currentAvailability = HealthAvailability.NOT_INSTALLED
+        assertEquals(HealthLastNightSleep.Unavailable, insights.lastNight())
+
+        source.currentAvailability = HealthAvailability.AVAILABLE
+        assertEquals(HealthLastNightSleep.Disabled, insights.lastNight())
+
+        // Connection on and permission granted, but the sleep sub-toggle is off.
+        activate(HealthReadType.SLEEP)
+        assertEquals(HealthLastNightSleep.Disabled, insights.lastNight())
+        assertFalse(source.sleepRead)
+
+        // Sub-toggle on, permission missing.
+        activate(HealthReadType.STEPS)
+        toggles.setEnabled(Feature.HEALTH_SLEEP, true)
+        assertEquals(HealthLastNightSleep.PermissionMissing, insights.lastNight())
+
+        activate(HealthReadType.SLEEP)
+        source.fail = true
+        assertEquals(HealthLastNightSleep.Unreadable, insights.lastNight())
+    }
+
+    @Test
+    fun lastNight_returnsDurationOfLatestSleep() = runTest {
+        activate(HealthReadType.SLEEP)
+        toggles.setEnabled(Feature.HEALTH_SLEEP, true)
+        source.sleep = HealthSleep(Instant.parse("2026-07-01T22:30:00Z"), Instant.parse("2026-07-02T06:05:00Z"))
+
+        assertEquals(HealthLastNightSleep.Available(455), insights.lastNight())
+        assertEquals(now.minus(Duration.ofHours(24)) to now, source.lastSleepWindow)
+    }
+
+    @Test
+    fun lastNight_noDataWhenNothingRecordedOrEmpty() = runTest {
+        activate(HealthReadType.SLEEP)
+        toggles.setEnabled(Feature.HEALTH_SLEEP, true)
+        assertEquals(HealthLastNightSleep.NoData, insights.lastNight())
+
+        source.sleep = HealthSleep(Instant.parse("2026-07-02T06:00:00Z"), Instant.parse("2026-07-02T06:00:00Z"))
+        assertEquals(HealthLastNightSleep.NoData, insights.lastNight())
+    }
+
+    @Test
     fun permissionsToRequest_includesSleepOnlyOnRequest() {
         val withoutSleep = insights.permissionsToRequest(includeSleep = false)
         assertTrue(withoutSleep.containsAll(source.requiredPermissions))
@@ -174,6 +217,7 @@ class HealthInsightsTest {
         var activity = HealthActivity()
         var sleep: HealthSleep? = null
         var sleepRead = false
+        var lastSleepWindow: Pair<Instant, Instant>? = null
         var stepsByStart: Map<Instant, Long>? = null
         var fail = false
         var lastAggregateTypes: Set<HealthReadType>? = null
@@ -207,6 +251,7 @@ class HealthInsightsTest {
         override suspend fun readLatestSleep(from: Instant, to: Instant): HealthSleep? {
             if (fail) error("throttled")
             sleepRead = true
+            lastSleepWindow = Pair(from, to)
             return sleep
         }
     }

@@ -91,6 +91,27 @@ data class WorkoutHealthMetrics(
             activeCaloriesKcal == null && sleepMinutes == null
 }
 
+/** Schlafdauer der letzten Nacht, oder warum es keine gibt. Wirft nie. */
+sealed interface HealthLastNightSleep {
+    /** Health Connect ist auf diesem Gerät nicht nutzbar. */
+    data object Unavailable : HealthLastNightSleep
+
+    /** Health Connect oder der Schlaf-Unterschalter ist in GymPulse aus bzw. die Kernberechtigungen fehlen. */
+    data object Disabled : HealthLastNightSleep
+
+    /** Anbindung und Schlaf-Unterschalter sind aktiv, aber die Lese-Berechtigung für Schlaf fehlt. */
+    data object PermissionMissing : HealthLastNightSleep
+
+    /** Health Connect hat die Anfrage abgelehnt oder gedrosselt; später erneut versuchen. */
+    data object Unreadable : HealthLastNightSleep
+
+    /** Alles aktiv, aber für die letzte Nacht liegt keine Schlafphase vor. */
+    data object NoData : HealthLastNightSleep
+
+    /** Dauer der jüngsten Schlafphase der letzten 24 Stunden in Minuten (immer größer als 0). */
+    data class Available(val minutes: Long) : HealthLastNightSleep
+}
+
 /** Schritte für heute und die laufende Woche, oder warum es keine gibt. Wirft nie. */
 sealed interface HealthSteps {
     /** Health Connect ist auf diesem Gerät nicht nutzbar. */

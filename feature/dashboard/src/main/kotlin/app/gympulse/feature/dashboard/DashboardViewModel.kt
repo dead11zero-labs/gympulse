@@ -2,6 +2,8 @@ package app.gympulse.feature.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.gympulse.core.data.health.HealthLastNightSleep
+import app.gympulse.core.data.health.HealthSleepReader
 import app.gympulse.core.data.health.HealthSteps
 import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.util.TimeProvider
@@ -66,6 +68,8 @@ data class DashboardUiState(
     val activeWorkout: ActiveWorkout? = null,
     /** Schritte aus Health Connect; die Kachel erscheint nur bei [HealthSteps.Available]. */
     val steps: HealthSteps = HealthSteps.Unavailable,
+    /** Schlaf der letzten Nacht; [HealthLastNightSleep.Disabled] blendet die Kachel aus. */
+    val sleep: HealthLastNightSleep = HealthLastNightSleep.Disabled,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -75,6 +79,7 @@ class DashboardViewModel @Inject constructor(
     private val goalProvider: WeeklyGoalProvider,
     private val weekStartProvider: WeekStartProvider,
     private val stepsReader: HealthStepsReader,
+    private val sleepReader: HealthSleepReader,
     private val time: TimeProvider,
 ) : ViewModel() {
 
@@ -84,17 +89,23 @@ class DashboardViewModel @Inject constructor(
         buildWeekWidgets(weekStartsOn)
     }
 
-    private val stepsRefresh = MutableStateFlow(0)
+    private val healthRefresh = MutableStateFlow(0)
 
     /** Liest die Schritte neu, z. B. wenn der Screen wieder sichtbar wird. Startet ohne Kachel, bis Werte da sind. */
-    private val steps: Flow<HealthSteps> = combine(weekStartProvider.weekStartsOn, stepsRefresh) { weekStartsOn, _ ->
+    private val steps: Flow<HealthSteps> = combine(weekStartProvider.weekStartsOn, healthRefresh) { weekStartsOn, _ ->
         weekStartsOn
     }.flatMapLatest { weekStartsOn ->
         flow { emit(stepsReader.steps(weekStartsOn)) }
     }.onStart { emit(HealthSteps.Unavailable) }
 
-    fun refreshSteps() {
-        stepsRefresh.value += 1
+    /** Liest die letzte Nacht neu. Startet ausgeblendet, damit ein langsames Health Connect das Dashboard nicht aufhält. */
+    private val sleep: Flow<HealthLastNightSleep> = healthRefresh.flatMapLatest {
+        flow { emit(sleepReader.lastNight()) }
+    }.onStart { emit(HealthLastNightSleep.Disabled) }
+
+    /** Liest die Health-Connect-Werte neu, z. B. wenn der Screen wieder sichtbar wird. */
+    fun refreshHealth() {
+        healthRefresh.value += 1
     }
 
     val uiState: StateFlow<DashboardUiState> = combine(
@@ -102,7 +113,8 @@ class DashboardViewModel @Inject constructor(
         data.observeRecentSessions(RECENT_LIMIT),
         data.observeActiveWorkout(),
         steps,
-    ) { widgets, recent, active, steps ->
+        sleep,
+    ) { widgets, recent, active, stepsState, sleepState ->
         val zone = time.zone()
         val now = time.now().atZone(zone)
         DashboardUiState(
@@ -122,7 +134,8 @@ class DashboardViewModel @Inject constructor(
                 )
             },
             activeWorkout = active,
-            steps = steps,
+            steps = stepsState,
+            sleep = sleepState,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), initialState())
 

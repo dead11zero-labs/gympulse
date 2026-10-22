@@ -46,6 +46,11 @@ fun interface HealthStepsReader {
     suspend fun steps(firstDayOfWeek: DayOfWeek): HealthSteps
 }
 
+/** Schlafdauer der letzten Nacht aus Health Connect, z. B. für eine Dashboard-Kachel. */
+fun interface HealthSleepReader {
+    suspend fun lastNight(): HealthLastNightSleep
+}
+
 /** Liest Werte aus Health Connect für ein beendetes Workout; null, wenn nichts vorliegt oder die Anbindung aus ist. */
 fun interface WorkoutHealthReader {
     suspend fun read(start: Instant, end: Instant): WorkoutHealthMetrics?
