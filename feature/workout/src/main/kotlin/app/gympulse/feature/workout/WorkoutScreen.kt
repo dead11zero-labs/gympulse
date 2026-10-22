@@ -32,6 +32,7 @@ internal fun WorkoutScreen(
     val restTimer by viewModel.restTimerState.collectAsStateWithLifecycle()
     val exerciseOptions by viewModel.exerciseOptions.collectAsStateWithLifecycle()
     val now by viewModel.now.collectAsStateWithLifecycle()
+    val finishAllProposal by viewModel.finishAllProposal.collectAsStateWithLifecycle()
 
     NotificationPermissionEffect(active = uiState is WorkoutUiState.Active)
 
@@ -63,6 +64,7 @@ internal fun WorkoutScreen(
             now = { now },
             restTimer = restTimer,
             exerciseOptions = exerciseOptions,
+            finishAllProposal = finishAllProposal,
             actions = WorkoutActions(
                 onWeightChange = viewModel::onWeightChange,
                 onRepsChange = viewModel::onRepsChange,
@@ -78,6 +80,9 @@ internal fun WorkoutScreen(
                 onSkipRest = viewModel::skipRest,
                 onAdjustRest = viewModel::adjustRest,
                 onFinish = viewModel::finishWorkout,
+                onFinishAll = viewModel::requestFinishAll,
+                onConfirmFinishAll = viewModel::confirmFinishAll,
+                onDismissFinishAll = viewModel::dismissFinishAll,
                 onDiscard = viewModel::discardWorkout,
             ),
             modifier = modifier,
