@@ -64,8 +64,8 @@ class HealthInsights @Inject constructor(
     }
 
     /**
-     * Werte im Zeitfenster eines beendeten Workouts: Durchschnitts- und Maximalpuls, Schritte,
-     * aktive Kalorien und mit Schlaf-Unterschalter die letzte Schlafphase vor dem Start.
+     * Werte im Zeitfenster eines beendeten Workouts: Durchschnitts- und Maximalpuls, Schritte
+     * und aktive Kalorien.
      */
     override suspend fun read(start: Instant, end: Instant): WorkoutHealthMetrics? {
         if (!end.isAfter(start)) return null
@@ -78,19 +78,12 @@ class HealthInsights @Inject constructor(
         } else {
             guarded(HealthActivity()) { dataSource.aggregateActivity(start, end, activityTypes) }
         }
-        val sleep = if (HealthReadType.SLEEP in types) {
-            guarded(null) { dataSource.readLatestSleep(start.minus(SLEEP_LOOKBACK), start) }
-        } else {
-            null
-        }
-        val sleepMinutes = sleep?.let { Duration.between(it.start, it.end).toMinutes() }?.takeIf { it > 0 }
 
         val metrics = WorkoutHealthMetrics(
             averageHeartRateBpm = activity.averageHeartRateBpm?.takeIf { it > 0 },
             maxHeartRateBpm = activity.maxHeartRateBpm?.takeIf { it > 0 },
             steps = activity.steps?.takeIf { it > 0 },
             activeCaloriesKcal = activity.activeCaloriesKcal?.takeIf { it >= MIN_CALORIES_KCAL },
-            sleepMinutes = sleepMinutes,
         )
         return metrics.takeUnless { it.isEmpty }
     }
@@ -183,9 +176,6 @@ class HealthInsights @Inject constructor(
             HealthMetric.STEPS to HealthReadType.STEPS,
             HealthMetric.CALORIES to HealthReadType.ACTIVE_CALORIES,
         )
-
-        /** Schlaf, der bis zu so lange vor dem Workout endet, zählt als "letzte Nacht". */
-        val SLEEP_LOOKBACK: Duration = Duration.ofHours(18)
 
         /** Für die Dashboard-Kachel zählt Schlaf, der in den letzten 24 Stunden endete, als "letzte Nacht". */
         val LAST_NIGHT_LOOKBACK: Duration = Duration.ofHours(24)

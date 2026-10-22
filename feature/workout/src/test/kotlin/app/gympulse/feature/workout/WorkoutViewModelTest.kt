@@ -237,6 +237,60 @@ class WorkoutViewModelTest {
     }
 
     @Test
+    fun finishAll_proposesTheLongerOfElapsedAndEstimate() = runTest {
+        seedPlan()
+        val viewModel = viewModel()
+        viewModel.startWorkout(PLAN_ID)
+        viewModel.awaitActive()
+        time.advanceSeconds(60)
+
+        viewModel.requestFinishAll()
+        val estimated = viewModel.finishAllProposal.first { it != null }!!
+
+        // 3 sets: 3 x 45 s work + 2 x 120 s rest.
+        assertEquals(375L, estimated.durationSeconds)
+        assertEquals(3, estimated.setCount)
+        assertEquals(3, estimated.openSets)
+
+        viewModel.dismissFinishAll()
+        assertNull(viewModel.finishAllProposal.value)
+        time.advanceSeconds(3600)
+        viewModel.requestFinishAll()
+
+        assertEquals(3660L, viewModel.finishAllProposal.first { it != null }!!.durationSeconds)
+    }
+
+    @Test
+    fun finishAll_completesOpenSetsAndMovesStartBack() = runTest {
+        seedPlan()
+        val viewModel = viewModel()
+        viewModel.startWorkout(PLAN_ID)
+        viewModel.awaitActive()
+        time.advanceSeconds(60)
+        val end = time.now()
+
+        viewModel.confirmFinishAll(durationMinutes = 7)
+        val summary = viewModel.summary.first { it != null }!!
+
+        assertEquals(420, summary.durationSeconds)
+        assertEquals(3, summary.completedSets)
+        assertNull(viewModel.finishAllProposal.value)
+        val stored = db.sessionDao().observeRecentCompleted(1).first().single()
+        assertEquals(SessionStatus.COMPLETED, stored.status)
+        assertEquals(end.minusSeconds(420).toEpochMilli(), stored.startedAt)
+        assertEquals(end.toEpochMilli(), stored.endedAt)
+        val sets = db.sessionDao().getById(stored.id)!!.exercises.single().sets.sortedBy { it.setIndex }
+        assertTrue(sets.all { it.isCompleted })
+        val start = end.minusSeconds(420)
+        assertEquals(
+            listOf(140L, 280L, 420L).map { start.plusSeconds(it).toEpochMilli() },
+            sets.map { it.completedAt },
+        )
+        // Reps stay as prefilled.
+        assertTrue(sets.all { it.reps == 10 })
+    }
+
+    @Test
     fun finish_addsHealthConnectValuesForTheSessionWindow() = runTest {
         healthMetrics = WorkoutHealthMetrics(averageHeartRateBpm = 128, maxHeartRateBpm = 165, steps = 2_340)
         seedPlan()

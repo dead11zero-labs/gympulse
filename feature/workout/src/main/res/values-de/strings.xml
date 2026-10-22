@@ -75,6 +75,13 @@
         <item quantity="other">%1$d Sätze sind noch offen. Trotzdem beenden?</item>
     </plurals>
     <string name="feature_workout_finish_confirm">Beenden</string>
+    <string name="feature_workout_more_actions">Weitere Aktionen</string>
+    <string name="feature_workout_finish_all">Alles als erledigt markieren</string>
+    <string name="feature_workout_finish_all_title">Alles als erledigt markieren?</string>
+    <string name="feature_workout_finish_all_text">Dauer ca. %1$d min – übernehmen?</string>
+    <string name="feature_workout_finish_all_hint">Offene Sätze werden abgehakt, ihre Zeiten gleichmäßig über die Dauer verteilt und das Workout wird beendet.</string>
+    <string name="feature_workout_finish_all_minutes">Dauer (min)</string>
+    <string name="feature_workout_finish_all_confirm">Übernehmen und beenden</string>
     <string name="feature_workout_cancel">Abbrechen</string>
     <string name="feature_workout_discard_title">Workout verwerfen?</string>
     <string name="feature_workout_discard_text">Alle Sätze dieses Workouts gehen verloren.</string>
@@ -108,7 +115,6 @@
     <string name="feature_workout_summary_health_max_hr">Max. %1$s bpm</string>
     <string name="feature_workout_summary_health_steps">%1$s Schritte</string>
     <string name="feature_workout_summary_health_calories">%1$s kcal aktiv</string>
-    <string name="feature_workout_summary_health_sleep">Schlaf %1$d h %2$02d min</string>
 
     <!-- Benachrichtigung und Mini-Leiste -->
     <string name="feature_workout_notification_channel">Aktives Workout</string>

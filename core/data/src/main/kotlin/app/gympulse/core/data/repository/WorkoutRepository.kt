@@ -21,6 +21,7 @@ import app.gympulse.core.model.setVolumeKg
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.time.Instant
 import javax.inject.Inject
 
 /**
@@ -278,8 +279,17 @@ class WorkoutRepository @Inject constructor(
 
     suspend fun deleteSet(setId: String) = sessionDao.softDeleteSet(setId, time.now().toEpochMilli())
 
-    /** Beendet die Session; offene Sätze bleiben gespeichert, zählen aber nicht ins Volumen. */
-    suspend fun finishSession(sessionId: String, rating: Int? = null, notes: String? = null) {
+    /**
+     * Beendet die Session; offene Sätze bleiben gespeichert, zählen aber nicht ins Volumen.
+     * Mit [startedAt] wird zusätzlich die Startzeit überschrieben (z. B. wenn die Dauer nachträglich
+     * geschätzt wurde).
+     */
+    suspend fun finishSession(
+        sessionId: String,
+        rating: Int? = null,
+        notes: String? = null,
+        startedAt: Instant? = null,
+    ) {
         val now = time.now().toEpochMilli()
         val current = sessionDao.getById(sessionId) ?: return
         val session = current.toModel()
@@ -294,6 +304,7 @@ class WorkoutRepository @Inject constructor(
         sessionDao.upsertSession(
             current.session.copy(
                 status = SessionStatus.COMPLETED,
+                startedAt = startedAt?.toEpochMilli() ?: current.session.startedAt,
                 endedAt = now,
                 rating = rating,
                 notes = notes,

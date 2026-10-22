@@ -16,7 +16,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -67,6 +76,9 @@ internal data class WorkoutActions(
     val onSkipRest: () -> Unit,
     val onAdjustRest: (deltaSeconds: Int) -> Unit,
     val onFinish: () -> Unit,
+    val onFinishAll: () -> Unit,
+    val onConfirmFinishAll: (durationMinutes: Int) -> Unit,
+    val onDismissFinishAll: () -> Unit,
     val onDiscard: () -> Unit,
 )
 
@@ -76,6 +88,7 @@ internal fun ActiveWorkoutContent(
     now: () -> Instant,
     restTimer: RestTimerState?,
     exerciseOptions: List<ExerciseOption>,
+    finishAllProposal: FinishAllProposal?,
     actions: WorkoutActions,
     modifier: Modifier = Modifier,
 ) {
@@ -106,6 +119,7 @@ internal fun ActiveWorkoutContent(
                         session = session,
                         now = now,
                         onFinish = { showFinishDialog = true },
+                        onFinishAll = actions.onFinishAll,
                         onDiscard = { showDiscardDialog = true },
                         modifier = itemModifier,
                     )
@@ -172,6 +186,14 @@ internal fun ActiveWorkoutContent(
         )
     }
 
+    if (finishAllProposal != null) {
+        FinishAllDialog(
+            proposal = finishAllProposal,
+            onConfirm = actions.onConfirmFinishAll,
+            onDismiss = actions.onDismissFinishAll,
+        )
+    }
+
     if (showDiscardDialog) {
         DiscardWorkoutDialog(
             onConfirm = {
@@ -204,9 +226,11 @@ private fun WorkoutHeader(
     session: ActiveSessionUi,
     now: () -> Instant,
     onFinish: () -> Unit,
+    onFinishAll: () -> Unit,
     onDiscard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var menuOpen by remember { mutableStateOf(false) }
     GymPulseCard(
         modifier = modifier,
         variant = GymPulseCardVariant.Level1,
@@ -255,6 +279,24 @@ private fun WorkoutHeader(
             horizontalArrangement = Arrangement.spacedBy(Spacing.xs, Alignment.End),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Box {
+                IconButton(onClick = { menuOpen = true }) {
+                    Icon(
+                        imageVector = Icons.Filled.MoreVert,
+                        contentDescription = stringResource(R.string.feature_workout_more_actions),
+                    )
+                }
+                DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.feature_workout_finish_all)) },
+                        enabled = session.openSets > 0,
+                        onClick = {
+                            menuOpen = false
+                            onFinishAll()
+                        },
+                    )
+                }
+            }
             TextButton(onClick = onDiscard) {
                 Text(stringResource(R.string.feature_workout_discard))
             }
@@ -315,6 +357,47 @@ private fun FinishWorkoutDialog(openSets: Int, onConfirm: () -> Unit, onDismiss:
         },
     )
 }
+
+/** Shows the estimated duration and lets the user change it in minutes before everything is ticked off. */
+@Composable
+private fun FinishAllDialog(proposal: FinishAllProposal, onConfirm: (Int) -> Unit, onDismiss: () -> Unit) {
+    val proposedMinutes = ((proposal.durationSeconds + SECONDS_PER_MINUTE - 1) / SECONDS_PER_MINUTE).toInt().coerceAtLeast(1)
+    var minutesText by rememberSaveable(proposal.durationSeconds) { mutableStateOf(proposedMinutes.toString()) }
+    val minutes = minutesText.toIntOrNull()
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.feature_workout_finish_all_title)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(Spacing.s)) {
+                Text(stringResource(R.string.feature_workout_finish_all_text, proposedMinutes))
+                Text(
+                    text = stringResource(R.string.feature_workout_finish_all_hint),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                OutlinedTextField(
+                    value = minutesText,
+                    onValueChange = { value -> minutesText = value.filter { it.isDigit() }.take(MAX_MINUTES_DIGITS) },
+                    label = { Text(stringResource(R.string.feature_workout_finish_all_minutes)) },
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { minutes?.let(onConfirm) }, enabled = minutes != null && minutes >= 1) {
+                Text(stringResource(R.string.feature_workout_finish_all_confirm))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.feature_workout_cancel)) }
+        },
+    )
+}
+
+private const val SECONDS_PER_MINUTE = 60L
+private const val MAX_MINUTES_DIGITS = 4
 
 @Composable
 private fun DiscardWorkoutDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {

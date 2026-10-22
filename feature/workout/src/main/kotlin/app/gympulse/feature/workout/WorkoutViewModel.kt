@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import java.time.Duration
 import java.time.Instant
 import java.util.Locale
 import javax.inject.Inject
@@ -51,7 +52,7 @@ internal class WorkoutViewModel @Inject constructor(
     private val restTimer: RestTimer,
     private val restTimerSettings: RestTimerSettings,
     ticker: Ticker,
-    time: TimeProvider,
+    private val time: TimeProvider,
     private val healthExporter: FinishedWorkoutExporter,
     private val healthReader: WorkoutHealthReader,
 ) : ViewModel() {
@@ -65,6 +66,11 @@ internal class WorkoutViewModel @Inject constructor(
 
     /** Set after finishing a workout until the dialog is dismissed. */
     val summary: StateFlow<WorkoutSummary?> = _summary.asStateFlow()
+
+    private val _finishAllProposal = MutableStateFlow<FinishAllProposal?>(null)
+
+    /** Estimated duration shown in the "mark everything as done" dialog; null while no dialog is open. */
+    val finishAllProposal: StateFlow<FinishAllProposal?> = _finishAllProposal.asStateFlow()
 
     private val catalog: SharedFlow<Map<String, Exercise>> =
         exerciseRepository.observeExercises(Locale.getDefault().language)
@@ -184,15 +190,54 @@ internal class WorkoutViewModel @Inject constructor(
     fun adjustRest(deltaSeconds: Int) = restTimer.adjust(deltaSeconds)
 
     /** Completes the whole session at once; open sets stay stored but do not count. */
-    fun finishWorkout() = mutate {
+    fun finishWorkout() = finish(durationSeconds = null)
+
+    /** Computes the estimated duration for "mark everything as done" and opens the confirmation. */
+    fun requestFinishAll() = mutate {
         val session = workoutRepository.getActiveSession() ?: return@mutate
-        workoutRepository.finishSession(session.id)
+        val restSeconds = restTimerSettings.restSeconds.first()
+        val counted = session.countedSets()
+        _finishAllProposal.value = FinishAllProposal(
+            durationSeconds = FinishAllPlanner.durationSeconds(
+                elapsedSeconds = Duration.between(session.startedAt, time.now()).seconds,
+                setCount = counted.size,
+                restSeconds = restSeconds,
+            ),
+            setCount = counted.size,
+            openSets = session.exercises.sumOf { exercise -> exercise.sets.count { !it.isCompleted } },
+        )
+    }
+
+    fun dismissFinishAll() {
+        _finishAllProposal.value = null
+    }
+
+    /**
+     * Marks every open set as done, spreads their timestamps over a window of [durationMinutes]
+     * ending now and finishes the session as usual.
+     */
+    fun confirmFinishAll(durationMinutes: Int) {
+        _finishAllProposal.value = null
+        finish(durationSeconds = durationMinutes.coerceAtLeast(1) * SECONDS_PER_MINUTE)
+    }
+
+    /** With [durationSeconds] the sets are completed first and the start time is moved to end - duration. */
+    private fun finish(durationSeconds: Long?) = mutate {
+        val session = workoutRepository.getActiveSession() ?: return@mutate
+        var startedAt: Instant? = null
+        if (durationSeconds != null) {
+            val windowEnd = time.now()
+            val windowStart = windowEnd.minusSeconds(durationSeconds)
+            completeOpenSets(session, windowStart, durationSeconds, windowEnd)
+            startedAt = windowStart
+        }
+        workoutRepository.finishSession(session.id, startedAt = startedAt)
         restTimer.skip()
         val finished = workoutRepository.observeSession(session.id).first()
         val endedAt = finished?.endedAt ?: session.startedAt
         val history = workoutRepository.setHistory(session.exercises.map { it.exerciseId }.distinct())
         val summary = buildWorkoutSummary(
-            session = session,
+            session = finished ?: session,
             endedAt = endedAt,
             volumeKg = finished?.totalVolumeKg ?: 0.0,
             catalog = catalog.first(),
@@ -202,9 +247,30 @@ internal class WorkoutViewModel @Inject constructor(
         // Health Connect (opt-in); runs outside the write lock and never blocks the summary.
         viewModelScope.launch { healthExporter.export(session.id) }
         viewModelScope.launch {
-            val metrics = healthReader.read(session.startedAt, endedAt) ?: return@launch
+            val metrics = healthReader.read(finished?.startedAt ?: session.startedAt, endedAt) ?: return@launch
             // Only fill in the summary of this session, if it is still shown.
             _summary.update { current -> current?.takeIf { it === summary }?.copy(health = metrics) ?: current }
+        }
+    }
+
+    private suspend fun completeOpenSets(
+        session: WorkoutSession,
+        windowStart: Instant,
+        durationSeconds: Long,
+        windowEnd: Instant,
+    ) {
+        val counted = session.countedSets()
+        val times = FinishAllPlanner.completionTimes(windowStart, durationSeconds, counted.size)
+        counted.forEachIndexed { index, (sessionExerciseId, set) ->
+            if (!set.isCompleted) {
+                workoutRepository.saveSet(sessionExerciseId, set.copy(isCompleted = true, completedAt = times[index]))
+            }
+        }
+        // Open sets without values stay empty; they are only ticked off.
+        session.exercises.forEach { exercise ->
+            exercise.sets.filter { !it.isCompleted && !it.hasValues() }.forEach { set ->
+                workoutRepository.saveSet(exercise.id, set.copy(isCompleted = true, completedAt = windowEnd))
+            }
         }
     }
 
@@ -258,5 +324,6 @@ internal class WorkoutViewModel @Inject constructor(
         const val KEY_PLAN_ID = "planId"
         private const val KEY_AUTO_START_HANDLED = "autoStartHandled"
         private const val STOP_TIMEOUT_MILLIS = 5_000L
+        private const val SECONDS_PER_MINUTE = 60L
     }
 }

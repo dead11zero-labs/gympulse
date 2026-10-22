@@ -183,7 +183,7 @@ private fun SummaryStats(summary: WorkoutSummary, modifier: Modifier = Modifier)
     }
 }
 
-/** Heart rate, steps, active calories and sleep from Health Connect, shown only for values that exist. */
+/** Heart rate, steps and active calories from Health Connect, shown only for values that exist. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun HealthMetricsCard(metrics: WorkoutHealthMetrics, modifier: Modifier = Modifier) {
@@ -198,9 +198,6 @@ private fun HealthMetricsCard(metrics: WorkoutHealthMetrics, modifier: Modifier 
         metrics.steps?.let { add(stringResource(R.string.feature_workout_summary_health_steps, numbers.format(it))) }
         metrics.activeCaloriesKcal?.let {
             add(stringResource(R.string.feature_workout_summary_health_calories, numbers.format(it.roundToLong())))
-        }
-        metrics.sleepMinutes?.let {
-            add(stringResource(R.string.feature_workout_summary_health_sleep, it / MINUTES_PER_HOUR, it % MINUTES_PER_HOUR))
         }
     }
     GymPulseCard(
@@ -224,8 +221,6 @@ private fun HealthMetricsCard(metrics: WorkoutHealthMetrics, modifier: Modifier 
         }
     }
 }
-
-private const val MINUTES_PER_HOUR = 60L
 
 @Composable
 private fun RecordsCard(summary: WorkoutSummary, modifier: Modifier = Modifier) {
