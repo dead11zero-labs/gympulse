@@ -3,6 +3,7 @@ package app.gympulse.feature.library
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.gympulse.core.insightcards.InsightsUi
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
@@ -14,6 +15,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
@@ -35,6 +38,8 @@ data class ExerciseDetailUiState(
     val plans: List<WorkoutPlan> = emptyList(),
     /** Ergebnis des letzten "Zu Plan hinzufügen"; die UI zeigt es einmal und meldet es mit consumePlanAddResult(). */
     val planAddResult: PlanAddResult? = null,
+    /** Befunde der Trainingsauswertung für diese Übung; leer und ohne Grund, bis das Ergebnis da ist. */
+    val insights: InsightsUi = InsightsUi.Loading,
 ) {
     /** Herz-Zustand: nur wahr, wenn die geladene Übung tatsächlich Favorit ist (vorher und bei fehlender Übung: aus). */
     val isFavorite: Boolean get() = detail?.exercise?.isFavorite == true
@@ -61,13 +66,18 @@ class ExerciseDetailViewModel @Inject constructor(
     private val deleted = MutableStateFlow(false)
     private val planAddResult = MutableStateFlow<PlanAddResult?>(null)
 
+    /** Ein Fehler bei der Auswertung blendet die Karten aus, statt die Detailseite zu stören. */
+    private val insights = repository.observeInsights(exerciseId)
+        .catch { emit(InsightsUi.Loading) }
+        .onStart { emit(InsightsUi.Loading) }
+
     val uiState: StateFlow<ExerciseDetailUiState> = combine(
         locale.flatMapLatest { repository.observeExercise(exerciseId, it) },
         repository.observeEquipment(),
         previousSets,
         deleted,
-        combine(repository.observePlans(), planAddResult) { plans, result -> plans to result },
-    ) { detail, equipment, sets, isDeleted, (plans, addResult) ->
+        combine(repository.observePlans(), planAddResult, insights) { plans, result, cards -> Triple(plans, result, cards) },
+    ) { detail, equipment, sets, isDeleted, (plans, addResult, cards) ->
         ExerciseDetailUiState(
             isLoading = false,
             detail = detail,
@@ -76,6 +86,7 @@ class ExerciseDetailViewModel @Inject constructor(
             deleted = isDeleted,
             plans = plans,
             planAddResult = addResult,
+            insights = cards,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS), ExerciseDetailUiState())
 

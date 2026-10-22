@@ -1,6 +1,7 @@
 package app.gympulse.feature.library.data
 
 import app.gympulse.core.data.mapper.toModel
+import app.gympulse.core.data.repository.InsightsRepository
 import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.database.dao.EquipmentDao
@@ -10,6 +11,8 @@ import app.gympulse.core.database.entity.ExerciseEntity
 import app.gympulse.core.database.entity.ExerciseMuscleEntity
 import app.gympulse.core.database.entity.ExerciseTranslationEntity
 import app.gympulse.core.database.relation.ExerciseWithDetails
+import app.gympulse.core.insightcards.InsightsUi
+import app.gympulse.core.insightcards.toExerciseInsights
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.Ids
@@ -20,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import java.util.Locale
 import javax.inject.Inject
 
 /**
@@ -31,6 +35,7 @@ class DefaultLibraryRepository @Inject constructor(
     private val equipmentDao: EquipmentDao,
     private val sessionDao: SessionDao,
     private val planRepository: PlanRepository,
+    private val insightsRepository: InsightsRepository,
     private val time: TimeProvider,
 ) : LibraryRepository {
 
@@ -58,6 +63,11 @@ class DefaultLibraryRepository @Inject constructor(
 
     override suspend fun previousSets(exerciseId: String): List<SetEntry> =
         sessionDao.getPreviousSets(exerciseId).map { it.toModel() }
+
+    override fun observeInsights(exerciseId: String): Flow<InsightsUi> =
+        insightsRepository.observeReport(Locale.getDefault().language).map { report ->
+            report.insights.toExerciseInsights(exerciseId)
+        }
 
     override suspend fun setFavorite(id: String, favorite: Boolean) =
         exerciseDao.setFavorite(id, favorite, time.now().toEpochMilli())

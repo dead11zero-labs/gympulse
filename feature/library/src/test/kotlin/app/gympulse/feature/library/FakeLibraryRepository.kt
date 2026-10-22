@@ -1,5 +1,6 @@
 package app.gympulse.feature.library
 
+import app.gympulse.core.insightcards.InsightsUi
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.EquipmentSetting
 import app.gympulse.core.model.EquipmentType
@@ -32,6 +33,7 @@ class FakeLibraryRepository : LibraryRepository {
     val equipment = MutableStateFlow<List<Equipment>>(emptyList())
     val plans = MutableStateFlow<List<WorkoutPlan>>(emptyList())
     var previous: List<SetEntry> = emptyList()
+    val insights = MutableStateFlow(InsightsUi.Loading)
 
     val requestedLocales = mutableListOf<String>()
     val favoriteCalls = mutableListOf<Pair<String, Boolean>>()
@@ -61,6 +63,8 @@ class FakeLibraryRepository : LibraryRepository {
         planAdds += planId to exercise.id
         return plans.value.any { it.id == planId }
     }
+
+    override fun observeInsights(exerciseId: String): Flow<InsightsUi> = insights
 
     override suspend fun previousSets(exerciseId: String): List<SetEntry> = previous
 

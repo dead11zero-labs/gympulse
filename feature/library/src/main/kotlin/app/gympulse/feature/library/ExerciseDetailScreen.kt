@@ -54,6 +54,8 @@ import app.gympulse.core.designsystem.component.ListGroup
 import app.gympulse.core.designsystem.component.ListRow
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
+import app.gympulse.core.insightcards.InsightsSection
+import app.gympulse.core.insightcards.InsightsUi
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.WorkoutPlan
@@ -105,6 +107,7 @@ internal fun ExerciseDetailScreen(
                 equipment = state.equipment,
                 previousSets = state.previousSets,
                 plans = state.plans,
+                insights = state.insights,
                 onToggleFavorite = viewModel::toggleFavorite,
                 onAddToPlan = viewModel::addToPlan,
                 onEdit = { onEdit(detail.exercise.id) },
@@ -122,6 +125,7 @@ private fun ExerciseDetailContent(
     equipment: Equipment?,
     previousSets: List<SetEntry>,
     plans: List<WorkoutPlan>,
+    insights: InsightsUi,
     onToggleFavorite: () -> Unit,
     onAddToPlan: (String) -> Unit,
     onEdit: () -> Unit,
@@ -283,6 +287,8 @@ private fun ExerciseDetailContent(
                 }
             }
         }
+
+        InsightsSection(insights = insights, forExercise = true)
 
         Column(verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
             SectionTitle(stringResource(R.string.library_last_session))

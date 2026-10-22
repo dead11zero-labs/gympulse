@@ -7,12 +7,14 @@ import app.gympulse.core.data.health.HealthSleepReader
 import app.gympulse.core.data.health.HealthSteps
 import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.util.TimeProvider
+import app.gympulse.core.insightcards.InsightsUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -70,6 +72,8 @@ data class DashboardUiState(
     val steps: HealthSteps = HealthSteps.Unavailable,
     /** Schlaf der letzten Nacht; [HealthLastNightSleep.Disabled] blendet die Kachel aus. */
     val sleep: HealthLastNightSleep = HealthLastNightSleep.Disabled,
+    /** Insight-Karten (Plateau, Steigerung, Deload, Ungleichgewicht) oder Leerzustand. */
+    val insights: InsightsUi = InsightsUi.Loading,
 )
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -103,6 +107,15 @@ class DashboardViewModel @Inject constructor(
         flow { emit(sleepReader.lastNight()) }
     }.onStart { emit(HealthLastNightSleep.Disabled) }
 
+    /** Insight-Karten; ein Fehler bei der Auswertung blendet sie aus, statt das Dashboard zu stören. */
+    private val insights: Flow<InsightsUi> = data.observeInsights()
+        .catch { emit(InsightsUi.Loading) }
+        .onStart { emit(InsightsUi.Loading) }
+
+    private data class Extras(val steps: HealthSteps, val sleep: HealthLastNightSleep, val insights: InsightsUi)
+
+    private val extras: Flow<Extras> = combine(steps, sleep, insights, ::Extras)
+
     /** Liest die Health-Connect-Werte neu, z. B. wenn der Screen wieder sichtbar wird. */
     fun refreshHealth() {
         healthRefresh.value += 1
@@ -112,9 +125,8 @@ class DashboardViewModel @Inject constructor(
         weekWidgets,
         data.observeRecentSessions(RECENT_LIMIT),
         data.observeActiveWorkout(),
-        steps,
-        sleep,
-    ) { widgets, recent, active, stepsState, sleepState ->
+        extras,
+    ) { widgets, recent, active, extra ->
         val zone = time.zone()
         val now = time.now().atZone(zone)
         DashboardUiState(
@@ -134,8 +146,9 @@ class DashboardViewModel @Inject constructor(
                 )
             },
             activeWorkout = active,
-            steps = stepsState,
-            sleep = sleepState,
+            steps = extra.steps,
+            sleep = extra.sleep,
+            insights = extra.insights,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), initialState())
 
