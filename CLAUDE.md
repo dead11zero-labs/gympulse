@@ -49,6 +49,7 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 `./gradlew assembleDebug testDebugUnitTest lintDebug`
 
 ## Release
-- `.github/workflows/release.yml` baut `assembleRelease` (manuell, bei Push auf `main` und bei Tags `v*`; Tags erzeugen ein GitHub-Release mit APK).
+- `.github/workflows/release.yml` baut `:app:assembleRelease` und `:wear:assembleRelease` (manuell, bei Push auf `main` und bei Tags `v*`; Tags erzeugen ein GitHub-Release mit beiden APKs).
 - Signatur über die Secrets `GYMPULSE_KEYSTORE_BASE64`, `GYMPULSE_KEYSTORE_PASSWORD`, `GYMPULSE_KEY_ALIAS`, `GYMPULSE_KEY_PASSWORD`. Fehlen sie, wird mit dem Debug-Schlüssel signiert. Keystores nie committen.
-- Jeder Build auf `main` veröffentlicht die APK zusätzlich als Pre-Release `latest-main` (direkter Download ohne ZIP, funktioniert auch am Handy).
+- Phone- und Wear-APK teilen sich die `applicationId` und müssen denselben Schlüssel haben (Data Layer). Die Signing-Konfiguration liegt zentral in `build-logic` (`ReleaseSigning.kt`), nicht in den Modulen.
+- Jeder Build auf `main` veröffentlicht die APKs zusätzlich als Pre-Release `latest-main` (direkter Download ohne ZIP, funktioniert auch am Handy): `gympulse-*.apk` (Handy) und `gympulse-wear-*.apk` (Wear OS).

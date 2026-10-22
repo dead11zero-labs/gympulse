@@ -22,8 +22,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            // Signatur folgt in W10; bis dahin Debug-Schlüssel, damit der Build installierbar bleibt.
-            signingConfig = signingConfigs.getByName("debug")
+            // Gleicher Schlüssel wie :app (Convention-Plugin), sonst funktioniert die Data Layer nicht.
+            // Ohne Keystore Fallback auf den Debug-Schlüssel, damit der Build installierbar bleibt.
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
         }
     }
 

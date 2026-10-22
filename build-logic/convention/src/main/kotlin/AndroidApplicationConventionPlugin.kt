@@ -1,4 +1,5 @@
 import app.gympulse.buildlogic.configureCommon
+import app.gympulse.buildlogic.configureReleaseSigning
 import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -10,6 +11,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         pluginManager.apply("com.android.application")
         extensions.configure<ApplicationExtension> {
             configureCommon()
+            configureReleaseSigning(target)
         }
     }
 }
