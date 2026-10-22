@@ -19,9 +19,13 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 - `core:cloud` – optionales Cloud-Backup: Supabase (auth-kt, postgrest-kt), Google-Login per Credential Manager. Schnittstellen
   (`CloudAuth`, `CloudBackupRemote`, `LocalBackupSource`) und `CloudBackupSync` liegen in `core:data`. Konfiguration über
   gradle.properties (`gympulseSupabaseUrl`, `gympulseSupabasePublishableKey`, `gympulseGoogleWebClientId`), SQL unter `supabase/migrations/`.
+- `wear` – Wear-OS-App (Companion, `standalone=false`): Compose for Wear OS (Material 3 für Wear), Hilt, minSdk 33, gleiche
+  `applicationId` wie `app` (Data Layer). Plugin `gympulse.wear.application`. Das Telefon bleibt Source of Truth, Plan siehe `wearos-plan.md`.
+  **Ausnahme:** Das Wear-Theme (`app.gympulse.wear.theme`) hat eigene Tokens (Wear-`ColorScheme`, Kinetic-Farben), weil Wear Material 3 ein
+  eigenes Token-System hat; sonst gelten dieselben Regeln (keine hartcodierten Farben/Größen außerhalb des Themes, Strings DE+EN).
 - `feature:*` – je ein Feature; stellt eine `@Serializable`-Route und `NavGraphBuilder.xyzScreen()` bereit.
 - Convention-Plugins in `build-logic/convention`: `gympulse.android.application`, `.library`, `.compose`,
-  `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`.
+  `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`, `gympulse.wear.application` (Wear-App, ohne Phone-Material3).
 
 ## Design (Material 3)
 - Referenz ist der Material-3-Skill (`/material-3`) bzw. m3.material.io; das finale Design von Jörg folgt.

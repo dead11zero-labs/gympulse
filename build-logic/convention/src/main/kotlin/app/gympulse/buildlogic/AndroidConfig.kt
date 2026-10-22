@@ -9,6 +9,8 @@ object AndroidConfig {
     const val TARGET_SDK = 36
     // Health Connect ist ab Android 9 (API 28) nutzbar.
     const val MIN_SDK = 28
+    // Wear OS 4 (API 33): Galaxy Watch ab Watch4 und alle Pixel Watches.
+    const val WEAR_MIN_SDK = 33
     val JAVA_VERSION = JavaVersion.VERSION_17
 }
 
