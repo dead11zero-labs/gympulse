@@ -3,4 +3,5 @@
     <string name="app_name" translatable="false">GymPulse</string>
     <string name="hello_title">Ready to train</string>
     <string name="hello_subtitle">Start your workout on your phone.</string>
+    <string name="status_offline_syncing">Offline – syncing</string>
 </resources>

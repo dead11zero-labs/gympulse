@@ -15,7 +15,7 @@ import androidx.wear.compose.material3.Text
 import app.gympulse.wear.theme.GymPulseWearTheme
 
 @Composable
-fun HelloScreen() {
+fun HelloScreen(isOffline: Boolean = false) {
     val listState = rememberScalingLazyListState()
     AppScaffold {
         ScreenScaffold(scrollState = listState) {
@@ -40,6 +40,16 @@ fun HelloScreen() {
                         textAlign = TextAlign.Center,
                     )
                 }
+                if (isOffline) {
+                    item {
+                        Text(
+                            text = stringResource(R.string.status_offline_syncing),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
             }
         }
     }
@@ -48,5 +58,5 @@ fun HelloScreen() {
 @Preview(device = "id:wearos_small_round")
 @Composable
 private fun HelloScreenPreview() {
-    GymPulseWearTheme { HelloScreen() }
+    GymPulseWearTheme { HelloScreen(isOffline = true) }
 }
