@@ -37,25 +37,31 @@ data class HealthWorkout(
     val endTime: Instant,
     val endZoneOffset: ZoneOffset?,
     val exerciseType: HealthExerciseType,
-    /** Ein Abschnitt je Übung, zeitlich sortiert, ohne Überlappung und innerhalb von Start/Ende. */
+    /** Ein Abschnitt je abgeschlossenem Satz, zeitlich sortiert, ohne Überlappung und innerhalb von Start/Ende. */
     val segments: List<HealthWorkoutSegment> = emptyList(),
 )
 
 /**
- * Abschnitt einer Trainingseinheit, z. B. alle Sätze Bankdrücken.
+ * Abschnitt einer Trainingseinheit, z. B. der zweite Satz Bankdrücken.
  *
- * @param repetitions Summe der Wiederholungen aller abgeschlossenen Sätze, 0 ohne Wiederholungen.
+ * @param repetitions Wiederholungen des Satzes, 0 ohne Wiederholungen.
+ * @param weightKg Zusatzgewicht des Satzes in kg, null ohne Gewicht.
+ * @param setIndex Position des Satzes innerhalb seiner Übung, 0-basiert; beginnt je Übung wieder bei 0.
+ * @param rpe Anstrengung (RPE) des Satzes, null wenn nicht erfasst.
  */
 data class HealthWorkoutSegment(
     val startTime: Instant,
     val endTime: Instant,
     val type: HealthSegmentType,
     val repetitions: Int,
+    val weightKg: Double? = null,
+    val setIndex: Int? = null,
+    val rpe: Double? = null,
 )
 
 /**
  * Übungsart eines Abschnitts. Entspricht den `EXERCISE_SEGMENT_TYPE_*`-Konstanten von Health Connect
- * (connect-client 1.1.0); die Implementierung in `core:health` bildet sie ab. Liegestütze und Dips
+ * (connect-client 1.2.0-alpha06); die Implementierung in `core:health` bildet sie ab. Liegestütze und Dips
  * kennt Health Connect nicht, sie landen bei [UNKNOWN].
  */
 enum class HealthSegmentType {
