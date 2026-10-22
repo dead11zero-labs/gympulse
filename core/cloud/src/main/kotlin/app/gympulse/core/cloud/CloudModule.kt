@@ -3,6 +3,7 @@ package app.gympulse.core.cloud
 import app.gympulse.core.data.cloud.CloudAuth
 import app.gympulse.core.data.cloud.CloudBackupRemote
 import app.gympulse.core.data.cloud.LocalBackupSource
+import app.gympulse.core.data.cloud.NetworkStatus
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,4 +20,7 @@ abstract class CloudModule {
 
     @Binds
     abstract fun bindLocalBackupSource(impl: BackupManagerLocalSource): LocalBackupSource
+
+    @Binds
+    abstract fun bindNetworkStatus(impl: ConnectivityNetworkStatus): NetworkStatus
 }

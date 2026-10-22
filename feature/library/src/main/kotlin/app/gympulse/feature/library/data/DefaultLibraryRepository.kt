@@ -1,25 +1,23 @@
 package app.gympulse.feature.library.data
 
 import app.gympulse.core.data.mapper.toModel
-import app.gympulse.core.data.repository.EquipmentTemplateRepository
+import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.database.dao.EquipmentDao
 import app.gympulse.core.database.dao.ExerciseDao
 import app.gympulse.core.database.dao.SessionDao
-import app.gympulse.core.database.entity.EquipmentEntity
-import app.gympulse.core.database.entity.EquipmentSettingEntity
 import app.gympulse.core.database.entity.ExerciseEntity
 import app.gympulse.core.database.entity.ExerciseMuscleEntity
 import app.gympulse.core.database.entity.ExerciseTranslationEntity
 import app.gympulse.core.database.relation.ExerciseWithDetails
 import app.gympulse.core.model.Equipment
-import app.gympulse.core.model.EquipmentTemplate
+import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.Ids
 import app.gympulse.core.model.MuscleGroup
 import app.gympulse.core.model.SetEntry
+import app.gympulse.core.model.WorkoutPlan
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -32,7 +30,7 @@ class DefaultLibraryRepository @Inject constructor(
     private val exerciseDao: ExerciseDao,
     private val equipmentDao: EquipmentDao,
     private val sessionDao: SessionDao,
-    private val templateRepository: EquipmentTemplateRepository,
+    private val planRepository: PlanRepository,
     private val time: TimeProvider,
 ) : LibraryRepository {
 
@@ -53,11 +51,10 @@ class DefaultLibraryRepository @Inject constructor(
     override fun observeEquipment(): Flow<List<Equipment>> =
         equipmentDao.observeAll().map { rows -> rows.map { it.toModel() } }
 
-    override fun observeEquipmentById(id: String): Flow<Equipment?> =
-        equipmentDao.observeById(id).map { it?.toModel() }
+    override fun observePlans(): Flow<List<WorkoutPlan>> = planRepository.observePlans()
 
-    override suspend fun templates(locale: String): List<EquipmentTemplate> =
-        templateRepository.templates(locale)
+    override suspend fun addExerciseToPlan(planId: String, exercise: Exercise): Boolean =
+        planRepository.appendExercise(planId, exercise)
 
     override suspend fun previousSets(exerciseId: String): List<SetEntry> =
         sessionDao.getPreviousSets(exerciseId).map { it.toModel() }
@@ -119,54 +116,6 @@ class DefaultLibraryRepository @Inject constructor(
         val existing = exerciseDao.getById(id)?.exercise ?: return
         if (!existing.isCustom) return
         exerciseDao.softDelete(id, time.now().toEpochMilli())
-    }
-
-    override suspend fun saveEquipment(draft: EquipmentDraft): String {
-        val now = time.now().toEpochMilli()
-        val existing = draft.id?.let { equipmentDao.observeById(it).first() }
-        val id = existing?.equipment?.id ?: Ids.newId(now)
-
-        equipmentDao.upsert(
-            EquipmentEntity(
-                id = id,
-                name = draft.name.trim(),
-                location = draft.location?.trim()?.ifEmpty { null },
-                notes = draft.notes?.trim()?.ifEmpty { null },
-                templateKey = draft.templateKey ?: existing?.equipment?.templateKey,
-                createdAt = existing?.equipment?.createdAt ?: now,
-                updatedAt = now,
-                deletedAt = null,
-            ),
-        )
-
-        val oldSettings = existing?.settings.orEmpty().filter { it.deletedAt == null }
-        val kept = draft.settings.filter { it.key.isNotBlank() }
-        val rows = kept.mapIndexed { index, setting ->
-            val old = oldSettings.firstOrNull { it.id == setting.id }
-            EquipmentSettingEntity(
-                id = old?.id ?: Ids.newId(now),
-                equipmentId = id,
-                key = setting.key.trim(),
-                value = setting.value.trim(),
-                sortOrder = index,
-                createdAt = old?.createdAt ?: now,
-                updatedAt = now,
-                deletedAt = null,
-            )
-        }
-        if (rows.isNotEmpty()) equipmentDao.upsertSettings(rows)
-        val keptIds = rows.map { it.id }.toSet()
-        oldSettings.filter { it.id !in keptIds }.forEach { equipmentDao.softDeleteSetting(it.id, now) }
-        return id
-    }
-
-    override suspend fun deleteEquipment(id: String) {
-        val now = time.now().toEpochMilli()
-        val linked = exerciseDao.observeAll().first().filter { it.exercise.equipmentId == id }
-        if (linked.isNotEmpty()) {
-            exerciseDao.upsertExercises(linked.map { it.exercise.copy(equipmentId = null, updatedAt = now) })
-        }
-        equipmentDao.softDelete(id, now)
     }
 }
 

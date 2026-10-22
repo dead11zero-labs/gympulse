@@ -93,7 +93,8 @@
 
     <string name="settings_section_health">Health data</string>
     <string name="settings_health_connect">Health Connect</string>
-    <string name="settings_health_connect_summary">Share workouts and read body weight, heart rate, steps and calories from Android Health Connect</string>
+    <string name="settings_health_connect_summary">Share workouts and read heart rate, steps, calories and sleep from Android Health Connect</string>
+    <string name="settings_health_connect_entry_summary">Main switch and data types</string>
 
     <string name="settings_section_data">Data</string>
     <string name="settings_export_import">Export and import</string>

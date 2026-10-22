@@ -12,6 +12,7 @@ dependencies {
     api(projects.core.model)
     implementation(projects.core.database)
     api(projects.core.featuregate)
+    implementation(projects.core.settings)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
 

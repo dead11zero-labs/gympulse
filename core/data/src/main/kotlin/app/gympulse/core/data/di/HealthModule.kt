@@ -1,7 +1,7 @@
 package app.gympulse.core.data.di
 
 import app.gympulse.core.data.health.FinishedWorkoutExporter
-import app.gympulse.core.data.health.HealthConnectSync
+import app.gympulse.core.data.health.GatedWorkoutExporter
 import app.gympulse.core.data.health.HealthInsights
 import app.gympulse.core.data.health.HealthSleepReader
 import app.gympulse.core.data.health.HealthStepsReader
@@ -16,7 +16,7 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class HealthModule {
     @Binds
-    abstract fun bindFinishedWorkoutExporter(impl: HealthConnectSync): FinishedWorkoutExporter
+    abstract fun bindFinishedWorkoutExporter(impl: GatedWorkoutExporter): FinishedWorkoutExporter
 
     @Binds
     abstract fun bindWorkoutHealthReader(impl: HealthInsights): WorkoutHealthReader

@@ -36,19 +36,3 @@ data class ExerciseDraft(
     val defaultRestSeconds: Int?,
     val equipmentId: String?,
 )
-
-/** Eingabe zum Anlegen oder Ändern eines Geräts. Einstellungen ohne [SettingDraft.id] sind neu. */
-data class EquipmentDraft(
-    val id: String?,
-    val name: String,
-    val location: String?,
-    val notes: String?,
-    val templateKey: String?,
-    val settings: List<SettingDraft>,
-)
-
-data class SettingDraft(
-    val id: String?,
-    val key: String,
-    val value: String,
-)

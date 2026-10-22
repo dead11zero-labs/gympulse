@@ -1,11 +1,12 @@
 package app.gympulse.feature.library.data
 
 import app.gympulse.core.model.Equipment
-import app.gympulse.core.model.EquipmentTemplate
+import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.SetEntry
+import app.gympulse.core.model.WorkoutPlan
 import kotlinx.coroutines.flow.Flow
 
-/** Datenzugriff der Bibliothek (Übungen und Geräte). Per Fake in Tests austauschbar. */
+/** Datenzugriff der Bibliothek (Übungen und Pläne zum Hinzufügen). Per Fake in Tests austauschbar. */
 interface LibraryRepository {
     /** Alle Übungen, alphabetisch nach dem Namen in [locale] (Fallback Englisch). */
     fun observeExercises(locale: String): Flow<List<LibraryExercise>>
@@ -16,9 +17,14 @@ interface LibraryRepository {
 
     fun observeEquipment(): Flow<List<Equipment>>
 
-    fun observeEquipmentById(id: String): Flow<Equipment?>
+    /** Aktive (nicht gelöschte, nicht archivierte) Pläne, alphabetisch. */
+    fun observePlans(): Flow<List<WorkoutPlan>>
 
-    suspend fun templates(locale: String): List<EquipmentTemplate>
+    /**
+     * Hängt die Übung mit den Standardwerten des Plan-Editors ans Ende des Plans.
+     * Liefert false, wenn der Plan nicht (mehr) existiert.
+     */
+    suspend fun addExerciseToPlan(planId: String, exercise: Exercise): Boolean
 
     /** Sätze der zuletzt abgeschlossenen Session mit dieser Übung. */
     suspend fun previousSets(exerciseId: String): List<SetEntry>
@@ -33,9 +39,4 @@ interface LibraryRepository {
 
     /** Löscht (Soft Delete) eine eigene Übung; Seed-Übungen bleiben unverändert. */
     suspend fun deleteCustomExercise(id: String)
-
-    suspend fun saveEquipment(draft: EquipmentDraft): String
-
-    /** Löscht das Gerät (Soft Delete) und löst die Zuordnung aller Übungen. */
-    suspend fun deleteEquipment(id: String)
 }

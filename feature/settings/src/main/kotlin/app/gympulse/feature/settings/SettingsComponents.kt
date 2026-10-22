@@ -1,14 +1,23 @@
 package app.gympulse.feature.settings
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
@@ -29,6 +38,7 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.graphics.Color
+import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListGroup
 import app.gympulse.core.designsystem.component.ListRow
@@ -88,6 +98,46 @@ internal fun SettingsRow(
         onClick = onClick,
         modifier = if (onClick != null) modifier.semantics { role = Role.Button } else modifier,
     )
+}
+
+/** Zeile, die eine Unterseite öffnet: Pfeil am Ende. */
+@Composable
+internal fun SettingsLinkRow(
+    headline: String,
+    supporting: String?,
+    icon: ImageVector,
+    onClick: () -> Unit,
+) {
+    SettingsRow(
+        headline = headline,
+        supporting = supporting,
+        icon = icon,
+        trailing = {
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        },
+        onClick = onClick,
+    )
+}
+
+/** Rahmen einer Unterseite der Einstellungen: scrollbar, auf großen Screens in der Breite begrenzt. */
+@Composable
+internal fun SettingsSubpage(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        Column(
+            modifier = Modifier
+                .widthIn(max = Spacing.maxContentWidth)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = currentWindowWidthClass().horizontalMargin, vertical = Spacing.m),
+            verticalArrangement = Arrangement.spacedBy(Spacing.l),
+        ) {
+            content()
+        }
+    }
 }
 
 /** Dialog mit Einfachauswahl (Radio-Buttons). */

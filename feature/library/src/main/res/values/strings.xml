@@ -2,11 +2,8 @@
 <resources>
     <string name="feature_library_title">Library</string>
 
-    <!-- Tabs and entry points -->
-    <string name="library_tab_exercises">Exercises</string>
-    <string name="library_tab_equipment">Equipment</string>
+    <!-- Entry points -->
     <string name="library_new_exercise">New exercise</string>
-    <string name="library_new_equipment">New equipment</string>
 
     <!-- Common actions -->
     <string name="library_save">Save</string>
@@ -90,33 +87,16 @@
     <string name="library_error_name_required">Please enter a name</string>
     <string name="library_error_bodyweight_factor">Enter a number between 0 and 2</string>
     <string name="library_error_rest">Enter a whole number of seconds</string>
-    <string name="library_builtin_hint">%1$s is a built-in exercise. You can change your notes, the rest time and the machine.</string>
-    <string name="library_machine_none">None</string>
-    <string name="library_machine_none_available">Add a machine in the Equipment tab to link it to this exercise.</string>
+    <string name="library_builtin_hint">%1$s is a built-in exercise. You can change your notes and the rest time.</string>
 
-    <!-- Equipment -->
-    <string name="library_settings_count">Settings: %1$d</string>
-    <string name="library_equipment_empty_title">No equipment yet</string>
-    <string name="library_equipment_empty_message">Save the machines in your gym together with their settings, for example seat height.</string>
-    <string name="library_equipment_not_found">Equipment not found</string>
-    <string name="library_equipment_not_found_message">This equipment no longer exists.</string>
-    <string name="library_search_templates">Search templates</string>
-    <string name="library_empty_equipment">Empty equipment</string>
-    <string name="library_empty_equipment_hint">Start from scratch and add your own settings</string>
-    <string name="library_templates_no_match">No matching templates</string>
-    <string name="library_edit_equipment">Edit equipment</string>
-    <string name="library_photo_placeholder">Photo (coming soon)</string>
-    <string name="library_field_equipment_name">Name</string>
-    <string name="library_field_location">Gym or location</string>
-    <string name="library_settings">Settings</string>
-    <string name="library_settings_hint">Save how you set up this machine, for example seat height 4.</string>
-    <string name="library_field_setting_name">Setting</string>
-    <string name="library_field_setting_value">Value</string>
-    <string name="library_add_setting">Add setting</string>
-    <string name="library_remove_setting">Remove setting</string>
-    <string name="library_linked_exercises">Exercises on this machine</string>
-    <string name="library_linked_exercises_empty">No exercises linked yet. Link one in the exercise editor.</string>
-    <string name="library_delete_equipment">Delete equipment</string>
-    <string name="library_delete_equipment_title">Delete equipment?</string>
-    <string name="library_delete_equipment_message">%1$s and its settings will be removed. Linked exercises stay in your library.</string>
+    <!-- Add to plan -->
+    <string name="library_add_to_plan">Add to plan</string>
+    <string name="library_add_to_plan_title">Add to plan</string>
+    <string name="library_add_to_plan_empty">You have no plans yet. Create a plan in the Plans tab first, then add this exercise to it.</string>
+    <string name="library_added_to_plan">Added to %1$s</string>
+    <string name="library_add_to_plan_failed">Could not add the exercise to the plan</string>
+    <plurals name="library_plan_exercise_count">
+        <item quantity="one">%1$d exercise</item>
+        <item quantity="other">%1$d exercises</item>
+    </plurals>
 </resources>

@@ -52,15 +52,14 @@ import app.gympulse.core.designsystem.component.GymPulseCardVariant
 import app.gympulse.core.designsystem.component.LabelCaps
 import app.gympulse.core.designsystem.component.ListRowIcon
 import app.gympulse.core.designsystem.component.StatTile
+import app.gympulse.core.designsystem.icon.ActionIcons
 import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.WeekStart
-import app.gympulse.feature.settings.cloud.CloudBackupSettingsRows
 import app.gympulse.feature.settings.data.DataSettingsRows
-import app.gympulse.feature.settings.health.HealthConnectSettingsRows
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -70,6 +69,8 @@ private enum class SettingsDialog { NAME, WEIGHT, HEIGHT, REST_TIMER, WEEKLY_GOA
 @Composable
 internal fun SettingsScreen(
     onOpenBodyMetrics: () -> Unit,
+    onOpenHealthConnect: () -> Unit,
+    onOpenCloudBackup: () -> Unit,
     onOpenAbout: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
@@ -186,7 +187,12 @@ internal fun SettingsScreen(
             }
 
             SettingsSection(stringResource(R.string.settings_section_health)) {
-                HealthConnectSettingsRows()
+                SettingsLinkRow(
+                    headline = stringResource(R.string.settings_health_connect),
+                    supporting = stringResource(R.string.settings_health_connect_entry_summary),
+                    icon = ActionIcons.HealthAndSafety,
+                    onClick = onOpenHealthConnect,
+                )
             }
 
             SettingsSection(stringResource(R.string.settings_section_data)) {
@@ -194,7 +200,12 @@ internal fun SettingsScreen(
             }
 
             SettingsSection(stringResource(R.string.settings_section_cloud)) {
-                CloudBackupSettingsRows()
+                SettingsLinkRow(
+                    headline = stringResource(R.string.cloud_backup),
+                    supporting = stringResource(R.string.cloud_backup_entry_summary),
+                    icon = ActionIcons.CloudSync,
+                    onClick = onOpenCloudBackup,
+                )
             }
 
             SettingsSection(stringResource(R.string.settings_section_about)) {

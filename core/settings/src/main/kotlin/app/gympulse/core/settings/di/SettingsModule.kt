@@ -5,7 +5,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import app.gympulse.core.settings.DataStoreIntegrationSettings
 import app.gympulse.core.settings.DataStoreUserSettingsRepository
+import app.gympulse.core.settings.IntegrationSettings
 import app.gympulse.core.settings.UserSettingsRepository
 import dagger.Binds
 import dagger.Module
@@ -21,6 +23,10 @@ abstract class SettingsModule {
     @Binds
     @Singleton
     abstract fun bindUserSettingsRepository(impl: DataStoreUserSettingsRepository): UserSettingsRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindIntegrationSettings(impl: DataStoreIntegrationSettings): IntegrationSettings
 
     companion object {
         private const val FILE_NAME = "user_settings"

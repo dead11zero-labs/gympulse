@@ -1,12 +1,14 @@
 package app.gympulse.core.data.health
 
 import app.gympulse.core.model.BodyMeasurement
+import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.MeasurementSource
 import app.gympulse.core.model.MeasurementType
 import app.gympulse.core.model.SessionStatus
 import app.gympulse.core.model.WorkoutSession
 import java.time.ZoneId
+import java.util.Locale
 
 /** Reine Abbildungen zwischen GymPulse-Modellen und Health-Connect-Daten. */
 object WorkoutHealthMapper {
@@ -15,33 +17,53 @@ object WorkoutHealthMapper {
      * Bildet eine abgeschlossene Session ab. Liefert null für aktive oder verworfene Sessions
      * sowie für Sessions ohne gültigen Zeitraum (Ende nicht nach Start).
      *
-     * @param categories Kategorie je Übungs-ID; unbekannte Übungen werden ignoriert.
+     * Der Titel lautet „GymPulse: <Plan/Titel>“. Für jede Übung mit abgeschlossenen Sätzen entsteht
+     * ein Abschnitt ([HealthSegmentPlanner]) und eine Zeile in den Notizen ([HealthWorkoutNotes]).
+     *
+     * @param exercises Übungen je ID mit Namen in App-Sprache; unbekannte Übungen werden ignoriert.
+     * @param locale Zahlenformat der Notizen.
      */
     fun toHealthWorkout(
         session: WorkoutSession,
-        categories: Map<String, ExerciseCategory>,
+        exercises: Map<String, Exercise>,
         zone: ZoneId,
+        locale: Locale = Locale.getDefault(),
     ): HealthWorkout? {
         if (session.status != SessionStatus.COMPLETED) return null
         val end = session.endedAt ?: return null
         if (!end.isAfter(session.startedAt)) return null
 
-        val trained = session.exercises.filter { exercise -> exercise.sets.any { it.isCompleted } }
-        val relevant = trained.ifEmpty { session.exercises }
-        val type = exerciseType(relevant.mapNotNull { categories[it.exerciseId] })
+        val ordered = session.exercises.sortedBy { it.sortOrder }
+        val trained = ordered.filter { exercise -> exercise.sets.any { it.isCompleted } }
+        val relevant = trained.ifEmpty { ordered }
+        val type = exerciseType(relevant.mapNotNull { exercises[it.exerciseId]?.category })
+
+        val details = trained.mapNotNull { sessionExercise ->
+            val exercise = exercises[sessionExercise.exerciseId] ?: return@mapNotNull null
+            TrainedExercise(
+                name = exercise.name,
+                type = HealthSegmentClassifier.classify(exercise),
+                sets = sessionExercise.sets.filter { it.isCompleted }.sortedBy { it.setIndex },
+            )
+        }
 
         return HealthWorkout(
             clientRecordId = session.id,
             clientRecordVersion = end.toEpochMilli(),
-            title = session.title?.trim()?.takeIf { it.isNotEmpty() },
-            notes = session.notes?.trim()?.takeIf { it.isNotEmpty() },
+            title = title(session.title),
+            notes = HealthWorkoutNotes.build(session.notes, details, locale),
             startTime = session.startedAt,
             startZoneOffset = zone.rules.getOffset(session.startedAt),
             endTime = end,
             endZoneOffset = zone.rules.getOffset(end),
             exerciseType = type,
+            segments = HealthSegmentPlanner.plan(session.startedAt, end, details),
         )
     }
+
+    /** „GymPulse: Push Day“, ohne Titel nur „GymPulse“. */
+    fun title(sessionTitle: String?): String =
+        sessionTitle?.trim()?.takeIf { it.isNotEmpty() }?.let { "$TITLE_PREFIX: $it" } ?: TITLE_PREFIX
 
     /**
      * Trainingsart aus den Übungskategorien: nur Dehnen ergibt STRETCHING; sonst entscheiden die
@@ -70,6 +92,8 @@ object WorkoutHealthMapper {
             it.source == MeasurementSource.HEALTH_CONNECT &&
             it.measuredAt.toEpochMilli() == weight.measuredAt.toEpochMilli()
     }
+
+    private const val TITLE_PREFIX = "GymPulse"
 
     private val WEIGHTLIFTING_CATEGORIES = setOf(
         ExerciseCategory.POWERLIFTING,
