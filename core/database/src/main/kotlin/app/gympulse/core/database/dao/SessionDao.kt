@@ -45,6 +45,20 @@ interface SessionDao {
     fun observeCompletedBetween(fromMillis: Long, toMillis: Long): Flow<List<WorkoutSessionEntity>>
 
     /**
+     * Abgeschlossene Sessions mit Beginn ab [fromMillis] samt Übungen und Sätzen, älteste zuerst.
+     * Grundlage der Trainingsauswertung (`core:insights`); Soft-Deletes der Kindzeilen filtern die Mapper.
+     */
+    @Transaction
+    @Query(
+        """
+        SELECT * FROM workout_session
+        WHERE status = 'COMPLETED' AND deleted_at IS NULL AND started_at >= :fromMillis
+        ORDER BY started_at
+        """,
+    )
+    fun observeCompletedWithContentSince(fromMillis: Long): Flow<List<SessionWithExercises>>
+
+    /**
      * Volumen je abgeschlossener Session im Zeitraum [fromMillis, toMillis).
      * Zählt nur erledigte Sätze außer Aufwärmsätzen (sofern [includeWarmups] false ist).
      * Formel wie [app.gympulse.core.model.setVolumeKg]:

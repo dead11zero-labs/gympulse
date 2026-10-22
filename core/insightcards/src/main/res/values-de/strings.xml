@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Trainings-Auswertung</string>
+    <string name="insights_section_title_exercise">Auswertung</string>
+    <string name="insights_disclaimer">Die Vorschläge basieren auf deinen erfassten Workouts und sind keine medizinische Beratung.</string>
+    <string name="insights_unknown_exercise">Übung</string>
+
+    <string name="insights_empty_not_enough_title">Noch zu wenig Daten</string>
+    <string name="insights_empty_not_enough_message">Erfasse ein paar Workouts mit Gewicht und Wiederholungen. Nach etwa vier Einheiten einer Übung erscheinen hier Trends und Vorschläge.</string>
+    <string name="insights_empty_notable_title">Nichts Auffälliges</string>
+    <string name="insights_empty_notable_message">Dein Training liegt im Plan. Neue Hinweise erscheinen hier, sobald du weiter trainierst.</string>
+    <string name="insights_empty_exercise_message">Für diese Übung gibt es noch zu wenig Daten. Nach etwa vier erfassten Einheiten siehst du hier Trends und Vorschläge.</string>
+
+    <string name="insights_title_plateau">Plateau</string>
+    <string name="insights_title_decline">Kraft sinkt</string>
+    <string name="insights_title_progress">Fortschritt</string>
+    <string name="insights_title_deload">Zeit für einen Deload</string>
+    <string name="insights_title_increase_weight">Gewicht steigern</string>
+    <string name="insights_title_increase_reps">Wiederholungen steigern</string>
+    <string name="insights_title_hold">Gewicht halten</string>
+    <string name="insights_title_imbalance">Ungleichgewicht</string>
+    <string name="insights_title_low_volume">Zu wenig Volumen</string>
+    <string name="insights_title_high_volume">Sehr hohes Volumen</string>
+
+    <string name="insights_subject_push_pull">Drücken vs. Ziehen</string>
+    <string name="insights_subject_quads_hamstrings">Quadrizeps vs. Beinbeuger</string>
+
+    <string name="insights_message_plateau">Seit %1$d Tagen kein neuer Bestwert. Einheiten seit dem letzten Bestwert: %2$d. Geschätztes Einmalmaximum: %3$s kg.</string>
+    <string name="insights_message_decline">Dein geschätztes Einmalmaximum liegt bei %1$s kg, dein Bestwert war %2$s kg. Achte auf deine Erholung oder plane eine leichtere Woche.</string>
+    <string name="insights_message_progress">Dein geschätztes Einmalmaximum liegt bei %1$s kg, etwa %2$s kg mehr pro Woche.</string>
+    <string name="insights_message_deload_plateau">Der Fortschritt stockt seit mehreren Phasen. Trainiere etwa eine Woche mit %1$s kg (jetzt %2$s kg) und %3$d Wiederholungen, danach steigerst du dich wieder.</string>
+    <string name="insights_message_deload_decline">Deine Kraft ist zuletzt gesunken. Trainiere etwa eine Woche mit %1$s kg (jetzt %2$s kg) und %3$d Wiederholungen, danach steigerst du dich wieder.</string>
+    <string name="insights_message_increase_weight">Alle Sätze haben das obere Ende deines Wiederholungsbereichs erreicht. Nimm beim nächsten Mal %1$s kg (jetzt %2$s kg) mit %3$d Wiederholungen.</string>
+    <string name="insights_message_increase_reps">Bleib bei %1$s kg und peile %2$d Wiederholungen pro Satz an.</string>
+    <string name="insights_message_hold_reps">Du hast die Mindestwiederholungen nicht erreicht. Bleib bei %1$s kg und peile %2$d Wiederholungen an.</string>
+    <string name="insights_message_hold_sets_missing">Geplante Sätze fehlen. Bleib bei %1$s kg und schließe alle Sätze mit %2$d Wiederholungen ab.</string>
+    <string name="insights_message_hold_rpe">Deine Sätze waren sehr anstrengend. Bleib bei %1$s kg, bis es leichter fällt, mit %2$d Wiederholungen.</string>
+    <string name="insights_message_low_volume">%1$s harte Sätze pro Woche. Ein guter Bereich liegt zwischen %2$s und %3$s.</string>
+    <string name="insights_message_high_volume">%1$s harte Sätze pro Woche, mehr als die üblichen %2$s bis %3$s. Achte auf deine Erholung.</string>
+    <string name="insights_message_push_dominant">Drückende Muskeln bekommen %1$s Sätze pro Woche, ziehende nur %2$s. Ergänze Rudern oder Latziehen zum Ausgleich.</string>
+    <string name="insights_message_pull_dominant">Ziehende Muskeln bekommen %1$s Sätze pro Woche, drückende nur %2$s. Ergänze Drücken zum Ausgleich.</string>
+    <string name="insights_message_quads_dominant">Der Quadrizeps bekommt %1$s Sätze pro Woche, die Beinbeuger nur %2$s. Ergänze Beinbeugen oder Rumänisches Kreuzheben.</string>
+    <string name="insights_message_hamstrings_dominant">Die Beinbeuger bekommen %1$s Sätze pro Woche, der Quadrizeps nur %2$s. Ergänze Kniebeugen oder Beinpressen.</string>
+</resources>

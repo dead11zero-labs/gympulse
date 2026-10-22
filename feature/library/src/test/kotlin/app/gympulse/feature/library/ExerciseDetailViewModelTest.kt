@@ -1,6 +1,8 @@
 package app.gympulse.feature.library
 
 import androidx.lifecycle.SavedStateHandle
+import app.gympulse.core.insightcards.InsightsEmptyReason
+import app.gympulse.core.insightcards.InsightsUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -111,5 +113,16 @@ class ExerciseDetailViewModelTest {
 
         vm.addToPlan("p1")
         assertEquals(PlanAddResult.Failed, vm.uiState.value.planAddResult)
+    }
+
+    @Test
+    fun insightsFollowTheRepository() = runTest {
+        val vm = vm("bench")
+        backgroundScope.launch(dispatcher) { vm.uiState.collect {} }
+        assertTrue(vm.uiState.value.insights.isEmpty)
+        assertNull(vm.uiState.value.insights.emptyReason)
+
+        repository.insights.value = InsightsUi(emptyReason = InsightsEmptyReason.NOT_ENOUGH_DATA)
+        assertEquals(InsightsEmptyReason.NOT_ENOUGH_DATA, vm.uiState.value.insights.emptyReason)
     }
 }
