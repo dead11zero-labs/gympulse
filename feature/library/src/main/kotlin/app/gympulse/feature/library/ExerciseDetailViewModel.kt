@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
+import app.gympulse.core.model.WorkoutPlan
 import app.gympulse.feature.library.data.ExerciseDetail
 import app.gympulse.feature.library.data.LibraryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,7 +31,19 @@ data class ExerciseDetailUiState(
     /** Erledigte Arbeitssätze der letzten Session mit dieser Übung. */
     val previousSets: List<SetEntry> = emptyList(),
     val deleted: Boolean = false,
-)
+    /** Vorhandene Pläne (ohne gelöschte), Ziel von "Zu Plan hinzufügen". */
+    val plans: List<WorkoutPlan> = emptyList(),
+    /** Ergebnis des letzten "Zu Plan hinzufügen"; die UI zeigt es einmal und meldet es mit consumePlanAddResult(). */
+    val planAddResult: PlanAddResult? = null,
+) {
+    /** Herz-Zustand: nur wahr, wenn die geladene Übung tatsächlich Favorit ist (vorher und bei fehlender Übung: aus). */
+    val isFavorite: Boolean get() = detail?.exercise?.isFavorite == true
+}
+
+sealed interface PlanAddResult {
+    data class Added(val planName: String) : PlanAddResult
+    data object Failed : PlanAddResult
+}
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -45,19 +59,23 @@ class ExerciseDetailViewModel @Inject constructor(
     private val locale = MutableStateFlow(Locale.getDefault().language)
     private val previousSets = MutableStateFlow<List<SetEntry>>(emptyList())
     private val deleted = MutableStateFlow(false)
+    private val planAddResult = MutableStateFlow<PlanAddResult?>(null)
 
     val uiState: StateFlow<ExerciseDetailUiState> = combine(
         locale.flatMapLatest { repository.observeExercise(exerciseId, it) },
         repository.observeEquipment(),
         previousSets,
         deleted,
-    ) { detail, equipment, sets, isDeleted ->
+        combine(repository.observePlans(), planAddResult) { plans, result -> plans to result },
+    ) { detail, equipment, sets, isDeleted, (plans, addResult) ->
         ExerciseDetailUiState(
             isLoading = false,
             detail = detail,
             equipment = detail?.exercise?.equipmentId?.let { id -> equipment.firstOrNull { it.id == id } },
             previousSets = sets,
             deleted = isDeleted,
+            plans = plans,
+            planAddResult = addResult,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS), ExerciseDetailUiState())
 
@@ -75,6 +93,27 @@ class ExerciseDetailViewModel @Inject constructor(
     fun toggleFavorite() {
         val exercise = uiState.value.detail?.exercise ?: return
         viewModelScope.launch { repository.setFavorite(exercise.id, !exercise.isFavorite) }
+    }
+
+    /** Hängt die Übung mit den Standardwerten des Plan-Editors ans Ende des gewählten Plans. */
+    fun addToPlan(planId: String) {
+        val state = uiState.value
+        val exercise = state.detail?.exercise ?: return
+        val plan = state.plans.firstOrNull { it.id == planId } ?: return
+        viewModelScope.launch {
+            val added = try {
+                repository.addExerciseToPlan(plan.id, exercise)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                false
+            }
+            planAddResult.value = if (added) PlanAddResult.Added(plan.name) else PlanAddResult.Failed
+        }
+    }
+
+    fun consumePlanAddResult() {
+        planAddResult.value = null
     }
 
     /** Löscht nur eigene Übungen; für Seed-Übungen ist die Aktion wirkungslos. */

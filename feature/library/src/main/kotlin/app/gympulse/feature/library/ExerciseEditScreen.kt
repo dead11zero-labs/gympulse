@@ -21,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.data.ui.labelRes
 import app.gympulse.core.designsystem.theme.Spacing
-import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.MuscleGroup
@@ -178,12 +177,6 @@ private fun ExerciseForm(
             },
         )
 
-        EquipmentChoice(
-            options = state.equipmentOptions,
-            selectedId = state.equipmentId,
-            onSelected = viewModel::setEquipmentId,
-        )
-
         Button(
             onClick = viewModel::save,
             enabled = !state.isSaving,
@@ -192,35 +185,6 @@ private fun ExerciseForm(
             Text(stringResource(R.string.library_save))
         }
     }
-}
-
-/** Zuordnung zu einem eigenen Gerät: "Keins" oder genau eines aus der Geräteliste. */
-@Composable
-private fun EquipmentChoice(
-    options: List<Equipment>,
-    selectedId: String?,
-    onSelected: (String?) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    if (options.isEmpty()) {
-        Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-            SectionTitle(stringResource(R.string.library_machine))
-            Text(
-                text = stringResource(R.string.library_machine_none_available),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        return
-    }
-    ChipGroup(
-        title = stringResource(R.string.library_machine),
-        options = listOf<Equipment?>(null) + options,
-        isSelected = { it?.id == selectedId },
-        label = { it?.name ?: stringResource(R.string.library_machine_none) },
-        onClick = { onSelected(it?.id) },
-        modifier = modifier,
-    )
 }
 
 /** Eine Gruppe von Filter-Chips, die umbrechen; Anzeige und Auswahl liefert der Aufrufer. */

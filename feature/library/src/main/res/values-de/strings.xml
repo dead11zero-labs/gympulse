@@ -2,11 +2,8 @@
 <resources>
     <string name="feature_library_title">Bibliothek</string>
 
-    <!-- Tabs und Einstiegspunkte -->
-    <string name="library_tab_exercises">Übungen</string>
-    <string name="library_tab_equipment">Geräte</string>
+    <!-- Einstiegspunkte -->
     <string name="library_new_exercise">Neue Übung</string>
-    <string name="library_new_equipment">Neues Gerät</string>
 
     <!-- Allgemeine Aktionen -->
     <string name="library_save">Speichern</string>
@@ -90,33 +87,16 @@
     <string name="library_error_name_required">Bitte gib einen Namen ein</string>
     <string name="library_error_bodyweight_factor">Gib eine Zahl zwischen 0 und 2 ein</string>
     <string name="library_error_rest">Gib eine ganze Zahl in Sekunden ein</string>
-    <string name="library_builtin_hint">%1$s ist eine mitgelieferte Übung. Du kannst Notizen, Pausenzeit und Gerät ändern.</string>
-    <string name="library_machine_none">Keins</string>
-    <string name="library_machine_none_available">Lege im Tab Geräte ein Gerät an, um es dieser Übung zuzuordnen.</string>
+    <string name="library_builtin_hint">%1$s ist eine mitgelieferte Übung. Du kannst Notizen und Pausenzeit ändern.</string>
 
-    <!-- Geräte -->
-    <string name="library_settings_count">Einstellungen: %1$d</string>
-    <string name="library_equipment_empty_title">Noch keine Geräte</string>
-    <string name="library_equipment_empty_message">Speichere die Geräte in deinem Studio samt Einstellungen, zum Beispiel die Sitzhöhe.</string>
-    <string name="library_equipment_not_found">Gerät nicht gefunden</string>
-    <string name="library_equipment_not_found_message">Dieses Gerät gibt es nicht mehr.</string>
-    <string name="library_search_templates">Vorlagen suchen</string>
-    <string name="library_empty_equipment">Leeres Gerät</string>
-    <string name="library_empty_equipment_hint">Von Null beginnen und eigene Einstellungen anlegen</string>
-    <string name="library_templates_no_match">Keine passenden Vorlagen</string>
-    <string name="library_edit_equipment">Gerät bearbeiten</string>
-    <string name="library_photo_placeholder">Foto (folgt)</string>
-    <string name="library_field_equipment_name">Name</string>
-    <string name="library_field_location">Studio oder Ort</string>
-    <string name="library_settings">Einstellungen</string>
-    <string name="library_settings_hint">Speichere, wie du das Gerät einstellst, zum Beispiel Sitzhöhe 4.</string>
-    <string name="library_field_setting_name">Einstellung</string>
-    <string name="library_field_setting_value">Wert</string>
-    <string name="library_add_setting">Einstellung hinzufügen</string>
-    <string name="library_remove_setting">Einstellung entfernen</string>
-    <string name="library_linked_exercises">Übungen an diesem Gerät</string>
-    <string name="library_linked_exercises_empty">Noch keine Übungen zugeordnet. Ordne eine im Übungseditor zu.</string>
-    <string name="library_delete_equipment">Gerät löschen</string>
-    <string name="library_delete_equipment_title">Gerät löschen?</string>
-    <string name="library_delete_equipment_message">%1$s und die Einstellungen werden entfernt. Zugeordnete Übungen bleiben in deiner Bibliothek.</string>
+    <!-- Zu Plan hinzufügen -->
+    <string name="library_add_to_plan">Zu Plan hinzufügen</string>
+    <string name="library_add_to_plan_title">Zu Plan hinzufügen</string>
+    <string name="library_add_to_plan_empty">Du hast noch keine Pläne. Lege zuerst im Tab Pläne einen Plan an und füge die Übung dann hinzu.</string>
+    <string name="library_added_to_plan">Zu %1$s hinzugefügt</string>
+    <string name="library_add_to_plan_failed">Die Übung konnte nicht zum Plan hinzugefügt werden</string>
+    <plurals name="library_plan_exercise_count">
+        <item quantity="one">%1$d Übung</item>
+        <item quantity="other">%1$d Übungen</item>
+    </plurals>
 </resources>
