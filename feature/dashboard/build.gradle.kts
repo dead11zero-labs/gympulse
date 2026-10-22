@@ -8,6 +8,7 @@ android {
 
 dependencies {
     implementation(projects.core.data)
+    implementation(projects.core.insightcards)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.kotlinx.coroutines.core)
 

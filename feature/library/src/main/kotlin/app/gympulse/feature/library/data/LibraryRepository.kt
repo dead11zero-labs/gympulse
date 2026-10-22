@@ -4,6 +4,7 @@ import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.WorkoutPlan
+import app.gympulse.core.insightcards.InsightsUi
 import kotlinx.coroutines.flow.Flow
 
 /** Datenzugriff der Bibliothek (Übungen und Pläne zum Hinzufügen). Per Fake in Tests austauschbar. */
@@ -28,6 +29,9 @@ interface LibraryRepository {
 
     /** Sätze der zuletzt abgeschlossenen Session mit dieser Übung. */
     suspend fun previousSets(exerciseId: String): List<SetEntry>
+
+    /** Befunde der Trainingsauswertung für diese Übung als fertige Karten (lokal berechnet). */
+    fun observeInsights(exerciseId: String): Flow<InsightsUi>
 
     suspend fun setFavorite(id: String, favorite: Boolean)
 
