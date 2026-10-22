@@ -2,4 +2,5 @@
 <resources>
     <string name="hello_title">Bereit fürs Training</string>
     <string name="hello_subtitle">Starte dein Workout am Handy.</string>
+    <string name="status_offline_syncing">Offline – wird synchronisiert</string>
 </resources>
