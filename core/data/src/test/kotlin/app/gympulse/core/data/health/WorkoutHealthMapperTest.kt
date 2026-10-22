@@ -155,7 +155,7 @@ class WorkoutHealthMapperTest {
     }
 
     @Test
-    fun everyTrainedExerciseBecomesASegmentInSessionOrder() {
+    fun everyCompletedSetBecomesASegmentInSessionOrder() {
         val workout = WorkoutHealthMapper.toHealthWorkout(
             session(
                 exercises = listOf(
@@ -176,6 +176,8 @@ class WorkoutHealthMapperTest {
         assertEquals(start, workout.segments.first().startTime)
         assertEquals(start.plusSeconds(1800), workout.segments.last().endTime)
         assertEquals(listOf(8, 8), workout.segments.map { it.repetitions })
+        assertEquals(listOf(0, 0), workout.segments.map { it.setIndex })
+        assertEquals(listOf(60.0, 60.0), workout.segments.map { it.weightKg })
         assertEquals(
             "Felt strong\n\n• Bankdrücken: 1 × 8 × 60 kg\n• Kniebeuge: 1 × 8 × 60 kg",
             workout.notes,
