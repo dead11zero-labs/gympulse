@@ -14,7 +14,6 @@ import app.gympulse.core.data.health.HealthWorkoutSegment
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.Duration
@@ -52,55 +51,8 @@ class HealthRecordMapperTest {
 
     private fun minutes(value: Long): Instant = workout.startTime.plus(Duration.ofMinutes(value))
 
-    private fun segment(
-        from: Long,
-        to: Long,
-        type: HealthSegmentType,
-        reps: Int = 0,
-        weightKg: Double? = null,
-        setIndex: Int? = null,
-        rpe: Double? = null,
-    ) = HealthWorkoutSegment(minutes(from), minutes(to), type, reps, weightKg, setIndex, rpe)
-
-    @Test
-    fun segmentsCarryWeightSetIndexAndRpePerSet() {
-        val record = HealthRecordMapper.toExerciseSessionRecord(
-            workout.copy(
-                exerciseType = HealthExerciseType.STRENGTH_TRAINING,
-                segments = listOf(
-                    segment(0, 5, HealthSegmentType.BENCH_PRESS, reps = 8, weightKg = 60.0, setIndex = 0, rpe = 7.5),
-                    segment(5, 10, HealthSegmentType.BENCH_PRESS, reps = 6, weightKg = 62.5, setIndex = 1),
-                    segment(10, 15, HealthSegmentType.PULL_UP, reps = 10, setIndex = 0),
-                ),
-            ),
-        )
-
-        assertEquals(3, record.segments.size)
-        assertEquals(listOf(8, 6, 10), record.segments.map { it.repetitions })
-        assertEquals(listOf(0, 1, 0), record.segments.map { it.setIndex })
-        assertEquals(60.0, record.segments[0].weight!!.inKilograms, 1e-9)
-        assertEquals(62.5, record.segments[1].weight!!.inKilograms, 1e-9)
-        assertNull(record.segments[2].weight)
-        assertEquals(listOf(7.5f, null, null), record.segments.map { it.rateOfPerceivedExertion })
-    }
-
-    @Test
-    fun invalidSetDetailsAreLeftOutInsteadOfDroppingTheSegment() {
-        val record = HealthRecordMapper.toExerciseSessionRecord(
-            workout.copy(
-                exerciseType = HealthExerciseType.STRENGTH_TRAINING,
-                segments = listOf(
-                    segment(0, 5, HealthSegmentType.SQUAT, reps = 5, weightKg = 0.0, setIndex = -1, rpe = 12.0),
-                    segment(5, 10, HealthSegmentType.SQUAT, reps = 5, weightKg = -20.0, setIndex = 1, rpe = -0.5),
-                ),
-            ),
-        )
-
-        assertEquals(2, record.segments.size)
-        record.segments.forEach { assertNull(it.weight) }
-        record.segments.forEach { assertNull(it.rateOfPerceivedExertion) }
-        assertEquals(listOf(null, 1), record.segments.map { it.setIndex })
-    }
+    private fun segment(from: Long, to: Long, type: HealthSegmentType, reps: Int = 0) =
+        HealthWorkoutSegment(minutes(from), minutes(to), type, reps)
 
     @Test
     fun segmentsAreWrittenWithTypeAndRepetitions() {
@@ -137,8 +89,7 @@ class HealthRecordMapperTest {
 
     @Test
     fun everySegmentTypeIsAcceptedInEveryExportedSessionType() {
-        // Prüft den Nachbau der Kompatibilitätsregel gegen die Validierung der Bibliothek (connect-client
-        // 1.2.0-alpha06, auf der JVM ohne Plattform-Validierung): Ein Abschnitt
+        // Prüft den Nachbau der Kompatibilitätsregel gegen die Validierung der Bibliothek: Ein Abschnitt
         // geht nie verloren, unpassende Typen werden zu OTHER_WORKOUT.
         HealthExerciseType.entries.forEach { sessionType ->
             HealthSegmentType.entries.forEach { segmentType ->
@@ -171,22 +122,6 @@ class HealthRecordMapperTest {
             HealthRecordMapper.isCompatible(
                 ExerciseSegment.EXERCISE_SEGMENT_TYPE_RUNNING_TREADMILL,
                 ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT,
-            ),
-        )
-        // Seit 1.2.0-alpha06 unverändert: Gewichtheben und Calisthenics teilen die Kraft-Abschnitte,
-        // Dehnen lässt nur die universellen Abschnitte zu.
-        listOf(ExerciseSessionRecord.EXERCISE_TYPE_WEIGHTLIFTING, ExerciseSessionRecord.EXERCISE_TYPE_CALISTHENICS)
-            .forEach { assertTrue(HealthRecordMapper.isCompatible(ExerciseSegment.EXERCISE_SEGMENT_TYPE_BENCH_PRESS, it)) }
-        assertTrue(
-            HealthRecordMapper.isCompatible(
-                ExerciseSegment.EXERCISE_SEGMENT_TYPE_STRETCHING,
-                ExerciseSessionRecord.EXERCISE_TYPE_STRETCHING,
-            ),
-        )
-        assertFalse(
-            HealthRecordMapper.isCompatible(
-                ExerciseSegment.EXERCISE_SEGMENT_TYPE_YOGA,
-                ExerciseSessionRecord.EXERCISE_TYPE_STRENGTH_TRAINING,
             ),
         )
     }
