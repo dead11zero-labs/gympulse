@@ -9,7 +9,7 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import app.gympulse.feature.workout.R
-import app.gympulse.feature.workout.timer.RestTimerState
+import app.gympulse.core.workout.timer.RestTimerState
 import java.time.Instant
 import java.util.Date
 

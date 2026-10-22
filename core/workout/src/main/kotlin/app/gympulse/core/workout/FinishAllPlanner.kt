@@ -1,11 +1,11 @@
-package app.gympulse.feature.workout
+package app.gympulse.core.workout
 
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.WorkoutSession
 import java.time.Instant
 
 /** Proposal for "mark everything as done": the duration the session will be finished with. */
-internal data class FinishAllProposal(
+data class FinishAllProposal(
     val durationSeconds: Long,
     /** Sets that count for the estimate: completed ones and open ones carrying values. */
     val setCount: Int,
@@ -16,7 +16,7 @@ internal data class FinishAllProposal(
  * Plausible duration for a session whose sets were all entered afterwards. Pure functions, no
  * clock or database access.
  */
-internal object FinishAllPlanner {
+object FinishAllPlanner {
     const val WORK_SECONDS_PER_SET = 45L
     const val DEFAULT_REST_SECONDS = 90
 
@@ -47,6 +47,6 @@ internal object FinishAllPlanner {
 }
 
 /** Sets that count for a finished session: completed ones and open ones with values, with their exercise id. */
-internal fun WorkoutSession.countedSets(): List<Pair<String, SetEntry>> =
+fun WorkoutSession.countedSets(): List<Pair<String, SetEntry>> =
     exercises.flatMap { exercise -> exercise.sets.map { exercise.id to it } }
         .filter { (_, set) -> set.isCompleted || set.hasValues() }

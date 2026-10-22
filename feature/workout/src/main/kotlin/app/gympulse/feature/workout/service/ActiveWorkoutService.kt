@@ -13,10 +13,9 @@ import android.os.IBinder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
-import app.gympulse.core.data.repository.WorkoutRepository
 import app.gympulse.core.data.util.TimeProvider
-import app.gympulse.feature.workout.timer.RestTimer
-import app.gympulse.feature.workout.timer.runningAt
+import app.gympulse.core.workout.ActiveWorkoutController
+import app.gympulse.core.workout.timer.runningAt
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +38,7 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class ActiveWorkoutService : Service() {
-    @Inject lateinit var workoutRepository: WorkoutRepository
-
-    @Inject lateinit var restTimer: RestTimer
+    @Inject lateinit var controller: ActiveWorkoutController
 
     @Inject lateinit var time: TimeProvider
 
@@ -69,10 +66,10 @@ class ActiveWorkoutService : Service() {
     }
 
     private suspend fun observeSession() {
-        val header = workoutRepository.observeActiveSession()
+        val header = controller.activeSession
             .map { session -> session?.let { HeaderData(it.title, it.startedAt) } }
             .distinctUntilChanged()
-        combine(header, restTimer.state) { data, rest -> data to rest }.collectLatest { (data, rest) ->
+        combine(header, controller.restTimerState) { data, rest -> data to rest }.collectLatest { (data, rest) ->
             if (data == null) {
                 ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 stopSelf()

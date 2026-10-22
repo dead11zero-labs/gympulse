@@ -1,4 +1,4 @@
-package app.gympulse.feature.workout
+package app.gympulse.core.workout
 
 import app.gympulse.core.data.repository.HistorySet
 import app.gympulse.core.model.SetType

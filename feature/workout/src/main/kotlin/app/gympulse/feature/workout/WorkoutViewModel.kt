@@ -3,19 +3,17 @@ package app.gympulse.feature.workout
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.gympulse.core.data.health.FinishedWorkoutExporter
-import app.gympulse.core.data.health.WorkoutHealthReader
 import app.gympulse.core.data.repository.ExerciseRepository
 import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.repository.WorkoutRepository
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.SetEntry
-import app.gympulse.core.model.SetType
 import app.gympulse.core.model.WorkoutSession
-import app.gympulse.feature.workout.timer.RestTimer
-import app.gympulse.feature.workout.timer.RestTimerSettings
-import app.gympulse.feature.workout.timer.RestTimerState
+import app.gympulse.core.workout.ActiveWorkoutController
+import app.gympulse.core.workout.FinishAllProposal
+import app.gympulse.core.workout.WorkoutSummary
+import app.gympulse.core.workout.timer.RestTimerState
 import app.gympulse.feature.workout.timer.Ticker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,48 +22,36 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import java.time.Duration
 import java.time.Instant
 import java.util.Locale
 import javax.inject.Inject
 
 /**
- * Active workout. The session state (active, completed, discarded) lives in Room only, so the
- * screen resumes a running session after process death. All writes run one after another
- * through [writeMutex] and always start from the latest stored session.
+ * Active workout screen. Reads the session from Room and delegates every write (and the rest
+ * timer) to the [ActiveWorkoutController], which serializes them and also serves the
+ * notification and, later, the watch.
  */
 @HiltViewModel
 internal class WorkoutViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
+    private val controller: ActiveWorkoutController,
     private val workoutRepository: WorkoutRepository,
     planRepository: PlanRepository,
     exerciseRepository: ExerciseRepository,
-    private val restTimer: RestTimer,
-    private val restTimerSettings: RestTimerSettings,
     ticker: Ticker,
-    private val time: TimeProvider,
-    private val healthExporter: FinishedWorkoutExporter,
-    private val healthReader: WorkoutHealthReader,
+    time: TimeProvider,
 ) : ViewModel() {
-
-    private val writeMutex = Mutex()
 
     /** Previous sets per exercise id, valid for one session. */
     private val previousSets = MutableStateFlow(PreviousSetsCache(sessionId = null, sets = emptyMap()))
 
-    private val _summary = MutableStateFlow<WorkoutSummary?>(null)
-
     /** Set after finishing a workout until the dialog is dismissed. */
-    val summary: StateFlow<WorkoutSummary?> = _summary.asStateFlow()
+    val summary: StateFlow<WorkoutSummary?> = controller.summary
 
     private val _finishAllProposal = MutableStateFlow<FinishAllProposal?>(null)
 
@@ -78,7 +64,7 @@ internal class WorkoutViewModel @Inject constructor(
             .shareIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS), replay = 1)
 
     val uiState: StateFlow<WorkoutUiState> = combine(
-        workoutRepository.observeActiveSession().onEach { session -> session?.let { loadPreviousSets(it) } },
+        controller.activeSession.onEach { session -> session?.let { loadPreviousSets(it) } },
         planRepository.observePlans(),
         catalog,
         previousSets,
@@ -104,7 +90,7 @@ internal class WorkoutViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS), emptyList())
 
-    val restTimerState: StateFlow<RestTimerState?> = restTimer.state
+    val restTimerState: StateFlow<RestTimerState?> = controller.restTimerState
 
     /** Current time for elapsed time and rest countdown; ticks only while the screen is visible. */
     val now: StateFlow<Instant> = ticker.ticks()
@@ -120,9 +106,7 @@ internal class WorkoutViewModel @Inject constructor(
     }
 
     /** Starts a workout from a plan, or an empty one with null; resumes a running session instead. */
-    fun startWorkout(planId: String?) = mutate {
-        workoutRepository.startOrResumeSession(planId)
-    }
+    fun startWorkout(planId: String?) = dispatch { controller.startWorkout(planId) }
 
     fun onWeightChange(sessionExerciseId: String, setId: String, text: String) {
         val value = WorkoutFormat.parseDecimal(text)
@@ -145,67 +129,33 @@ internal class WorkoutViewModel @Inject constructor(
     }
 
     /** Ticks a set off (and starts the rest timer) or reopens it. */
-    fun toggleSetCompleted(sessionExerciseId: String, setId: String) = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        val exercise = session.exercises.firstOrNull { it.id == sessionExerciseId } ?: return@mutate
-        val set = exercise.sets.firstOrNull { it.id == setId } ?: return@mutate
-        val completed = !set.isCompleted
-        workoutRepository.saveSet(sessionExerciseId, set.copy(isCompleted = completed, completedAt = null))
-        if (completed) {
-            restTimer.start(restSecondsFor(exercise.exerciseId))
-        }
-    }
+    fun toggleSetCompleted(sessionExerciseId: String, setId: String) =
+        dispatch { controller.toggleSetCompleted(sessionExerciseId, setId) }
 
-    fun toggleWarmup(sessionExerciseId: String, setId: String) {
-        updateSet(sessionExerciseId, setId) {
-            it.copy(setType = if (it.setType == SetType.WARMUP) SetType.WORKING else SetType.WARMUP)
-        }
-    }
+    fun toggleWarmup(sessionExerciseId: String, setId: String) =
+        dispatch { controller.toggleWarmup(sessionExerciseId, setId) }
 
-    fun addSet(sessionExerciseId: String) = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        workoutRepository.addSet(session.id, sessionExerciseId)
-    }
+    fun addSet(sessionExerciseId: String) = dispatch { controller.addSet(sessionExerciseId) }
 
-    fun deleteSet(setId: String) = mutate {
-        workoutRepository.deleteSet(setId)
-    }
+    fun deleteSet(setId: String) = dispatch { controller.deleteSet(setId) }
 
-    fun addExercise(exerciseId: String) = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        workoutRepository.addExercise(session.id, exerciseId)
-    }
+    fun addExercise(exerciseId: String) = dispatch { controller.addExercise(exerciseId) }
 
-    fun removeExercise(sessionExerciseId: String) = mutate {
-        workoutRepository.removeExercise(sessionExerciseId)
-    }
+    fun removeExercise(sessionExerciseId: String) = dispatch { controller.removeExercise(sessionExerciseId) }
 
-    fun onNotesChange(sessionExerciseId: String, notes: String) = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        workoutRepository.updateExerciseNotes(session.id, sessionExerciseId, notes)
-    }
+    fun onNotesChange(sessionExerciseId: String, notes: String) =
+        dispatch { controller.updateNotes(sessionExerciseId, notes) }
 
-    fun skipRest() = restTimer.skip()
+    fun skipRest() = controller.skipRest()
 
-    fun adjustRest(deltaSeconds: Int) = restTimer.adjust(deltaSeconds)
+    fun adjustRest(deltaSeconds: Int) = controller.adjustRest(deltaSeconds)
 
     /** Completes the whole session at once; open sets stay stored but do not count. */
-    fun finishWorkout() = finish(durationSeconds = null)
+    fun finishWorkout() = dispatch { controller.finishWorkout() }
 
     /** Computes the estimated duration for "mark everything as done" and opens the confirmation. */
-    fun requestFinishAll() = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        val restSeconds = restTimerSettings.restSeconds.first()
-        val counted = session.countedSets()
-        _finishAllProposal.value = FinishAllProposal(
-            durationSeconds = FinishAllPlanner.durationSeconds(
-                elapsedSeconds = Duration.between(session.startedAt, time.now()).seconds,
-                setCount = counted.size,
-                restSeconds = restSeconds,
-            ),
-            setCount = counted.size,
-            openSets = session.exercises.sumOf { exercise -> exercise.sets.count { !it.isCompleted } },
-        )
+    fun requestFinishAll() = dispatch {
+        controller.proposeFinishAll()?.let { _finishAllProposal.value = it }
     }
 
     fun dismissFinishAll() {
@@ -218,88 +168,20 @@ internal class WorkoutViewModel @Inject constructor(
      */
     fun confirmFinishAll(durationMinutes: Int) {
         _finishAllProposal.value = null
-        finish(durationSeconds = durationMinutes.coerceAtLeast(1) * SECONDS_PER_MINUTE)
+        dispatch { controller.finishAll(durationMinutes.coerceAtLeast(1) * SECONDS_PER_MINUTE) }
     }
 
-    /** With [durationSeconds] the sets are completed first and the start time is moved to end - duration. */
-    private fun finish(durationSeconds: Long?) = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        var startedAt: Instant? = null
-        if (durationSeconds != null) {
-            val windowEnd = time.now()
-            val windowStart = windowEnd.minusSeconds(durationSeconds)
-            completeOpenSets(session, windowStart, durationSeconds, windowEnd)
-            startedAt = windowStart
-        }
-        workoutRepository.finishSession(session.id, startedAt = startedAt)
-        restTimer.skip()
-        val finished = workoutRepository.observeSession(session.id).first()
-        val endedAt = finished?.endedAt ?: session.startedAt
-        val history = workoutRepository.setHistory(session.exercises.map { it.exerciseId }.distinct())
-        val summary = buildWorkoutSummary(
-            session = finished ?: session,
-            endedAt = endedAt,
-            volumeKg = finished?.totalVolumeKg ?: 0.0,
-            catalog = catalog.first(),
-            records = PersonalRecordDetector().detect(session.id, history),
-        )
-        _summary.value = summary
-        // Health Connect (opt-in); runs outside the write lock and never blocks the summary.
-        viewModelScope.launch { healthExporter.export(session.id) }
-        viewModelScope.launch {
-            val metrics = healthReader.read(finished?.startedAt ?: session.startedAt, endedAt) ?: return@launch
-            // Only fill in the summary of this session, if it is still shown.
-            _summary.update { current -> current?.takeIf { it === summary }?.copy(health = metrics) ?: current }
-        }
+    fun discardWorkout() = dispatch { controller.discardWorkout() }
+
+    fun dismissSummary() = controller.dismissSummary()
+
+    override fun onCleared() {
+        // The summary belongs to this screen, as before the controller existed.
+        controller.dismissSummary()
     }
 
-    private suspend fun completeOpenSets(
-        session: WorkoutSession,
-        windowStart: Instant,
-        durationSeconds: Long,
-        windowEnd: Instant,
-    ) {
-        val counted = session.countedSets()
-        val times = FinishAllPlanner.completionTimes(windowStart, durationSeconds, counted.size)
-        counted.forEachIndexed { index, (sessionExerciseId, set) ->
-            if (!set.isCompleted) {
-                workoutRepository.saveSet(sessionExerciseId, set.copy(isCompleted = true, completedAt = times[index]))
-            }
-        }
-        // Open sets without values stay empty; they are only ticked off.
-        session.exercises.forEach { exercise ->
-            exercise.sets.filter { !it.isCompleted && !it.hasValues() }.forEach { set ->
-                workoutRepository.saveSet(exercise.id, set.copy(isCompleted = true, completedAt = windowEnd))
-            }
-        }
-    }
-
-    fun discardWorkout() = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        workoutRepository.discardSession(session.id)
-        restTimer.skip()
-    }
-
-    fun dismissSummary() {
-        _summary.value = null
-    }
-
-    private fun updateSet(sessionExerciseId: String, setId: String, transform: (SetEntry) -> SetEntry) = mutate {
-        val session = workoutRepository.getActiveSession() ?: return@mutate
-        val set = session.exercises
-            .firstOrNull { it.id == sessionExerciseId }
-            ?.sets
-            ?.firstOrNull { it.id == setId }
-            ?: return@mutate
-        val updated = transform(set)
-        if (updated != set) {
-            workoutRepository.saveSet(sessionExerciseId, updated)
-        }
-    }
-
-    private suspend fun restSecondsFor(exerciseId: String): Int =
-        catalog.replayCache.firstOrNull()?.get(exerciseId)?.defaultRestSeconds
-            ?: restTimerSettings.restSeconds.first()
+    private fun updateSet(sessionExerciseId: String, setId: String, transform: (SetEntry) -> SetEntry) =
+        dispatch { controller.updateSet(sessionExerciseId, setId, transform) }
 
     private suspend fun loadPreviousSets(session: WorkoutSession) {
         val cache = previousSets.value
@@ -310,8 +192,8 @@ internal class WorkoutViewModel @Inject constructor(
         previousSets.value = PreviousSetsCache(sessionId = session.id, sets = known + loaded)
     }
 
-    private fun mutate(block: suspend () -> Unit) {
-        viewModelScope.launch { writeMutex.withLock { block() } }
+    private fun dispatch(block: suspend () -> Unit) {
+        viewModelScope.launch { block() }
     }
 
     private data class PreviousSetsCache(
