@@ -16,10 +16,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
@@ -32,6 +34,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.minimumInteractiveComponentSize
@@ -47,6 +50,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -88,6 +96,8 @@ internal fun ExerciseCard(
     var menuOpen by remember { mutableStateOf(false) }
     var showNotes by rememberSaveable(exercise.sessionExerciseId) { mutableStateOf(exercise.notes != null) }
     val fields = setFieldsFor(exercise.trackingType, exercise.isBodyweight)
+    // Only one weight slider is open at a time within a card; null means all are collapsed.
+    var expandedWeightSetId by rememberSaveable(exercise.sessionExerciseId) { mutableStateOf<String?>(null) }
     val activeSetId = if (isActive) exercise.sets.firstOrNull { !it.isCompleted }?.id else null
 
     GymPulseCard(
@@ -159,6 +169,10 @@ internal fun ExerciseCard(
                         fields = fields,
                         actions = actions,
                         isActive = set.id == activeSetId,
+                        weightExpanded = expandedWeightSetId == set.id,
+                        onWeightExpandedChange = { expand ->
+                            expandedWeightSetId = if (expand) set.id else null
+                        },
                     )
                 }
             }
@@ -229,6 +243,8 @@ private fun SetRow(
     fields: List<SetField>,
     actions: WorkoutActions,
     isActive: Boolean,
+    weightExpanded: Boolean,
+    onWeightExpandedChange: (Boolean) -> Unit,
 ) {
     val isWarmup = set.setType == SetType.WARMUP
     val label = if (isWarmup) {
@@ -284,11 +300,11 @@ private fun SetRow(
                 val highlighted = isActive && index == 0
                 val description = stringResource(field.labelRes())
                 when (field) {
-                    SetField.WEIGHT, SetField.EXTRA_WEIGHT -> SetInputField(
+                    SetField.WEIGHT, SetField.EXTRA_WEIGHT -> WeightCell(
                         storedValue = WorkoutFormat.formatDecimalInput(set.weightKg),
                         onValueChange = { actions.onWeightChange(sessionExerciseId, set.id, it) },
-                        sanitize = WorkoutFormat::sanitizeDecimal,
-                        keyboardType = KeyboardType.Decimal,
+                        expanded = weightExpanded,
+                        onExpandedChange = onWeightExpandedChange,
                         contentDescription = description,
                         highlighted = highlighted,
                         modifier = fieldModifier,
@@ -330,8 +346,116 @@ private fun SetRow(
                 )
             }
         }
+        if (weightExpanded) {
+            WeightSlider(
+                weightKg = set.weightKg,
+                onValueChange = { actions.onWeightChange(sessionExerciseId, set.id, it) },
+                onClose = { onWeightExpandedChange(false) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = Spacing.s, end = Spacing.xxs),
+            )
+        }
         if (isActive) {
             ActiveSetPanel(sessionExerciseId = sessionExerciseId, set = set, fields = fields, actions = actions)
+        }
+    }
+}
+
+/**
+ * Weight cell of a set. Collapsed it shows the weight compactly; tapping it opens the slider
+ * below the row. While the slider is open, tapping the number switches to keyboard input, and
+ * finishing the input returns to the plain number display.
+ */
+@Composable
+private fun WeightCell(
+    storedValue: String,
+    onValueChange: (String) -> Unit,
+    expanded: Boolean,
+    onExpandedChange: (Boolean) -> Unit,
+    contentDescription: String,
+    highlighted: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    var typing by rememberSaveable { mutableStateOf(false) }
+    // Collapsing the slider (or opening another one) always ends keyboard input.
+    LaunchedEffect(expanded) { if (!expanded) typing = false }
+
+    if (expanded && typing) {
+        SetInputField(
+            storedValue = storedValue,
+            onValueChange = onValueChange,
+            sanitize = WorkoutFormat::sanitizeDecimal,
+            keyboardType = KeyboardType.Decimal,
+            contentDescription = contentDescription,
+            highlighted = highlighted,
+            modifier = modifier,
+            requestFocus = true,
+            imeAction = ImeAction.Done,
+            onFocusLost = { typing = false },
+        )
+    } else {
+        val clickLabel = stringResource(
+            if (expanded) R.string.feature_workout_weight_edit else R.string.feature_workout_weight_adjust,
+        )
+        val scheme = MaterialTheme.colorScheme
+        val shape = MaterialTheme.shapes.small
+        Box(
+            modifier = modifier
+                .clip(shape)
+                .background(color = scheme.surfaceContainerHigh, shape = shape)
+                .border(
+                    width = if (highlighted) Sizing.setCheckboxBorder else Sizing.hairline,
+                    color = if (highlighted) scheme.primary else scheme.outlineVariant,
+                    shape = shape,
+                )
+                .clickable(onClickLabel = clickLabel, role = Role.Button) {
+                    if (expanded) typing = true else onExpandedChange(true)
+                }
+                .semantics(mergeDescendants = true) { this.contentDescription = contentDescription }
+                .padding(horizontal = Spacing.xxs),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                text = storedValue.ifEmpty { stringResource(R.string.feature_workout_weight_empty) },
+                style = MaterialTheme.typography.setValueStyle,
+                color = if (highlighted) scheme.primary else scheme.onSurface,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+            )
+        }
+    }
+}
+
+/** Slider for the weight in kg, snapped to [WorkoutFormat.WEIGHT_SLIDER_STEP_KG], plus a close button. */
+@Composable
+private fun WeightSlider(
+    weightKg: Double?,
+    onValueChange: (String) -> Unit,
+    onClose: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val current = weightKg ?: 0.0
+    val sliderDescription = stringResource(R.string.feature_workout_weight_slider)
+    val max = WorkoutFormat.sliderMax(current).toFloat()
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+        Slider(
+            value = current.toFloat().coerceIn(0f, max),
+            onValueChange = { raw ->
+                val snapped = WorkoutFormat.snapWeight(raw.toDouble())
+                if (snapped != weightKg) onValueChange(WorkoutFormat.formatDecimalInput(snapped))
+            },
+            valueRange = 0f..max,
+            modifier = Modifier
+                .weight(1f)
+                .heightIn(min = Sizing.minTouchTarget)
+                .semantics { this.contentDescription = sliderDescription },
+        )
+        IconButton(onClick = onClose) {
+            Icon(
+                Icons.Filled.Close,
+                contentDescription = stringResource(R.string.feature_workout_weight_close),
+            )
         }
     }
 }
@@ -543,8 +667,17 @@ private fun SetInputField(
     contentDescription: String,
     highlighted: Boolean,
     modifier: Modifier = Modifier,
+    requestFocus: Boolean = false,
+    imeAction: ImeAction = ImeAction.Next,
+    onFocusLost: (() -> Unit)? = null,
 ) {
     var text by rememberSaveable { mutableStateOf(storedValue) }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
+    var hadFocus by remember { mutableStateOf(false) }
+    if (requestFocus) {
+        LaunchedEffect(Unit) { focusRequester.requestFocus() }
+    }
     LaunchedEffect(storedValue) {
         if (WorkoutFormat.parseDecimal(text) != WorkoutFormat.parseDecimal(storedValue)) {
             text = storedValue
@@ -559,12 +692,23 @@ private fun SetInputField(
             text = sanitized
             onValueChange(sanitized)
         },
-        modifier = modifier.semantics { this.contentDescription = contentDescription },
+        modifier = modifier
+            .focusRequester(focusRequester)
+            .onFocusChanged { state ->
+                if (state.isFocused) {
+                    hadFocus = true
+                } else if (hadFocus) {
+                    hadFocus = false
+                    onFocusLost?.invoke()
+                }
+            }
+            .semantics { this.contentDescription = contentDescription },
         textStyle = MaterialTheme.typography.setValueStyle.copy(
             color = if (highlighted) scheme.primary else scheme.onSurface,
             textAlign = TextAlign.Center,
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
+        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
         singleLine = true,
         interactionSource = interactionSource,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
