@@ -9,7 +9,6 @@ import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.WeightRecord
 import androidx.health.connect.client.records.metadata.Metadata
-import androidx.health.connect.client.units.Mass
 import app.gympulse.core.data.health.HealthExerciseType
 import app.gympulse.core.data.health.HealthReadType
 import app.gympulse.core.data.health.HealthSegmentType
@@ -22,9 +21,9 @@ import kotlin.reflect.KClass
 internal object HealthRecordMapper {
 
     /**
-     * Trainingseinheit mit einem Abschnitt je Satz (Wiederholungen, Gewicht, Satznummer, RPE).
-     * Abschnitte, deren Typ Health Connect in dieser Trainingsart nicht zulässt (z. B. Laufband im
-     * Krafttraining), werden zu `EXERCISE_SEGMENT_TYPE_OTHER_WORKOUT`; ungültige Zeitfenster werden verworfen. Lehnt Health
+     * Trainingseinheit mit Abschnitten je Übung. Abschnitte, deren Typ Health Connect in dieser
+     * Trainingsart nicht zulässt (z. B. Laufband im Krafttraining), werden zu
+     * `EXERCISE_SEGMENT_TYPE_OTHER_WORKOUT`; ungültige Zeitfenster werden verworfen. Lehnt Health
      * Connect die Abschnitte trotzdem ab, entsteht die Einheit ohne Abschnitte.
      */
     fun toExerciseSessionRecord(workout: HealthWorkout): ExerciseSessionRecord {
@@ -90,9 +89,6 @@ internal object HealthRecordMapper {
                     endTime = segment.endTime,
                     segmentType = type,
                     repetitions = segment.repetitions.coerceAtLeast(0),
-                    weight = segment.weightKg?.takeIf { it > 0.0 && it.isFinite() }?.let { Mass.kilograms(it) },
-                    setIndex = segment.setIndex?.takeIf { it >= 0 },
-                    rateOfPerceivedExertion = segment.rpe?.takeIf { it in RPE_RANGE }?.toFloat(),
                 )
             }
     }
@@ -151,12 +147,9 @@ internal object HealthRecordMapper {
     }
 
     /**
-     * Ob Health Connect den Abschnittstyp in der Trainingsart zulässt. Nachbau der Regel
-     * `ExerciseSegment.isSegmentTypeCompatibleWithSessionType`, beschränkt auf die Trainingsarten,
-     * die GymPulse schreibt. Mit dem Quellcode von connect-client 1.2.0-alpha06 abgeglichen: Für
-     * diese Trainingsarten gelten dieselben Regeln (universell sind dort zusätzlich Bootcamp und
-     * HIIT, die GymPulse nicht schreibt). Bewusst kein Aufruf der Bibliotheksfunktion, da sie in 1.1.0
-     * nicht öffentlich war und die Alpha ihre API noch ändern kann.
+     * Ob Health Connect den Abschnittstyp in der Trainingsart zulässt. Nachbau der internen Regel
+     * `ExerciseSegment.isSegmentTypeCompatibleWithSessionType` (in connect-client 1.1.0 nicht
+     * öffentlich), beschränkt auf die Trainingsarten, die GymPulse schreibt.
      */
     fun isCompatible(segmentType: Int, exerciseType: Int): Boolean = when {
         exerciseType == ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT -> true
@@ -164,9 +157,6 @@ internal object HealthRecordMapper {
         exerciseType in STRENGTH_SESSION_TYPES -> segmentType in STRENGTH_SEGMENTS
         else -> false
     }
-
-    /** Gültiger Bereich der Anstrengung je Abschnitt (Borg CR10). */
-    private val RPE_RANGE = 0.0..10.0
 
     private val UNIVERSAL_SEGMENTS = setOf(
         ExerciseSegment.EXERCISE_SEGMENT_TYPE_OTHER_WORKOUT,
