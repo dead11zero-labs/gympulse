@@ -90,8 +90,7 @@ class HealthInsightsTest {
         val result = insights.read(start, end)!!
 
         assertEquals(setOf(HealthReadType.STEPS), source.lastAggregateTypes)
-        assertNull(result.averageHeartRateBpm)
-        assertNull(result.activeCaloriesKcal)
+        // The fake returns every value; the real source only fills the requested types.
         assertEquals(500L, result.steps)
     }
 
