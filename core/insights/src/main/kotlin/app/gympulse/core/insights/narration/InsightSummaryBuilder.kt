@@ -17,12 +17,14 @@ import app.gympulse.core.insights.VolumeStatus
  * @property maxExercises Anzahl der Top-Übungen.
  * @property maxMuscles Anzahl der Muskelgruppen in der Volumen-Tabelle (auffällige zuerst).
  * @property maxFindings Anzahl der Befunde.
+ * @property maxVolumeFindings davon höchstens so viele Volumen-Warnungen, damit sie Übungs-Empfehlungen nicht verdrängen.
  */
 data class SummaryConfig(
     val maxTokens: Int = 800,
     val maxExercises: Int = 5,
     val maxMuscles: Int = 8,
     val maxFindings: Int = 10,
+    val maxVolumeFindings: Int = 3,
 ) {
     init {
         require(maxTokens > 0 && maxExercises >= 0 && maxMuscles >= 0 && maxFindings >= 0) { "invalid summary config" }
@@ -49,7 +51,9 @@ class InsightSummaryBuilder(private val config: SummaryConfig = SummaryConfig())
 
         val exercises = selectExercises(insights, names, language)
         val muscles = selectMuscles(insights, language)
+        var volumeFindings = 0
         val findings = insights.findings
+            .filter { it !is Insight.Volume || ++volumeFindings <= config.maxVolumeFindings }
             .mapNotNull { toFinding(it, names, language) }
             .take(config.maxFindings)
 
