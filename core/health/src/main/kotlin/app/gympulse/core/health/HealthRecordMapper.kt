@@ -1,5 +1,6 @@
 package app.gympulse.core.health
 
+import android.os.Build
 import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
 import androidx.health.connect.client.records.ExerciseSegment
 import androidx.health.connect.client.records.ExerciseSessionRecord
@@ -8,6 +9,7 @@ import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.WeightRecord
+import androidx.health.connect.client.records.metadata.Device
 import androidx.health.connect.client.records.metadata.Metadata
 import app.gympulse.core.data.health.HealthExerciseType
 import app.gympulse.core.data.health.HealthReadType
@@ -19,6 +21,13 @@ import kotlin.reflect.KClass
 
 /** Übersetzt die plattformneutralen Health-Modelle in Records von Health Connect und zurück. */
 internal object HealthRecordMapper {
+
+    private val phoneDevice: Device
+        get() = Device(
+            type = Device.TYPE_PHONE,
+            manufacturer = Build.MANUFACTURER,
+            model = Build.MODEL,
+        )
 
     /**
      * Trainingseinheit mit Abschnitten je Übung. Abschnitte, deren Typ Health Connect in dieser
@@ -56,7 +65,10 @@ internal object HealthRecordMapper {
         startZoneOffset = workout.startZoneOffset,
         endTime = workout.endTime,
         endZoneOffset = workout.endZoneOffset,
-        metadata = Metadata.manualEntry(
+        // Samsung Health übernimmt manuell eingetragene Einheiten anderer Apps offenbar nicht;
+        // GymPulse zeichnet das Training live auf dem Telefon auf.
+        metadata = Metadata.activelyRecorded(
+            device = phoneDevice,
             clientRecordId = workout.clientRecordId,
             clientRecordVersion = workout.clientRecordVersion,
         ),
