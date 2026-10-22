@@ -21,6 +21,10 @@ class ExerciseRepository @Inject constructor(
     fun observeExercise(id: String, locale: String): Flow<Exercise?> =
         exerciseDao.observeById(id).map { it?.toModel(locale) }
 
+    /** Übung inklusive gelöschter, z. B. für die Namen in alten Sessions. */
+    suspend fun getExerciseIncludingDeleted(id: String, locale: String): Exercise? =
+        exerciseDao.getById(id)?.toModel(locale)
+
     suspend fun setFavorite(id: String, favorite: Boolean) =
         exerciseDao.setFavorite(id, favorite, time.now().toEpochMilli())
 
