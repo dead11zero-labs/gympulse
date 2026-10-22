@@ -144,9 +144,10 @@ private fun SummaryHeader(summary: WorkoutSummary, modifier: Modifier = Modifier
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         )
-        if (summary.title != null) {
+        val title = summary.title
+        if (title != null) {
             LabelCaps(
-                text = summary.title,
+                text = title,
                 style = MaterialTheme.typography.labelLarge,
             )
         }
