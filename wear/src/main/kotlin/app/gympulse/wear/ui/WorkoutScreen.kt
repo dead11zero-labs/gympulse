@@ -224,6 +224,7 @@ private fun ExerciseHeader(
     onNext: () -> Unit,
     onOpenOverview: () -> Unit,
 ) {
+    val overviewDescription = stringResource(R.string.cd_open_overview, exercise.name)
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         IconButton(onClick = onPrevious, enabled = state.exerciseIndex > 0) {
             Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_previous_exercise))
@@ -234,7 +235,7 @@ private fun ExerciseHeader(
                 .heightIn(min = WearSpacing.minTouchTarget)
                 .clip(MaterialTheme.shapes.small)
                 .clickable(role = Role.Button, onClick = onOpenOverview)
-                .semantics { contentDescription = "${exercise.name}. " + overviewDescription(state) },
+                .semantics { contentDescription = overviewDescription },
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
@@ -262,10 +263,6 @@ private fun ExerciseHeader(
         }
     }
 }
-
-@Composable
-private fun overviewDescription(state: WorkoutUiState): String =
-    stringResource(R.string.cd_open_overview, state.exercise?.name.orEmpty())
 
 @Composable
 private fun ValueTile(
