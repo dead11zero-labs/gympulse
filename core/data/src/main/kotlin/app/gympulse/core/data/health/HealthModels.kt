@@ -37,7 +37,78 @@ data class HealthWorkout(
     val endTime: Instant,
     val endZoneOffset: ZoneOffset?,
     val exerciseType: HealthExerciseType,
+    /** Ein Abschnitt je Übung, zeitlich sortiert, ohne Überlappung und innerhalb von Start/Ende. */
+    val segments: List<HealthWorkoutSegment> = emptyList(),
 )
+
+/**
+ * Abschnitt einer Trainingseinheit, z. B. alle Sätze Bankdrücken.
+ *
+ * @param repetitions Summe der Wiederholungen aller abgeschlossenen Sätze, 0 ohne Wiederholungen.
+ */
+data class HealthWorkoutSegment(
+    val startTime: Instant,
+    val endTime: Instant,
+    val type: HealthSegmentType,
+    val repetitions: Int,
+)
+
+/**
+ * Übungsart eines Abschnitts. Entspricht den `EXERCISE_SEGMENT_TYPE_*`-Konstanten von Health Connect
+ * (connect-client 1.1.0); die Implementierung in `core:health` bildet sie ab. Liegestütze und Dips
+ * kennt Health Connect nicht, sie landen bei [UNKNOWN].
+ */
+enum class HealthSegmentType {
+    UNKNOWN,
+    OTHER_WORKOUT,
+    WEIGHTLIFTING,
+    STRETCHING,
+    ARM_CURL,
+    BACK_EXTENSION,
+    BALL_SLAM,
+    BARBELL_SHOULDER_PRESS,
+    BENCH_PRESS,
+    BENCH_SIT_UP,
+    BURPEE,
+    CRUNCH,
+    DEADLIFT,
+    DOUBLE_ARM_TRICEPS_EXTENSION,
+    DUMBBELL_FRONT_RAISE,
+    DUMBBELL_LATERAL_RAISE,
+    DUMBBELL_ROW,
+    DUMBBELL_TRICEPS_EXTENSION_TWO_ARM,
+    FRONT_RAISE,
+    HIP_THRUST,
+    HULA_HOOP,
+    JUMPING_JACK,
+    JUMP_ROPE,
+    KETTLEBELL_SWING,
+    LATERAL_RAISE,
+    LAT_PULL_DOWN,
+    LEG_CURL,
+    LEG_EXTENSION,
+    LEG_PRESS,
+    LEG_RAISE,
+    LUNGE,
+    MOUNTAIN_CLIMBER,
+    PLANK,
+    PULL_UP,
+    SHOULDER_PRESS,
+    SINGLE_ARM_TRICEPS_EXTENSION,
+    SIT_UP,
+    SQUAT,
+    UPPER_TWIST,
+
+    // Ausdauer; in Krafttrainings-Sessions lässt Health Connect diese Typen nicht zu.
+    BIKING,
+    BIKING_STATIONARY,
+    ELLIPTICAL,
+    ROWING_MACHINE,
+    RUNNING,
+    RUNNING_TREADMILL,
+    STAIR_CLIMBING_MACHINE,
+    WALKING,
+}
 
 /** Ein Körpergewicht aus Health Connect, immer in kg. */
 data class HealthWeight(

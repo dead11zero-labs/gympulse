@@ -49,9 +49,13 @@ class HealthConnectSync @Inject constructor(
         if (!isReady()) return
         guarded(Unit) {
             val session = workoutRepository.observeSession(sessionId).first() ?: return@guarded
-            val categories = exerciseRepository.observeExercises(Locale.getDefault().language).first()
-                .associate { it.id to it.category }
-            val workout = WorkoutHealthMapper.toHealthWorkout(session, categories, time.zone())
+            val language = Locale.getDefault().language
+            val known = exerciseRepository.observeExercises(language).first().associateBy { it.id }
+            // Inzwischen gelöschte Übungen fehlen in der Liste; Name und Typ einzeln nachladen.
+            val exercises = session.exercises.map { it.exerciseId }.distinct().mapNotNull { id ->
+                known[id] ?: exerciseRepository.getExerciseIncludingDeleted(id, language)
+            }.associateBy { it.id }
+            val workout = WorkoutHealthMapper.toHealthWorkout(session, exercises, time.zone())
                 ?: return@guarded
             dataSource.insertWorkout(workout)
         }
