@@ -94,17 +94,25 @@ internal fun LibraryScreen(
             }
         },
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
+        // Titel/Umschalter liegen als erstes Element in der jeweiligen Liste und scrollen mit weg.
+        val header: @Composable () -> Unit = {
             LibraryHeader(
                 selectedTab = tab,
                 onSelectTab = { tab = it },
             )
+        }
+        Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
             if (tab == TAB_EXERCISES) {
-                ExerciseListContent(onOpenExercise = onOpenExercise, modifier = Modifier.weight(1f))
+                ExerciseListContent(
+                    onOpenExercise = onOpenExercise,
+                    header = header,
+                    modifier = Modifier.weight(1f),
+                )
             } else {
                 EquipmentListContent(
                     onOpenEquipment = onOpenEquipment,
                     onCreateEquipment = onCreateEquipment,
+                    header = header,
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -115,6 +123,7 @@ internal fun LibraryScreen(
 @Composable
 private fun ExerciseListContent(
     onOpenExercise: (String) -> Unit,
+    header: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ExerciseListViewModel = hiltViewModel(),
 ) {
@@ -125,93 +134,107 @@ private fun ExerciseListContent(
     val filter = state.filter
 
     ContentColumn(modifier = modifier) {
-        SearchField(
-            value = query,
-            onValueChange = viewModel::setQuery,
-            label = stringResource(R.string.library_search_exercises),
-            modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
-        )
-        Row(
-            modifier = Modifier
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = Spacing.screenMargin)
-                .animateContentSize(),
-            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-            verticalAlignment = Alignment.CenterVertically,
+        // Immer eine Liste: Titel, Suche und Filter sind ihre ersten Elemente und scrollen mit weg.
+        // Lade-/Leerzustände sind ebenfalls Elemente, damit das Suchfeld seinen Fokus behält.
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            // Platz unter der letzten Zeile, damit der Button nichts verdeckt.
+            contentPadding = listPadding(),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
         ) {
-            FilterChip(
-                selected = filter.favoritesOnly,
-                onClick = viewModel::toggleFavoritesOnly,
-                label = { Text(stringResource(R.string.library_filter_favorites)) },
-                leadingIcon = {
-                    Icon(
-                        imageVector = if (filter.favoritesOnly) Icons.Filled.Favorite else Icons.Outlined.Favorite,
-                        contentDescription = null,
+            item(key = "header") {
+                Column {
+                    header()
+                    SearchField(
+                        value = query,
+                        onValueChange = viewModel::setQuery,
+                        label = stringResource(R.string.library_search_exercises),
+                        modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
                     )
-                },
-            )
-            FilterDropdownChip<MuscleGroup>(
-                title = stringResource(R.string.library_filter_muscle),
-                allLabel = stringResource(R.string.library_filter_all),
-                selected = filter.muscle,
-                options = MuscleGroup.entries,
-                optionLabel = { stringResource(it.labelRes()) },
-                onSelected = viewModel::setMuscle,
-            )
-            FilterDropdownChip<EquipmentType>(
-                title = stringResource(R.string.library_filter_equipment_type),
-                allLabel = stringResource(R.string.library_filter_all),
-                selected = filter.equipmentType,
-                options = EquipmentType.entries,
-                optionLabel = { stringResource(it.labelRes()) },
-                onSelected = viewModel::setEquipmentType,
-            )
-            FilterDropdownChip<ExerciseCategory>(
-                title = stringResource(R.string.library_filter_category),
-                allLabel = stringResource(R.string.library_filter_all),
-                selected = filter.category,
-                options = ExerciseCategory.entries,
-                optionLabel = { stringResource(it.categoryLabelRes()) },
-                onSelected = viewModel::setCategory,
-            )
-            if (filter.isActive || query.isNotEmpty()) {
-                TextButton(onClick = viewModel::clearFilters) {
-                    Text(stringResource(R.string.library_clear_filters))
+                    Row(
+                        modifier = Modifier
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = Spacing.screenMargin)
+                            .animateContentSize(),
+                        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        FilterChip(
+                            selected = filter.favoritesOnly,
+                            onClick = viewModel::toggleFavoritesOnly,
+                            label = { Text(stringResource(R.string.library_filter_favorites)) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = if (filter.favoritesOnly) Icons.Filled.Favorite else Icons.Outlined.Favorite,
+                                    contentDescription = null,
+                                )
+                            },
+                        )
+                        FilterDropdownChip<MuscleGroup>(
+                            title = stringResource(R.string.library_filter_muscle),
+                            allLabel = stringResource(R.string.library_filter_all),
+                            selected = filter.muscle,
+                            options = MuscleGroup.entries,
+                            optionLabel = { stringResource(it.labelRes()) },
+                            onSelected = viewModel::setMuscle,
+                        )
+                        FilterDropdownChip<EquipmentType>(
+                            title = stringResource(R.string.library_filter_equipment_type),
+                            allLabel = stringResource(R.string.library_filter_all),
+                            selected = filter.equipmentType,
+                            options = EquipmentType.entries,
+                            optionLabel = { stringResource(it.labelRes()) },
+                            onSelected = viewModel::setEquipmentType,
+                        )
+                        FilterDropdownChip<ExerciseCategory>(
+                            title = stringResource(R.string.library_filter_category),
+                            allLabel = stringResource(R.string.library_filter_all),
+                            selected = filter.category,
+                            options = ExerciseCategory.entries,
+                            optionLabel = { stringResource(it.categoryLabelRes()) },
+                            onSelected = viewModel::setCategory,
+                        )
+                        if (filter.isActive || query.isNotEmpty()) {
+                            TextButton(onClick = viewModel::clearFilters) {
+                                Text(stringResource(R.string.library_clear_filters))
+                            }
+                        }
+                    }
                 }
             }
-        }
-
-        when {
-            state.isLoading -> LoadingIndicator(modifier = Modifier.weight(1f))
-            state.totalCount == 0 -> EmptyState(
-                icon = Icons.Filled.Search,
-                title = stringResource(R.string.library_exercises_empty_title),
-                message = stringResource(R.string.library_exercises_empty_message),
-                modifier = Modifier.weight(1f),
-            )
-            state.exercises.isEmpty() -> EmptyState(
-                title = stringResource(R.string.library_exercises_no_match_title),
-                message = stringResource(R.string.library_exercises_no_match_message),
-                modifier = Modifier.weight(1f),
-                actionLabel = stringResource(R.string.library_clear_filters),
-                onAction = viewModel::clearFilters,
-            )
-            else -> {
-                LabelCaps(
-                    text = stringResource(R.string.library_exercise_count, state.exercises.size),
-                    modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
-                )
-                LazyColumn(
-                    modifier = Modifier.weight(1f),
-                    // Platz unter der letzten Zeile, damit der Button nichts verdeckt.
-                    contentPadding = listPadding(),
-                    verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
-                ) {
+            when {
+                state.isLoading -> item(key = "loading") {
+                    LoadingIndicator(modifier = Modifier.fillParentMaxHeight(PLACEHOLDER_HEIGHT_FRACTION))
+                }
+                state.totalCount == 0 -> item(key = "empty") {
+                    EmptyState(
+                        icon = Icons.Filled.Search,
+                        title = stringResource(R.string.library_exercises_empty_title),
+                        message = stringResource(R.string.library_exercises_empty_message),
+                        modifier = Modifier.fillParentMaxHeight(PLACEHOLDER_HEIGHT_FRACTION),
+                    )
+                }
+                state.exercises.isEmpty() -> item(key = "no_match") {
+                    EmptyState(
+                        title = stringResource(R.string.library_exercises_no_match_title),
+                        message = stringResource(R.string.library_exercises_no_match_message),
+                        modifier = Modifier.fillParentMaxHeight(PLACEHOLDER_HEIGHT_FRACTION),
+                        actionLabel = stringResource(R.string.library_clear_filters),
+                        onAction = viewModel::clearFilters,
+                    )
+                }
+                else -> {
+                    item(key = "count") {
+                        LabelCaps(
+                            text = stringResource(R.string.library_exercise_count, state.exercises.size),
+                            modifier = Modifier.padding(horizontal = Spacing.screenMargin, vertical = Spacing.xs),
+                        )
+                    }
                     items(items = state.exercises, key = { it.id }) { exercise ->
                         ExerciseRow(
                             exercise = exercise,
                             onClick = { onOpenExercise(exercise.id) },
-                            modifier = Modifier.animateItem(),
+                            modifier = Modifier.padding(horizontal = Spacing.screenMargin).animateItem(),
                         )
                     }
                 }
@@ -220,13 +243,13 @@ private fun ExerciseListContent(
     }
 }
 
-/** Seitenrand oben/seitlich und Platz unter der letzten Zeile, damit der Button nichts verdeckt. */
-private fun listPadding() = PaddingValues(
-    start = Spacing.screenMargin,
-    end = Spacing.screenMargin,
-    top = Spacing.xs,
-    bottom = Spacing.xxl * 2,
-)
+private const val PLACEHOLDER_HEIGHT_FRACTION = 0.6f
+
+/**
+ * Platz unter der letzten Zeile, damit der Button nichts verdeckt. Den Seitenrand tragen die
+ * Elemente selbst, da der scrollende Kopf (Titel, Suche, Filter) eigene Abstände mitbringt.
+ */
+private fun listPadding() = PaddingValues(bottom = Spacing.xxl * 2)
 
 @Composable
 private fun ExerciseRow(exercise: Exercise, onClick: () -> Unit, modifier: Modifier = Modifier) {
@@ -346,32 +369,38 @@ private fun LibraryTab(
 private fun EquipmentListContent(
     onOpenEquipment: (String) -> Unit,
     onCreateEquipment: () -> Unit,
+    header: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: EquipmentListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     ContentColumn(modifier = modifier) {
-        when {
-            state.isLoading -> LoadingIndicator(modifier = Modifier.weight(1f))
-            state.equipment.isEmpty() -> EmptyState(
-                icon = Icons.Filled.Settings,
-                title = stringResource(R.string.library_equipment_empty_title),
-                message = stringResource(R.string.library_equipment_empty_message),
-                modifier = Modifier.weight(1f),
-                actionLabel = stringResource(R.string.library_new_equipment),
-                onAction = onCreateEquipment,
-            )
-            else -> LazyColumn(
-                modifier = Modifier.weight(1f),
-                contentPadding = listPadding(),
-                verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
-            ) {
-                items(items = state.equipment, key = { it.id }) { equipment ->
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            contentPadding = listPadding(),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xxs),
+        ) {
+            item(key = "header") { header() }
+            when {
+                state.isLoading -> item(key = "loading") {
+                    LoadingIndicator(modifier = Modifier.fillParentMaxHeight(PLACEHOLDER_HEIGHT_FRACTION))
+                }
+                state.equipment.isEmpty() -> item(key = "empty") {
+                    EmptyState(
+                        icon = Icons.Filled.Settings,
+                        title = stringResource(R.string.library_equipment_empty_title),
+                        message = stringResource(R.string.library_equipment_empty_message),
+                        modifier = Modifier.fillParentMaxHeight(PLACEHOLDER_HEIGHT_FRACTION),
+                        actionLabel = stringResource(R.string.library_new_equipment),
+                        onAction = onCreateEquipment,
+                    )
+                }
+                else -> items(items = state.equipment, key = { it.id }) { equipment ->
                     EquipmentRow(
                         equipment = equipment,
                         onClick = { onOpenEquipment(equipment.id) },
-                        modifier = Modifier.animateItem(),
+                        modifier = Modifier.padding(horizontal = Spacing.screenMargin).animateItem(),
                     )
                 }
             }

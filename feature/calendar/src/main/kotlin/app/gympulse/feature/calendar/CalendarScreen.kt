@@ -157,15 +157,15 @@ internal fun CalendarContent(
 internal fun PremiumNotice(modifier: Modifier = Modifier) {
     GymPulseCard(
         modifier = modifier.fillMaxWidth(),
-        variant = GymPulseCardVariant.Tertiary,
+        variant = GymPulseCardVariant.Primary,
         shape = ExpressiveShapes.extraLargeIncreased,
         contentPadding = PaddingValues(Spacing.l),
         verticalSpacing = Spacing.s,
     ) {
         ListRowIcon(
             icon = Icons.Filled.Lock,
-            containerColor = MaterialTheme.colorScheme.tertiary,
-            contentColor = MaterialTheme.colorScheme.onTertiary,
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
         )
         Text(
             text = stringResource(R.string.feature_calendar_premium_title),
@@ -371,10 +371,13 @@ private fun periodSubtitle(state: CalendarUiState, locale: Locale): String? =
         "${formatter.format(first)} – ${formatter.format(first.plusDays(6))}"
     }
 
+private const val PLANNED_ALPHA = 0.55f
+
 @Composable
 private fun statusColor(status: DayStatus): Color = when (status) {
     DayStatus.COMPLETED -> MaterialTheme.colorScheme.primary
-    DayStatus.PLANNED -> MaterialTheme.colorScheme.tertiary
+    // Geplant: gedämpftes Primärgrün, klar von "erledigt" (volles primary) unterscheidbar.
+    DayStatus.PLANNED -> MaterialTheme.colorScheme.primary.copy(alpha = PLANNED_ALPHA)
     DayStatus.MISSED -> MaterialTheme.colorScheme.error
     DayStatus.SKIPPED -> MaterialTheme.colorScheme.outline
     DayStatus.REST -> MaterialTheme.colorScheme.onSurfaceVariant
