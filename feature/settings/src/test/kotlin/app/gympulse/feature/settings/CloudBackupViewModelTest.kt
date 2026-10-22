@@ -114,6 +114,7 @@ class CloudBackupViewModelTest {
     private val gate = FakeGate(toggles)
     private val remote = FakeRemote()
     private val local = FakeLocal()
+    private val integration = FakeIntegrationSettings()
     private val token = GoogleIdTokenRequester { GoogleIdToken("id-token", "nonce") }
 
     @Before
@@ -127,7 +128,7 @@ class CloudBackupViewModelTest {
     }
 
     private fun viewModel(auth: FakeAuth = FakeAuth()) =
-        CloudBackupViewModel(CloudBackupSync(auth, remote, local, gate, toggles, time))
+        CloudBackupViewModel(CloudBackupSync(auth, remote, local, gate, toggles, time), integration)
 
     @Test
     fun featureIsOffByDefault() = runTest(UnconfinedTestDispatcher()) {
@@ -307,5 +308,20 @@ class CloudBackupViewModelTest {
 
         assertFalse(vm.uiState.value.active)
         assertNull(vm.uiState.value.user)
+    }
+
+    @Test
+    fun autoBackupIsOffByDefaultAndStoredWhenSwitched() = runTest(UnconfinedTestDispatcher()) {
+        val vm = viewModel()
+        backgroundScope.launch { vm.uiState.collect {} }
+        assertFalse(vm.uiState.value.autoBackup)
+
+        vm.setAutoBackup(true)
+
+        assertTrue(integration.autoBackup.value)
+        assertTrue(vm.uiState.value.autoBackup)
+
+        vm.setAutoBackup(false)
+        assertFalse(vm.uiState.value.autoBackup)
     }
 }

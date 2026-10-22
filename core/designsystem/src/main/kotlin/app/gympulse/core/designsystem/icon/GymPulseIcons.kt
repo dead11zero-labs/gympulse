@@ -48,7 +48,7 @@ object GymPulseIcons {
     }
 
     /** Builds a 24 dp icon from Material Symbols path data (viewBox "0 -960 960 960"). */
-    private fun symbol(name: String, pathData: String): ImageVector =
+    internal fun symbol(name: String, pathData: String): ImageVector =
         ImageVector.Builder(
             name = name,
             defaultWidth = 24.dp,
