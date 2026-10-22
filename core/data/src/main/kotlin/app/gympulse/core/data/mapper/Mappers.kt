@@ -99,6 +99,7 @@ fun SetEntryEntity.toModel() = SetEntry(
     rpe = rpe,
     isCompleted = isCompleted,
     completedAt = completedAt?.let(Instant::ofEpochMilli),
+    updatedAt = Instant.ofEpochMilli(updatedAt),
 )
 
 fun SessionWithExercises.toModel() = WorkoutSession(

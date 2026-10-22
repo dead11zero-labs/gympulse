@@ -86,12 +86,21 @@ class RestTimer @Inject constructor(
         }
     }
 
-    /** Starts (or restarts) the rest period; a non-positive duration stops the timer. */
-    fun start(seconds: Int) = change {
-        if (seconds <= 0) {
+    /**
+     * Starts (or restarts) the rest period; a non-positive duration stops the timer.
+     *
+     * @param startedAt when the rest began, e.g. the moment a set was ticked off on the watch
+     *   while the phone was out of reach. A time in the future counts as now; if the rest is
+     *   already over, the timer stops.
+     */
+    fun start(seconds: Int, startedAt: Instant? = null) = change {
+        val now = time.now()
+        val start = startedAt?.takeIf { it.isBefore(now) } ?: now
+        val endsAt = start.plusSeconds(seconds.toLong())
+        if (seconds <= 0 || !endsAt.isAfter(now)) {
             null
         } else {
-            RestTimerState(endsAt = time.now().plusSeconds(seconds.toLong()), totalSeconds = seconds)
+            RestTimerState(endsAt = endsAt, totalSeconds = seconds)
         }
     }
 

@@ -131,6 +131,7 @@
     <string name="feature_workout_notification_channel_description">Shows the running workout and the rest timer.</string>
     <string name="feature_workout_notification_running">Workout in progress</string>
     <string name="feature_workout_notification_started_at">Started at %1$s</string>
+    <string name="feature_workout_notification_started_on_watch">Started on your watch. Tap to open GymPulse.</string>
     <string name="feature_workout_bar_rest">Rest %1$s</string>
     <string name="feature_workout_bar_open">Open workout</string>
 </resources>

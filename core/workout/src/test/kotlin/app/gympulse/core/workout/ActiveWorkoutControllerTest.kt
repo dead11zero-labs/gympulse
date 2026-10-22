@@ -147,6 +147,49 @@ class ActiveWorkoutControllerTest {
     }
 
     @Test
+    fun editSet_findsSetByIdChecksSessionAndRule() = runTest {
+        seed()
+        val sessionId = controller.startWorkout(PLAN_ID)
+        val set = controller.activeSession.first()!!.exercises.single().sets.first()
+
+        time.advanceSeconds(5)
+        val changed = controller.editSet(sessionId, set.id) { it.copy(weightKg = 82.5) }
+        assertEquals(SetEditStatus.CHANGED, changed.status)
+        assertEquals(82.5, changed.set!!.weightKg!!, 0.001)
+        assertEquals(time.now(), changed.set.updatedAt)
+
+        assertEquals(SetEditStatus.UNCHANGED, controller.editSet(sessionId, set.id) { it }.status)
+        assertEquals(SetEditStatus.REJECTED, controller.editSet(sessionId, set.id) { null }.status)
+        assertEquals(SetEditStatus.SET_NOT_FOUND, controller.editSet(sessionId, "missing") { it }.status)
+        assertEquals(SetEditStatus.OTHER_SESSION, controller.editSet("other", set.id) { it }.status)
+        controller.discardWorkout()
+        assertEquals(SetEditStatus.NO_SESSION, controller.editSet(sessionId, set.id) { it }.status)
+    }
+
+    @Test
+    fun setSetCompleted_isAbsoluteAndCountsRestFromCompletion() = runTest {
+        seed()
+        val sessionId = controller.startWorkout(PLAN_ID)
+        val set = controller.activeSession.first()!!.exercises.single().sets.first()
+        val completedAt = time.now().minusSeconds(30)
+
+        val result = controller.setSetCompleted(sessionId, set.id, completed = true, completedAt = completedAt)
+
+        assertEquals(SetEditStatus.CHANGED, result.status)
+        assertEquals(completedAt, result.set!!.completedAt)
+        assertEquals(DEFAULT_REST_SECONDS - 30, controller.restTimerState.value!!.remainingSeconds(time.now()))
+        assertEquals(
+            SetEditStatus.UNCHANGED,
+            controller.setSetCompleted(sessionId, set.id, completed = true).status,
+        )
+        assertEquals(
+            SetEditStatus.REJECTED,
+            controller.setSetCompleted(sessionId, set.id, completed = false) { false }.status,
+        )
+        assertTrue(controller.activeSession.first()!!.exercises.single().sets.first().isCompleted)
+    }
+
+    @Test
     fun adjustAndSkipRest() = runTest {
         seed()
         controller.startWorkout(PLAN_ID)

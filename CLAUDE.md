@@ -24,6 +24,12 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 - `core:workout` – `ActiveWorkoutController`: einziger Schreibpfad für das laufende Workout (Mutex, Sätze, Finish inkl.
   Zusammenfassung/PRs/Health-Export) und persistenter `RestTimer` (`endsAt` in DataStore). Funktioniert ohne offenen Screen;
   ViewModel, Notification und Wear-Bridge nutzen ihn.
+- `core:wearsync` – Telefon-Seite der Uhr-Anbindung hinter `Feature.WEAR_APP`: `WearSnapshotPublisher` (debounced
+  `/workout/active` mit monotoner `version` und Quittungen, `/plans/summary`), `WearCommandListenerService` +
+  `WearCommandProcessor` (`/cmd/<uuid>` idempotent über den Controller, verarbeitete IDs in DataStore, Konfliktregel
+  `commandWins` mit `SetClockBook`), Capability-Prüfung `WatchAppStatus` (Capability `gympulse_watch_app` aus `wear.xml`),
+  `WearRestAlertPolicy` (Pausen-Vibration nur auf der Uhr, solange sie verbunden ist). Data Layer und Controller hängen
+  hinter `WearDataClient`/`WearWorkoutPort` (Fakes in Tests). Start per `WearSync.start()` in der Application.
 - `wear` – Wear-OS-App (Companion, `standalone=false`): Compose for Wear OS (Material 3 für Wear), Hilt, minSdk 33, gleiche
   `applicationId` wie `app` (Data Layer). Plugin `gympulse.wear.application`. Das Telefon bleibt Source of Truth, Plan siehe `wearos-plan.md`.
   **Ausnahme:** Das Wear-Theme (`app.gympulse.wear.theme`) hat eigene Tokens (Wear-`ColorScheme`, Kinetic-Farben), weil Wear Material 3 ein

@@ -15,6 +15,7 @@ import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.workout.ActiveWorkoutController
+import app.gympulse.core.workout.RestAlertPolicy
 import app.gympulse.core.workout.timer.runningAt
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +42,8 @@ class ActiveWorkoutService : Service() {
     @Inject lateinit var controller: ActiveWorkoutController
 
     @Inject lateinit var time: TimeProvider
+
+    @Inject lateinit var restAlertPolicy: RestAlertPolicy
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var observeJob: Job? = null
@@ -81,6 +84,8 @@ class ActiveWorkoutService : Service() {
                 // Switch back to the elapsed time once the rest is over.
                 delay(Duration.between(time.now(), running.endsAt).toMillis().coerceAtLeast(0))
                 notify(WorkoutNotificationContent(data.title, data.startedAt, null))
+                // With a connected watch only the watch vibrates.
+                if (restAlertPolicy.alertOnPhone()) RestAlarm.vibrate(this)
             }
         }
     }
@@ -115,13 +120,17 @@ class ActiveWorkoutService : Service() {
     private data class HeaderData(val title: String?, val startedAt: Instant)
 
     companion object {
-        /** Starts the service; safe to call repeatedly while a session is running. */
-        fun start(context: Context) {
-            try {
-                ContextCompat.startForegroundService(context, Intent(context, ActiveWorkoutService::class.java))
-            } catch (e: IllegalStateException) {
-                // App is not in the foreground; the next visible start will try again.
-            }
+        /**
+         * Starts the service; safe to call repeatedly while a session is running.
+         *
+         * @return false if the system refused it (ForegroundServiceStartNotAllowedException on
+         *   API 31+ while the app is in the background); the next visible start will try again.
+         */
+        fun start(context: Context): Boolean = try {
+            ContextCompat.startForegroundService(context, Intent(context, ActiveWorkoutService::class.java))
+            true
+        } catch (e: IllegalStateException) {
+            false
         }
     }
 }

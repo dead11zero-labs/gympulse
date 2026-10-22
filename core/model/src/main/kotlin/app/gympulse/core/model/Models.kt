@@ -95,6 +95,8 @@ data class SetEntry(
     val rpe: Double?,
     val isCompleted: Boolean,
     val completedAt: Instant?,
+    /** Letzte Änderung des gespeicherten Satzes (`updated_at`); null, wenn er nie gespeichert wurde. */
+    val updatedAt: Instant? = null,
 )
 
 data class ScheduleRule(
