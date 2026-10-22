@@ -6,6 +6,7 @@ import app.gympulse.core.model.SetType
 import app.gympulse.core.model.TrackingType
 import app.gympulse.core.model.WorkoutSession
 import app.gympulse.core.model.setVolumeKg
+import app.gympulse.core.workout.completedSetCount
 
 /** Input columns of a set row. */
 internal enum class SetField { WEIGHT, EXTRA_WEIGHT, REPS, DURATION, DISTANCE }
@@ -20,14 +21,6 @@ internal fun setFieldsFor(trackingType: TrackingType, isBodyweight: Boolean): Li
     TrackingType.DURATION -> listOf(SetField.DURATION)
     TrackingType.DISTANCE -> listOf(SetField.DISTANCE, SetField.DURATION)
 }
-
-/** A set without reps, duration or distance is empty and does not count as done. */
-internal fun SetEntry.hasValues(): Boolean =
-    (reps ?: 0) > 0 || (durationSeconds ?: 0) > 0 || (distanceMeters ?: 0.0) > 0.0
-
-/** Number of ticked-off sets that carry values. */
-internal fun WorkoutSession.completedSetCount(): Int =
-    exercises.sumOf { exercise -> exercise.sets.count { it.isCompleted && it.hasValues() } }
 
 /**
  * Builds the screen model. The live volume uses the same rule as

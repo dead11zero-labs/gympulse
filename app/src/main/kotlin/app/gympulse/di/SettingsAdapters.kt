@@ -5,7 +5,7 @@ import app.gympulse.core.settings.UserSettingsRepository
 import app.gympulse.feature.calendar.CalendarWeekStartProvider
 import app.gympulse.feature.dashboard.WeekStartProvider
 import app.gympulse.feature.dashboard.WeeklyGoalProvider
-import app.gympulse.feature.workout.timer.RestTimerSettings
+import app.gympulse.core.workout.timer.RestTimerSettings
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

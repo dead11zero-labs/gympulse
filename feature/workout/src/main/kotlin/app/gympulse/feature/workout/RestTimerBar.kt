@@ -20,8 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import app.gympulse.core.designsystem.theme.Spacing
-import app.gympulse.feature.workout.timer.RestTimer
-import app.gympulse.feature.workout.timer.RestTimerState
+import app.gympulse.core.workout.timer.RestTimer
+import app.gympulse.core.workout.timer.RestTimerState
 import java.time.Instant
 import androidx.compose.animation.animateContentSize
 import androidx.compose.material3.FilledTonalButton

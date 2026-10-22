@@ -21,6 +21,9 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
   gradle.properties (`gympulseSupabaseUrl`, `gympulseSupabasePublishableKey`, `gympulseGoogleWebClientId`), SQL unter `supabase/migrations/`.
 - `core:wearprotocol` – reines Kotlin/JVM: Protokoll Telefon ↔ Uhr (`@Serializable`-Snapshot und -Kommandos, `WearPaths`,
   Mapping `WorkoutSession → SessionSnapshot`, `WatchWorkoutReducer` für den optimistischen Zustand). Plan: `wearos-plan.md`.
+- `core:workout` – `ActiveWorkoutController`: einziger Schreibpfad für das laufende Workout (Mutex, Sätze, Finish inkl.
+  Zusammenfassung/PRs/Health-Export) und persistenter `RestTimer` (`endsAt` in DataStore). Funktioniert ohne offenen Screen;
+  ViewModel, Notification und Wear-Bridge nutzen ihn.
 - `wear` – Wear-OS-App (Companion, `standalone=false`): Compose for Wear OS (Material 3 für Wear), Hilt, minSdk 33, gleiche
   `applicationId` wie `app` (Data Layer). Plugin `gympulse.wear.application`. Das Telefon bleibt Source of Truth, Plan siehe `wearos-plan.md`.
   **Ausnahme:** Das Wear-Theme (`app.gympulse.wear.theme`) hat eigene Tokens (Wear-`ColorScheme`, Kinetic-Farben), weil Wear Material 3 ein

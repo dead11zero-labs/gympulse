@@ -1,4 +1,4 @@
-package app.gympulse.feature.workout.timer
+package app.gympulse.core.workout.timer
 
 import kotlinx.coroutines.flow.Flow
 
