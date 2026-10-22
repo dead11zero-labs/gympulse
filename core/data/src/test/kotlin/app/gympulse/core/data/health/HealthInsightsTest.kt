@@ -69,15 +69,14 @@ class HealthInsightsTest {
     }
 
     @Test
-    fun sleepIsOnlyReadWithSubToggle() = runTest {
-        activate(HealthReadType.SLEEP)
-        source.sleep = HealthSleep(start.minus(Duration.ofHours(10)), start.minus(Duration.ofHours(2)))
-
-        assertNull(insights.read(start, end))
-        assertFalse(source.sleepRead)
-
+    fun read_neverReadsSleep() = runTest {
+        activate(HealthReadType.SLEEP, HealthReadType.STEPS)
         toggles.setEnabled(Feature.HEALTH_SLEEP, true)
-        assertEquals(480L, insights.read(start, end)?.sleepMinutes)
+        source.sleep = HealthSleep(start.minus(Duration.ofHours(10)), start.minus(Duration.ofHours(2)))
+        source.activity = HealthActivity(steps = 100)
+
+        assertEquals(100L, insights.read(start, end)?.steps)
+        assertFalse(source.sleepRead)
     }
 
     @Test

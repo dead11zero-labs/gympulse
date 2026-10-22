@@ -147,19 +147,16 @@ data class HealthSleep(
 
 /**
  * Werte aus Health Connect im Zeitfenster eines Workouts, für die Zusammenfassung.
- *
- * @param sleepMinutes Dauer der letzten Schlafphase vor dem Workout, nur mit Schlaf-Unterschalter.
  */
 data class WorkoutHealthMetrics(
     val averageHeartRateBpm: Long? = null,
     val maxHeartRateBpm: Long? = null,
     val steps: Long? = null,
     val activeCaloriesKcal: Double? = null,
-    val sleepMinutes: Long? = null,
 ) {
     val isEmpty: Boolean
         get() = averageHeartRateBpm == null && maxHeartRateBpm == null && steps == null &&
-            activeCaloriesKcal == null && sleepMinutes == null
+            activeCaloriesKcal == null
 }
 
 /** Schlafdauer der letzten Nacht, oder warum es keine gibt. Wirft nie. */
