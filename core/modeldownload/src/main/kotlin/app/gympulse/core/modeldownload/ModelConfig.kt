@@ -48,8 +48,8 @@ object ModelConfig {
 
     private const val HF_REPO = "litert-community/gemma-4-E2B-it-litert-lm"
 
-    /** PLATZHALTER: 40-stelliger Commit-Hash des HF-Repos. */
-    private const val HF_COMMIT = "TODO_PLACEHOLDER_COMMIT_SHA"
+    /** Gepinnter Commit des HF-Repos (Stand 23.10.2026). */
+    private const val HF_COMMIT = "a790a852d433991c0c0a41c1154cf9b3850300fa"
 
     private const val GEMMA_4_E2B_GPU_FILE = "gemma-4-E2B-it-gpu.litertlm"
 
@@ -57,8 +57,8 @@ object ModelConfig {
         id = "gemma-4-e2b-it-gpu",
         fileName = GEMMA_4_E2B_GPU_FILE,
         url = "https://huggingface.co/$HF_REPO/resolve/$HF_COMMIT/$GEMMA_4_E2B_GPU_FILE",
-        // PLATZHALTER: SHA-256 der Datei (LFS-Objekt) von Hugging Face.
-        sha256 = "TODO_PLACEHOLDER_SHA256",
+        // SHA-256 des LFS-Objekts auf Hugging Face (von Jörg am 23.10.2026 übernommen).
+        sha256 = "794339191f0e1dc8353b7f84fb205af5e62870ed5647a315eddbf7a9a9c90f06",
         // Verifiziert auf Hugging Face (22.10.2026): 2.008.432.640 Bytes.
         sizeBytes = 2_008_432_640L,
     )
