@@ -10,6 +10,7 @@ import app.gympulse.core.model.MeasurementSource
 import app.gympulse.core.model.MeasurementType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.Instant
 import javax.inject.Inject
 
 /** Körpermaße (Gewicht in kg, Körperfett in Prozent, Umfänge in cm). */
@@ -19,6 +20,9 @@ interface BodyMeasurementRepository {
 
     /** Legt pro Eintrag einen Messwert zum aktuellen Zeitpunkt an. */
     suspend fun record(values: Map<MeasurementType, Double>)
+
+    /** Legt ein aus Health Connect gelesenes Körpergewicht (kg) mit dessen Messzeitpunkt an. */
+    suspend fun recordHealthConnectWeight(measuredAt: Instant, weightKg: Double)
 
     /** Ändert den Wert eines Messwerts; unbekannte oder gelöschte IDs werden ignoriert. */
     suspend fun updateValue(id: String, value: Double)
@@ -49,6 +53,21 @@ class DefaultBodyMeasurementRepository @Inject constructor(
                 ),
             )
         }
+    }
+
+    override suspend fun recordHealthConnectWeight(measuredAt: Instant, weightKg: Double) {
+        val now = time.now().toEpochMilli()
+        bodyDao.upsertMeasurement(
+            BodyMeasurementEntity(
+                id = Ids.newId(now),
+                measuredAt = measuredAt.toEpochMilli(),
+                type = MeasurementType.WEIGHT,
+                value = weightKg,
+                source = MeasurementSource.HEALTH_CONNECT,
+                createdAt = now,
+                updatedAt = now,
+            ),
+        )
     }
 
     override suspend fun updateValue(id: String, value: Double) {
