@@ -8,6 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
@@ -53,7 +54,7 @@ class WorkoutHeartRateRecorderTest {
         }
     }
 
-    private fun TestScope.launchRecorder() = backgroundScope.launch { recorder.run(states) }
+    private fun TestScope.launchRecorder() = backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { recorder.run(states) }
 
     @Test
     fun finishedWorkout_sendsAverageAndMaxAfterTheEnd() = runTest {
