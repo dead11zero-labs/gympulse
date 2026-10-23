@@ -98,8 +98,8 @@
 
     <string name="settings_section_about">Über die App</string>
     <string name="settings_version">Version</string>
-    <string name="settings_licenses">Open-Source-Lizenzen</string>
-    <string name="settings_licenses_summary">Übungsdaten und Bibliotheken, die GymPulse nutzt</string>
+    <string name="settings_licenses">Über die App</string>
+    <string name="settings_licenses_summary">Open-Source-Lizenzen, Übungsdaten und Bibliotheken</string>
 
     <string name="about_app_name" translatable="false">GymPulse</string>
     <string name="about_version">Version %1$s</string>

@@ -1,11 +1,13 @@
 package app.gympulse.core.data.health
 
+import app.gympulse.core.data.repository.BodyMeasurementRepository
 import app.gympulse.core.data.repository.ExerciseRepository
 import app.gympulse.core.data.repository.WorkoutRepository
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.featuregate.Feature
 import app.gympulse.core.featuregate.FeatureGate
 import app.gympulse.core.featuregate.UserFeatureToggles
+import java.time.Duration
 import java.util.Locale
 import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
@@ -22,6 +24,7 @@ class HealthConnectSync @Inject constructor(
     private val userToggles: UserFeatureToggles,
     private val workoutRepository: WorkoutRepository,
     private val exerciseRepository: ExerciseRepository,
+    private val bodyMeasurements: BodyMeasurementRepository,
     private val time: TimeProvider,
 ) : FinishedWorkoutExporter {
 
@@ -54,6 +57,21 @@ class HealthConnectSync @Inject constructor(
         }
     }
 
+    /**
+     * Übernimmt das jüngste Körpergewicht aus Health Connect als Messwert, falls es noch fehlt.
+     * Läuft bei jedem App-Start; ohne Feature oder Berechtigung passiert nichts.
+     */
+    suspend fun importLatestWeight() {
+        if (!isReady()) return
+        guarded(Unit) {
+            val weight = dataSource.readLatestWeight(time.now().minus(WEIGHT_LOOKBACK)) ?: return@guarded
+            val existing = bodyMeasurements.observeAll().first()
+            if (WorkoutHealthMapper.isNewWeight(weight, existing)) {
+                bodyMeasurements.recordHealthConnectWeight(weight.measuredAt, weight.weightKg)
+            }
+        }
+    }
+
     private suspend fun isReady(): Boolean =
         featureGate.isEnabled(Feature.HEALTH_CONNECT) && hasAllPermissions()
 
@@ -64,5 +82,9 @@ class HealthConnectSync @Inject constructor(
     } catch (e: Exception) {
         // Health Connect kann jederzeit Berechtigungen entziehen oder Anfragen drosseln.
         fallback
+    }
+
+    private companion object {
+        val WEIGHT_LOOKBACK: Duration = Duration.ofDays(365)
     }
 }
