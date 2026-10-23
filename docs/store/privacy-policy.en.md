@@ -37,7 +37,7 @@ You decide which information you enter. Required fields are limited to what the 
 
 ## 5. Permissions
 
-- **Internet:** to load exercise images (see section 4) and, only if you turn it on, for sign-in and cloud backup (see section 7).
+- **Internet:** to load exercise images (see section 4), for the one-time download of the AI model (see section 9) and, only if you turn it on, for sign-in and cloud backup (see section 7).
 - **Notifications:** show a notification during an active workout so the session can be resumed easily.
 - **Foreground service:** keeps the active workout and rest timer running while you train.
 - **Health Connect (optional):** write exercise sessions and read body weight, heart rate, steps, active calories and – with a separate switch – sleep (see section 8).
@@ -71,32 +71,45 @@ The connection to Android Health Connect is **off** by default. It only becomes 
 
 [To be reviewed by Jörg: legal basis for health data (consent, Art. 9(2)(a) GDPR) and details for the Health Connect review in the Play Store.]
 
-## 9. Android system backup
+## 9. AI coach (optional, opt-in)
+
+The AI coach is **off** by default. It only becomes active when you turn on "Local AI coach" in the settings and agree to the dialog. Without your consent GymPulse does not download an AI model.
+
+- **Processing on your device:** the AI coach phrases recommendations with a language model (Gemma 4 E2B by Google). The model runs entirely on your device. Your training data is not sent to a server for this.
+- **What the model receives:** the model is given a condensed summary, such as strength trends and training volume per muscle group over the last few weeks. Individual sets, notes, photos and health data from Health Connect are not part of it.
+- **One-time model download:** during setup GymPulse downloads the model once from Hugging Face (`huggingface.co`). The download only starts on Wi-Fi and is about 2 GB. For this connection your device necessarily sends its IP address to Hugging Face. No training data is sent during the download. After that the AI coach does not need an internet connection.
+- **Results are not stored:** the texts produced by the AI coach are not saved, not logged, not exported and not included in the cloud backup.
+- **Note on AI texts:** AI-generated text may contain errors. The recommendations are not medical advice. Check statements against your own training data before you change your plan.
+- **Storage:** the model takes up about 2 GB on your device. You can delete it at any time in the settings.
+
+[To be checked by Jörg: legal basis for the model download (IP address sent to Hugging Face) and information on transfers to third countries.]
+
+## 10. Android system backup
 
 GymPulse is configured to take part in the Android system backup. If you have enabled a backup of app data in your Android settings (for example via your Google account), Android may back up the app's data according to the rules of the operating system. This backup is performed by Android or Google, not by GymPulse. [To be checked by Jörg: define backup rules or deliberately allow the default.]
 
-## 10. No sharing, no advertising
+## 11. No sharing, no advertising
 
-GymPulse does not sell data, does not share data with third parties and shows no advertising. The exceptions are the technically required loading of exercise images from GitHub (section 4) and – only with cloud backup turned on – Google as sign-in service and Supabase as hosting provider (section 7).
+GymPulse does not sell data, does not share data with third parties and shows no advertising. The exceptions are the technically required loading of exercise images from GitHub (section 4), the one-time download of the AI model from Hugging Face (section 9) and – only with cloud backup turned on – Google as sign-in service and Supabase as hosting provider (section 7).
 
-## 11. Planned features (not yet available)
+## 12. Planned features (not yet available)
 
 The following features are planned but are **not** included in the current version. This policy will be updated when they are released. They are optional and will only be activated with your consent.
 
 - **Automatic synchronisation:** continuous syncing of your data between several devices. Today's cloud backup (section 7) works manually only.
 
-## 12. Retention and deletion
+## 13. Retention and deletion
 
-Your data stays on your device until you delete it in the app (individual workouts, exercises, plans or measurements). A cloud backup is kept until you remove it in the settings with "Delete cloud backup" or replace it with a new backup; to delete your account, contact [KONTAKT-EMAIL]. If you uninstall GymPulse, the data stored locally by the app is removed. Any backup made by Android (section 9) is not affected and is managed in your Android settings.
+Your data stays on your device until you delete it in the app (individual workouts, exercises, plans or measurements). A cloud backup is kept until you remove it in the settings with "Delete cloud backup" or replace it with a new backup; to delete your account, contact [KONTAKT-EMAIL]. If you uninstall GymPulse, the data stored locally by the app is removed. Any backup made by Android (section 10) is not affected and is managed in your Android settings.
 
-## 13. Your rights
+## 14. Your rights
 
 Because the provider does not receive your training data, it remains entirely with you. If you have questions about privacy, or a request about data you have sent to us (for example by email), please contact [KONTAKT-EMAIL]. You have the statutory rights to access, rectification, erasure, restriction and objection, and the right to lodge a complaint with a data protection supervisory authority. [To be checked by Jörg: wording and scope.]
 
-## 14. Children
+## 15. Children
 
 [To be checked by Jörg: note on use by minors.]
 
-## 15. Changes to this policy
+## 16. Changes to this policy
 
 If features or data processing change, this policy will be updated. The date above shows the current version.

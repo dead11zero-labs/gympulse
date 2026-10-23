@@ -46,5 +46,9 @@ internal object LicenseSources {
         LicenseEntry("Kotlin", APACHE_2, "https://kotlinlang.org"),
         LicenseEntry("Navigation Compose", APACHE_2, "https://developer.android.com/guide/navigation"),
         LicenseEntry("DataStore", APACHE_2, "https://developer.android.com/topic/libraries/architecture/datastore"),
+        LicenseEntry("OkHttp", APACHE_2, "https://square.github.io/okhttp/"),
+        LicenseEntry("WorkManager", APACHE_2, "https://developer.android.com/topic/libraries/architecture/workmanager"),
+        LicenseEntry("LiteRT-LM", APACHE_2, "https://github.com/google-ai-edge/LiteRT-LM"),
+        LicenseEntry("Gemma 4 E2B (KI-Modell, Download)", APACHE_2, "https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm"),
     )
 }

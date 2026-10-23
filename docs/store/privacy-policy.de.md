@@ -37,7 +37,7 @@ Du entscheidest selbst, welche Angaben du machst. Pflichtfelder sind auf das Nö
 
 ## 5. Berechtigungen
 
-- **Internet:** zum Laden der Übungsbilder (siehe Abschnitt 4) und, nur wenn du es einschaltest, für Anmeldung und Cloud-Backup (siehe Abschnitt 7).
+- **Internet:** zum Laden der Übungsbilder (siehe Abschnitt 4), für den einmaligen Download des KI-Modells (siehe Abschnitt 9) und, nur wenn du es einschaltest, für Anmeldung und Cloud-Backup (siehe Abschnitt 7).
 - **Benachrichtigungen:** zeigen während eines laufenden Workouts eine Benachrichtigung an, damit die Sitzung nicht unterbrochen wird.
 - **Vordergrunddienst:** hält das laufende Workout und den Pausentimer aktiv, solange du trainierst.
 - **Health Connect (optional):** Trainingseinheiten schreiben sowie Körpergewicht, Herzfrequenz, Schritte, aktive Kalorien und – mit eigenem Schalter – Schlaf lesen (siehe Abschnitt 8).
@@ -71,32 +71,45 @@ Die Anbindung an Android Health Connect ist standardmäßig **ausgeschaltet**. S
 
 [Von Jörg zu prüfen: Rechtsgrundlage für Gesundheitsdaten (Einwilligung, Art. 9 Abs. 2 lit. a DSGVO) und Angaben für die Health-Connect-Prüfung im Play Store.]
 
-## 9. Android-Systemsicherung
+## 9. KI-Coach (optional, Opt-in)
+
+Der KI-Coach ist standardmäßig **ausgeschaltet**. Er wird erst aktiv, wenn du ihn in den Einstellungen unter „Lokaler KI-Coach“ einschaltest und dem Dialog zustimmst. Ohne deine Zustimmung lädt GymPulse kein KI-Modell.
+
+- **Verarbeitung auf dem Gerät:** Der KI-Coach formuliert Empfehlungen mit einem Sprachmodell (Gemma 4 E2B von Google). Das Modell läuft vollständig auf deinem Gerät. Deine Trainingsdaten werden dafür nicht an einen Server übertragen.
+- **Was das Modell erhält:** Dem Modell wird eine verdichtete Zusammenfassung übergeben, etwa Verläufe der Kraftwerte und das Trainingsvolumen pro Muskelgruppe der letzten Wochen. Einzelne Sätze, Notizen, Fotos und Gesundheitsdaten aus Health Connect gehören nicht dazu.
+- **Einmaliger Modell-Download:** Beim Einrichten lädt GymPulse das Modell einmalig von Hugging Face (`huggingface.co`) herunter. Der Download startet nur im WLAN und umfasst ca. 2 GB. Für diese Verbindung sendet dein Gerät technisch notwendig seine IP-Adresse an Hugging Face. Trainingsdaten werden dabei nicht übertragen. Danach braucht der KI-Coach keine Internetverbindung mehr.
+- **Ergebnisse werden nicht gespeichert:** Die vom KI-Coach erzeugten Texte werden nicht gespeichert, nicht protokolliert, nicht exportiert und nicht ins Cloud-Backup übernommen.
+- **Hinweis zu KI-Texten:** KI-generierte Texte können Fehler enthalten. Die Empfehlungen sind keine medizinische oder ärztliche Beratung. Prüfe Aussagen anhand deiner Trainingsdaten, bevor du deinen Plan änderst.
+- **Speicherplatz:** Das Modell belegt ca. 2 GB auf deinem Gerät. In den Einstellungen kannst du es jederzeit wieder löschen.
+
+[Von Jörg zu prüfen: Rechtsgrundlage für den Modell-Download (IP-Adresse an Hugging Face) und Hinweise zu Übermittlungen in Drittländer.]
+
+## 10. Android-Systemsicherung
 
 GymPulse ist für die Android-Systemsicherung konfiguriert. Wenn du in den Android-Einstellungen eine Sicherung deiner App-Daten aktiviert hast (z. B. über dein Google-Konto), kann Android die Daten der App nach den Regeln des Betriebssystems sichern. Diese Sicherung wird von Android bzw. Google durchgeführt, nicht von GymPulse. [Von Jörg zu prüfen: Sicherungsregeln festlegen oder bewusst zulassen.]
 
-## 10. Keine Weitergabe, keine Werbung
+## 11. Keine Weitergabe, keine Werbung
 
-GymPulse verkauft keine Daten, gibt keine Daten an Dritte weiter und zeigt keine Werbung. Ausgenommen sind der technisch notwendige Abruf der Übungsbilder bei GitHub (Abschnitt 4) sowie – nur bei eingeschaltetem Cloud-Backup – Google als Anmeldedienst und Supabase als Hosting-Dienstleister (Abschnitt 7).
+GymPulse verkauft keine Daten, gibt keine Daten an Dritte weiter und zeigt keine Werbung. Ausgenommen sind der technisch notwendige Abruf der Übungsbilder bei GitHub (Abschnitt 4), der einmalige Download des KI-Modells von Hugging Face (Abschnitt 9) sowie – nur bei eingeschaltetem Cloud-Backup – Google als Anmeldedienst und Supabase als Hosting-Dienstleister (Abschnitt 7).
 
-## 11. Geplante Funktionen (noch nicht verfügbar)
+## 12. Geplante Funktionen (noch nicht verfügbar)
 
 Die folgenden Funktionen sind geplant, aber in der aktuellen Version **nicht** enthalten. Sobald sie veröffentlicht werden, wird diese Erklärung ergänzt. Sie sind optional und werden erst nach deiner Zustimmung aktiviert.
 
 - **Automatische Synchronisation:** fortlaufender Abgleich der Daten zwischen mehreren Geräten. Das heutige Cloud-Backup (Abschnitt 7) arbeitet nur manuell.
 
-## 12. Speicherdauer und Löschung
+## 13. Speicherdauer und Löschung
 
-Deine Daten bleiben auf deinem Gerät, bis du sie in der App löschst (einzelne Workouts, Übungen, Pläne oder Messwerte). Eine Cloud-Sicherung bleibt gespeichert, bis du sie in den Einstellungen mit „Cloud-Sicherung löschen“ entfernst oder durch eine neue Sicherung ersetzt; zur Löschung deines Kontos wende dich an [KONTAKT-EMAIL]. Wenn du GymPulse deinstallierst, werden die lokal gespeicherten Daten der App entfernt. Eine eventuelle Sicherung durch Android (Abschnitt 9) bleibt davon unberührt und ist in den Android-Einstellungen zu verwalten.
+Deine Daten bleiben auf deinem Gerät, bis du sie in der App löschst (einzelne Workouts, Übungen, Pläne oder Messwerte). Eine Cloud-Sicherung bleibt gespeichert, bis du sie in den Einstellungen mit „Cloud-Sicherung löschen“ entfernst oder durch eine neue Sicherung ersetzt; zur Löschung deines Kontos wende dich an [KONTAKT-EMAIL]. Wenn du GymPulse deinstallierst, werden die lokal gespeicherten Daten der App entfernt. Eine eventuelle Sicherung durch Android (Abschnitt 10) bleibt davon unberührt und ist in den Android-Einstellungen zu verwalten.
 
-## 13. Deine Rechte
+## 14. Deine Rechte
 
 Da der Anbieter deine Trainingsdaten nicht erhält, liegen sie vollständig bei dir. Wenn du dennoch Fragen zum Datenschutz hast oder ein Anliegen zu Daten hast, die du an uns übermittelt hast (z. B. per E-Mail), wende dich an [KONTAKT-EMAIL]. Dir stehen die gesetzlichen Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung und Widerspruch sowie das Beschwerderecht bei einer Datenschutzaufsichtsbehörde zu. [Von Jörg zu prüfen: Formulierung und Umfang.]
 
-## 14. Kinder
+## 15. Kinder
 
 [Von Jörg zu prüfen: Hinweis zur Nutzung durch Minderjährige.]
 
-## 15. Änderungen dieser Erklärung
+## 16. Änderungen dieser Erklärung
 
 Wenn sich die Funktionen oder die Datenverarbeitung ändern, wird diese Erklärung angepasst. Das Datum oben zeigt den Stand an.

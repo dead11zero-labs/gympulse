@@ -26,7 +26,7 @@ class LicenseSourcesTest {
     fun libraries_areAllApache2AndIncludeMainDependencies() {
         val names = LicenseSources.libraries.map { it.name }
         assertTrue(LicenseSources.libraries.all { it.license == "Apache-2.0" })
-        listOf("Compose", "Room", "Hilt", "Coil", "Kotlin").forEach { expected ->
+        listOf("Compose", "Room", "Hilt", "Coil", "Kotlin", "OkHttp", "WorkManager", "LiteRT-LM", "Gemma").forEach { expected ->
             assertTrue("missing $expected in $names", names.any { it.contains(expected) })
         }
     }
