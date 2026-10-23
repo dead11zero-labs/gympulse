@@ -50,8 +50,12 @@ class WearSync @Inject constructor(
 }
 
 /**
- * Pausen-Vibration nur auf der Uhr, solange eine Uhr mit GymPulse direkt verbunden ist (Jörg);
- * sonst wie bisher am Telefon. Im Zweifel (keine Antwort der Play Services) vibriert das Telefon.
+ * Pausen-Vibration nur auf der Uhr, solange sie verbunden ist (Jörg); sonst wie bisher am Telefon.
+ *
+ * „Verbunden“ reicht allein nicht: Die Uhr muss den Timer auch tatsächlich mitführen. Das meldet sie
+ * über [WatchAppState.restAlertsOnWatch], solange ihr Workout-Dienst läuft. Konnte der Dienst nicht
+ * starten (z. B. Hintergrund-Startverbot) oder ist die Uhr weg, vibriert das Telefon. Im Zweifel
+ * (keine Antwort der Play Services) ebenfalls.
  */
 class WearRestAlertPolicy @Inject constructor(
     private val featureGate: FeatureGate,
@@ -60,7 +64,7 @@ class WearRestAlertPolicy @Inject constructor(
     override suspend fun alertOnPhone(): Boolean {
         if (!featureGate.isEnabled(Feature.WEAR_APP)) return true
         val state = withTimeoutOrNull(STATUS_TIMEOUT_MILLIS) { watchAppStatus.state.first() } ?: return true
-        return !state.connected
+        return !(state.connected && state.restAlertsOnWatch)
     }
 
     private companion object {
