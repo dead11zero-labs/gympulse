@@ -40,6 +40,10 @@ class BodyMetricsViewModelTest {
             }
         }
 
+        override suspend fun recordHealthConnectWeight(measuredAt: Instant, weightKg: Double) {
+            items.value += BodyMeasurement("n${nextId++}", measuredAt, MeasurementType.WEIGHT, weightKg, MeasurementSource.HEALTH_CONNECT)
+        }
+
         override suspend fun updateValue(id: String, value: Double) {
             items.value = items.value.map { if (it.id == id) it.copy(value = value) else it }
         }
