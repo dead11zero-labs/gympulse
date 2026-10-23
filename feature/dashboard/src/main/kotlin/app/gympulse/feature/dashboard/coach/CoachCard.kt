@@ -65,7 +65,7 @@ internal fun CoachCard(state: CoachUiState, onRegenerate: () -> Unit, modifier: 
                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
             }
             is CoachUiState.Content -> {
-                Text(text = state.text, style = MaterialTheme.typography.bodyMedium)
+                Text(text = renderCoachMarkdown(state.text), style = MaterialTheme.typography.bodyMedium)
                 if (state.streaming) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                 val ai = state.source == NarrationSource.AI
                 Text(
