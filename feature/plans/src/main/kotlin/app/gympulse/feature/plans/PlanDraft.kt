@@ -80,6 +80,7 @@ internal data class PlanDraft(
                 id = newId(),
                 exerciseId = exercise.id,
                 name = exercise.name,
+                sets = PlanExerciseDefaults.defaultSets(exercise.trackingType).toString(),
                 repsMin = if (usesReps) DraftExercise.DEFAULT_REPS_MIN else "",
                 repsMax = if (usesReps) DraftExercise.DEFAULT_REPS_MAX else "",
             )

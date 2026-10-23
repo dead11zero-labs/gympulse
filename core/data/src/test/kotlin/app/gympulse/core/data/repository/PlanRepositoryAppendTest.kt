@@ -109,6 +109,7 @@ class PlanRepositoryAppendTest {
         val added = dao.items.value.single { it.deletedAt == null }
         assertNull(added.targetRepsMin)
         assertNull(added.targetRepsMax)
+        assertEquals(PlanExerciseDefaults.SETS_DURATION, added.targetSets)
     }
 
     @Test

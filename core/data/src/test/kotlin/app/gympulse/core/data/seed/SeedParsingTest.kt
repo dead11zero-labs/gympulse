@@ -71,6 +71,13 @@ class SeedParsingTest {
     }
 
     @Test
+    fun realSeedCardioExercisesTrackOnlyDuration() {
+        val cardio = realSeed().exercises.filter { it.category == "cardio" }
+        assertTrue(cardio.isNotEmpty())
+        cardio.forEach { assertEquals(it.slug, "DURATION", it.trackingType) }
+    }
+
+    @Test
     fun realSeedContainsMachinesFromJoerg() {
         val seed = realSeed()
         assertTrue(seed.schemaVersion >= 2)
