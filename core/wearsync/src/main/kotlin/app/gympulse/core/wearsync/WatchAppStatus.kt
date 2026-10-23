@@ -19,6 +19,11 @@ data class WatchAppState(
     val installed: Boolean,
     /** Eine dieser Uhren ist gerade direkt (Bluetooth/WLAN) verbunden. */
     val connected: Boolean,
+    /**
+     * Eine direkt verbundene Uhr führt gerade den Pausen-Timer mit und vibriert selbst
+     * ([WearCapabilities.WATCH_REST_ALERTS], solange ihr Workout-Dienst läuft).
+     */
+    val restAlertsOnWatch: Boolean = false,
 ) {
     companion object {
         val NONE = WatchAppState(installed = false, connected = false)
@@ -31,7 +36,10 @@ interface WatchAppStatus {
     val state: Flow<WatchAppState>
 }
 
-/** [WatchAppStatus] über die Capability [WearCapabilities.WATCH_APP] der Uhr-App. */
+/**
+ * [WatchAppStatus] über die Capabilities der Uhr-App: [WearCapabilities.WATCH_APP] (installiert)
+ * und [WearCapabilities.WATCH_REST_ALERTS] (Workout-Dienst der Uhr läuft).
+ */
 @Singleton
 class CapabilityWatchAppStatus @Inject constructor(
     private val capabilityClient: CapabilityClient,
@@ -43,17 +51,19 @@ class CapabilityWatchAppStatus @Inject constructor(
         }
         // Meldet Änderungen der erreichbaren Knoten; installiert/verbunden wird dann neu abgefragt.
         val listener = CapabilityClient.OnCapabilityChangedListener { launch { refresh() } }
-        capabilityClient.addListener(listener, WearCapabilities.WATCH_APP)
+        for (capability in WATCHED) capabilityClient.addListener(listener, capability)
         refresh()
-        awaitClose { capabilityClient.removeListener(listener, WearCapabilities.WATCH_APP) }
+        awaitClose { for (capability in WATCHED) capabilityClient.removeListener(listener, capability) }
     }.distinctUntilChanged()
 
     private suspend fun query(): WatchAppState = try {
-        val all = nodes(CapabilityClient.FILTER_ALL)
-        val reachable = nodes(CapabilityClient.FILTER_REACHABLE)
+        val all = nodes(WearCapabilities.WATCH_APP, CapabilityClient.FILTER_ALL)
+        val reachable = nodes(WearCapabilities.WATCH_APP, CapabilityClient.FILTER_REACHABLE)
+        val alerting = nodes(WearCapabilities.WATCH_REST_ALERTS, CapabilityClient.FILTER_REACHABLE)
         WatchAppState(
             installed = all.isNotEmpty() || reachable.isNotEmpty(),
             connected = reachable.any { it.isNearby },
+            restAlertsOnWatch = alerting.any { it.isNearby },
         )
     } catch (e: CancellationException) {
         throw e
@@ -62,6 +72,10 @@ class CapabilityWatchAppStatus @Inject constructor(
         WatchAppState.NONE
     }
 
-    private suspend fun nodes(filter: Int): Set<Node> =
-        capabilityClient.getCapability(WearCapabilities.WATCH_APP, filter).await().nodes
+    private suspend fun nodes(capability: String, filter: Int): Set<Node> =
+        capabilityClient.getCapability(capability, filter).await().nodes
+
+    private companion object {
+        val WATCHED = listOf(WearCapabilities.WATCH_APP, WearCapabilities.WATCH_REST_ALERTS)
+    }
 }

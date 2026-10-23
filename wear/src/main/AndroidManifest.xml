@@ -3,6 +3,18 @@
 
     <uses-feature android:name="android.hardware.type.watch" />
 
+    <!-- Workout-Dienst mit Ongoing Activity und Pausen-Haptik (W7). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
+    <!--
+        Typ "health" verlangt ab API 34 zusätzlich eine Sensor-Berechtigung. HIGH_SAMPLING_RATE_SENSORS
+        ist eine normale Berechtigung (ohne Dialog); die Puls-Berechtigungen kommen mit W8 dazu.
+    -->
+    <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:name=".GymPulseWearApplication"
         android:allowBackup="false"
@@ -29,6 +41,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".workout.WatchWorkoutService"
+            android:exported="false"
+            android:foregroundServiceType="health" />
+
+        <!-- Weckt die App, wenn das Telefon ein Workout meldet (Snapshot unter /workout/active). -->
+        <service
+            android:name=".workout.WorkoutDataListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data
+                    android:host="*"
+                    android:path="/workout/active"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
