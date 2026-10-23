@@ -42,6 +42,14 @@
     <string name="cd_next_exercise">Nächste Übung</string>
     <string name="cd_open_overview">Übungen und Optionen, %1$s</string>
 
+    <!-- Puls (Live-Wert bleibt auf der Uhr) -->
+    <string name="heart_rate_unit">bpm</string>
+    <string name="heart_rate_placeholder">--</string>
+    <string name="heart_rate_no_permission">Puls aus: Berechtigung verweigert</string>
+    <string name="heart_rate_unavailable">Puls nicht verfügbar</string>
+    <string name="cd_heart_rate_value">Puls, %1$d Schläge pro Minute</string>
+    <string name="cd_heart_rate_searching">Puls, wird gemessen</string>
+
     <!-- Pause -->
     <string name="rest_add">+15</string>
     <string name="rest_subtract">−15</string>

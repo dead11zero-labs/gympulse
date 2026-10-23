@@ -96,6 +96,34 @@ data class Discard(
     override val sessionId: String,
 ) : SessionCommand
 
+/**
+ * Puls-Zusammenfassung der Uhr für die beendete Session [sessionId]: Durchschnitt und Maximum in
+ * Schlägen pro Minute. Wird erst nach dem Workout gesendet (kein Live-Puls ans Telefon) und braucht
+ * keine laufende Session am Telefon, deshalb kein [SessionCommand].
+ */
+@Serializable
+@SerialName("heart_rate_summary")
+data class HeartRateSummary(
+    override val commandId: String,
+    override val issuedAt: Long,
+    val sessionId: String,
+    val averageBpm: Int,
+    val maxBpm: Int,
+    val sampleCount: Int,
+) : WearCommand {
+    /** Werte in einem glaubwürdigen Bereich, Durchschnitt nicht über dem Maximum. */
+    val isPlausible: Boolean
+        get() = averageBpm in HeartRateLimits.MIN_BPM..HeartRateLimits.MAX_BPM &&
+            maxBpm in averageBpm..HeartRateLimits.MAX_BPM &&
+            sampleCount > 0
+}
+
+/** Gültiger Bereich für einzelne Pulswerte (Schläge pro Minute); alles außerhalb gilt als Messfehler. */
+object HeartRateLimits {
+    const val MIN_BPM = 30
+    const val MAX_BPM = 250
+}
+
 /** Hülle mit Protokollversion, so wie ein Kommando auf dem Draht liegt. */
 @Serializable
 data class CommandEnvelope(
@@ -125,4 +153,12 @@ object WearCommands {
 
     fun discard(sessionId: String, now: Long = System.currentTimeMillis()) =
         Discard(Ids.newId(now), now, sessionId)
+
+    fun heartRateSummary(
+        sessionId: String,
+        averageBpm: Int,
+        maxBpm: Int,
+        sampleCount: Int,
+        now: Long = System.currentTimeMillis(),
+    ) = HeartRateSummary(Ids.newId(now), now, sessionId, averageBpm, maxBpm, sampleCount)
 }

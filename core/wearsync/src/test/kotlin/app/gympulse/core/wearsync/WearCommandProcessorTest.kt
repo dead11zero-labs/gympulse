@@ -21,9 +21,10 @@ class WearCommandProcessorTest {
     private val data = FakeWearDataClient()
     private val store = InMemoryWearSyncStore()
     private val clocks = SetClockBook()
+    private val heartRates = InMemoryWatchHeartRateStore()
     private val foreground = FakeForeground()
     private val gate = FakeFeatureGate()
-    private val processor = WearCommandProcessor(workout, sources, data, store, clocks, foreground, gate, time)
+    private val processor = WearCommandProcessor(workout, sources, data, store, clocks, heartRates, foreground, gate, time)
 
     private val now get() = time.now().toEpochMilli()
 
@@ -40,6 +41,39 @@ class WearCommandProcessorTest {
         assertEquals(6, workout.set("k1").reps)
         assertEquals(listOf(CommandAck(command.commandId, AckResult.APPLIED)), acks())
         assertEquals(listOf(WearPaths.command(command.commandId)), data.deletes)
+        assertTrue(data.items.isEmpty())
+    }
+
+    @Test
+    fun heartRateSummary_isStoredAfterWorkoutEnded() = runTest {
+        // Keine laufende Session: die Zusammenfassung kommt erst nach dem Beenden.
+        val command = WearCommands.heartRateSummary(SESSION_ID, averageBpm = 121, maxBpm = 168, sampleCount = 1_800, now = now)
+
+        processor.process(listOf(data.putCommand(command)))
+
+        assertEquals(WatchHeartRate(SESSION_ID, 121, 168), heartRates.values.value[SESSION_ID])
+        assertEquals(listOf(CommandAck(command.commandId, AckResult.APPLIED)), acks())
+        assertTrue(data.items.isEmpty())
+    }
+
+    @Test
+    fun heartRateSummary_implausibleValuesAreRejected() = runTest {
+        val command = WearCommands.heartRateSummary(SESSION_ID, averageBpm = 180, maxBpm = 90, sampleCount = 50, now = now)
+
+        processor.process(listOf(data.putCommand(command)))
+
+        assertTrue(heartRates.values.value.isEmpty())
+        assertEquals(listOf(CommandAck(command.commandId, AckResult.INVALID)), acks())
+    }
+
+    @Test
+    fun heartRateSummary_isDroppedWhenFeatureIsOff() = runTest {
+        gate.wearApp.value = false
+        val command = WearCommands.heartRateSummary(SESSION_ID, averageBpm = 121, maxBpm = 168, sampleCount = 1_800, now = now)
+
+        processor.process(listOf(data.putCommand(command)))
+
+        assertTrue(heartRates.values.value.isEmpty())
         assertTrue(data.items.isEmpty())
     }
 

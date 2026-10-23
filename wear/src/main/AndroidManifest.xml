@@ -8,9 +8,18 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
     <!--
         Typ "health" verlangt ab API 34 zusätzlich eine Sensor-Berechtigung. HIGH_SAMPLING_RATE_SENSORS
-        ist eine normale Berechtigung (ohne Dialog); die Puls-Berechtigungen kommen mit W8 dazu.
+        ist eine normale Berechtigung (ohne Dialog).
     -->
     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
+    <!--
+        Puls über die Health Services (W8), Laufzeit-Berechtigung. Bis Wear OS 5 (API 35) gilt
+        BODY_SENSORS, ab Wear OS 6 (API 36) die granulare Health-Berechtigung. Wird sie verweigert,
+        läuft das Workout ohne Puls weiter.
+    -->
+    <uses-permission
+        android:name="android.permission.BODY_SENSORS"
+        android:maxSdkVersion="35" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />

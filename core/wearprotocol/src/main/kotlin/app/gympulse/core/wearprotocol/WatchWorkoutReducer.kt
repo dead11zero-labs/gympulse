@@ -121,6 +121,8 @@ object WatchWorkoutReducer {
             is AdjustRest -> adjustRest(session, command)
             is SkipRest -> session.copy(restEndsAt = null)
             is Finish, is Discard -> null
+            // Betrifft nur das Telefon; die Ansicht der Uhr bleibt unverändert.
+            is HeartRateSummary -> session
         }
     }
 

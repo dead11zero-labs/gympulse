@@ -44,6 +44,7 @@ class WearProtocolTest {
             SkipRest(Fixtures.cmdId(8), 17, Fixtures.SESSION),
             Finish(Fixtures.cmdId(9), 18, Fixtures.SESSION),
             Discard(Fixtures.cmdId(10), 19, Fixtures.SESSION),
+            HeartRateSummary(Fixtures.cmdId(11), 20, Fixtures.SESSION, averageBpm = 118, maxBpm = 171, sampleCount = 2_400),
         )
         for (command in commands) {
             val bytes = WearProtocol.encodeCommand(command)
@@ -53,6 +54,18 @@ class WearProtocolTest {
         assertTrue(json, json.contains("\"type\":\"update_set\""))
         assertTrue(json, json.contains("\"weightKg\":82.5"))
         assertTrue(json, json.contains("\"protocolVersion\":${WearProtocol.VERSION}"))
+    }
+
+    @Test
+    fun heartRateSummary_plausibility() {
+        fun summary(avg: Int, max: Int, count: Int = 100) =
+            HeartRateSummary(Fixtures.cmdId(1), 1, Fixtures.SESSION, avg, max, count)
+        assertTrue(summary(120, 160).isPlausible)
+        assertTrue(summary(120, 120).isPlausible)
+        assertFalse(summary(120, 110).isPlausible)
+        assertFalse(summary(10, 160).isPlausible)
+        assertFalse(summary(120, 300).isPlausible)
+        assertFalse(summary(120, 160, count = 0).isPlausible)
     }
 
     @Test

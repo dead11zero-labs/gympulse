@@ -55,6 +55,7 @@ import app.gympulse.core.wearprotocol.SetSnapshot
 import app.gympulse.core.wearprotocol.WearTrackingType
 import app.gympulse.wear.R
 import app.gympulse.wear.theme.WearSpacing
+import app.gympulse.wear.workout.HeartRateReading
 import kotlinx.coroutines.delay
 
 private const val CROWN_PIXELS_PER_STEP = 40f
@@ -78,6 +79,7 @@ fun WorkoutScreen(
     onAdjustRest: (deltaSeconds: Int) -> Unit,
     onSkipRest: () -> Unit,
     onDismissNotices: () -> Unit,
+    heartRate: HeartRateReading = HeartRateReading.Off,
 ) {
     val exercise = state.exercise
     val set = state.currentSet
@@ -99,6 +101,7 @@ fun WorkoutScreen(
         if (status != null) {
             StatusBanner(message = status, onDismissNotice = onDismissNotices)
         }
+        HeartRateBadge(reading = heartRate)
         if (exercise == null || set == null) {
             Text(
                 text = stringResource(R.string.workout_empty),

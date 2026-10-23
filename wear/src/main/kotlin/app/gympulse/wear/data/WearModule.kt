@@ -2,6 +2,8 @@ package app.gympulse.wear.data
 
 import android.content.Context
 import app.gympulse.wear.workout.CapabilityRestAlertCapability
+import app.gympulse.wear.workout.HealthServicesHeartRateMonitor
+import app.gympulse.wear.workout.HeartRateMonitor
 import app.gympulse.wear.workout.RestAlertCapability
 import app.gympulse.wear.workout.WearClock
 import com.google.android.gms.wearable.CapabilityClient
@@ -33,6 +35,9 @@ abstract class WearBindingsModule {
 
     @Binds
     abstract fun bindRestAlertCapability(impl: CapabilityRestAlertCapability): RestAlertCapability
+
+    @Binds
+    abstract fun bindHeartRateMonitor(impl: HealthServicesHeartRateMonitor): HeartRateMonitor
 }
 
 @Module
