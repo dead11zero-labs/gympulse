@@ -46,6 +46,8 @@ dependencies {
     implementation(projects.core.modeldownload)
     // Lokaler KI-Coach (LiteRT-LM): auch im Release-Build, das Modell kommt per Opt-in-Download.
     implementation(projects.core.ai)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)
@@ -61,6 +63,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.compose.material3.navigation.suite)
     implementation(libs.kotlinx.serialization.json)
