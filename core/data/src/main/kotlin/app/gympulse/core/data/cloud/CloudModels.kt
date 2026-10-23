@@ -3,7 +3,7 @@ package app.gympulse.core.data.cloud
 import java.time.Instant
 
 /** Angemeldetes Konto beim Cloud-Backend. */
-data class CloudUser(val id: String, val email: String?)
+data class CloudUser(val id: String, val email: String?, val avatarUrl: String? = null)
 
 /**
  * Was dieser Build mitbringt: [backendConfigured] heißt, Supabase-URL und Publishable Key sind

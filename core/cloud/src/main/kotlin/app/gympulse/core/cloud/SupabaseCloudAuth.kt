@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.json.contentOrNull
+import kotlinx.serialization.json.jsonPrimitive
 
 /** Anmeldung bei Supabase Auth mit einem Google-ID-Token (Credential Manager). */
 class SupabaseCloudAuth @Inject constructor(
@@ -60,5 +62,11 @@ class SupabaseCloudAuth @Inject constructor(
         cloudCall(CloudException.Reason.NETWORK) { supabase.client.auth.signOut() }
     }
 
-    private fun UserInfo.toCloudUser() = CloudUser(id = id, email = email)
+    private fun UserInfo.toCloudUser() = CloudUser(id = id, email = email, avatarUrl = avatarUrl())
+
+    /** Profilbild aus den Google-Metadaten (`avatar_url`, sonst `picture`); nur https. */
+    private fun UserInfo.avatarUrl(): String? =
+        listOf("avatar_url", "picture")
+            .firstNotNullOfOrNull { key -> userMetadata?.get(key)?.jsonPrimitive?.contentOrNull?.takeIf { it.isNotBlank() } }
+            ?.takeIf { it.startsWith("https://") }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
@@ -32,7 +33,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -41,6 +46,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.gympulse.R
+import coil3.compose.SubcomposeAsyncImage
 import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.component.GymPulseNavigationDefaults
 import app.gympulse.core.designsystem.theme.Sizing
@@ -55,7 +61,9 @@ import app.gympulse.navigation.TopLevelDestination
 @Composable
 fun GymPulseApp(
     navController: NavHostController = rememberNavController(),
+    avatarViewModel: AvatarViewModel = hiltViewModel(),
 ) {
+    val avatarUrl by avatarViewModel.avatarUrl.collectAsStateWithLifecycle()
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = backStackEntry?.destination
     val currentTopLevel = TopLevelDestination.entries.firstOrNull { currentDestination.isOn(it) }
@@ -121,6 +129,7 @@ fun GymPulseApp(
                     actions = {
                         if (currentTopLevel != null) {
                             AvatarMenu(
+                                avatarUrl = avatarUrl,
                                 onOpenSettings = { navController.navigate(SettingsRoute) },
                             )
                         }
@@ -163,7 +172,7 @@ private fun NavHostController.navigateToTopLevel(destination: TopLevelDestinatio
 
 /** Avatar button in the top bar; its menu leads to the settings. */
 @Composable
-private fun AvatarMenu(onOpenSettings: () -> Unit) {
+private fun AvatarMenu(avatarUrl: String?, onOpenSettings: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     // The Box anchors the dropdown to the avatar button instead of the top-left corner.
     Box {
@@ -171,12 +180,27 @@ private fun AvatarMenu(onOpenSettings: () -> Unit) {
             onClick = { expanded = true },
             modifier = Modifier.sizeIn(minWidth = Sizing.minTouchTarget, minHeight = Sizing.minTouchTarget),
         ) {
-            Icon(
-                Icons.Filled.AccountCircle,
-                contentDescription = stringResource(R.string.action_account),
-                modifier = Modifier.size(Sizing.iconLarge),
-                tint = MaterialTheme.colorScheme.primary,
-            )
+            val description = stringResource(R.string.action_account)
+            val fallback = @Composable {
+                Icon(
+                    Icons.Filled.AccountCircle,
+                    contentDescription = description,
+                    modifier = Modifier.size(Sizing.iconLarge),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+            if (avatarUrl == null) {
+                fallback()
+            } else {
+                SubcomposeAsyncImage(
+                    model = avatarUrl,
+                    contentDescription = description,
+                    contentScale = ContentScale.Crop,
+                    loading = { fallback() },
+                    error = { fallback() },
+                    modifier = Modifier.size(Sizing.iconLarge).clip(CircleShape),
+                )
+            }
         }
         DropdownMenu(
             expanded = expanded,
