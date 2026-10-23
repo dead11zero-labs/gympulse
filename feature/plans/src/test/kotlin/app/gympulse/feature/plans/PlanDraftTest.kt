@@ -167,6 +167,7 @@ class PlanDraftTest {
         assertEquals("3", d.items[1].sets)
         assertEquals("8", d.items[1].repsMin)
         assertEquals("12", d.items[1].repsMax)
+        assertEquals("1", d.items[2].sets)
         assertEquals("", d.items[2].repsMin)
         assertEquals("", d.items[2].repsMax)
     }
