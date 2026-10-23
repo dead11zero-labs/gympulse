@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.animation.animateContentSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,25 +65,43 @@ import kotlin.math.max
 
 private const val BAR_WIDTH_FRACTION = 0.5f
 
-/** Karte "Wochenvolumen": große Summe in kg, Trend zur Vorwoche und Balken je Tag. */
+/**
+ * Karte "Wochenvolumen": große Summe in kg, Trend zur Vorwoche und Balken je Tag.
+ * Ein Tipp ([onClick]) öffnet die Wochenanalyse.
+ */
 @Composable
 internal fun WeeklyVolumeCard(
     volume: WeeklyVolumeUi?,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
     GymPulseCard(
         modifier = modifier
             .fillMaxWidth()
             .animateContentSize(),
         variant = GymPulseCardVariant.Filled,
+        onClick = onClick,
         shape = ExpressiveShapes.largeIncreased,
         verticalSpacing = Spacing.s,
     ) {
-        Text(
-            text = stringResource(R.string.feature_dashboard_volume_title),
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = stringResource(R.string.feature_dashboard_volume_title),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (onClick != null) {
+                Icon(
+                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = stringResource(R.string.feature_dashboard_volume_open_analysis),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
         if (volume != null) {
             val kgFormat = remember { NumberFormat.getIntegerInstance() }
             Row(

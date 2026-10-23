@@ -59,4 +59,50 @@
     <string name="feature_dashboard_coach_ai_disclaimer">KI-generiert auf deinem Gerät, kann Fehler enthalten. Keine medizinische Beratung.</string>
     <string name="feature_dashboard_coach_template_disclaimer">Basierend auf deinen erfassten Workouts. Keine medizinische Beratung.</string>
     <string name="feature_dashboard_coach_regenerate">Neu formulieren</string>
+
+    <string name="feature_dashboard_volume_open_analysis">Wochenanalyse öffnen</string>
+    <string name="feature_dashboard_unit_km">km</string>
+
+    <string name="feature_dashboard_week_title">Wochenanalyse</string>
+    <string name="feature_dashboard_week_previous">Vorherige Woche</string>
+    <string name="feature_dashboard_week_next">Nächste Woche</string>
+    <string name="feature_dashboard_week_this_week">Diese Woche</string>
+    <string name="feature_dashboard_week_total_label">Gesamtvolumen</string>
+    <string name="feature_dashboard_week_vs_previous">%1$s zur Vorwoche</string>
+    <string name="feature_dashboard_week_no_comparison">Kein Training in der Woche davor zum Vergleichen</string>
+    <string name="feature_dashboard_week_empty">In dieser Woche gab es kein Training. Wähle eine andere Woche oder starte ein Workout.</string>
+    <string name="feature_dashboard_week_kpi_sessions">Trainings</string>
+    <string name="feature_dashboard_week_kpi_sets">Sätze</string>
+    <string name="feature_dashboard_week_kpi_duration">Trainingszeit</string>
+    <string name="feature_dashboard_week_kpi_average">Ø pro Training</string>
+    <string name="feature_dashboard_week_days_title">Volumen pro Tag</string>
+    <string name="feature_dashboard_week_days_hint">Tippe auf einen Balken, um den Tag zu sehen</string>
+    <string name="feature_dashboard_week_days_description">Volumen pro Tag, insgesamt %1$s kg. %2$s.</string>
+    <string name="feature_dashboard_week_day_rest">%1$s: Ruhetag</string>
+    <string name="feature_dashboard_week_muscles_title">Muskelgruppen</string>
+    <string name="feature_dashboard_week_muscles_subtitle">Gewichtete Sätze: Hauptmuskel zählt 1, Nebenmuskel ½</string>
+    <string name="feature_dashboard_week_muscles_empty">In dieser Woche keine Kraftsätze.</string>
+    <string name="feature_dashboard_week_region_upper">Oberkörper</string>
+    <string name="feature_dashboard_week_region_legs">Beine</string>
+    <string name="feature_dashboard_week_region_core">Rumpf</string>
+    <string name="feature_dashboard_week_legend">%1$s · %2$d %%</string>
+    <string name="feature_dashboard_week_split_title">Kraft vs. Kardio</string>
+    <string name="feature_dashboard_week_strength">Kraft</string>
+    <string name="feature_dashboard_week_cardio">Kardio</string>
+    <string name="feature_dashboard_week_no_cardio">In dieser Woche kein Kardio erfasst. Anteil an der Trainingszeit, Pausen eingerechnet.</string>
+    <string name="feature_dashboard_week_cardio_time">Kardiozeit</string>
+    <string name="feature_dashboard_week_cardio_distance">Kardio-Distanz</string>
+    <string name="feature_dashboard_week_trend_title">Letzte %d Wochen</string>
+    <string name="feature_dashboard_week_trend_hint">Volumen pro Woche. Tippe auf einen Punkt, um zu dieser Woche zu springen.</string>
+    <string name="feature_dashboard_week_trend_description">Verlauf des Wochenvolumens: %1$s.</string>
+    <string name="feature_dashboard_week_trend_point">Woche ab %1$s: %2$s kg</string>
+    <string name="feature_dashboard_week_top_title">Top-Übungen</string>
+    <plurals name="feature_dashboard_week_top_detail">
+        <item quantity="one">%1$s kg · %2$d Satz</item>
+        <item quantity="other">%1$s kg · %2$d Sätze</item>
+    </plurals>
+    <string name="feature_dashboard_week_highlights_title">Auffälligkeiten</string>
+    <string name="feature_dashboard_week_highlight_day">Stärkster Tag: %1$s</string>
+    <string name="feature_dashboard_week_highlight_muscle">Am meisten trainiert: %1$s</string>
+    <string name="feature_dashboard_week_highlight_neglected">Diese Woche ausgelassen: %1$s, obwohl du sie sonst trainierst.</string>
 </resources>

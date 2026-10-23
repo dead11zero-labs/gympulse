@@ -41,6 +41,7 @@ import java.time.format.FormatStyle
 internal fun DashboardScreen(
     onStartWorkout: (planId: String?) -> Unit,
     onResumeWorkout: () -> Unit,
+    onOpenWeekAnalysis: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
@@ -55,6 +56,7 @@ internal fun DashboardScreen(
         // TODO: Sobald der Kalender den heutigen Plan liefert, hier dessen planId übergeben.
         onStartWorkout = { onStartWorkout(null) },
         onResumeWorkout = onResumeWorkout,
+        onOpenWeekAnalysis = onOpenWeekAnalysis,
         modifier = modifier,
     )
 }
@@ -65,6 +67,7 @@ internal fun DashboardContent(
     onStartWorkout: () -> Unit,
     onResumeWorkout: () -> Unit,
     modifier: Modifier = Modifier,
+    onOpenWeekAnalysis: () -> Unit = {},
 ) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         BoxWithConstraints(
@@ -93,6 +96,7 @@ internal fun DashboardContent(
                     ) {
                         WeeklyVolumeCard(
                             volume = state.weeklyVolume,
+                            onClick = onOpenWeekAnalysis,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxHeight(),
@@ -105,7 +109,7 @@ internal fun DashboardContent(
                         )
                     }
                 } else {
-                    WeeklyVolumeCard(volume = state.weeklyVolume)
+                    WeeklyVolumeCard(volume = state.weeklyVolume, onClick = onOpenWeekAnalysis)
                     WeeklyProgressCard(progress = state.weeklyProgress)
                 }
                 StepsCard(steps = state.steps)

@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import app.gympulse.feature.calendar.calendarScreen
 import app.gympulse.feature.dashboard.DashboardRoute
+import app.gympulse.feature.dashboard.WeekAnalysisRoute
 import app.gympulse.feature.dashboard.dashboardScreen
 import app.gympulse.feature.library.libraryScreen
 import app.gympulse.feature.plans.plansScreen
@@ -28,6 +29,7 @@ fun GymPulseNavHost(
         dashboardScreen(
             onStartWorkout = { planId -> navController.navigateToWorkout(planId) },
             onResumeWorkout = { navController.navigateToWorkout() },
+            onOpenWeekAnalysis = { navController.navigate(WeekAnalysisRoute) },
         )
         plansScreen(navController)
         libraryScreen(navController)
