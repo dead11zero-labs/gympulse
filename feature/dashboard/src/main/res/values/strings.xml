@@ -59,4 +59,50 @@
     <string name="feature_dashboard_coach_ai_disclaimer">AI-generated on your device, may contain errors. Not medical advice.</string>
     <string name="feature_dashboard_coach_template_disclaimer">Based on your logged workouts. Not medical advice.</string>
     <string name="feature_dashboard_coach_regenerate">Rephrase</string>
+
+    <string name="feature_dashboard_volume_open_analysis">Open weekly analysis</string>
+    <string name="feature_dashboard_unit_km">km</string>
+
+    <string name="feature_dashboard_week_title">Weekly analysis</string>
+    <string name="feature_dashboard_week_previous">Previous week</string>
+    <string name="feature_dashboard_week_next">Next week</string>
+    <string name="feature_dashboard_week_this_week">This week</string>
+    <string name="feature_dashboard_week_total_label">Total volume</string>
+    <string name="feature_dashboard_week_vs_previous">%1$s vs. previous week</string>
+    <string name="feature_dashboard_week_no_comparison">No workouts in the week before to compare with</string>
+    <string name="feature_dashboard_week_empty">No workouts in this week. Pick another week or start a workout.</string>
+    <string name="feature_dashboard_week_kpi_sessions">Workouts</string>
+    <string name="feature_dashboard_week_kpi_sets">Sets</string>
+    <string name="feature_dashboard_week_kpi_duration">Training time</string>
+    <string name="feature_dashboard_week_kpi_average">Avg. per workout</string>
+    <string name="feature_dashboard_week_days_title">Volume by day</string>
+    <string name="feature_dashboard_week_days_hint">Tap a bar to see the day</string>
+    <string name="feature_dashboard_week_days_description">Volume per day, %1$s kg in total. %2$s.</string>
+    <string name="feature_dashboard_week_day_rest">%1$s: rest day</string>
+    <string name="feature_dashboard_week_muscles_title">Muscle groups</string>
+    <string name="feature_dashboard_week_muscles_subtitle">Weighted sets: primary muscle counts 1, secondary ½</string>
+    <string name="feature_dashboard_week_muscles_empty">No strength sets in this week.</string>
+    <string name="feature_dashboard_week_region_upper">Upper body</string>
+    <string name="feature_dashboard_week_region_legs">Legs</string>
+    <string name="feature_dashboard_week_region_core">Core</string>
+    <string name="feature_dashboard_week_legend">%1$s · %2$d %%</string>
+    <string name="feature_dashboard_week_split_title">Strength vs. cardio</string>
+    <string name="feature_dashboard_week_strength">Strength</string>
+    <string name="feature_dashboard_week_cardio">Cardio</string>
+    <string name="feature_dashboard_week_no_cardio">No cardio logged in this week. Share of training time, rest breaks included.</string>
+    <string name="feature_dashboard_week_cardio_time">Cardio time</string>
+    <string name="feature_dashboard_week_cardio_distance">Cardio distance</string>
+    <string name="feature_dashboard_week_trend_title">Last %d weeks</string>
+    <string name="feature_dashboard_week_trend_hint">Volume per week. Tap a point to jump to that week.</string>
+    <string name="feature_dashboard_week_trend_description">Weekly volume trend: %1$s.</string>
+    <string name="feature_dashboard_week_trend_point">Week of %1$s: %2$s kg</string>
+    <string name="feature_dashboard_week_top_title">Top exercises</string>
+    <plurals name="feature_dashboard_week_top_detail">
+        <item quantity="one">%1$s kg · %2$d set</item>
+        <item quantity="other">%1$s kg · %2$d sets</item>
+    </plurals>
+    <string name="feature_dashboard_week_highlights_title">Highlights</string>
+    <string name="feature_dashboard_week_highlight_day">Strongest day: %1$s</string>
+    <string name="feature_dashboard_week_highlight_muscle">Most trained: %1$s</string>
+    <string name="feature_dashboard_week_highlight_neglected">Skipped this week: %1$s, although you usually train it.</string>
 </resources>
