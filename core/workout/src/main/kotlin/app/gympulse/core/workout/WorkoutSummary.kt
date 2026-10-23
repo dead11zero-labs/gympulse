@@ -6,6 +6,8 @@ import app.gympulse.core.model.WorkoutSession
 
 /** Shown after finishing a workout. */
 data class WorkoutSummary(
+    /** Id of the finished session; links watch data (heart rate) to this summary. */
+    val sessionId: String,
     val title: String?,
     val durationSeconds: Long,
     val completedSets: Int,

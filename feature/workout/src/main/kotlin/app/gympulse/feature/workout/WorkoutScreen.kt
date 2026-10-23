@@ -32,6 +32,7 @@ internal fun WorkoutScreen(
     val restTimer by viewModel.restTimerState.collectAsStateWithLifecycle()
     val exerciseOptions by viewModel.exerciseOptions.collectAsStateWithLifecycle()
     val now by viewModel.now.collectAsStateWithLifecycle()
+    val watchHeartRate by viewModel.watchHeartRate.collectAsStateWithLifecycle()
     val finishAllProposal by viewModel.finishAllProposal.collectAsStateWithLifecycle()
 
     NotificationPermissionEffect(active = uiState is WorkoutUiState.Active)
@@ -40,6 +41,7 @@ internal fun WorkoutScreen(
     if (finishedSummary != null) {
         WorkoutSummaryScreen(
             summary = finishedSummary,
+            watchHeartRate = watchHeartRate,
             onDone = {
                 viewModel.dismissSummary()
                 onClose()

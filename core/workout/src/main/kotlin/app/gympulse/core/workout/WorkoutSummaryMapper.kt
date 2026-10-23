@@ -42,6 +42,7 @@ fun buildWorkoutSummary(
         )
     }
     return WorkoutSummary(
+        sessionId = session.id,
         title = session.title,
         durationSeconds = Duration.between(session.startedAt, endedAt).seconds.coerceAtLeast(0),
         completedSets = session.completedSetCount(),
