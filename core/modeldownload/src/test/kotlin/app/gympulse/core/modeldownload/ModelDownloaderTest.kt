@@ -8,6 +8,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
+import mockwebserver3.SocketEffect
 import okhttp3.OkHttpClient
 import okio.Buffer
 import org.junit.After
@@ -32,7 +33,13 @@ class ModelDownloaderTest {
 
     private val server = MockWebServer()
     private val content: ByteArray = Random(42).nextBytes(300 * 1024)
-    private val downloader = ModelDownloader(OkHttpClient(), bufferSize = 8 * 1024)
+    private val logs = mutableListOf<String>()
+    private val downloader = ModelDownloader(
+        client = OkHttpClient(),
+        bufferSize = 8 * 1024,
+        retryDelayMillis = 0L,
+        log = { logs += it },
+    )
     private lateinit var dir: File
 
     @Before
@@ -52,7 +59,7 @@ class ModelDownloaderTest {
         val storage = storage()
         val progress = mutableListOf<Long>()
 
-        val outcome = downloader.download(storage) { done, _ -> progress += done }
+        val outcome = downloader.download(storage, onProgress = { done, _ -> progress += done })
 
         assertTrue(outcome is DownloadOutcome.Success)
         assertArrayEquals(content, storage.targetFile.readBytes())
@@ -92,6 +99,105 @@ class ModelDownloaderTest {
 
         assertTrue(outcome is DownloadOutcome.Success)
         assertArrayEquals(content, storage.targetFile.readBytes())
+    }
+
+    @Test
+    fun `connection drop shortly before the end resumes with range in the same run`() = runBlocking {
+        val cutAt = content.size - 1_000
+        server.enqueue(
+            MockResponse.Builder()
+                .code(200)
+                .body(Buffer().write(content, 0, cutAt))
+                // Server kündigt die volle Länge an und schließt die Verbindung vorher.
+                .setHeader("Content-Length", content.size)
+                .onResponseEnd(SocketEffect.ShutdownConnection)
+                .build(),
+        )
+        server.enqueue(
+            MockResponse.Builder()
+                .code(206)
+                .addHeader("Content-Range", "bytes $cutAt-${content.size - 1}/${content.size}")
+                .body(Buffer().write(content, cutAt, content.size - cutAt))
+                .build(),
+        )
+        val storage = storage()
+
+        val outcome = downloader.download(storage)
+
+        assertTrue(outcome.toString(), outcome is DownloadOutcome.Success)
+        assertArrayEquals(content, storage.targetFile.readBytes())
+        assertEquals(2, server.requestCount)
+        assertNull(server.takeRequest().headers["Range"])
+        assertEquals("bytes=$cutAt-", server.takeRequest().headers["Range"])
+        assertTrue(logs.any { it.contains("retry 1/") })
+    }
+
+    @Test
+    fun `in-run retries are limited and keep the partial file`() = runBlocking {
+        val storage = storage()
+        storage.partialFile.writeBytes(content.copyOfRange(0, 2048))
+        repeat(6) { server.enqueue(MockResponse.Builder().code(503).build()) }
+
+        val outcome = downloader.download(storage)
+
+        outcome as DownloadOutcome.Failure
+        assertEquals(ModelDownloadFailure.HTTP_ERROR, outcome.reason)
+        assertTrue(outcome.retryable)
+        assertTrue(outcome.message!!.contains("503"))
+        assertEquals(6, server.requestCount)
+        assertEquals(2048L, storage.partialBytes())
+    }
+
+    @Test
+    fun `expired signed url is requested again from the original url`() = runBlocking {
+        server.enqueue(MockResponse.Builder().code(403).build())
+        server.enqueue(ok(content))
+        val storage = storage()
+
+        val outcome = downloader.download(storage)
+
+        assertTrue(outcome is DownloadOutcome.Success)
+        assertEquals("/model.litertlm", server.takeRequest().url.encodedPath)
+        assertEquals("/model.litertlm", server.takeRequest().url.encodedPath)
+    }
+
+    @Test
+    fun `persistent 403 is not retried by the worker`() = runBlocking {
+        repeat(6) { server.enqueue(MockResponse.Builder().code(403).build()) }
+
+        val outcome = downloader.download(storage())
+
+        outcome as DownloadOutcome.Failure
+        assertEquals(403, outcome.httpCode)
+        assertFalse(outcome.retryable)
+    }
+
+    @Test
+    fun `verifying is reported after the last byte and before success`() = runBlocking {
+        server.enqueue(ok(content))
+        val events = mutableListOf<String>()
+
+        val outcome = downloader.download(
+            storage = storage(),
+            onProgress = { done, total -> if (done == total) events += "complete" },
+            onVerifying = { events += "verifying" },
+        )
+
+        assertTrue(outcome is DownloadOutcome.Success)
+        assertEquals(listOf("complete", "verifying"), events)
+    }
+
+    @Test
+    fun `hash mismatch detail names expected and actual hash`() = runBlocking {
+        server.enqueue(ok(content))
+        val expected = "0".repeat(64)
+
+        val outcome = downloader.download(storage(sha256 = expected))
+
+        val message = (outcome as DownloadOutcome.Failure).message!!
+        assertTrue(message, message.contains("expected sha256 $expected"))
+        assertTrue(message, message.contains("got ${sha256(content)}"))
+        assertTrue(logs.any { it.contains(sha256(content)) })
     }
 
     @Test
@@ -139,9 +245,9 @@ class ModelDownloaderTest {
         val storage = storage()
 
         val job = async {
-            downloader.download(storage) { done, _ ->
+            downloader.download(storage, onProgress = { done, _ ->
                 if (done >= 32 * 1024) this@async.cancel()
-            }
+            })
         }
         try {
             withTimeout(10_000) { job.await() }
@@ -162,7 +268,7 @@ class ModelDownloaderTest {
         storage.partialFile.writeBytes(content.copyOfRange(0, 1024))
         server.enqueue(MockResponse.Builder().code(503).build())
 
-        val outcome = downloader.download(storage)
+        val outcome = ModelDownloader(OkHttpClient(), maxInRunRetries = 0).download(storage)
 
         outcome as DownloadOutcome.Failure
         assertEquals(ModelDownloadFailure.HTTP_ERROR, outcome.reason)
@@ -183,12 +289,11 @@ class ModelDownloaderTest {
 
     @Test
     fun `placeholder config never downloads`() = runBlocking {
-        val spec = ModelConfig.CURRENT
+        val spec = ModelConfig.CURRENT.copy(sha256 = "${ModelConfig.PLACEHOLDER}_SHA256")
         val storage = ModelStorage(dir, spec) { Long.MAX_VALUE }
 
         val outcome = downloader.download(storage)
 
-        if (spec.isConfigured) return@runBlocking // Werte wurden eingetragen; dann greift dieser Test nicht.
         assertEquals(ModelDownloadFailure.NOT_CONFIGURED, (outcome as DownloadOutcome.Failure).reason)
         assertEquals(0, server.requestCount)
     }

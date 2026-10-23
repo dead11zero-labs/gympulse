@@ -25,6 +25,8 @@
     <string name="ai_coach_error_storage">Nicht genug freier Speicher. Schaffe Platz und versuche es erneut.</string>
     <string name="ai_coach_error_corrupt">Die geladene Datei ist beschädigt. Versuche es erneut.</string>
     <string name="ai_coach_error_network">Der Server ist nicht erreichbar. Prüfe dein WLAN und versuche es erneut.</string>
+    <string name="ai_coach_model_verifying">Prüfe Datei …</string>
+    <string name="ai_coach_error_details">Details: %1$s</string>
     <string name="ai_coach_error_unknown">Etwas ist schiefgelaufen. Bitte versuche es erneut.</string>
 
     <string name="ai_coach_optin_title">KI-Coach einschalten?</string>

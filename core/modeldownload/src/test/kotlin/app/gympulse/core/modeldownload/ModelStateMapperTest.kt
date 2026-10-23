@@ -52,6 +52,34 @@ class ModelStateMapperTest {
     }
 
     @Test
+    fun `failed work passes technical detail through`() {
+        val output = Data.Builder()
+            .putString(ModelDownloadWorker.KEY_FAILURE, ModelDownloadFailure.NETWORK.name)
+            .putString(ModelDownloadWorker.KEY_DETAIL, "SocketTimeoutException: timeout")
+            .build()
+
+        val state = map(snapshot(WorkInfo.State.FAILED, output = output))
+
+        assertEquals(
+            ModelDownloadState.Failed(ModelDownloadFailure.NETWORK, "SocketTimeoutException: timeout"),
+            state,
+        )
+    }
+
+    @Test
+    fun `verifying phase hides percentage`() {
+        val progress = Data.Builder()
+            .putLong(ModelDownloadWorker.KEY_DOWNLOADED, total)
+            .putLong(ModelDownloadWorker.KEY_TOTAL, total)
+            .putString(ModelDownloadWorker.KEY_PHASE, ModelDownloadWorker.PHASE_VERIFYING)
+            .build()
+
+        val state = map(snapshot(WorkInfo.State.RUNNING, progress = progress))
+
+        assertEquals(ModelDownloadState.Downloading(null, total, total, verifying = true), state)
+    }
+
+    @Test
     fun `failed work without reason is unknown`() {
         val state = map(snapshot(WorkInfo.State.FAILED))
         assertEquals(ModelDownloadState.Failed(ModelDownloadFailure.UNKNOWN), state)

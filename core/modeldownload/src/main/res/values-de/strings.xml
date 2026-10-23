@@ -5,5 +5,6 @@
     <string name="core_modeldownload_title">KI-Modell wird geladen</string>
     <string name="core_modeldownload_preparing">Download wird vorbereitet …</string>
     <string name="core_modeldownload_progress">%1$d %% · %2$d von %3$d MB</string>
+    <string name="core_modeldownload_verifying">Prüfe Datei …</string>
     <string name="core_modeldownload_cancel">Abbrechen</string>
 </resources>
