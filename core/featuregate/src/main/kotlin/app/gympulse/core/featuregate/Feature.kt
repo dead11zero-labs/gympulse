@@ -28,4 +28,11 @@ enum class Feature(
 
     /** Google-Anmeldung und manuelles Cloud-Backup über Supabase; Opt-in in den Einstellungen. */
     CLOUD_BACKUP(premium = false, enabledByDefault = false, userToggleable = true),
+
+    /**
+     * Lokaler KI-Coach: lädt ein On-Device-Sprachmodell (Opt-in, nur WLAN) und formuliert damit die
+     * Coach-Karte im Dashboard. Ohne Modell oder bei Fehlern gelten Textbausteine. Die klassische
+     * Auswertung (Insight-Karten) hängt nicht daran.
+     */
+    AI_COACH(premium = false, enabledByDefault = false, userToggleable = true),
 }

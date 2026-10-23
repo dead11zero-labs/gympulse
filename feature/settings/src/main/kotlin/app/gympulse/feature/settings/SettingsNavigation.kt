@@ -8,6 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import app.gympulse.feature.settings.ai.AiCoachScreen
 import app.gympulse.feature.settings.cloud.CloudBackupScreen
 import app.gympulse.feature.settings.health.HealthConnectScreen
 import app.gympulse.feature.settings.wear.WearSettingsScreen
@@ -22,7 +23,7 @@ fun NavGraphBuilder.settingsScreen(onOpenAbout: () -> Unit) {
     }
 }
 
-private enum class SettingsPage { ROOT, BODY_METRICS, PHOTOS, HEALTH_CONNECT, CLOUD_BACKUP, WEAR }
+private enum class SettingsPage { ROOT, BODY_METRICS, PHOTOS, HEALTH_CONNECT, CLOUD_BACKUP, WEAR, AI_COACH }
 
 /**
  * Einstellungen mit den Unterseiten Körpermaße, Fortschrittsfotos, Health Connect, Cloud-Backup und Smartwatch. Die Unterseiten hängen an der
@@ -40,6 +41,7 @@ private fun SettingsHost(onOpenAbout: () -> Unit) {
             onOpenHealthConnect = { page = SettingsPage.HEALTH_CONNECT },
             onOpenCloudBackup = { page = SettingsPage.CLOUD_BACKUP },
             onOpenWear = { page = SettingsPage.WEAR },
+            onOpenAiCoach = { page = SettingsPage.AI_COACH },
             onOpenAbout = onOpenAbout,
         )
         SettingsPage.BODY_METRICS -> BodyMetricsScreen(onOpenPhotos = { page = SettingsPage.PHOTOS })
@@ -47,5 +49,6 @@ private fun SettingsHost(onOpenAbout: () -> Unit) {
         SettingsPage.HEALTH_CONNECT -> HealthConnectScreen()
         SettingsPage.CLOUD_BACKUP -> CloudBackupScreen()
         SettingsPage.WEAR -> WearSettingsScreen()
+        SettingsPage.AI_COACH -> AiCoachScreen()
     }
 }
