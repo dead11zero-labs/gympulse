@@ -9,6 +9,8 @@ import app.gympulse.core.wearsync.ControllerWorkoutPort
 import app.gympulse.core.wearsync.DataStoreWearSyncStore
 import app.gympulse.core.wearsync.PlayServicesWearDataClient
 import app.gympulse.core.wearsync.RepositoryWearSnapshotSources
+import app.gympulse.core.wearsync.RemoteWatchAppLauncher
+import app.gympulse.core.wearsync.WatchAppLauncher
 import app.gympulse.core.wearsync.WatchAppStatus
 import app.gympulse.core.wearsync.WearDataClient
 import app.gympulse.core.wearsync.WearRestAlertPolicy
@@ -17,6 +19,7 @@ import app.gympulse.core.wearsync.WearSyncStore
 import app.gympulse.core.wearsync.WearWorkoutPort
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.NodeClient
 import com.google.android.gms.wearable.Wearable
 import dagger.Binds
 import dagger.Module
@@ -45,6 +48,9 @@ abstract class WearSyncBindings {
     abstract fun bindWatchAppStatus(impl: CapabilityWatchAppStatus): WatchAppStatus
 
     @Binds
+    abstract fun bindWatchAppLauncher(impl: RemoteWatchAppLauncher): WatchAppLauncher
+
+    @Binds
     abstract fun bindWorkoutPort(impl: ControllerWorkoutPort): WearWorkoutPort
 
     @Binds
@@ -66,6 +72,10 @@ object WearSyncProviders {
     @Provides
     @Singleton
     fun capabilityClient(@ApplicationContext context: Context): CapabilityClient = Wearable.getCapabilityClient(context)
+
+    @Provides
+    @Singleton
+    fun nodeClient(@ApplicationContext context: Context): NodeClient = Wearable.getNodeClient(context)
 
     @Provides
     @Singleton
