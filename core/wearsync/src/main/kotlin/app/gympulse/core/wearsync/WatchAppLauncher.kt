@@ -17,6 +17,22 @@ import javax.inject.Singleton
 /** Ergebnis einer Aktion, die etwas auf der Uhr öffnet. */
 enum class WatchLaunchResult { STARTED, NO_WATCH, FAILED }
 
+/** Wie die Uhr-App verteilt wird. */
+object WearDistribution {
+    /**
+     * Gibt es einen Play-Store-Eintrag für GymPulse? Erst dann hat "Auf der Uhr installieren" (Play-Seite
+     * auf der Uhr) ein Ziel; bis dahin Sideload aus dem Release [RELEASE_PAGE_URL].
+     */
+    const val PLAY_LISTING_AVAILABLE = false
+
+    const val RELEASE_PAGE_URL = "https://github.com/realgroundzero-gif/gympulse/releases/tag/latest-main"
+}
+
+/** Qualifier für das Flag, ob es einen Play-Eintrag gibt ([WearDistribution.PLAY_LISTING_AVAILABLE]). */
+@javax.inject.Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class WearPlayListing
+
 /** Öffnet Seiten und die App auf der gekoppelten Uhr (RemoteActivityHelper). */
 interface WatchAppLauncher {
     /** Öffnet auf Uhren ohne GymPulse die Play-Store-Seite der App zur Installation. */

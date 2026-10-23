@@ -12,6 +12,8 @@ import app.gympulse.core.wearsync.RepositoryWearSnapshotSources
 import app.gympulse.core.wearsync.RemoteWatchAppLauncher
 import app.gympulse.core.wearsync.WatchAppLauncher
 import app.gympulse.core.wearsync.WatchAppStatus
+import app.gympulse.core.wearsync.WearDistribution
+import app.gympulse.core.wearsync.WearPlayListing
 import app.gympulse.core.wearsync.WearDataClient
 import app.gympulse.core.wearsync.WearRestAlertPolicy
 import app.gympulse.core.wearsync.WearSnapshotSources
@@ -72,6 +74,10 @@ object WearSyncProviders {
     @Provides
     @Singleton
     fun capabilityClient(@ApplicationContext context: Context): CapabilityClient = Wearable.getCapabilityClient(context)
+
+    @Provides
+    @WearPlayListing
+    fun playListingAvailable(): Boolean = WearDistribution.PLAY_LISTING_AVAILABLE
 
     @Provides
     @Singleton
