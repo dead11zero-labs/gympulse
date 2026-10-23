@@ -52,6 +52,16 @@ class DefaultFeatureGateTest {
     }
 
     @Test
+    fun aiCoachIsOffByDefaultAndUserToggleable() = runTest {
+        val gate = gate()
+        assertFalse(gate.isEnabled(Feature.AI_COACH))
+        toggles.setEnabled(Feature.AI_COACH, true)
+        assertTrue(gate.observe(Feature.AI_COACH).first())
+        toggles.setEnabled(Feature.AI_COACH, false)
+        assertFalse(gate.isEnabled(Feature.AI_COACH))
+    }
+
+    @Test
     fun cloudBackupIsOffByDefaultAndUserToggleable() = runTest {
         val gate = gate()
         assertFalse(gate.isEnabled(Feature.CLOUD_BACKUP))

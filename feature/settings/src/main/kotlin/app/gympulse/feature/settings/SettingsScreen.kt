@@ -59,6 +59,7 @@ import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.settings.AppLanguage
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.WeekStart
+import app.gympulse.feature.settings.ai.AiCoachSettingsEntry
 import app.gympulse.feature.settings.data.DataSettingsRows
 import app.gympulse.feature.settings.wear.WearSettingsEntry
 import java.text.NumberFormat
@@ -73,6 +74,7 @@ internal fun SettingsScreen(
     onOpenHealthConnect: () -> Unit,
     onOpenCloudBackup: () -> Unit,
     onOpenWear: () -> Unit,
+    onOpenAiCoach: () -> Unit,
     onOpenAbout: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = hiltViewModel(),
@@ -198,6 +200,8 @@ internal fun SettingsScreen(
             }
 
             WearSettingsEntry(onClick = onOpenWear)
+
+            AiCoachSettingsEntry(onClick = onOpenAiCoach)
 
             SettingsSection(stringResource(R.string.settings_section_data)) {
                 DataSettingsRows()

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">KI-Coach</string>
+    <string name="ai_coach">Lokaler KI-Coach</string>
+    <string name="ai_coach_entry_summary">Optional: Ein Modell auf deinem Gerät formuliert deine Trainingszusammenfassung</string>
+    <string name="ai_coach_summary_on">An. Ohne Modell nutzt der Coach einfache Textbausteine.</string>
+    <string name="ai_coach_summary_off">Aus</string>
+    <string name="ai_coach_privacy">Die Auswertung läuft vollständig auf deinem Gerät. Es werden keine Trainingsdaten übertragen. Empfehlungen sind keine medizinische Beratung.</string>
+
+    <string name="ai_coach_section_model">KI-Modell</string>
+    <string name="ai_coach_model_download">Modell herunterladen</string>
+    <string name="ai_coach_model_not_downloaded">Nicht geladen · ca. %1$s, nur WLAN</string>
+    <string name="ai_coach_model_downloading">Modell wird geladen …</string>
+    <string name="ai_coach_model_waiting_wifi">Wartet auf WLAN</string>
+    <string name="ai_coach_model_progress">%1$s von %2$s</string>
+    <string name="ai_coach_model_cancel">Download abbrechen</string>
+    <string name="ai_coach_model_ready">Modell bereit</string>
+    <string name="ai_coach_model_ready_size">Belegt %1$s Speicher</string>
+    <string name="ai_coach_model_delete">Modell löschen</string>
+    <string name="ai_coach_model_delete_summary">Gibt den Speicher frei. Der Coach nutzt dann Textbausteine.</string>
+    <string name="ai_coach_model_failed">Download fehlgeschlagen. Tippen, um es erneut zu versuchen.</string>
+
+    <string name="ai_coach_notice_not_configured">Das KI-Modell ist in dieser Version der App noch nicht verfügbar. Bis dahin nutzt der Coach einfache Textbausteine.</string>
+    <string name="ai_coach_notice_storage">Nicht genug freier Speicher: %1$s nötig, %2$s verfügbar. Schaffe Platz und versuche es erneut.</string>
+    <string name="ai_coach_error_storage">Nicht genug freier Speicher. Schaffe Platz und versuche es erneut.</string>
+    <string name="ai_coach_error_corrupt">Die geladene Datei ist beschädigt. Versuche es erneut.</string>
+    <string name="ai_coach_error_network">Der Server ist nicht erreichbar. Prüfe dein WLAN und versuche es erneut.</string>
+    <string name="ai_coach_error_unknown">Etwas ist schiefgelaufen. Bitte versuche es erneut.</string>
+
+    <string name="ai_coach_optin_title">KI-Coach einschalten?</string>
+    <string name="ai_coach_optin_local">Die Formulierung läuft vollständig auf deinem Gerät. Keine Trainingsdaten verlassen dein Handy.</string>
+    <string name="ai_coach_optin_download">Einmalig wird ein KI-Modell (ca. %1$s) von Hugging Face geladen. Dabei sieht der Server deine IP-Adresse, aber keine Trainingsdaten.</string>
+    <string name="ai_coach_optin_storage">Du brauchst ca. %1$s freien Speicher.</string>
+    <string name="ai_coach_optin_wifi">Der Download läuft nur über WLAN. Du kannst ihn jederzeit abbrechen oder das Modell löschen.</string>
+    <string name="ai_coach_optin_medical">Empfehlungen sind keine medizinische Beratung und können Fehler enthalten.</string>
+    <string name="ai_coach_optin_confirm">Einschalten und laden</string>
+    <string name="ai_coach_delete_title">Modell löschen?</string>
+    <string name="ai_coach_delete_message">Das gibt %1$s frei. Der Coach nutzt dann einfache Textbausteine, bis du das Modell erneut lädst.</string>
+    <string name="ai_coach_delete_confirm">Löschen</string>
+</resources>

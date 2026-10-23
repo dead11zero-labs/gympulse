@@ -54,4 +54,9 @@
     <string name="feature_dashboard_sleep_title">Sleep last night</string>
     <string name="feature_dashboard_sleep_unit_hours">h</string>
     <string name="feature_dashboard_sleep_unit_minutes">min</string>
+    <string name="feature_dashboard_coach_title">Coach</string>
+    <string name="feature_dashboard_coach_loading">The coach is preparing your summary…</string>
+    <string name="feature_dashboard_coach_ai_disclaimer">AI-generated on your device, may contain errors. Not medical advice.</string>
+    <string name="feature_dashboard_coach_template_disclaimer">Based on your logged workouts. Not medical advice.</string>
+    <string name="feature_dashboard_coach_regenerate">Rephrase</string>
 </resources>

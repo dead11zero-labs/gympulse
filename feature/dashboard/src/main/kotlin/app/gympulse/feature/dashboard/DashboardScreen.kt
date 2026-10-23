@@ -32,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.gympulse.core.designsystem.adaptive.WindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.insightcards.InsightsSection
+import app.gympulse.feature.dashboard.coach.CoachSection
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -109,6 +110,7 @@ internal fun DashboardContent(
                 }
                 StepsCard(steps = state.steps)
                 SleepCard(sleep = state.sleep)
+                CoachSection()
                 InsightsSection(insights = state.insights)
                 RecentSessionsSection(sessions = state.recentSessions, today = state.today)
                 // Platz, damit der FAB den letzten Eintrag nicht verdeckt.

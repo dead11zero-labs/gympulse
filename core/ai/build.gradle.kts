@@ -17,6 +17,8 @@ dependencies {
     api(projects.core.insights)
     // ModelLocator-Schnittstelle des Download-Managers (KI-PR 5).
     implementation(projects.core.data)
+    // Feature.AI_COACH entscheidet, ob das Modell genutzt wird.
+    implementation(projects.core.featuregate)
     implementation(libs.litertlm.android)
     implementation(libs.kotlinx.coroutines.core)
 

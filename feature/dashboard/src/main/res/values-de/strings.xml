@@ -54,4 +54,9 @@
     <string name="feature_dashboard_sleep_title">Schlaf letzte Nacht</string>
     <string name="feature_dashboard_sleep_unit_hours">Std.</string>
     <string name="feature_dashboard_sleep_unit_minutes">Min.</string>
+    <string name="feature_dashboard_coach_title">Coach</string>
+    <string name="feature_dashboard_coach_loading">Der Coach bereitet deine Zusammenfassung vor …</string>
+    <string name="feature_dashboard_coach_ai_disclaimer">KI-generiert auf deinem Gerät, kann Fehler enthalten. Keine medizinische Beratung.</string>
+    <string name="feature_dashboard_coach_template_disclaimer">Basierend auf deinen erfassten Workouts. Keine medizinische Beratung.</string>
+    <string name="feature_dashboard_coach_regenerate">Neu formulieren</string>
 </resources>
