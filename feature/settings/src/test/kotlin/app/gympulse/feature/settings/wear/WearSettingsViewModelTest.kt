@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -61,8 +62,11 @@ class WearSettingsViewModelTest {
         launcher: FakeLauncher = FakeLauncher(),
     ) = WearSettingsViewModel(gate, status, launcher)
 
-    private fun kotlinx.coroutines.test.TestScope.collect(vm: WearSettingsViewModel) =
+    /** Startet die Sammlung (backgroundScope läuft auf dem Standard-Dispatcher) und lässt sie anlaufen. */
+    private fun kotlinx.coroutines.test.TestScope.collect(vm: WearSettingsViewModel) {
         backgroundScope.launch { vm.uiState.collect {} }
+        runCurrent()
+    }
 
     @Test
     fun `entry is hidden while the feature is off`() = runTest {
