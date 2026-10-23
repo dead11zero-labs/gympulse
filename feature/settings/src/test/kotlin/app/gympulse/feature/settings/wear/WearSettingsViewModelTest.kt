@@ -60,7 +60,8 @@ class WearSettingsViewModelTest {
         gate: FakeGate = FakeGate(true),
         status: FakeStatus = FakeStatus(WatchAppState.NONE),
         launcher: FakeLauncher = FakeLauncher(),
-    ) = WearSettingsViewModel(gate, status, launcher)
+        playListing: Boolean = true,
+    ) = WearSettingsViewModel(gate, status, launcher, playListing)
 
     /** Startet die Sammlung (backgroundScope läuft auf dem Standard-Dispatcher) und lässt sie anlaufen. */
     private fun kotlinx.coroutines.test.TestScope.collect(vm: WearSettingsViewModel) {
@@ -139,5 +140,16 @@ class WearSettingsViewModelTest {
         vm.installOnWatch()
         assertEquals(0, launcher.installCalls)
         assertTrue(!vm.uiState.value.canInstall && !vm.uiState.value.canOpen)
+    }
+
+    @Test
+    fun `without a play listing install is disabled and sideload is shown`() = runTest {
+        val launcher = FakeLauncher()
+        val vm = viewModel(launcher = launcher, playListing = false)
+        collect(vm)
+        assertFalse(vm.uiState.value.playListingAvailable)
+        assertFalse(vm.uiState.value.canInstall)
+        vm.installOnWatch()
+        assertEquals(0, launcher.installCalls)
     }
 }

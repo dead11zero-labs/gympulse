@@ -164,4 +164,7 @@
     <string name="wear_message_open_started">GymPulse öffnet sich auf deiner Uhr.</string>
     <string name="wear_message_no_watch">Gerade ist keine passende Uhr verbunden.</string>
     <string name="wear_message_failed">Die Uhr ist nicht erreichbar. Prüfe die Verbindung und versuche es erneut.</string>
+    <string name="wear_sideload_title">Uhr-App installieren (Sideload)</string>
+    <string name="wear_sideload_steps">GymPulse ist noch nicht bei Google Play. 1. Lade gympulse-wear-*.apk aus dem Release latest-main auf GitHub herunter. 2. Auf der Uhr: Einstellungen > Entwickleroptionen > ADB-Debugging und Über WLAN debuggen einschalten, dann Neues Gerät koppeln. 3. Am Computer: adb pair &lt;Uhr-IP:Port&gt;, dann adb connect &lt;Uhr-IP:Port&gt;, dann adb install gympulse-wear-*.apk. Alternativ geht eine Wear-Installer-App. Die Uhr-App muss mit demselben Schlüssel signiert sein wie diese App.</string>
+    <string name="wear_action_release_page">Release-Seite öffnen</string>
 </resources>

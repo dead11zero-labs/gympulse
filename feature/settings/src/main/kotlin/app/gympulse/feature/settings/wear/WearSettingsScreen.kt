@@ -1,5 +1,9 @@
 package app.gympulse.feature.settings.wear
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +17,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,6 +25,7 @@ import app.gympulse.core.designsystem.component.StatusChip
 import app.gympulse.core.designsystem.icon.ActionIcons
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
+import app.gympulse.core.wearsync.WearDistribution
 import app.gympulse.feature.settings.R
 import app.gympulse.feature.settings.SettingsLinkRow
 import app.gympulse.feature.settings.SettingsRow
@@ -49,6 +55,7 @@ internal fun WearSettingsEntry(onClick: () -> Unit, viewModel: WearSettingsViewM
 @Composable
 internal fun WearSettingsScreen(modifier: Modifier = Modifier, viewModel: WearSettingsViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     val chipIndent = Spacing.m + Sizing.iconContainer + Spacing.m
 
     SettingsSubpage(modifier = modifier) {
@@ -85,16 +92,28 @@ internal fun WearSettingsScreen(modifier: Modifier = Modifier, viewModel: WearSe
 
         if (!state.watch.installed) {
             SettingsSection(stringResource(R.string.wear_section_install)) {
-                SettingsRow(
-                    headline = stringResource(R.string.wear_install_title),
-                    supporting = stringResource(R.string.wear_install_description),
-                    icon = ActionIcons.CloudDownload,
-                )
-                Button(
-                    onClick = viewModel::installOnWatch,
-                    enabled = state.canInstall,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.m, vertical = Spacing.s),
-                ) { Text(stringResource(R.string.wear_action_install)) }
+                if (state.playListingAvailable) {
+                    SettingsRow(
+                        headline = stringResource(R.string.wear_install_title),
+                        supporting = stringResource(R.string.wear_install_description),
+                        icon = ActionIcons.CloudDownload,
+                    )
+                    Button(
+                        onClick = viewModel::installOnWatch,
+                        enabled = state.canInstall,
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.m, vertical = Spacing.s),
+                    ) { Text(stringResource(R.string.wear_action_install)) }
+                } else {
+                    SettingsRow(
+                        headline = stringResource(R.string.wear_sideload_title),
+                        supporting = stringResource(R.string.wear_sideload_steps),
+                        icon = ActionIcons.CloudDownload,
+                    )
+                    Button(
+                        onClick = { openReleasePage(context) },
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = Spacing.m, vertical = Spacing.s),
+                    ) { Text(stringResource(R.string.wear_action_release_page)) }
+                }
             }
         }
 
@@ -132,5 +151,16 @@ internal fun WearSettingsScreen(modifier: Modifier = Modifier, viewModel: WearSe
                 TextButton(onClick = viewModel::dismissMessage) { Text(stringResource(R.string.wear_action_ok)) }
             },
         )
+    }
+}
+
+/** Öffnet die Release-Seite mit der Wear-APK im Browser des Handys. */
+private fun openReleasePage(context: Context) {
+    try {
+        context.startActivity(
+            Intent(Intent.ACTION_VIEW, Uri.parse(WearDistribution.RELEASE_PAGE_URL)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        )
+    } catch (_: ActivityNotFoundException) {
+        // Kein Browser vorhanden: die Anleitung bleibt die einzige Information.
     }
 }
