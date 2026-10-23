@@ -43,6 +43,7 @@ dependencies {
     implementation(projects.core.cloud)
     implementation(projects.core.workout)
     implementation(projects.core.wearsync)
+    implementation(projects.core.modeldownload)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)

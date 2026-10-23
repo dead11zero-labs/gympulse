@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_modeldownload_channel">Download des KI-Modells</string>
+    <string name="core_modeldownload_channel_description">Fortschritt, während das Modell für den lokalen KI-Coach per WLAN geladen wird</string>
+    <string name="core_modeldownload_title">KI-Modell wird geladen</string>
+    <string name="core_modeldownload_preparing">Download wird vorbereitet …</string>
+    <string name="core_modeldownload_progress">%1$d %% · %2$d von %3$d MB</string>
+    <string name="core_modeldownload_cancel">Abbrechen</string>
+</resources>
