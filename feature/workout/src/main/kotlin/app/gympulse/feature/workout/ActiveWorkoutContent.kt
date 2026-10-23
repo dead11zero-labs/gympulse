@@ -45,8 +45,9 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import app.gympulse.core.designsystem.adaptive.WindowWidthClass
 import app.gympulse.core.designsystem.theme.Spacing
-import app.gympulse.feature.workout.timer.RestTimerState
-import app.gympulse.feature.workout.timer.runningAt
+import app.gympulse.core.workout.FinishAllProposal
+import app.gympulse.core.workout.timer.RestTimerState
+import app.gympulse.core.workout.timer.runningAt
 import java.time.Duration
 import java.time.Instant
 import androidx.compose.material3.FilledTonalButton

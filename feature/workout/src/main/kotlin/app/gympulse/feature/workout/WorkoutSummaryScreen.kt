@@ -50,6 +50,11 @@ import app.gympulse.core.designsystem.theme.Sizing
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import app.gympulse.core.data.health.WorkoutHealthMetrics
+import app.gympulse.core.workout.PersonalRecord
+import app.gympulse.core.workout.RecordType
+import app.gympulse.core.workout.SummaryExercise
+import app.gympulse.core.workout.SummarySet
+import app.gympulse.core.workout.WorkoutSummary
 import java.text.NumberFormat
 import kotlin.math.roundToLong
 
@@ -139,9 +144,10 @@ private fun SummaryHeader(summary: WorkoutSummary, modifier: Modifier = Modifier
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
         )
-        if (summary.title != null) {
+        val title = summary.title
+        if (title != null) {
             LabelCaps(
-                text = summary.title,
+                text = title,
                 style = MaterialTheme.typography.labelLarge,
             )
         }

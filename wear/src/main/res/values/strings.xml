@@ -1,7 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">GymPulse</string>
-    <string name="hello_title">Ready to train</string>
-    <string name="hello_subtitle">Start your workout on your phone.</string>
+
+    <!-- Status and notices -->
     <string name="status_offline_syncing">Offline – syncing</string>
+    <string name="status_update_required">Update GymPulse on phone and watch</string>
+    <string name="notice_session_ended">Workout already ended on phone</string>
+    <string name="notice_session_mismatch">Phone is running a different workout</string>
+    <string name="notice_invalid">Phone could not apply a change</string>
+    <string name="notice_dismiss_cd">Dismiss notice</string>
+
+    <!-- Plan selection -->
+    <string name="plans_title">Start workout</string>
+    <string name="plans_free_workout">Free workout</string>
+    <string name="plans_free_workout_hint">Without a plan</string>
+    <string name="plans_waiting">Waiting for phone…</string>
+    <string name="plans_empty">No plans on your phone yet.</string>
+    <string name="plans_starting">Starting…</string>
+    <plurals name="plans_exercise_count">
+        <item quantity="one">%d exercise</item>
+        <item quantity="other">%d exercises</item>
+    </plurals>
+
+    <!-- Active exercise -->
+    <string name="workout_empty">This workout has no exercises.</string>
+    <string name="workout_set_progress">Set %1$d of %2$d</string>
+    <string name="workout_all_done">All sets done</string>
+    <string name="workout_unit_kg">kg</string>
+    <string name="workout_unit_kg_added">+kg</string>
+    <string name="workout_unit_reps">reps</string>
+    <string name="workout_unit_time">time</string>
+    <string name="workout_unit_meters">m</string>
+    <string name="workout_previous_weight_reps">Last: %1$s kg × %2$d</string>
+    <string name="workout_previous_reps">Last: %1$d reps</string>
+    <string name="workout_previous_time">Last: %1$s</string>
+    <string name="workout_previous_distance">Last: %1$s m</string>
+    <string name="workout_complete">Done</string>
+    <string name="workout_undo">Undo set</string>
+    <string name="workout_finish">Finish workout</string>
+    <string name="cd_weight_value">Weight, %1$s kilograms. Turn the crown to change.</string>
+    <string name="cd_reps_value">Repetitions, %1$d. Turn the crown to change.</string>
+    <string name="cd_previous_exercise">Previous exercise</string>
+    <string name="cd_next_exercise">Next exercise</string>
+    <string name="cd_open_overview">Exercises and options, %1$s</string>
+
+    <!-- Rest -->
+    <string name="rest_add">+15</string>
+    <string name="rest_subtract">−15</string>
+    <string name="cd_rest_add">Add 15 seconds of rest</string>
+    <string name="cd_rest_subtract">Remove 15 seconds of rest</string>
+    <string name="cd_rest_skip">Rest, %1$s remaining. Tap to skip.</string>
+
+    <!-- Overview and end -->
+    <string name="overview_title">Exercises</string>
+    <string name="overview_sets_progress">%1$d/%2$d sets</string>
+    <string name="overview_finish">Finish workout</string>
+    <string name="overview_discard">Discard workout</string>
+    <string name="confirm_finish_title">Finish workout?</string>
+    <string name="confirm_finish_text">It is saved on your phone.</string>
+    <string name="confirm_discard_title">Discard workout?</string>
+    <string name="confirm_discard_text">All sets of this workout are deleted.</string>
+    <string name="confirm_finish_action">Finish</string>
+    <string name="confirm_discard_action">Discard</string>
+    <string name="confirm_cancel">Cancel</string>
+
+    <!-- Workout service (ongoing activity) -->
+    <string name="notification_channel_workout">Active workout</string>
+    <string name="notification_channel_workout_description">Workout time and rest timer while you train</string>
+    <string name="notification_workout_free">Workout</string>
+    <string name="notification_training">Training</string>
+    <string name="notification_resting">Rest</string>
+    <!-- #time# is replaced by a live timer; keep the placeholder unchanged. -->
+    <string name="ongoing_status_training_template">Workout #time#</string>
+    <string name="ongoing_status_rest_template">Rest #time#</string>
 </resources>

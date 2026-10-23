@@ -7,6 +7,8 @@ import app.gympulse.core.data.health.HealthStepsReader
 import app.gympulse.core.data.repository.CompletedSessionSummary
 import app.gympulse.core.data.repository.WeeklyVolume
 import app.gympulse.core.data.util.TimeProvider
+import app.gympulse.core.insightcards.InsightsEmptyReason
+import app.gympulse.core.insightcards.InsightsUi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -50,6 +52,7 @@ class DashboardViewModelTest {
         val endTimes = MutableStateFlow<List<Instant>>(emptyList())
         val recent = MutableStateFlow<List<CompletedSessionSummary>>(emptyList())
         val active = MutableStateFlow<ActiveWorkout?>(null)
+        val insights = MutableStateFlow(InsightsUi.Loading)
 
         override fun observeWeeklyVolume(weekOffset: Long, weekStartsOn: DayOfWeek): Flow<WeeklyVolume> =
             if (weekOffset == 0L) current else previous
@@ -60,6 +63,8 @@ class DashboardViewModelTest {
         override fun observeRecentSessions(limit: Int): Flow<List<CompletedSessionSummary>> = recent
 
         override fun observeActiveWorkout(): Flow<ActiveWorkout?> = active
+
+        override fun observeInsights(): Flow<InsightsUi> = insights
     }
 
     private class FakeSettings(goal: Int = 3) : WeeklyGoalProvider, WeekStartProvider {
@@ -237,5 +242,16 @@ class DashboardViewModelTest {
         stepsResult = HealthSteps.PermissionMissing
         vm.refreshHealth()
         assertEquals(HealthSteps.PermissionMissing, vm.uiState.value.steps)
+    }
+
+    @Test
+    fun insightsAreExposedAndFollowTheDataSource() = runTest {
+        val vm = viewModel()
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
+        assertTrue(vm.uiState.value.insights.isEmpty)
+        assertNull(vm.uiState.value.insights.emptyReason)
+
+        data.insights.value = InsightsUi(emptyReason = InsightsEmptyReason.NOT_ENOUGH_DATA)
+        assertEquals(InsightsEmptyReason.NOT_ENOUGH_DATA, vm.uiState.value.insights.emptyReason)
     }
 }

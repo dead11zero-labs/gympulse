@@ -14,20 +14,7 @@ android {
         versionName = "0.1.0"
     }
 
-    // Release-Signatur kommt aus Umgebungsvariablen (CI: GitHub Secrets), der Keystore liegt nie im Repo.
-    // Ohne Keystore wird der Release-Build mit dem Debug-Schlüssel signiert, damit er installierbar bleibt.
-    val releaseKeystore = providers.environmentVariable("GYMPULSE_KEYSTORE_FILE").orNull
-    signingConfigs {
-        if (releaseKeystore != null) {
-            create("release") {
-                storeFile = file(releaseKeystore)
-                storePassword = providers.environmentVariable("GYMPULSE_KEYSTORE_PASSWORD").get()
-                keyAlias = providers.environmentVariable("GYMPULSE_KEY_ALIAS").get()
-                keyPassword = providers.environmentVariable("GYMPULSE_KEY_PASSWORD").get()
-            }
-        }
-    }
-
+    // Die Release-Signatur (Keystore aus Umgebungsvariablen) setzt das Convention-Plugin, siehe ReleaseSigning.kt.
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -54,6 +41,11 @@ dependencies {
     implementation(projects.core.settings)
     implementation(projects.core.health)
     implementation(projects.core.cloud)
+    implementation(projects.core.workout)
+    implementation(projects.core.wearsync)
+    implementation(projects.core.modeldownload)
+    // Lokaler KI-Coach (LiteRT-LM): auch im Release-Build, das Modell kommt per Opt-in-Download.
+    implementation(projects.core.ai)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)

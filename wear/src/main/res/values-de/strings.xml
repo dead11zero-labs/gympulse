@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello_title">Bereit fürs Training</string>
-    <string name="hello_subtitle">Starte dein Workout am Handy.</string>
+    <!-- Status und Hinweise -->
     <string name="status_offline_syncing">Offline – wird synchronisiert</string>
+    <string name="status_update_required">GymPulse auf Handy und Uhr aktualisieren</string>
+    <string name="notice_session_ended">Workout am Handy schon beendet</string>
+    <string name="notice_session_mismatch">Am Handy läuft ein anderes Workout</string>
+    <string name="notice_invalid">Das Handy konnte eine Änderung nicht übernehmen</string>
+    <string name="notice_dismiss_cd">Hinweis schließen</string>
+
+    <!-- Planauswahl -->
+    <string name="plans_title">Workout starten</string>
+    <string name="plans_free_workout">Freies Workout</string>
+    <string name="plans_free_workout_hint">Ohne Plan</string>
+    <string name="plans_waiting">Warte auf das Handy…</string>
+    <string name="plans_empty">Auf dem Handy gibt es noch keine Pläne.</string>
+    <string name="plans_starting">Startet…</string>
+    <plurals name="plans_exercise_count">
+        <item quantity="one">%d Übung</item>
+        <item quantity="other">%d Übungen</item>
+    </plurals>
+
+    <!-- Aktive Übung -->
+    <string name="workout_empty">Dieses Workout hat keine Übungen.</string>
+    <string name="workout_set_progress">Satz %1$d von %2$d</string>
+    <string name="workout_all_done">Alle Sätze erledigt</string>
+    <string name="workout_unit_kg">kg</string>
+    <string name="workout_unit_kg_added">+kg</string>
+    <string name="workout_unit_reps">Wdh.</string>
+    <string name="workout_unit_time">Zeit</string>
+    <string name="workout_unit_meters">m</string>
+    <string name="workout_previous_weight_reps">Zuletzt: %1$s kg × %2$d</string>
+    <string name="workout_previous_reps">Zuletzt: %1$d Wdh.</string>
+    <string name="workout_previous_time">Zuletzt: %1$s</string>
+    <string name="workout_previous_distance">Zuletzt: %1$s m</string>
+    <string name="workout_complete">Fertig</string>
+    <string name="workout_undo">Satz zurücknehmen</string>
+    <string name="workout_finish">Workout beenden</string>
+    <string name="cd_weight_value">Gewicht, %1$s Kilogramm. Zum Ändern die Krone drehen.</string>
+    <string name="cd_reps_value">Wiederholungen, %1$d. Zum Ändern die Krone drehen.</string>
+    <string name="cd_previous_exercise">Vorherige Übung</string>
+    <string name="cd_next_exercise">Nächste Übung</string>
+    <string name="cd_open_overview">Übungen und Optionen, %1$s</string>
+
+    <!-- Pause -->
+    <string name="rest_add">+15</string>
+    <string name="rest_subtract">−15</string>
+    <string name="cd_rest_add">15 Sekunden Pause hinzufügen</string>
+    <string name="cd_rest_subtract">15 Sekunden Pause abziehen</string>
+    <string name="cd_rest_skip">Pause, noch %1$s. Tippen zum Überspringen.</string>
+
+    <!-- Übersicht und Ende -->
+    <string name="overview_title">Übungen</string>
+    <string name="overview_sets_progress">%1$d/%2$d Sätze</string>
+    <string name="overview_finish">Workout beenden</string>
+    <string name="overview_discard">Workout verwerfen</string>
+    <string name="confirm_finish_title">Workout beenden?</string>
+    <string name="confirm_finish_text">Es wird auf dem Handy gespeichert.</string>
+    <string name="confirm_discard_title">Workout verwerfen?</string>
+    <string name="confirm_discard_text">Alle Sätze dieses Workouts werden gelöscht.</string>
+    <string name="confirm_finish_action">Beenden</string>
+    <string name="confirm_discard_action">Verwerfen</string>
+    <string name="confirm_cancel">Abbrechen</string>
+
+    <!-- Workout-Dienst (Ongoing Activity) -->
+    <string name="notification_channel_workout">Laufendes Training</string>
+    <string name="notification_channel_workout_description">Trainingszeit und Pausen-Timer während des Trainings</string>
+    <string name="notification_workout_free">Training</string>
+    <string name="notification_training">Training läuft</string>
+    <string name="notification_resting">Pause</string>
+    <string name="ongoing_status_training_template">Training #time#</string>
+    <string name="ongoing_status_rest_template">Pause #time#</string>
 </resources>

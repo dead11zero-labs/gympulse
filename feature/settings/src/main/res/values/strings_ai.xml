@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">AI coach</string>
+    <string name="ai_coach">Local AI coach</string>
+    <string name="ai_coach_entry_summary">Optional: a model on your device words your training summary</string>
+    <string name="ai_coach_summary_on">On. Without a model the coach uses simple text templates.</string>
+    <string name="ai_coach_summary_off">Off</string>
+    <string name="ai_coach_privacy">The analysis runs entirely on your device. No training data is transmitted. Suggestions are not medical advice.</string>
+
+    <string name="ai_coach_section_model">AI model</string>
+    <string name="ai_coach_model_download">Download model</string>
+    <string name="ai_coach_model_not_downloaded">Not downloaded · about %1$s, Wi-Fi only</string>
+    <string name="ai_coach_model_downloading">Downloading model…</string>
+    <string name="ai_coach_model_waiting_wifi">Waiting for Wi-Fi</string>
+    <string name="ai_coach_model_progress">%1$s of %2$s</string>
+    <string name="ai_coach_model_cancel">Cancel download</string>
+    <string name="ai_coach_model_ready">Model ready</string>
+    <string name="ai_coach_model_ready_size">Uses %1$s of storage</string>
+    <string name="ai_coach_model_delete">Delete model</string>
+    <string name="ai_coach_model_delete_summary">Frees the storage. The coach then uses text templates.</string>
+    <string name="ai_coach_model_failed">Download failed. Tap to try again.</string>
+
+    <string name="ai_coach_notice_not_configured">The AI model is not available in this version of the app yet. Until then the coach uses simple text templates.</string>
+    <string name="ai_coach_notice_storage">Not enough free storage: %1$s needed, %2$s available. Free up space and try again.</string>
+    <string name="ai_coach_error_storage">Not enough free storage. Free up space and try again.</string>
+    <string name="ai_coach_error_corrupt">The downloaded file is damaged. Try again.</string>
+    <string name="ai_coach_error_network">The server could not be reached. Check your Wi-Fi and try again.</string>
+    <string name="ai_coach_error_unknown">Something went wrong. Please try again.</string>
+
+    <string name="ai_coach_optin_title">Turn on the AI coach?</string>
+    <string name="ai_coach_optin_local">The wording runs entirely on your device. No training data leaves your phone.</string>
+    <string name="ai_coach_optin_download">Once, an AI model (about %1$s) is downloaded from Hugging Face. The server sees your IP address, but no training data.</string>
+    <string name="ai_coach_optin_storage">You need about %1$s of free storage.</string>
+    <string name="ai_coach_optin_wifi">The download only runs over Wi-Fi. You can cancel it or delete the model at any time.</string>
+    <string name="ai_coach_optin_medical">Suggestions are not medical advice and can contain errors.</string>
+    <string name="ai_coach_optin_confirm">Turn on and download</string>
+    <string name="ai_coach_delete_title">Delete model?</string>
+    <string name="ai_coach_delete_message">This frees %1$s. The coach then uses simple text templates until you download the model again.</string>
+    <string name="ai_coach_delete_confirm">Delete</string>
+</resources>

@@ -1,5 +1,6 @@
 import app.gympulse.buildlogic.AndroidConfig
 import app.gympulse.buildlogic.configureCommon
+import app.gympulse.buildlogic.configureReleaseSigning
 import app.gympulse.buildlogic.lib
 import app.gympulse.buildlogic.libs
 import com.android.build.api.dsl.ApplicationExtension
@@ -18,6 +19,7 @@ class WearApplicationConventionPlugin : Plugin<Project> {
         pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
         extensions.configure<ApplicationExtension> {
             configureCommon()
+            configureReleaseSigning(target)
             defaultConfig.minSdk = AndroidConfig.WEAR_MIN_SDK
             buildFeatures.compose = true
         }

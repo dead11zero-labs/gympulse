@@ -121,6 +121,7 @@
     <string name="feature_workout_notification_channel_description">Zeigt das laufende Training und den Pausentimer.</string>
     <string name="feature_workout_notification_running">Training läuft</string>
     <string name="feature_workout_notification_started_at">Gestartet um %1$s</string>
+    <string name="feature_workout_notification_started_on_watch">Auf der Uhr gestartet. Tippen, um GymPulse zu öffnen.</string>
     <string name="feature_workout_bar_rest">Pause %1$s</string>
     <string name="feature_workout_bar_open">Workout öffnen</string>
 </resources>

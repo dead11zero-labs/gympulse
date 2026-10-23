@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Training insights</string>
+    <string name="insights_section_title_exercise">Insights</string>
+    <string name="insights_disclaimer">Suggestions are based on your logged workouts and are not medical advice.</string>
+    <string name="insights_unknown_exercise">Exercise</string>
+
+    <string name="insights_empty_not_enough_title">Not enough data yet</string>
+    <string name="insights_empty_not_enough_message">Log a few workouts with weights and reps. After about four sessions of an exercise, trends and suggestions show up here.</string>
+    <string name="insights_empty_notable_title">Nothing to flag</string>
+    <string name="insights_empty_notable_message">Your training looks on track. New findings appear here as you keep logging.</string>
+    <string name="insights_empty_exercise_message">Not enough data for this exercise yet. After about four logged sessions you will see trends and suggestions here.</string>
+
+    <string name="insights_title_plateau">Plateau</string>
+    <string name="insights_title_decline">Strength dropping</string>
+    <string name="insights_title_progress">Making progress</string>
+    <string name="insights_title_deload">Time for a deload</string>
+    <string name="insights_title_increase_weight">Increase the weight</string>
+    <string name="insights_title_increase_reps">Add reps</string>
+    <string name="insights_title_hold">Hold the weight</string>
+    <string name="insights_title_imbalance">Imbalance</string>
+    <string name="insights_title_low_volume">Low volume</string>
+    <string name="insights_title_high_volume">High volume</string>
+
+    <string name="insights_subject_push_pull">Push vs. pull</string>
+    <string name="insights_subject_quads_hamstrings">Quadriceps vs. hamstrings</string>
+
+    <string name="insights_message_plateau">No new best for %1$d days. Sessions since your last best: %2$d. Estimated one-rep max: %3$s kg.</string>
+    <string name="insights_message_decline">Your estimated one-rep max is %1$s kg, your best was %2$s kg. Check your recovery or plan a lighter week.</string>
+    <string name="insights_message_progress">Your estimated one-rep max is %1$s kg, about %2$s kg more per week.</string>
+    <string name="insights_message_deload_plateau">Progress has stalled for several periods. Train with %1$s kg (now %2$s kg) for about a week, aiming for %3$d reps, then build back up.</string>
+    <string name="insights_message_deload_decline">Strength has been falling. Train with %1$s kg (now %2$s kg) for about a week, aiming for %3$d reps, then build back up.</string>
+    <string name="insights_message_increase_weight">All sets reached the top of your rep range. Next time use %1$s kg (now %2$s kg) for %3$d reps.</string>
+    <string name="insights_message_increase_reps">Stay at %1$s kg and aim for %2$d reps per set.</string>
+    <string name="insights_message_hold_reps">You fell short of the minimum reps. Stay at %1$s kg and aim for %2$d reps.</string>
+    <string name="insights_message_hold_sets_missing">Some planned sets are missing. Stay at %1$s kg and complete all sets with %2$d reps.</string>
+    <string name="insights_message_hold_rpe">Your sets felt very hard. Stay at %1$s kg until it feels easier, with %2$d reps.</string>
+    <string name="insights_message_low_volume">%1$s hard sets per week. A good range is %2$s to %3$s.</string>
+    <string name="insights_message_high_volume">%1$s hard sets per week, above the usual %2$s to %3$s. Keep an eye on your recovery.</string>
+    <string name="insights_message_push_dominant">Pushing muscles get %1$s sets per week, pulling muscles only %2$s. Add rows or pull-downs to even it out.</string>
+    <string name="insights_message_pull_dominant">Pulling muscles get %1$s sets per week, pushing muscles only %2$s. Add presses to even it out.</string>
+    <string name="insights_message_quads_dominant">Quadriceps get %1$s sets per week, hamstrings only %2$s. Add leg curls or Romanian deadlifts.</string>
+    <string name="insights_message_hamstrings_dominant">Hamstrings get %1$s sets per week, quadriceps only %2$s. Add squats or leg presses.</string>
+</resources>

@@ -1,6 +1,10 @@
 package app.gympulse.wear.data
 
 import android.content.Context
+import app.gympulse.wear.workout.CapabilityRestAlertCapability
+import app.gympulse.wear.workout.RestAlertCapability
+import app.gympulse.wear.workout.WearClock
+import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.NodeClient
 import com.google.android.gms.wearable.Wearable
@@ -26,6 +30,9 @@ annotation class WearAppScope
 abstract class WearBindingsModule {
     @Binds
     abstract fun bindWearChannel(impl: DataClientWearChannel): WearChannel
+
+    @Binds
+    abstract fun bindRestAlertCapability(impl: CapabilityRestAlertCapability): RestAlertCapability
 }
 
 @Module
@@ -38,6 +45,13 @@ object WearProvidersModule {
     @Provides
     @Singleton
     fun nodeClient(@ApplicationContext context: Context): NodeClient = Wearable.getNodeClient(context)
+
+    @Provides
+    @Singleton
+    fun capabilityClient(@ApplicationContext context: Context): CapabilityClient = Wearable.getCapabilityClient(context)
+
+    @Provides
+    fun wearClock(): WearClock = WearClock { System.currentTimeMillis() }
 
     @Provides
     @Singleton

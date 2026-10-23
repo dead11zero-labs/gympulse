@@ -21,10 +21,20 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
   gradle.properties (`gympulseSupabaseUrl`, `gympulseSupabasePublishableKey`, `gympulseGoogleWebClientId`), SQL unter `supabase/migrations/`.
 - `core:wearprotocol` – reines Kotlin/JVM: Protokoll Telefon ↔ Uhr (`@Serializable`-Snapshot und -Kommandos, `WearPaths`,
   Mapping `WorkoutSession → SessionSnapshot`, `WatchWorkoutReducer` für den optimistischen Zustand). Plan: `wearos-plan.md`.
+- `core:workout` – `ActiveWorkoutController`: einziger Schreibpfad für das laufende Workout (Mutex, Sätze, Finish inkl.
+  Zusammenfassung/PRs/Health-Export) und persistenter `RestTimer` (`endsAt` in DataStore). Funktioniert ohne offenen Screen;
+  ViewModel, Notification und Wear-Bridge nutzen ihn.
+- `core:wearsync` – Telefon-Seite der Uhr-Anbindung hinter `Feature.WEAR_APP`: `WearSnapshotPublisher` (debounced
+  `/workout/active` mit monotoner `version` und Quittungen, `/plans/summary`), `WearCommandListenerService` +
+  `WearCommandProcessor` (`/cmd/<uuid>` idempotent über den Controller, verarbeitete IDs in DataStore, Konfliktregel
+  `commandWins` mit `SetClockBook`), Capability-Prüfung `WatchAppStatus` (Capability `gympulse_watch_app` aus `wear.xml`),
+  `WearRestAlertPolicy` (Pausen-Vibration nur auf der Uhr, solange sie verbunden ist). Data Layer und Controller hängen
+  hinter `WearDataClient`/`WearWorkoutPort` (Fakes in Tests). Start per `WearSync.start()` in der Application.
 - `wear` – Wear-OS-App (Companion, `standalone=false`): Compose for Wear OS (Material 3 für Wear), Hilt, minSdk 33, gleiche
   `applicationId` wie `app` (Data Layer). Plugin `gympulse.wear.application`. Das Telefon bleibt Source of Truth, Plan siehe `wearos-plan.md`.
   **Ausnahme:** Das Wear-Theme (`app.gympulse.wear.theme`) hat eigene Tokens (Wear-`ColorScheme`, Kinetic-Farben), weil Wear Material 3 ein
   eigenes Token-System hat; sonst gelten dieselben Regeln (keine hartcodierten Farben/Größen außerhalb des Themes, Strings DE+EN).
+- `core:insights` – reines Kotlin/JVM (keine Android-Abhängigkeit): klassische Trainingsauswertung (e1RM, Trend, Progression, Volumen → `TrainingInsights`). Unterpaket `narration`: `InsightSummaryBuilder` (kompakte Zusammenfassung unter 800 Token, nur Schlussfolgerungen), `InsightPrompt` (DE/EN je nach `AppLanguage`), `InsightNarrator` (`Flow<String>`) und `TemplateNarrator` (Textbausteine ohne Modell; Texte über `NarrationTexts`, eingebaut DE/EN). Pläne: `lokale-ki-plan.md`.
 - `feature:*` – je ein Feature; stellt eine `@Serializable`-Route und `NavGraphBuilder.xyzScreen()` bereit.
 - Convention-Plugins in `build-logic/convention`: `gympulse.android.application`, `.library`, `.compose`,
   `.feature` (Library + Compose + Hilt + Navigation + Designsystem), `gympulse.hilt`, `gympulse.wear.application` (Wear-App, ohne Phone-Material3).
@@ -49,6 +59,7 @@ Offline-first Gym-Tracker für Android. Produktkonzept und Aufgabenplan liegen i
 `./gradlew assembleDebug testDebugUnitTest lintDebug`
 
 ## Release
-- `.github/workflows/release.yml` baut `assembleRelease` (manuell, bei Push auf `main` und bei Tags `v*`; Tags erzeugen ein GitHub-Release mit APK).
+- `.github/workflows/release.yml` baut `:app:assembleRelease` und `:wear:assembleRelease` (manuell, bei Push auf `main` und bei Tags `v*`; Tags erzeugen ein GitHub-Release mit beiden APKs).
 - Signatur über die Secrets `GYMPULSE_KEYSTORE_BASE64`, `GYMPULSE_KEYSTORE_PASSWORD`, `GYMPULSE_KEY_ALIAS`, `GYMPULSE_KEY_PASSWORD`. Fehlen sie, wird mit dem Debug-Schlüssel signiert. Keystores nie committen.
-- Jeder Build auf `main` veröffentlicht die APK zusätzlich als Pre-Release `latest-main` (direkter Download ohne ZIP, funktioniert auch am Handy).
+- Phone- und Wear-APK teilen sich die `applicationId` und müssen denselben Schlüssel haben (Data Layer). Die Signing-Konfiguration liegt zentral in `build-logic` (`ReleaseSigning.kt`), nicht in den Modulen.
+- Jeder Build auf `main` veröffentlicht die APKs zusätzlich als Pre-Release `latest-main` (direkter Download ohne ZIP, funktioniert auch am Handy): `gympulse-*.apk` (Handy) und `gympulse-wear-*.apk` (Wear OS).

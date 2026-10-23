@@ -9,7 +9,7 @@ import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import app.gympulse.feature.workout.R
-import app.gympulse.feature.workout.timer.RestTimerState
+import app.gympulse.core.workout.timer.RestTimerState
 import java.time.Instant
 import java.util.Date
 
@@ -74,6 +74,26 @@ internal object WorkoutNotifications {
                 .setChronometerCountDown(false)
                 .setWhen(content.startedAt.toEpochMilli())
         }
+        return builder.build()
+    }
+
+    /**
+     * Plain notification for a workout started on the watch while the app was in the background
+     * and no foreground service was allowed. Dismissible; the elapsed time still counts up.
+     */
+    fun buildStartedInBackground(context: Context, title: String?, startedAt: Instant): Notification {
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_workout_notification)
+            .setContentTitle(title ?: context.getString(R.string.feature_workout_empty_workout))
+            .setContentText(context.getString(R.string.feature_workout_notification_started_on_watch))
+            .setOnlyAlertOnce(true)
+            .setSilent(true)
+            .setAutoCancel(true)
+            .setShowWhen(true)
+            .setUsesChronometer(true)
+            .setWhen(startedAt.toEpochMilli())
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+        openAppIntent(context)?.let(builder::setContentIntent)
         return builder.build()
     }
 

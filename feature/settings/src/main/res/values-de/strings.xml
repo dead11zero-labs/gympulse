@@ -140,4 +140,31 @@
     <string name="photos_error_title">Foto nicht verfügbar</string>
     <string name="photos_error_message">Das Foto konnte nicht gespeichert werden. Prüfe, ob eine Kamera-App installiert ist, oder wähle ein anderes Foto.</string>
     <string name="photos_error_ok">OK</string>
+
+    <string name="settings_section_wear">Smartwatch</string>
+    <string name="settings_wear">Smartwatch (Wear OS)</string>
+    <string name="settings_wear_entry_summary">Uhr-Status, Installation und Uhr-App öffnen</string>
+    <string name="wear_status_connected">Uhr verbunden, GymPulse ist installiert</string>
+    <string name="wear_status_not_connected">GymPulse ist installiert, die Uhr ist gerade nicht verbunden</string>
+    <string name="wear_status_not_detected">Keine Uhr mit GymPulse gefunden</string>
+    <string name="wear_chip_watch_connected">Uhr verbunden</string>
+    <string name="wear_chip_watch_missing">Uhr nicht verbunden</string>
+    <string name="wear_chip_app_installed">Uhr-App installiert</string>
+    <string name="wear_chip_app_missing">Uhr-App fehlt</string>
+    <string name="wear_section_install">Installation</string>
+    <string name="wear_install_title">Uhr-App installieren</string>
+    <string name="wear_install_description">Der Button öffnet die Google-Play-Seite von GymPulse auf deiner Uhr. Solange GymPulse nicht bei Google Play veröffentlicht ist, installierst du die Uhr-APK aus dem Release latest-main auf GitHub per Sideload (adb über WLAN), mit demselben Signaturschlüssel wie diese App.</string>
+    <string name="wear_action_install">Auf der Uhr installieren</string>
+    <string name="wear_section_actions">Aktionen</string>
+    <string name="wear_open_title">Auf der Uhr öffnen</string>
+    <string name="wear_open_summary">Startet GymPulse auf deiner verbundenen Uhr</string>
+    <string name="wear_action_open">Auf der Uhr öffnen</string>
+    <string name="wear_action_ok">OK</string>
+    <string name="wear_message_install_started">Schau auf deine Uhr, um die Installation fortzusetzen.</string>
+    <string name="wear_message_open_started">GymPulse öffnet sich auf deiner Uhr.</string>
+    <string name="wear_message_no_watch">Gerade ist keine passende Uhr verbunden.</string>
+    <string name="wear_message_failed">Die Uhr ist nicht erreichbar. Prüfe die Verbindung und versuche es erneut.</string>
+    <string name="wear_sideload_title">Uhr-App installieren (Sideload)</string>
+    <string name="wear_sideload_steps">GymPulse ist noch nicht bei Google Play. 1. Lade gympulse-wear-*.apk aus dem Release latest-main auf GitHub herunter. 2. Auf der Uhr: Einstellungen > Entwickleroptionen > ADB-Debugging und Über WLAN debuggen einschalten, dann Neues Gerät koppeln. 3. Am Computer: adb pair &lt;Uhr-IP:Port&gt;, dann adb connect &lt;Uhr-IP:Port&gt;, dann adb install gympulse-wear-*.apk. Alternativ geht eine Wear-Installer-App. Die Uhr-App muss mit demselben Schlüssel signiert sein wie diese App.</string>
+    <string name="wear_action_release_page">Release-Seite öffnen</string>
 </resources>
