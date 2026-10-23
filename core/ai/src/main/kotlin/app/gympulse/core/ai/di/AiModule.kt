@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import app.gympulse.core.ai.ActivityManagerDeviceMemory
 import app.gympulse.core.ai.DeviceMemory
-import app.gympulse.core.ai.FilesDirModelLocator
+import app.gympulse.core.ai.DownloadedModelLocator
 import app.gympulse.core.ai.LiteRtLmEngineFactory
 import app.gympulse.core.ai.LiteRtLmNarrator
 import app.gympulse.core.ai.LlmEngineFactory
@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 abstract class AiModule {
 
     @Binds
-    abstract fun bindModelLocator(impl: FilesDirModelLocator): ModelLocator
+    abstract fun bindModelLocator(impl: DownloadedModelLocator): ModelLocator
 
     @Binds
     abstract fun bindDeviceMemory(impl: ActivityManagerDeviceMemory): DeviceMemory

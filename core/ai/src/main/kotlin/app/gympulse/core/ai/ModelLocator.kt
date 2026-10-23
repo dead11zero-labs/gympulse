@@ -1,9 +1,7 @@
 package app.gympulse.core.ai
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.File
 import javax.inject.Inject
+import app.gympulse.core.data.ai.ModelLocator as DownloadModelLocator
 
 /**
  * Eine Modelldatei auf dem Gerät. [sizeBytes] und [lastModified] identifizieren den Stand: Ist ein
@@ -12,40 +10,19 @@ import javax.inject.Inject
  */
 data class ModelFile(val path: String, val sizeBytes: Long, val lastModified: Long)
 
-/** Findet das lokale Modell. Den Download übernimmt ein späterer PR (WorkManager, SHA-256). */
+/** Findet das lokale Modell; schmale Sicht von `core:ai`, damit Tests ohne Dateisystem auskommen. */
 fun interface ModelLocator {
-    /** Die nutzbare Modelldatei oder `null`, wenn keine (vollständige) Datei vorhanden ist. */
+    /** Die nutzbare Modelldatei oder `null`, wenn keine vollständige Datei vorhanden ist. */
     fun locate(): ModelFile?
 }
 
 /**
- * Sucht in `filesDir/models/` (nicht `cacheDir`, das darf das System leeren) nach den bekannten
- * Gemma-4-E2B-Dateien. Dateien unter [minSizeBytes] gelten als abgebrochener Download.
+ * Adapter auf den Locator des Download-Managers (`core:modeldownload`, KI-PR 5): nur vollständig
+ * geladene, geprüfte Dateien in `filesDir/models/` zählen.
  */
-class FilesDirModelLocator internal constructor(
-    private val modelsDir: File,
-    private val candidates: List<String> = DEFAULT_CANDIDATES,
-    private val minSizeBytes: Long = MIN_MODEL_SIZE_BYTES,
+class DownloadedModelLocator @Inject constructor(
+    private val source: DownloadModelLocator,
 ) : ModelLocator {
-
-    @Inject
-    constructor(@ApplicationContext context: Context) : this(File(context.filesDir, MODELS_DIR))
-
-    override fun locate(): ModelFile? = candidates.asSequence()
-        .map { File(modelsDir, it) }
-        .firstOrNull { it.isFile && it.length() >= minSizeBytes }
-        ?.let { ModelFile(it.absolutePath, it.length(), it.lastModified()) }
-
-    companion object {
-        const val MODELS_DIR = "models"
-
-        /**
-         * Gemma 4 E2B-it aus `litert-community/gemma-4-E2B-it-litert-lm` (Apache 2.0). Welche Datei
-         * auf dem S25 Ultra besser läuft, klärt die Messung; bevorzugt wird die GPU-Variante (2,01 GB).
-         */
-        val DEFAULT_CANDIDATES = listOf("gemma-4-E2B-it-gpu.litertlm", "gemma-4-E2B-it.litertlm")
-
-        /** Deutlich unter der echten Größe (ca. 2 GB), fängt nur leere und abgebrochene Dateien ab. */
-        const val MIN_MODEL_SIZE_BYTES = 500L * 1024 * 1024
-    }
+    override fun locate(): ModelFile? =
+        source.modelFile()?.let { ModelFile(it.absolutePath, it.length(), it.lastModified()) }
 }
