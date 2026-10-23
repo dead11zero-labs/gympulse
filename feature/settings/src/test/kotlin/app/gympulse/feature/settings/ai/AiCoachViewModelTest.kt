@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -78,6 +79,7 @@ class AiCoachViewModelTest {
     private fun kotlinx.coroutines.test.TestScope.viewModel(): AiCoachViewModel {
         val vm = AiCoachViewModel(FakeGate(toggles), toggles, downloads)
         backgroundScope.launch { vm.uiState.collect {} }
+        testScheduler.runCurrent()
         return vm
     }
 

@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
@@ -91,6 +92,7 @@ class CoachViewModelTest {
 
     private fun kotlinx.coroutines.test.TestScope.collect(vm: CoachViewModel) {
         backgroundScope.launch { vm.uiState.collect {} }
+        testScheduler.runCurrent()
     }
 
     @Test
@@ -98,7 +100,7 @@ class CoachViewModelTest {
         val gate = FakeGate(false)
         val narrator = FakeNarrator(ai("x"))
         val vm = CoachViewModel(gate, data, narrator, downloads, cache)
-        backgroundScope.launch { vm.uiState.collect {} }
+        collect(vm)
         assertEquals(CoachUiState.Hidden, vm.uiState.value)
         assertEquals(0, narrator.calls)
     }
