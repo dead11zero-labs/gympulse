@@ -28,12 +28,14 @@ private object Routes {
 fun WearApp(
     plansViewModel: PlansViewModel = hiltViewModel(),
     workoutViewModel: WorkoutViewModel = hiltViewModel(),
+    heartRateViewModel: HeartRateViewModel = hiltViewModel(),
 ) {
     GymPulseWearTheme {
         AppScaffold {
             val navController = rememberSwipeDismissableNavController()
             val plansState by plansViewModel.uiState.collectAsStateWithLifecycle()
             val workoutState by workoutViewModel.uiState.collectAsStateWithLifecycle()
+            val heartRate by heartRateViewModel.reading.collectAsStateWithLifecycle()
             val hasSession = workoutState.session != null
 
             // Das Workout wurde am Handy beendet oder hier bestätigt: zurück zur Planauswahl.
@@ -58,6 +60,7 @@ fun WearApp(
                             onAdjustRest = workoutViewModel::adjustRest,
                             onSkipRest = workoutViewModel::skipRest,
                             onDismissNotices = workoutViewModel::dismissNotices,
+                            heartRate = heartRate,
                         )
                     } else {
                         PlansScreen(

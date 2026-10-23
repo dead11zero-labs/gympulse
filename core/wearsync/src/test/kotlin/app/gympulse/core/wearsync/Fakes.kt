@@ -23,6 +23,7 @@ import app.gympulse.core.workout.SetEditStatus
 import app.gympulse.core.workout.WorkoutForegroundMode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import java.time.Instant
 import java.time.ZoneId
@@ -201,6 +202,16 @@ class InMemoryWearSyncStore : WearSyncStore {
         version = maxOf(version + 1, nowMillis)
         return version
     }
+}
+
+class InMemoryWatchHeartRateStore : WatchHeartRateStore {
+    val values = MutableStateFlow(emptyMap<String, WatchHeartRate>())
+
+    override suspend fun record(value: WatchHeartRate) {
+        values.update { it + (value.sessionId to value) }
+    }
+
+    override fun observe(sessionId: String): Flow<WatchHeartRate?> = values.map { it[sessionId] }
 }
 
 class FakeForeground(var mode: WorkoutForegroundMode = WorkoutForegroundMode.FOREGROUND_SERVICE) : ActiveWorkoutForeground {

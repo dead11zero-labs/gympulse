@@ -6,10 +6,12 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import app.gympulse.core.workout.RestAlertPolicy
 import app.gympulse.core.wearsync.CapabilityWatchAppStatus
 import app.gympulse.core.wearsync.ControllerWorkoutPort
+import app.gympulse.core.wearsync.DataStoreWatchHeartRateStore
 import app.gympulse.core.wearsync.DataStoreWearSyncStore
 import app.gympulse.core.wearsync.PlayServicesWearDataClient
 import app.gympulse.core.wearsync.RepositoryWearSnapshotSources
 import app.gympulse.core.wearsync.WatchAppStatus
+import app.gympulse.core.wearsync.WatchHeartRateStore
 import app.gympulse.core.wearsync.WearDataClient
 import app.gympulse.core.wearsync.WearRestAlertPolicy
 import app.gympulse.core.wearsync.WearSnapshotSources
@@ -58,6 +60,7 @@ abstract class WearSyncBindings {
 @InstallIn(SingletonComponent::class)
 object WearSyncProviders {
     private const val STORE_FILE = "wear_sync"
+    private const val HEART_RATE_FILE = "wear_heart_rate"
 
     @Provides
     @Singleton
@@ -77,4 +80,9 @@ object WearSyncProviders {
     @Singleton
     fun store(@ApplicationContext context: Context): WearSyncStore =
         DataStoreWearSyncStore(PreferenceDataStoreFactory.create { context.preferencesDataStoreFile(STORE_FILE) })
+
+    @Provides
+    @Singleton
+    fun heartRateStore(@ApplicationContext context: Context): WatchHeartRateStore =
+        DataStoreWatchHeartRateStore(PreferenceDataStoreFactory.create { context.preferencesDataStoreFile(HEART_RATE_FILE) })
 }

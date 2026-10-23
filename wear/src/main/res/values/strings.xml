@@ -44,6 +44,14 @@
     <string name="cd_next_exercise">Next exercise</string>
     <string name="cd_open_overview">Exercises and options, %1$s</string>
 
+    <!-- Heart rate (live value stays on the watch) -->
+    <string name="heart_rate_unit">bpm</string>
+    <string name="heart_rate_placeholder">--</string>
+    <string name="heart_rate_no_permission">Heart rate off: permission denied</string>
+    <string name="heart_rate_unavailable">Heart rate unavailable</string>
+    <string name="cd_heart_rate_value">Heart rate, %1$d beats per minute</string>
+    <string name="cd_heart_rate_searching">Heart rate, measuring</string>
+
     <!-- Rest -->
     <string name="rest_add">+15</string>
     <string name="rest_subtract">−15</string>

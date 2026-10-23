@@ -9,6 +9,7 @@ import app.gympulse.core.wearprotocol.CommandAck
 import app.gympulse.core.wearprotocol.CompleteSet
 import app.gympulse.core.wearprotocol.Discard
 import app.gympulse.core.wearprotocol.Finish
+import app.gympulse.core.wearprotocol.HeartRateSummary
 import app.gympulse.core.wearprotocol.SessionCommand
 import app.gympulse.core.wearprotocol.SkipRest
 import app.gympulse.core.wearprotocol.StartWorkout
@@ -38,6 +39,7 @@ import javax.inject.Singleton
  * - Konflikte am selben Satz: [WatchWorkoutReducer.commandWins] gegen die Feld-Uhr aus [SetClockBook].
  *   Verliert ein Kommando, bleibt der Telefon-Stand und das Kommando gilt trotzdem als verarbeitet.
  * - Kommandos auf eine beendete oder fremde Session werden ignoriert und als solche quittiert.
+ * - Puls-Zusammenfassungen ([HeartRateSummary]) gelten der Session von vorhin und werden auch ohne laufende Session gespeichert.
  * - Ist [Feature.WEAR_APP] aus, werden Kommandos verworfen, ohne sie anzuwenden.
  */
 @Singleton
@@ -47,6 +49,7 @@ class WearCommandProcessor @Inject constructor(
     private val dataClient: WearDataClient,
     private val store: WearSyncStore,
     private val clocks: SetClockBook,
+    private val heartRates: WatchHeartRateStore,
     private val foreground: ActiveWorkoutForeground,
     private val featureGate: FeatureGate,
     private val time: TimeProvider,
@@ -97,6 +100,7 @@ class WearCommandProcessor @Inject constructor(
 
     private suspend fun apply(command: WearCommand): AckResult = when (command) {
         is StartWorkout -> start(command)
+        is HeartRateSummary -> recordHeartRate(command)
         is SessionCommand -> {
             val session = workout.activeSession.first()
             when {
@@ -128,6 +132,16 @@ class WearCommandProcessor @Inject constructor(
             ended()
             AckResult.APPLIED
         }
+    }
+
+    /**
+     * Puls-Zusammenfassung der Uhr: kommt nach dem Workout, deshalb ohne Prüfung auf eine laufende
+     * Session. Unplausible Werte werden abgelehnt.
+     */
+    private suspend fun recordHeartRate(command: HeartRateSummary): AckResult {
+        if (!command.isPlausible) return AckResult.INVALID
+        heartRates.record(WatchHeartRate(command.sessionId, command.averageBpm, command.maxBpm))
+        return AckResult.APPLIED
     }
 
     /** Startet das Workout wie die Handy-UI; läuft schon eins, wird es fortgesetzt. */

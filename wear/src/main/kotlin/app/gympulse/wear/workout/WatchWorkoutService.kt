@@ -41,6 +41,8 @@ class WatchWorkoutService : Service(), WatchRestEffects {
 
     @Inject lateinit var advertiser: RestAlertAdvertiser
 
+    @Inject lateinit var heartRateRecording: HeartRateRecording
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private var trackJob: Job? = null
     private var wakeLock: PowerManager.WakeLock? = null
@@ -57,6 +59,8 @@ class WatchWorkoutService : Service(), WatchRestEffects {
             }
             inForeground = true
             advertiser.setActive(true)
+            // Im Vordergrund darf die Pulsmessung starten, falls sie vorher im Hintergrund scheiterte.
+            heartRateRecording.resume()
         }
         if (trackJob == null) {
             trackJob = scope.launch { WatchRestTracker(clock, this@WatchWorkoutService).run(repository.session) }

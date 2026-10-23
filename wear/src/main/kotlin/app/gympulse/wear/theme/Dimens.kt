@@ -10,6 +10,9 @@ object WearSpacing {
     val m: Dp = 12.dp
     val l: Dp = 16.dp
 
+    /** Kleines Icon neben Text, z. B. das Herz beim Puls. */
+    val iconSmall: Dp = 16.dp
+
     /** Mindestgröße eines Touch-Ziels auf der Uhr. */
     val minTouchTarget: Dp = 48.dp
 

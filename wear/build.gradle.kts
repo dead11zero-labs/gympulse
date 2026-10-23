@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.wear.compose.navigation)
     implementation(libs.androidx.wear.ongoing)
+    implementation(libs.androidx.health.services.client)
+    implementation(libs.androidx.concurrent.futures.ktx)
     implementation(libs.androidx.compose.material.icons.core)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.play.services)
