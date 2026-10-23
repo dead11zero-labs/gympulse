@@ -44,9 +44,11 @@ class LiteRtLmNarrator(
         return flow {
             var streamed = false
             val llm = engines.withEngine { it.generate(prompt.system, prompt.user) }
-                .timeout(tokenTimeout)
                 .filter { it.isNotEmpty() }
+                // Vor timeout() markieren: timeout() arbeitet über einen Channel, ein Fehler direkt nach
+                // dem ersten Delta könnte sonst ankommen, bevor das Delta unten verarbeitet ist.
                 .onEach { streamed = true }
+                .timeout(tokenTimeout)
                 .catch { e ->
                     if (streamed) throw NarrationInterruptedException(e)
                     streamed = true

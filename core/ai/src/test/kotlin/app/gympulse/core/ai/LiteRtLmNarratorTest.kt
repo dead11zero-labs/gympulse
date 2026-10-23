@@ -5,6 +5,7 @@ import app.gympulse.core.insights.narration.InsightPrompt
 import app.gympulse.core.insights.narration.narrateToString
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -19,6 +20,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class LiteRtLmNarratorTest {
 
     private fun TestScope.manager(
@@ -112,7 +114,8 @@ class LiteRtLmNarratorTest {
         assertEquals(UnavailableReason.LOAD_FAILED, manager.precheck())
         val failure = fallbacks.first() as ModelUnavailableException
         assertEquals(UnavailableReason.LOAD_FAILED, failure.reason)
-        assertEquals(corrupt, failure.cause)
+        // Stack-Trace-Recovery der Coroutines kann die Exception kopieren: Nachricht statt Identität prüfen.
+        assertEquals(corrupt.message, failure.cause?.message)
 
         // Neue Datei (z. B. erneuter Download): wieder versuchen.
         locator.model = FakeModelLocator.MODEL.copy(lastModified = 2L)
