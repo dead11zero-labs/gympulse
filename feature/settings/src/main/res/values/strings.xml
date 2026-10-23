@@ -144,4 +144,28 @@
     <string name="photos_error_title">Photo not available</string>
     <string name="photos_error_message">The photo could not be saved. Check that a camera app is installed or choose another photo.</string>
     <string name="photos_error_ok">OK</string>
+
+    <string name="settings_section_wear">Smartwatch</string>
+    <string name="settings_wear">Smartwatch (Wear OS)</string>
+    <string name="settings_wear_entry_summary">Watch status, install and open the watch app</string>
+    <string name="wear_status_connected">Watch connected, GymPulse is installed</string>
+    <string name="wear_status_not_connected">GymPulse is installed, but the watch is not connected right now</string>
+    <string name="wear_status_not_detected">No watch with GymPulse found</string>
+    <string name="wear_chip_watch_connected">Watch connected</string>
+    <string name="wear_chip_watch_missing">Watch not connected</string>
+    <string name="wear_chip_app_installed">Watch app installed</string>
+    <string name="wear_chip_app_missing">Watch app missing</string>
+    <string name="wear_section_install">Install</string>
+    <string name="wear_install_title">Install the watch app</string>
+    <string name="wear_install_description">The button opens the Google Play page of GymPulse on your watch. As long as GymPulse is not published on Google Play, install the watch APK from the latest-main release on GitHub by sideloading (adb over Wi-Fi) with the same signing key as this app.</string>
+    <string name="wear_action_install">Install on watch</string>
+    <string name="wear_section_actions">Actions</string>
+    <string name="wear_open_title">Open on watch</string>
+    <string name="wear_open_summary">Starts GymPulse on your connected watch</string>
+    <string name="wear_action_open">Open on watch</string>
+    <string name="wear_action_ok">OK</string>
+    <string name="wear_message_install_started">Look at your watch to continue the installation.</string>
+    <string name="wear_message_open_started">GymPulse is opening on your watch.</string>
+    <string name="wear_message_no_watch">No suitable watch is connected right now.</string>
+    <string name="wear_message_failed">The watch could not be reached. Check the connection and try again.</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import app.gympulse.feature.settings.cloud.CloudBackupScreen
 import app.gympulse.feature.settings.health.HealthConnectScreen
+import app.gympulse.feature.settings.wear.WearSettingsScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,10 +22,10 @@ fun NavGraphBuilder.settingsScreen(onOpenAbout: () -> Unit) {
     }
 }
 
-private enum class SettingsPage { ROOT, BODY_METRICS, PHOTOS, HEALTH_CONNECT, CLOUD_BACKUP }
+private enum class SettingsPage { ROOT, BODY_METRICS, PHOTOS, HEALTH_CONNECT, CLOUD_BACKUP, WEAR }
 
 /**
- * Einstellungen mit den Unterseiten Körpermaße, Fortschrittsfotos, Health Connect und Cloud-Backup. Die Unterseiten hängen an der
+ * Einstellungen mit den Unterseiten Körpermaße, Fortschrittsfotos, Health Connect, Cloud-Backup und Smartwatch. Die Unterseiten hängen an der
  * Settings-Route, damit NavHost und App-Scaffold unverändert bleiben; Zurück führt eine Ebene hoch.
  */
 @Composable
@@ -38,11 +39,13 @@ private fun SettingsHost(onOpenAbout: () -> Unit) {
             onOpenBodyMetrics = { page = SettingsPage.BODY_METRICS },
             onOpenHealthConnect = { page = SettingsPage.HEALTH_CONNECT },
             onOpenCloudBackup = { page = SettingsPage.CLOUD_BACKUP },
+            onOpenWear = { page = SettingsPage.WEAR },
             onOpenAbout = onOpenAbout,
         )
         SettingsPage.BODY_METRICS -> BodyMetricsScreen(onOpenPhotos = { page = SettingsPage.PHOTOS })
         SettingsPage.PHOTOS -> ProgressPhotosScreen()
         SettingsPage.HEALTH_CONNECT -> HealthConnectScreen()
         SettingsPage.CLOUD_BACKUP -> CloudBackupScreen()
+        SettingsPage.WEAR -> WearSettingsScreen()
     }
 }
