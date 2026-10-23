@@ -13,12 +13,10 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +44,6 @@ import app.gympulse.R
 import app.gympulse.core.designsystem.adaptive.currentWindowWidthClass
 import app.gympulse.core.designsystem.component.GymPulseNavigationDefaults
 import app.gympulse.core.designsystem.theme.Sizing
-import app.gympulse.feature.settings.AboutRoute
 import app.gympulse.feature.settings.SettingsRoute
 import app.gympulse.feature.workout.bar.ActiveWorkoutBar
 import app.gympulse.feature.workout.bar.ActiveWorkoutServiceEffect
@@ -125,7 +122,6 @@ fun GymPulseApp(
                         if (currentTopLevel != null) {
                             AvatarMenu(
                                 onOpenSettings = { navController.navigate(SettingsRoute) },
-                                onOpenAbout = { navController.navigate(AboutRoute) },
                             )
                         }
                     },
@@ -165,9 +161,9 @@ private fun NavHostController.navigateToTopLevel(destination: TopLevelDestinatio
     }
 }
 
-/** Avatar button in the top bar; its menu leads to the settings and to "Über die App". */
+/** Avatar button in the top bar; its menu leads to the settings. */
 @Composable
-private fun AvatarMenu(onOpenSettings: () -> Unit, onOpenAbout: () -> Unit) {
+private fun AvatarMenu(onOpenSettings: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     // The Box anchors the dropdown to the avatar button instead of the top-left corner.
     Box {
@@ -193,15 +189,6 @@ private fun AvatarMenu(onOpenSettings: () -> Unit, onOpenAbout: () -> Unit) {
                 onClick = {
                     expanded = false
                     onOpenSettings()
-                },
-            )
-            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.action_about)) },
-                leadingIcon = { Icon(Icons.Filled.Info, contentDescription = null) },
-                onClick = {
-                    expanded = false
-                    onOpenAbout()
                 },
             )
         }
