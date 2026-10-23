@@ -57,8 +57,8 @@ object ModelConfig {
         id = "gemma-4-e2b-it-gpu",
         fileName = GEMMA_4_E2B_GPU_FILE,
         url = "https://huggingface.co/$HF_REPO/resolve/$HF_COMMIT/$GEMMA_4_E2B_GPU_FILE",
-        // SHA-256 des LFS-Objekts auf Hugging Face (von Jörg am 23.10.2026 übernommen).
-        sha256 = "794339191f0e1dc8353b7f84fb205af5e62870ed5647a315eddbf7a9a9c90f06",
+        // SHA-256 des LFS-Objekts auf Hugging Face (von Jörg am 23.10.2026 auf der HF-Dateiseite des gepinnten Commits abgelesen).
+        sha256 = "a53a59001894c58e6bdb5b9b227709f91a2e3e556baa7d85acf9c55402ba5cf5",
         // Verifiziert auf Hugging Face (22.10.2026): 2.008.432.640 Bytes.
         sizeBytes = 2_008_432_640L,
     )
