@@ -1,9 +1,11 @@
 package app.gympulse.core.modeldownload.di
 
 import android.content.Context
+import android.util.Log
 import app.gympulse.core.data.ai.ModelDownloadManager
 import app.gympulse.core.data.ai.ModelLocator
 import app.gympulse.core.modeldownload.ModelConfig
+import app.gympulse.core.modeldownload.ModelDownloadWorker
 import app.gympulse.core.modeldownload.ModelDownloader
 import app.gympulse.core.modeldownload.ModelStorage
 import app.gympulse.core.modeldownload.WorkManagerModelDownloadManager
@@ -31,10 +33,17 @@ object ModelDownloadProvidesModule {
     fun provideModelDownloader(): ModelDownloader =
         ModelDownloader(
             // Eigener Client, nicht als OkHttpClient gebunden, damit er keine anderen Bindings stört.
-            OkHttpClient.Builder()
+            client = OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
+                // Großzügig, weil das CDN gegen Ende einer 2-GB-Datei längere Pausen machen kann.
+                .readTimeout(120, TimeUnit.SECONDS)
+                // Kein Gesamt-Timeout: der Download dauert je nach WLAN viele Minuten.
+                .callTimeout(0, TimeUnit.MILLISECONDS)
+                .retryOnConnectionFailure(true)
+                .followRedirects(true)
+                .followSslRedirects(true)
                 .build(),
+            log = { message -> Log.w(ModelDownloadWorker.TAG, message) },
         )
 
     private const val MODELS_DIR = "models"

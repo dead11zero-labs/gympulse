@@ -5,5 +5,6 @@
     <string name="core_modeldownload_title">Downloading AI model</string>
     <string name="core_modeldownload_preparing">Preparing download…</string>
     <string name="core_modeldownload_progress">%1$d%% · %2$d of %3$d MB</string>
+    <string name="core_modeldownload_verifying">Checking file…</string>
     <string name="core_modeldownload_cancel">Cancel</string>
 </resources>

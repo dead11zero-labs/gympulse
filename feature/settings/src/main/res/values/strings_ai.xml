@@ -25,6 +25,8 @@
     <string name="ai_coach_error_storage">Not enough free storage. Free up space and try again.</string>
     <string name="ai_coach_error_corrupt">The downloaded file is damaged. Try again.</string>
     <string name="ai_coach_error_network">The server could not be reached. Check your Wi-Fi and try again.</string>
+    <string name="ai_coach_model_verifying">Checking file…</string>
+    <string name="ai_coach_error_details">Details: %1$s</string>
     <string name="ai_coach_error_unknown">Something went wrong. Please try again.</string>
 
     <string name="ai_coach_optin_title">Turn on the AI coach?</string>

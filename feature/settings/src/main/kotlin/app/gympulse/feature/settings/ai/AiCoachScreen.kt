@@ -154,7 +154,9 @@ private fun ModelRows(state: AiCoachUiState, viewModel: AiCoachViewModel, bytes:
         is ModelDownloadState.Downloading -> {
             SettingsRow(
                 headline = stringResource(R.string.ai_coach_model_downloading),
-                supporting = if (model.waitingForNetwork) {
+                supporting = if (model.verifying) {
+                    stringResource(R.string.ai_coach_model_verifying)
+                } else if (model.waitingForNetwork) {
                     stringResource(R.string.ai_coach_model_waiting_wifi)
                 } else {
                     stringResource(
@@ -196,12 +198,26 @@ private fun ModelRows(state: AiCoachUiState, viewModel: AiCoachViewModel, bytes:
                 onClick = viewModel::requestDeleteModel,
             )
         }
-        is ModelDownloadState.Failed -> SettingsRow(
-            headline = stringResource(R.string.ai_coach_model_failed),
-            supporting = stringResource(failureMessage(model.reason)),
-            icon = ActionIcons.CloudDownload,
-            onClick = if (state.canStartDownload) viewModel::startDownload else null,
-        )
+        is ModelDownloadState.Failed -> {
+            SettingsRow(
+                headline = stringResource(R.string.ai_coach_model_failed),
+                supporting = stringResource(failureMessage(model.reason)),
+                icon = ActionIcons.CloudDownload,
+                onClick = if (state.canStartDownload) viewModel::startDownload else null,
+            )
+            val detail = model.detail
+            if (!detail.isNullOrBlank()) {
+                // Technisches Detail für die Fehlersuche, klein unter der Meldung.
+                Text(
+                    text = stringResource(R.string.ai_coach_error_details, detail),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Spacing.m, vertical = Spacing.xs),
+                )
+            }
+        }
     }
 }
 

@@ -136,12 +136,22 @@ internal object ModelStateMapper {
             WorkInfo.State.RUNNING -> {
                 val total = work.progress.getLong(ModelDownloadWorker.KEY_TOTAL, totalBytes)
                 val done = work.progress.getLong(ModelDownloadWorker.KEY_DOWNLOADED, partialBytes)
-                downloading(done, total, waiting = false)
+                if (work.progress.getString(ModelDownloadWorker.KEY_PHASE) == ModelDownloadWorker.PHASE_VERIFYING) {
+                    ModelDownloadState.Downloading(
+                        progress = null,
+                        downloadedBytes = done,
+                        totalBytes = total,
+                        verifying = true,
+                    )
+                } else {
+                    downloading(done, total, waiting = false)
+                }
             }
             WorkInfo.State.ENQUEUED, WorkInfo.State.BLOCKED ->
                 downloading(partialBytes, totalBytes, waiting = true)
             WorkInfo.State.FAILED -> ModelDownloadState.Failed(
-                ModelDownloadWorker.failureFrom(work.output.getString(ModelDownloadWorker.KEY_FAILURE)),
+                reason = ModelDownloadWorker.failureFrom(work.output.getString(ModelDownloadWorker.KEY_FAILURE)),
+                detail = work.output.getString(ModelDownloadWorker.KEY_DETAIL),
             )
             // Erfolgreich, aber Datei fehlt (gelöscht) oder abgebrochen: wieder Ausgangszustand.
             WorkInfo.State.SUCCEEDED, WorkInfo.State.CANCELLED -> ModelDownloadState.NotDownloaded

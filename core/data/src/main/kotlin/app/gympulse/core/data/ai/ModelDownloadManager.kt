@@ -37,18 +37,27 @@ sealed interface ModelDownloadState {
      * Download geplant oder aktiv.
      * @property progress Anteil 0..1 oder null, solange die Größe unbekannt ist.
      * @property waitingForNetwork true, solange der Job auf WLAN wartet bzw. neu geplant ist.
+     * @property verifying true, solange die fertig geladene Datei per SHA-256 geprüft wird.
      */
     data class Downloading(
         val progress: Float?,
         val downloadedBytes: Long,
         val totalBytes: Long,
         val waitingForNetwork: Boolean = false,
+        val verifying: Boolean = false,
     ) : ModelDownloadState
 
     /** Modell liegt vollständig und geprüft vor. */
     data class Ready(val sizeBytes: Long) : ModelDownloadState
 
-    data class Failed(val reason: ModelDownloadFailure) : ModelDownloadState
+    /**
+     * @property detail technisches Detail für die Diagnose (z. B. "expected …, got …", HTTP-Code,
+     *   Exception-Klasse und Nachricht); nicht übersetzt, nur klein als "Details" angezeigt.
+     */
+    data class Failed(
+        val reason: ModelDownloadFailure,
+        val detail: String? = null,
+    ) : ModelDownloadState
 }
 
 /** Warum ein Download gescheitert ist. Stabile Codes für die UI. */

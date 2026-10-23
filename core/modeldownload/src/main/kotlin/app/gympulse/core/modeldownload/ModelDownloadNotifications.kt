@@ -30,6 +30,7 @@ internal object ModelDownloadNotifications {
         downloadedBytes: Long,
         totalBytes: Long,
         cancelIntent: PendingIntent?,
+        verifying: Boolean = false,
     ): Notification {
         val percent = if (totalBytes > 0) ((downloadedBytes * 100) / totalBytes).toInt().coerceIn(0, 100) else 0
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -40,8 +41,11 @@ internal object ModelDownloadNotifications {
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setCategory(NotificationCompat.CATEGORY_PROGRESS)
-            .setProgress(100, percent, totalBytes <= 0)
-        if (totalBytes > 0) {
+            .setProgress(100, percent, totalBytes <= 0 || verifying)
+        if (verifying) {
+            // SHA-256 über 2 GB dauert spürbar; nicht "100 %" anzeigen, solange geprüft wird.
+            builder.setContentText(context.getString(R.string.core_modeldownload_verifying))
+        } else if (totalBytes > 0) {
             builder.setContentText(
                 context.getString(
                     R.string.core_modeldownload_progress,
