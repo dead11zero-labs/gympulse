@@ -43,12 +43,16 @@ dependencies {
     implementation(projects.core.cloud)
     implementation(projects.core.workout)
     implementation(projects.core.wearsync)
+    implementation(projects.core.modeldownload)
     implementation(projects.feature.dashboard)
     implementation(projects.feature.workout)
     implementation(projects.feature.plans)
     implementation(projects.feature.library)
     implementation(projects.feature.calendar)
     implementation(projects.feature.settings)
+    // Lokaler KI-Coach (LiteRT-LM): vorerst nur im Debug-Build für das Messgerüst "GymPulse AI Bench".
+    // Die Verdrahtung in die App folgt mit Feature.AI_COACH (KI-PR 6).
+    debugImplementation(projects.core.ai)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)

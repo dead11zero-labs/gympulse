@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_bench_title">GymPulse AI Bench</string>
+    <string name="ai_bench_intro">Measures the on-device model (load time, time to first token, tokens/s, memory) with a fixed sample prompt. Model file: files/models/gemma-4-E2B-it-gpu.litertlm</string>
+    <string name="ai_bench_run_gpu">Run on GPU</string>
+    <string name="ai_bench_run_cpu">Run on CPU</string>
+    <string name="ai_bench_run_both">Run GPU, then CPU</string>
+    <string name="ai_bench_running">Loading model and generating…</string>
+    <string name="ai_bench_no_model">No model found in files/models/. Copy gemma-4-E2B-it-gpu.litertlm there first (see PR description).</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- Nur Debug: Messgerüst für das On-Device-LLM, eigener Launcher-Eintrag. -->
+        <activity
+            android:name="app.gympulse.core.ai.debug.AiBenchmarkActivity"
+            android:exported="true"
+            android:label="@string/ai_bench_title"
+            android:taskAffinity="app.gympulse.aibench"
+            android:theme="@android:style/Theme.DeviceDefault">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
