@@ -26,7 +26,7 @@ internal fun renderCoachMarkdown(text: String): AnnotatedString = buildAnnotated
                 appendInline(bullet.groupValues[1])
             }
             numbered != null -> {
-                append(numbered.groupValues[1]).append(". ")
+                append("${numbered.groupValues[1]}. ")
                 appendInline(numbered.groupValues[2])
             }
             else -> appendInline(line)
