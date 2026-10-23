@@ -61,4 +61,13 @@
     <string name="confirm_finish_action">Beenden</string>
     <string name="confirm_discard_action">Verwerfen</string>
     <string name="confirm_cancel">Abbrechen</string>
+
+    <!-- Workout-Dienst (Ongoing Activity) -->
+    <string name="notification_channel_workout">Laufendes Training</string>
+    <string name="notification_channel_workout_description">Trainingszeit und Pausen-Timer während des Trainings</string>
+    <string name="notification_workout_free">Training</string>
+    <string name="notification_training">Training läuft</string>
+    <string name="notification_resting">Pause</string>
+    <string name="ongoing_status_training_template">Training #time#</string>
+    <string name="ongoing_status_rest_template">Pause #time#</string>
 </resources>

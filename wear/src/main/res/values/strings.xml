@@ -63,4 +63,14 @@
     <string name="confirm_finish_action">Finish</string>
     <string name="confirm_discard_action">Discard</string>
     <string name="confirm_cancel">Cancel</string>
+
+    <!-- Workout service (ongoing activity) -->
+    <string name="notification_channel_workout">Active workout</string>
+    <string name="notification_channel_workout_description">Workout time and rest timer while you train</string>
+    <string name="notification_workout_free">Workout</string>
+    <string name="notification_training">Training</string>
+    <string name="notification_resting">Rest</string>
+    <!-- #time# is replaced by a live timer; keep the placeholder unchanged. -->
+    <string name="ongoing_status_training_template">Workout #time#</string>
+    <string name="ongoing_status_rest_template">Rest #time#</string>
 </resources>
