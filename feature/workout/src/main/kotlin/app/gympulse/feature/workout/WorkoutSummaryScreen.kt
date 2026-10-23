@@ -50,6 +50,7 @@ import app.gympulse.core.designsystem.theme.Sizing
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import app.gympulse.core.data.health.WorkoutHealthMetrics
+import app.gympulse.core.wearsync.WatchHeartRate
 import app.gympulse.core.workout.PersonalRecord
 import app.gympulse.core.workout.RecordType
 import app.gympulse.core.workout.SummaryExercise
@@ -64,6 +65,7 @@ internal fun WorkoutSummaryScreen(
     summary: WorkoutSummary,
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
+    watchHeartRate: WatchHeartRate? = null,
 ) {
     BackHandler(onBack = onDone)
     val itemModifier = Modifier
@@ -84,6 +86,9 @@ internal fun WorkoutSummaryScreen(
             val health = summary.health
             if (health != null && !health.isEmpty) {
                 item(key = "health") { HealthMetricsCard(health, itemModifier) }
+            }
+            if (watchHeartRate != null) {
+                item(key = "watch") { WatchHeartRateCard(watchHeartRate, itemModifier) }
             }
             if (summary.recordCount > 0) {
                 item(key = "records") { RecordsCard(summary, itemModifier) }
@@ -224,6 +229,34 @@ private fun HealthMetricsCard(metrics: WorkoutHealthMetrics, modifier: Modifier 
             verticalArrangement = Arrangement.spacedBy(Spacing.xs),
         ) {
             chips.forEach { label -> StatusChip(text = label) }
+        }
+    }
+}
+
+/** Avg/max heart rate measured by the watch during the workout. */
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun WatchHeartRateCard(heartRate: WatchHeartRate, modifier: Modifier = Modifier) {
+    val numbers = NumberFormat.getIntegerInstance()
+    GymPulseCard(
+        modifier = modifier,
+        variant = GymPulseCardVariant.Level1,
+        verticalSpacing = Spacing.s,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+            Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.tertiary)
+            Text(
+                text = stringResource(R.string.feature_workout_summary_watch_title),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
+        }
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
+            verticalArrangement = Arrangement.spacedBy(Spacing.xs),
+        ) {
+            StatusChip(text = stringResource(R.string.feature_workout_summary_health_avg_hr, numbers.format(heartRate.averageBpm)))
+            StatusChip(text = stringResource(R.string.feature_workout_summary_health_max_hr, numbers.format(heartRate.maxBpm)))
         }
     }
 }

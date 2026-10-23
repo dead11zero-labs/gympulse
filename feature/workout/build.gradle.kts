@@ -13,6 +13,7 @@ android {
 dependencies {
     implementation(projects.core.data)
     implementation(projects.core.workout)
+    implementation(projects.core.wearsync)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.hilt.navigation.compose)

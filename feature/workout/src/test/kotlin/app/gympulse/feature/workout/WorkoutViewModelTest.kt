@@ -15,6 +15,8 @@ import app.gympulse.core.model.PlanExercise
 import app.gympulse.core.model.SessionStatus
 import app.gympulse.core.model.TrackingType
 import app.gympulse.core.model.WorkoutPlan
+import app.gympulse.core.wearsync.WatchHeartRate
+import app.gympulse.core.wearsync.WatchHeartRateStore
 import app.gympulse.core.workout.ActiveWorkoutController
 import app.gympulse.core.workout.RecordType
 import app.gympulse.core.workout.WorkoutSummary
@@ -30,8 +32,11 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -63,6 +68,7 @@ class WorkoutViewModelTest {
     private lateinit var restTimer: RestTimer
     private lateinit var controllerScope: CoroutineScope
     private val exportedSession = CompletableDeferred<String>()
+    private val watchHeartRates = FakeWatchHeartRateStore()
     private var healthMetrics: WorkoutHealthMetrics? = null
     private val healthWindows = mutableListOf<Pair<Instant, Instant>>()
 
@@ -380,6 +386,28 @@ class WorkoutViewModelTest {
     }
 
     @Test
+    fun watchHeartRate_followsFinishedSession() = runTest {
+        seedPlan()
+        val viewModel = viewModel()
+        viewModel.startWorkout(PLAN_ID)
+        val exercise = viewModel.awaitActive().exercises.single()
+        viewModel.toggleSetCompleted(exercise.sessionExerciseId, exercise.sets[0].id)
+        viewModel.awaitActive { it.completedSets == 1 }
+        val collector = launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.watchHeartRate.collect {} }
+
+        viewModel.finishWorkout()
+        val summary = viewModel.summary.first { it != null }!!
+        assertNull(viewModel.watchHeartRate.value)
+
+        watchHeartRates.record(WatchHeartRate(summary.sessionId, averageBpm = 118, maxBpm = 164))
+        assertEquals(WatchHeartRate(summary.sessionId, 118, 164), viewModel.watchHeartRate.first { it != null })
+
+        viewModel.dismissSummary()
+        assertNull(viewModel.watchHeartRate.first { it == null })
+        collector.cancel()
+    }
+
+    @Test
     fun discard_marksSessionDiscarded() = runTest {
         seedPlan()
         val viewModel = viewModel()
@@ -413,6 +441,7 @@ class WorkoutViewModelTest {
         workoutRepository = workoutRepository,
         planRepository = planRepository,
         exerciseRepository = exerciseRepository,
+        watchHeartRates = watchHeartRates,
         ticker = object : Ticker {
             override fun ticks(): Flow<Instant> = flowOf(time.now())
         },
@@ -469,6 +498,16 @@ class WorkoutViewModelTest {
         override suspend fun write(state: RestTimerState?) {
             stored = state
         }
+    }
+
+    private class FakeWatchHeartRateStore : WatchHeartRateStore {
+        private val values = MutableStateFlow<Map<String, WatchHeartRate>>(emptyMap())
+
+        override suspend fun record(value: WatchHeartRate) {
+            values.value = values.value + (value.sessionId to value)
+        }
+
+        override fun observe(sessionId: String): Flow<WatchHeartRate?> = values.map { it[sessionId] }
     }
 
     private class FakeTime(var instant: Instant) : TimeProvider {

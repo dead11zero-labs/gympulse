@@ -111,6 +111,7 @@
     <string name="feature_workout_summary_record_set_volume">Bestes Satzvolumen</string>
     <string name="feature_workout_summary_record_previous">vorher: %1$s kg</string>
     <string name="feature_workout_summary_health_title">Aus Health Connect</string>
+    <string name="feature_workout_summary_watch_title">Von der Uhr</string>
     <string name="feature_workout_summary_health_avg_hr">Ø %1$s bpm</string>
     <string name="feature_workout_summary_health_max_hr">Max. %1$s bpm</string>
     <string name="feature_workout_summary_health_steps">%1$s Schritte</string>

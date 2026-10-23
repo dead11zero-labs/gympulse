@@ -13,15 +13,21 @@ import app.gympulse.core.model.WorkoutSession
 import app.gympulse.core.workout.ActiveWorkoutController
 import app.gympulse.core.workout.FinishAllProposal
 import app.gympulse.core.workout.WorkoutSummary
+import app.gympulse.core.wearsync.WatchHeartRate
+import app.gympulse.core.wearsync.WatchHeartRateStore
 import app.gympulse.core.workout.timer.RestTimerState
 import app.gympulse.feature.workout.timer.Ticker
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
@@ -43,6 +49,7 @@ internal class WorkoutViewModel @Inject constructor(
     private val workoutRepository: WorkoutRepository,
     planRepository: PlanRepository,
     exerciseRepository: ExerciseRepository,
+    watchHeartRates: WatchHeartRateStore,
     ticker: Ticker,
     time: TimeProvider,
 ) : ViewModel() {
@@ -52,6 +59,14 @@ internal class WorkoutViewModel @Inject constructor(
 
     /** Set after finishing a workout until the dialog is dismissed. */
     val summary: StateFlow<WorkoutSummary?> = controller.summary
+
+    /** Avg/max heart rate the watch reports after the workout; null until it arrives (or without a watch). */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val watchHeartRate: StateFlow<WatchHeartRate?> = controller.summary
+        .map { it?.sessionId }
+        .distinctUntilChanged()
+        .flatMapLatest { id -> if (id == null) flowOf(null) else watchHeartRates.observe(id) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MILLIS), null)
 
     private val _finishAllProposal = MutableStateFlow<FinishAllProposal?>(null)
 
