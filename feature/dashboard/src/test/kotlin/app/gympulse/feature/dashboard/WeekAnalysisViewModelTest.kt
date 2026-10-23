@@ -62,7 +62,7 @@ class WeekAnalysisViewModelTest {
     @Test
     fun startsOnCurrentWeekWithTwelveWeeksLoaded() = runTest {
         val vm = viewModel()
-        val job = launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
         val state = vm.uiState.value
         assertFalse(state.isLoading)
         assertEquals(WEEKS_LOADED, state.weeks.size)
@@ -73,13 +73,12 @@ class WeekAnalysisViewModelTest {
         assertEquals(WEEKS_SHOWN, state.trendWeeks.size)
         assertEquals(WEEKS_SHOWN - 1, state.selectedTrendIndex)
         assertEquals(Instant.parse("2026-08-03T00:00:00Z"), dataSource.requestedFrom)
-        job.cancel()
     }
 
     @Test
     fun navigationStaysWithinShownWeeks() = runTest {
         val vm = viewModel()
-        val job = launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
         repeat(WEEKS_SHOWN + 3) { vm.showPreviousWeek() }
         var state = vm.uiState.value
         assertEquals(0, state.selectedTrendIndex)
@@ -89,18 +88,16 @@ class WeekAnalysisViewModelTest {
         repeat(WEEKS_SHOWN + 3) { vm.showNextWeek() }
         state = vm.uiState.value
         assertTrue(state.isCurrentWeek)
-        job.cancel()
     }
 
     @Test
     fun selectingTrendPointJumpsToThatWeek() = runTest {
         val vm = viewModel()
-        val job = launch { vm.uiState.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { vm.uiState.collect {} }
         vm.selectTrendWeek(WEEKS_SHOWN - 3)
         val state = vm.uiState.value
         assertEquals(WEEKS_SHOWN - 3, state.selectedTrendIndex)
         assertEquals(LocalDate.of(2026, 10, 19).minusWeeks(2), state.selected?.weekStart)
         assertEquals(LocalDate.of(2026, 10, 19).minusWeeks(3), state.previous?.weekStart)
-        job.cancel()
     }
 }
