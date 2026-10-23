@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_bench_title">GymPulse KI-Messung</string>
+    <string name="ai_bench_intro">Misst das On-Device-Modell (Ladezeit, Zeit bis zum ersten Token, Token/s, Speicher) mit einem festen Beispiel-Prompt. Modelldatei: files/models/gemma-4-E2B-it-gpu.litertlm</string>
+    <string name="ai_bench_run_gpu">Auf GPU messen</string>
+    <string name="ai_bench_run_cpu">Auf CPU messen</string>
+    <string name="ai_bench_run_both">Erst GPU, dann CPU</string>
+    <string name="ai_bench_running">Modell wird geladen und Text erzeugt …</string>
+    <string name="ai_bench_no_model">Kein Modell in files/models/ gefunden. Zuerst gemma-4-E2B-it-gpu.litertlm dorthin kopieren (siehe PR-Beschreibung).</string>
+</resources>
