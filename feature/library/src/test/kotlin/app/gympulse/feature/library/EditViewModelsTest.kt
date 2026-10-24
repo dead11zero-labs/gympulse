@@ -2,7 +2,9 @@ package app.gympulse.feature.library
 
 import androidx.lifecycle.SavedStateHandle
 import app.gympulse.core.model.EquipmentType
+import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.MuscleGroup
+import app.gympulse.core.model.TrackingType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -62,6 +64,21 @@ class EditViewModelsTest {
         assertNull(draft.notes)
         assertEquals(setOf(MuscleGroup.LATS), draft.primaryMuscles)
         assertTrue(vm.state.value.saved)
+    }
+
+    @Test
+    fun cardioCategoryAlwaysTracksDuration() = runTest {
+        val vm = exerciseVm()
+        vm.setTrackingType(TrackingType.WEIGHT_REPS)
+        vm.setCategory(ExerciseCategory.CARDIO)
+        assertEquals(TrackingType.DURATION, vm.state.value.trackingType)
+
+        vm.setTrackingType(TrackingType.DISTANCE)
+        assertEquals(TrackingType.DURATION, vm.state.value.trackingType)
+
+        vm.setName("Rudern")
+        vm.save()
+        assertEquals(TrackingType.DURATION, repository.savedExercises.single().trackingType)
     }
 
     @Test

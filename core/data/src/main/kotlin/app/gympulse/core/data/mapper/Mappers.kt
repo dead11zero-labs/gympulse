@@ -13,6 +13,7 @@ import app.gympulse.core.model.EquipmentSetting
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.ExerciseCategory
+import app.gympulse.core.model.resolveTracking
 import app.gympulse.core.model.MuscleGroup
 import app.gympulse.core.model.PlanExercise
 import app.gympulse.core.model.SessionExercise
@@ -35,13 +36,14 @@ fun ExerciseWithDetails.toModel(locale: String): Exercise {
         ?: visibleTranslations.firstOrNull { it.locale == "en" }
         ?: visibleTranslations.firstOrNull()
     val visibleMuscles = muscles.filter { it.deletedAt == null }
+    val category = ExerciseCategory.fromKey(exercise.category)
     return Exercise(
         id = exercise.id,
         slug = exercise.slug,
         name = translation?.name ?: exercise.slug.orEmpty(),
-        category = ExerciseCategory.fromKey(exercise.category),
+        category = category,
         equipmentType = EquipmentType.fromKey(exercise.equipmentType),
-        trackingType = exercise.trackingType,
+        trackingType = category.resolveTracking(exercise.trackingType),
         bodyweightFactor = exercise.bodyweightFactor,
         primaryMuscles = visibleMuscles.filter { it.isPrimary }.mapNotNull { MuscleGroup.fromKey(it.muscle) },
         secondaryMuscles = visibleMuscles.filterNot { it.isPrimary }.mapNotNull { MuscleGroup.fromKey(it.muscle) },
