@@ -71,6 +71,7 @@ internal fun WorkoutScreen(
                 onWeightChange = viewModel::onWeightChange,
                 onRepsChange = viewModel::onRepsChange,
                 onDurationChange = viewModel::onDurationChange,
+                onDurationMinutesChange = viewModel::onDurationMinutesChange,
                 onDistanceChange = viewModel::onDistanceChange,
                 onToggleCompleted = viewModel::toggleSetCompleted,
                 onToggleWarmup = viewModel::toggleWarmup,

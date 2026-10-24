@@ -138,6 +138,12 @@ internal class WorkoutViewModel @Inject constructor(
         updateSet(sessionExerciseId, setId) { it.copy(durationSeconds = value) }
     }
 
+    /** Cardio input is in minutes (decimals allowed); sets store whole seconds. */
+    fun onDurationMinutesChange(sessionExerciseId: String, setId: String, text: String) {
+        val seconds = WorkoutFormat.parseDecimal(text)?.let { Math.round(it * SECONDS_PER_MINUTE).toInt() }
+        updateSet(sessionExerciseId, setId) { it.copy(durationSeconds = seconds) }
+    }
+
     fun onDistanceChange(sessionExerciseId: String, setId: String, text: String) {
         val value = WorkoutFormat.parseDecimal(text)
         updateSet(sessionExerciseId, setId) { it.copy(distanceMeters = value) }

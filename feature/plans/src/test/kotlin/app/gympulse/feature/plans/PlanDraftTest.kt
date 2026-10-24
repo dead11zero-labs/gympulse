@@ -172,6 +172,35 @@ class PlanDraftTest {
         assertEquals("", d.items[2].repsMax)
     }
 
+    @Test
+    fun cardioExercise_onlyKeepsTheDurationInMinutes() {
+        val cardio = exercise("c1", "Crosstrainer", TrackingType.DURATION).copy(category = ExerciseCategory.CARDIO)
+        val d = draft().addExercises(listOf(cardio)) { "new" }
+        val added = d.items.single()
+        assertTrue(added.isCardio)
+        assertEquals("20", added.durationMinutes)
+
+        val plan = d.updateItem("new") { it.copy(durationMinutes = "35", weight = "50", rest = "30") }.toPlanOrNull()!!
+        val saved = plan.exercises.single()
+        assertEquals(1, saved.targetSets)
+        assertEquals(35, saved.targetRepsMin)
+        assertNull(saved.targetRepsMax)
+        assertNull(saved.targetWeightKg)
+        assertNull(saved.restSeconds)
+
+        val reloaded = PlanDraft.from(plan, mapOf("c1" to "Crosstrainer"), cardioIds = setOf("c1"))
+        assertEquals("35", reloaded.items.single().durationMinutes)
+        assertTrue(reloaded.items.single().isCardio)
+    }
+
+    @Test
+    fun cardioDuration_mustBeWithinRange() {
+        val bad = draft(DraftExercise("a", "e", "A", isCardio = true, durationMinutes = "0"))
+        assertTrue(bad.validate().itemErrors.getValue("a").duration)
+        val ok = draft(DraftExercise("a", "e", "A", isCardio = true, durationMinutes = "45"))
+        assertFalse(ok.validate().itemErrors.getValue("a").any)
+    }
+
     // --- Validierung ---
 
     @Test

@@ -53,6 +53,7 @@
     <string name="plans_field_reps_max">Wdh. max</string>
     <string name="plans_field_weight">Zielgewicht (kg)</string>
     <string name="plans_field_rest">Pause (s)</string>
+    <string name="plans_field_duration_minutes">Dauer (min)</string>
     <string name="plans_error_invalid">Ungültig</string>
     <string name="plans_move_up">Nach oben</string>
     <string name="plans_move_down">Nach unten</string>

@@ -66,6 +66,7 @@ internal data class WorkoutActions(
     val onWeightChange: (sessionExerciseId: String, setId: String, text: String) -> Unit,
     val onRepsChange: (sessionExerciseId: String, setId: String, text: String) -> Unit,
     val onDurationChange: (sessionExerciseId: String, setId: String, text: String) -> Unit,
+    val onDurationMinutesChange: (sessionExerciseId: String, setId: String, text: String) -> Unit,
     val onDistanceChange: (sessionExerciseId: String, setId: String, text: String) -> Unit,
     val onToggleCompleted: (sessionExerciseId: String, setId: String) -> Unit,
     val onToggleWarmup: (sessionExerciseId: String, setId: String) -> Unit,

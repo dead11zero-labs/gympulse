@@ -34,6 +34,7 @@
     <string name="feature_workout_column_extra_kg">+kg</string>
     <string name="feature_workout_column_reps">Wdh.</string>
     <string name="feature_workout_column_duration">Sek.</string>
+    <string name="feature_workout_column_duration_minutes">Min.</string>
     <string name="feature_workout_column_distance">m</string>
     <string name="feature_workout_weight_adjust">Gewicht anpassen</string>
     <string name="feature_workout_weight_edit">Gewicht per Tastatur eingeben</string>

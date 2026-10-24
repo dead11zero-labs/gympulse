@@ -61,6 +61,8 @@ class WorkoutFormatTest {
         assertEquals(listOf(SetField.REPS), setFieldsFor(TrackingType.REPS, false))
         assertEquals(listOf(SetField.DURATION), setFieldsFor(TrackingType.DURATION, true))
         assertEquals(listOf(SetField.DISTANCE, SetField.DURATION), setFieldsFor(TrackingType.DISTANCE, false))
+        assertEquals(listOf(SetField.DURATION_MINUTES), setFieldsFor(TrackingType.DURATION, false, isCardio = true))
+        assertEquals(listOf(SetField.DURATION_MINUTES), setFieldsFor(TrackingType.DISTANCE, false, isCardio = true))
     }
 
     @Test

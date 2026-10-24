@@ -2,6 +2,7 @@ package app.gympulse.feature.plans
 
 import app.gympulse.core.data.repository.PlanExerciseDefaults
 import app.gympulse.core.model.Exercise
+import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.PlanExercise
 import app.gympulse.core.model.WorkoutPlan
 
@@ -20,6 +21,9 @@ internal data class DraftExercise(
     val repsMax: String = DEFAULT_REPS_MAX,
     val weight: String = "",
     val rest: String = "",
+    /** Cardio: nur die Zielzeit in Minuten; Sätze, Wiederholungen, Gewicht und Pause entfallen. */
+    val isCardio: Boolean = false,
+    val durationMinutes: String = "",
 ) {
     companion object {
         val DEFAULT_SETS = PlanExerciseDefaults.SETS.toString()
@@ -34,8 +38,9 @@ internal data class ItemErrors(
     val reps: Boolean = false,
     val weight: Boolean = false,
     val rest: Boolean = false,
+    val duration: Boolean = false,
 ) {
-    val any: Boolean get() = sets || reps || weight || rest
+    val any: Boolean get() = sets || reps || weight || rest || duration
 }
 
 internal data class DraftValidation(
@@ -75,12 +80,15 @@ internal data class PlanDraft(
 
     fun addExercises(exercises: List<Exercise>, newId: () -> String): PlanDraft {
         val added = exercises.map { exercise ->
-            val usesReps = PlanExerciseDefaults.usesReps(exercise.trackingType)
+            val cardio = exercise.category == ExerciseCategory.CARDIO
+            val usesReps = PlanExerciseDefaults.usesReps(exercise.trackingType) && !cardio
             DraftExercise(
                 id = newId(),
                 exerciseId = exercise.id,
                 name = exercise.name,
-                sets = PlanExerciseDefaults.defaultSets(exercise.trackingType).toString(),
+                isCardio = cardio,
+                durationMinutes = if (cardio) PlanExerciseDefaults.CARDIO_MINUTES.toString() else "",
+                sets = (if (cardio) PlanExerciseDefaults.SETS_DURATION else PlanExerciseDefaults.defaultSets(exercise.trackingType)).toString(),
                 repsMin = if (usesReps) DraftExercise.DEFAULT_REPS_MIN else "",
                 repsMax = if (usesReps) DraftExercise.DEFAULT_REPS_MAX else "",
             )
@@ -134,17 +142,32 @@ internal data class PlanDraft(
             color = color,
             isArchived = isArchived,
             exercises = items.mapIndexed { index, item ->
-                PlanExercise(
-                    id = item.id,
-                    exerciseId = item.exerciseId,
-                    sortOrder = index,
-                    supersetGroup = item.supersetGroup,
-                    targetSets = item.sets.toInt(),
-                    targetRepsMin = item.repsMin.toIntOrNull(),
-                    targetRepsMax = item.repsMax.toIntOrNull(),
-                    targetWeightKg = parseDecimal(item.weight),
-                    restSeconds = item.rest.toIntOrNull(),
-                )
+                if (item.isCardio) {
+                    // Zielminuten stehen in targetRepsMin (kein eigenes Datenbankfeld).
+                    PlanExercise(
+                        id = item.id,
+                        exerciseId = item.exerciseId,
+                        sortOrder = index,
+                        supersetGroup = item.supersetGroup,
+                        targetSets = PlanExerciseDefaults.SETS_DURATION,
+                        targetRepsMin = item.durationMinutes.toIntOrNull(),
+                        targetRepsMax = null,
+                        targetWeightKg = null,
+                        restSeconds = null,
+                    )
+                } else {
+                    PlanExercise(
+                        id = item.id,
+                        exerciseId = item.exerciseId,
+                        sortOrder = index,
+                        supersetGroup = item.supersetGroup,
+                        targetSets = item.sets.toInt(),
+                        targetRepsMin = item.repsMin.toIntOrNull(),
+                        targetRepsMax = item.repsMax.toIntOrNull(),
+                        targetWeightKg = parseDecimal(item.weight),
+                        restSeconds = item.rest.toIntOrNull(),
+                    )
+                }
             },
         )
     }
@@ -155,9 +178,10 @@ internal data class PlanDraft(
         const val MAX_REPS = 999
         const val MAX_WEIGHT_KG = 1000.0
         const val MAX_REST_SECONDS = 3600
+        const val MAX_DURATION_MINUTES = 999
 
         /** Baut den Bearbeitungsstand aus einem gespeicherten Plan; [names] bildet Übungs-ID auf Namen ab. */
-        fun from(plan: WorkoutPlan, names: Map<String, String>): PlanDraft = PlanDraft(
+        fun from(plan: WorkoutPlan, names: Map<String, String>, cardioIds: Set<String> = emptySet()): PlanDraft = PlanDraft(
             planId = plan.id,
             name = plan.name,
             description = plan.description.orEmpty(),
@@ -175,6 +199,8 @@ internal data class PlanDraft(
                         repsMax = item.targetRepsMax?.toString().orEmpty(),
                         weight = item.targetWeightKg?.let(::formatDecimal).orEmpty(),
                         rest = item.restSeconds?.toString().orEmpty(),
+                        isCardio = item.exerciseId in cardioIds,
+                        durationMinutes = if (item.exerciseId in cardioIds) item.targetRepsMin?.toString().orEmpty() else "",
                     )
                 },
             ),
@@ -183,6 +209,10 @@ internal data class PlanDraft(
 }
 
 private fun DraftExercise.errors(): ItemErrors {
+    if (isCardio) {
+        val minutes = durationMinutes.toIntOrNull()
+        return ItemErrors(duration = durationMinutes.isNotEmpty() && (minutes == null || minutes !in 1..PlanDraft.MAX_DURATION_MINUTES))
+    }
     val setsValue = sets.toIntOrNull()
     val min = repsMin.toIntOrNull()
     val max = repsMax.toIntOrNull()

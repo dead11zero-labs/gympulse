@@ -7,6 +7,7 @@ import app.gympulse.core.data.repository.ExerciseRepository
 import app.gympulse.core.data.repository.PlanRepository
 import app.gympulse.core.data.util.TimeProvider
 import app.gympulse.core.model.Exercise
+import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.Ids
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -69,9 +70,12 @@ internal class PlanEditorViewModel @Inject constructor(
     private suspend fun load() {
         val plan = existingPlanId?.let { planRepository.observePlan(it).first() }
         val draft = if (plan != null) {
-            val names = exerciseRepository.observeExercises(Locale.getDefault().language).first()
-                .associate { it.id to it.name }
-            PlanDraft.from(plan, names)
+            val catalog = exerciseRepository.observeExercises(Locale.getDefault().language).first()
+            PlanDraft.from(
+                plan,
+                names = catalog.associate { it.id to it.name },
+                cardioIds = catalog.filter { it.category == ExerciseCategory.CARDIO }.map { it.id }.toSet(),
+            )
         } else {
             PlanDraft(planId = newId())
         }

@@ -42,6 +42,8 @@ internal data class ExerciseUi(
     val isBodyweight: Boolean,
     val notes: String?,
     val sets: List<SetUi>,
+    /** Cardio records only the duration, entered in minutes. */
+    val isCardio: Boolean = false,
 )
 
 internal data class SetUi(
