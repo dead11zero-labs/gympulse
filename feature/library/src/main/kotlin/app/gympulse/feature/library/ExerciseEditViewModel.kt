@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import app.gympulse.core.model.EquipmentType
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.ExerciseCategory
+import app.gympulse.core.model.resolveTracking
 import app.gympulse.core.model.MuscleGroup
 import app.gympulse.core.model.TrackingType
 import app.gympulse.feature.library.data.ExerciseDraft
@@ -69,7 +70,7 @@ data class ExerciseFormState(
         name = name.trim(),
         category = category,
         equipmentType = equipmentType,
-        trackingType = trackingType,
+        trackingType = category.resolveTracking(trackingType),
         bodyweightFactor = if (equipmentType == EquipmentType.BODYWEIGHT) parseDecimalOrNull(bodyweightFactor) else null,
         primaryMuscles = primaryMuscles,
         secondaryMuscles = secondaryMuscles,
@@ -105,11 +106,13 @@ class ExerciseEditViewModel @Inject constructor(
 
     fun setName(value: String) = _state.update { it.copy(name = value) }
 
-    fun setCategory(value: ExerciseCategory) = _state.update { it.copy(category = value) }
+    fun setCategory(value: ExerciseCategory) =
+        _state.update { it.copy(category = value, trackingType = value.resolveTracking(it.trackingType)) }
 
     fun setEquipmentType(value: EquipmentType) = _state.update { it.copy(equipmentType = value) }
 
-    fun setTrackingType(value: TrackingType) = _state.update { it.copy(trackingType = value) }
+    fun setTrackingType(value: TrackingType) =
+        _state.update { it.copy(trackingType = it.category.resolveTracking(value)) }
 
     fun setBodyweightFactor(value: String) = _state.update { it.copy(bodyweightFactor = value) }
 

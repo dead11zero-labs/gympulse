@@ -16,6 +16,7 @@ import app.gympulse.core.insightcards.toExerciseInsights
 import app.gympulse.core.model.Equipment
 import app.gympulse.core.model.Exercise
 import app.gympulse.core.model.Ids
+import app.gympulse.core.model.resolveTracking
 import app.gympulse.core.model.MuscleGroup
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.WorkoutPlan
@@ -83,7 +84,7 @@ class DefaultLibraryRepository @Inject constructor(
             slug = null,
             category = draft.category.key,
             equipmentType = draft.equipmentType.key,
-            trackingType = draft.trackingType,
+            trackingType = draft.category.resolveTracking(draft.trackingType),
             bodyweightFactor = draft.bodyweightFactor,
             imageUrls = existing?.exercise?.imageUrls,
             notes = draft.notes,

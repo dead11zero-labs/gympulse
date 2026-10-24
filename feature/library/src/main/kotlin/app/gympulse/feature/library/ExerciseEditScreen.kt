@@ -96,7 +96,7 @@ private fun ExerciseForm(
             )
             ChipGroup(
                 title = stringResource(R.string.library_label_tracking),
-                options = TrackingType.entries,
+                options = if (state.category == ExerciseCategory.CARDIO) listOf(TrackingType.DURATION) else TrackingType.entries,
                 isSelected = { it == state.trackingType },
                 label = { stringResource(it.trackingLabelRes()) },
                 onClick = viewModel::setTrackingType,

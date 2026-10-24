@@ -59,6 +59,10 @@ enum class ExerciseCategory(val key: String) {
 }
 
 /** Was pro Satz erfasst wird. */
+/** Cardio erfasst immer nur die Dauer, egal was für die Übung gespeichert ist. */
+fun ExerciseCategory.resolveTracking(requested: TrackingType): TrackingType =
+    if (this == ExerciseCategory.CARDIO) TrackingType.DURATION else requested
+
 enum class TrackingType { WEIGHT_REPS, REPS, DURATION, DISTANCE }
 
 enum class SetType { WARMUP, WORKING, DROP, FAILURE }
