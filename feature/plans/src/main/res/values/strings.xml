@@ -53,6 +53,7 @@
     <string name="plans_field_reps_max">Reps max</string>
     <string name="plans_field_weight">Target weight (kg)</string>
     <string name="plans_field_rest">Rest (s)</string>
+    <string name="plans_field_duration_minutes">Duration (min)</string>
     <string name="plans_error_invalid">Invalid</string>
     <string name="plans_move_up">Move up</string>
     <string name="plans_move_down">Move down</string>

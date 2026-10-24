@@ -1,6 +1,7 @@
 package app.gympulse.feature.workout
 
 import app.gympulse.core.model.Exercise
+import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.SetEntry
 import app.gympulse.core.model.SetType
 import app.gympulse.core.model.TrackingType
@@ -9,13 +10,18 @@ import app.gympulse.core.model.setVolumeKg
 import app.gympulse.core.workout.completedSetCount
 
 /** Input columns of a set row. */
-internal enum class SetField { WEIGHT, EXTRA_WEIGHT, REPS, DURATION, DISTANCE }
+/** [DURATION_MINUTES] is the cardio input: minutes in the field, stored as seconds. */
+internal enum class SetField { WEIGHT, EXTRA_WEIGHT, REPS, DURATION, DURATION_MINUTES, DISTANCE }
 
 /**
  * Which values a set records. Bodyweight exercises (with a bodyweight factor) only take
  * additional load in kg; the bodyweight share is added when computing the volume.
  */
-internal fun setFieldsFor(trackingType: TrackingType, isBodyweight: Boolean): List<SetField> = when (trackingType) {
+internal fun setFieldsFor(
+    trackingType: TrackingType,
+    isBodyweight: Boolean,
+    isCardio: Boolean = false,
+): List<SetField> = if (isCardio) listOf(SetField.DURATION_MINUTES) else when (trackingType) {
     TrackingType.WEIGHT_REPS -> listOf(SetField.WEIGHT, SetField.REPS)
     TrackingType.REPS -> if (isBodyweight) listOf(SetField.EXTRA_WEIGHT, SetField.REPS) else listOf(SetField.REPS)
     TrackingType.DURATION -> listOf(SetField.DURATION)
@@ -77,6 +83,7 @@ internal fun WorkoutSession.toUi(
             name = exercise?.name.orEmpty(),
             trackingType = exercise?.trackingType ?: TrackingType.WEIGHT_REPS,
             isBodyweight = exercise?.bodyweightFactor != null,
+            isCardio = exercise?.category == ExerciseCategory.CARDIO,
             notes = sessionExercise.notes,
             sets = sets,
         )

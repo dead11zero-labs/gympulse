@@ -95,7 +95,7 @@ internal fun ExerciseCard(
 ) {
     var menuOpen by remember { mutableStateOf(false) }
     var showNotes by rememberSaveable(exercise.sessionExerciseId) { mutableStateOf(exercise.notes != null) }
-    val fields = setFieldsFor(exercise.trackingType, exercise.isBodyweight)
+    val fields = setFieldsFor(exercise.trackingType, exercise.isBodyweight, exercise.isCardio)
     // Only one weight slider is open at a time within a card; null means all are collapsed.
     var expandedWeightSetId by rememberSaveable(exercise.sessionExerciseId) { mutableStateOf<String?>(null) }
     val activeSetId = if (isActive) exercise.sets.firstOrNull { !it.isCompleted }?.id else null
@@ -323,6 +323,15 @@ private fun SetRow(
                         onValueChange = { actions.onDurationChange(sessionExerciseId, set.id, it) },
                         sanitize = WorkoutFormat::sanitizeInteger,
                         keyboardType = KeyboardType.Number,
+                        contentDescription = description,
+                        highlighted = highlighted,
+                        modifier = fieldModifier,
+                    )
+                    SetField.DURATION_MINUTES -> SetInputField(
+                        storedValue = WorkoutFormat.formatDecimalInput(set.durationSeconds?.let { it / SECONDS_PER_MINUTE }),
+                        onValueChange = { actions.onDurationMinutesChange(sessionExerciseId, set.id, it) },
+                        sanitize = WorkoutFormat::sanitizeDecimal,
+                        keyboardType = KeyboardType.Decimal,
                         contentDescription = description,
                         highlighted = highlighted,
                         modifier = fieldModifier,
@@ -761,6 +770,9 @@ private fun previousText(previous: SetEntry?, fields: List<SetField>): String {
         SetField.DURATION -> previous.durationSeconds?.let {
             stringResource(R.string.feature_workout_previous_duration, it)
         } ?: none
+        SetField.DURATION_MINUTES -> previous.durationSeconds?.let {
+            stringResource(R.string.feature_workout_previous_minutes, WorkoutFormat.formatDecimalInput(it / SECONDS_PER_MINUTE))
+        } ?: none
         SetField.DISTANCE -> previous.distanceMeters?.let {
             stringResource(R.string.feature_workout_previous_distance, WorkoutFormat.formatDecimalInput(it))
         } ?: none
@@ -772,5 +784,8 @@ private fun SetField.labelRes(): Int = when (this) {
     SetField.EXTRA_WEIGHT -> R.string.feature_workout_column_extra_kg
     SetField.REPS -> R.string.feature_workout_column_reps
     SetField.DURATION -> R.string.feature_workout_column_duration
+    SetField.DURATION_MINUTES -> R.string.feature_workout_column_duration_minutes
     SetField.DISTANCE -> R.string.feature_workout_column_distance
 }
+
+private const val SECONDS_PER_MINUTE = 60.0

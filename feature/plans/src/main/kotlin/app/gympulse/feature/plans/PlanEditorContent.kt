@@ -57,6 +57,7 @@ private const val NAME_MAX_LINES = 2
 private const val SETS_DIGITS = 2
 private const val REPS_DIGITS = 3
 private const val REST_DIGITS = 4
+private const val DURATION_DIGITS = 3
 
 @Composable
 internal fun EditorContent(
@@ -317,46 +318,56 @@ private fun ExerciseCard(
                         Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.plans_remove_exercise))
                     }
                 }
-                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                if (item.isCardio) {
                     PlanNumberField(
-                        value = item.sets,
-                        onValueChange = { value -> onChange { it.copy(sets = sanitizeDigits(value, SETS_DIGITS)) } },
-                        label = stringResource(R.string.plans_field_sets),
-                        errorText = invalid.takeIf { errors.sets },
-                        modifier = Modifier.weight(1f),
+                        value = item.durationMinutes,
+                        onValueChange = { value -> onChange { it.copy(durationMinutes = sanitizeDigits(value, DURATION_DIGITS)) } },
+                        label = stringResource(R.string.plans_field_duration_minutes),
+                        errorText = invalid.takeIf { errors.duration },
+                        modifier = Modifier.fillMaxWidth(),
                     )
-                    PlanNumberField(
-                        value = item.repsMin,
-                        onValueChange = { value -> onChange { it.copy(repsMin = sanitizeDigits(value, REPS_DIGITS)) } },
-                        label = stringResource(R.string.plans_field_reps_min),
-                        errorText = null,
-                        isError = errors.reps,
-                        modifier = Modifier.weight(1f),
-                    )
-                    PlanNumberField(
-                        value = item.repsMax,
-                        onValueChange = { value -> onChange { it.copy(repsMax = sanitizeDigits(value, REPS_DIGITS)) } },
-                        label = stringResource(R.string.plans_field_reps_max),
-                        errorText = invalid.takeIf { errors.reps },
-                        modifier = Modifier.weight(1f),
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
-                    PlanNumberField(
-                        value = item.weight,
-                        onValueChange = { value -> onChange { it.copy(weight = sanitizeDecimal(value)) } },
-                        label = stringResource(R.string.plans_field_weight),
-                        errorText = invalid.takeIf { errors.weight },
-                        decimal = true,
-                        modifier = Modifier.weight(1f),
-                    )
-                    PlanNumberField(
-                        value = item.rest,
-                        onValueChange = { value -> onChange { it.copy(rest = sanitizeDigits(value, REST_DIGITS)) } },
-                        label = stringResource(R.string.plans_field_rest),
-                        errorText = invalid.takeIf { errors.rest },
-                        modifier = Modifier.weight(1f),
-                    )
+                } else {
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                        PlanNumberField(
+                            value = item.sets,
+                            onValueChange = { value -> onChange { it.copy(sets = sanitizeDigits(value, SETS_DIGITS)) } },
+                            label = stringResource(R.string.plans_field_sets),
+                            errorText = invalid.takeIf { errors.sets },
+                            modifier = Modifier.weight(1f),
+                        )
+                        PlanNumberField(
+                            value = item.repsMin,
+                            onValueChange = { value -> onChange { it.copy(repsMin = sanitizeDigits(value, REPS_DIGITS)) } },
+                            label = stringResource(R.string.plans_field_reps_min),
+                            errorText = null,
+                            isError = errors.reps,
+                            modifier = Modifier.weight(1f),
+                        )
+                        PlanNumberField(
+                            value = item.repsMax,
+                            onValueChange = { value -> onChange { it.copy(repsMax = sanitizeDigits(value, REPS_DIGITS)) } },
+                            label = stringResource(R.string.plans_field_reps_max),
+                            errorText = invalid.takeIf { errors.reps },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(Spacing.xs)) {
+                        PlanNumberField(
+                            value = item.weight,
+                            onValueChange = { value -> onChange { it.copy(weight = sanitizeDecimal(value)) } },
+                            label = stringResource(R.string.plans_field_weight),
+                            errorText = invalid.takeIf { errors.weight },
+                            decimal = true,
+                            modifier = Modifier.weight(1f),
+                        )
+                        PlanNumberField(
+                            value = item.rest,
+                            onValueChange = { value -> onChange { it.copy(rest = sanitizeDigits(value, REST_DIGITS)) } },
+                            label = stringResource(R.string.plans_field_rest),
+                            errorText = invalid.takeIf { errors.rest },
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
                 }
                 if (!isLast) {
                     TextButton(onClick = onToggleLink) {

@@ -11,6 +11,7 @@ import app.gympulse.core.database.dao.SessionDao
 import app.gympulse.core.database.entity.SessionExerciseEntity
 import app.gympulse.core.database.entity.SetEntryEntity
 import app.gympulse.core.database.entity.WorkoutSessionEntity
+import app.gympulse.core.model.ExerciseCategory
 import app.gympulse.core.model.Ids
 import app.gympulse.core.model.MeasurementType
 import app.gympulse.core.model.SessionStatus
@@ -71,6 +72,7 @@ class WorkoutRepository @Inject constructor(
                 )
                 val previous = sessionDao.getPreviousSets(planExercise.exerciseId)
                     .filter { it.setType != SetType.WARMUP }
+                val isCardio = exerciseDao.getById(planExercise.exerciseId)?.exercise?.category == ExerciseCategory.CARDIO.key
                 repeat(planExercise.targetSets.coerceAtLeast(1)) { setIndex ->
                     val template = previous.getOrNull(setIndex) ?: previous.lastOrNull()
                     sets += SetEntryEntity(
@@ -78,10 +80,12 @@ class WorkoutRepository @Inject constructor(
                         sessionExerciseId = sessionExerciseId,
                         setIndex = setIndex,
                         setType = SetType.WORKING,
-                        weightKg = template?.weightKg ?: planExercise.targetWeightKg,
-                        reps = template?.reps ?: planExercise.targetRepsMax ?: planExercise.targetRepsMin,
-                        durationSeconds = template?.durationSeconds,
-                        distanceMeters = template?.distanceMeters,
+                        weightKg = if (isCardio) null else template?.weightKg ?: planExercise.targetWeightKg,
+                        reps = if (isCardio) null else template?.reps ?: planExercise.targetRepsMax ?: planExercise.targetRepsMin,
+                        // Cardio plan entries store the target in minutes in targetRepsMin.
+                        durationSeconds = template?.durationSeconds
+                            ?: if (isCardio) planExercise.targetRepsMin?.times(SECONDS_PER_MINUTE) else null,
+                        distanceMeters = if (isCardio) null else template?.distanceMeters,
                         rpe = null,
                         isCompleted = false,
                         completedAt = null,
@@ -328,3 +332,5 @@ class WorkoutRepository @Inject constructor(
         )
     }
 }
+
+private const val SECONDS_PER_MINUTE = 60

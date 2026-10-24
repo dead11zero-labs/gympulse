@@ -35,6 +35,7 @@
     <string name="feature_workout_column_extra_kg">+kg</string>
     <string name="feature_workout_column_reps">Reps</string>
     <string name="feature_workout_column_duration">Sec</string>
+    <string name="feature_workout_column_duration_minutes">Min</string>
     <string name="feature_workout_column_distance">m</string>
     <string name="feature_workout_weight_adjust">Adjust weight</string>
     <string name="feature_workout_weight_edit">Enter weight with keyboard</string>
@@ -64,6 +65,7 @@
     <string name="feature_workout_previous_extra_weight_reps" translatable="false">+%1$s × %2$d</string>
     <string name="feature_workout_previous_reps" translatable="false">%1$d</string>
     <string name="feature_workout_previous_duration" translatable="false">%1$d s</string>
+    <string name="feature_workout_previous_minutes" translatable="false">%1$s min</string>
     <string name="feature_workout_previous_distance" translatable="false">%1$s m</string>
 
     <!-- Rest timer -->
