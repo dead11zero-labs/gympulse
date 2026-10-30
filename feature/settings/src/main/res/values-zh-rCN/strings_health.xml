@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">训练完成后会共享到 Health Connect</string>
+    <string name="health_connect_not_installed">请从 Google Play 安装 Health Connect 以使用此功能</string>
+    <string name="health_connect_update_required">请从 Google Play 更新 Health Connect 以使用此功能</string>
+    <string name="health_connect_unsupported">这台设备上无法使用 Health Connect</string>
+    <string name="health_connect_permissions">权限</string>
+    <string name="health_connect_permissions_missing">缺少访问权限。点按以允许训练和体重。</string>
+    <string name="health_connect_permissions_denied">未授予 Health Connect 访问权限。训练不会被共享。</string>
+    <string name="health_connect_sources_hint">Samsung Health 等应用通过 Health Connect 共享数据。请在 Samsung Health 的“设置”→ Health Connect 中允许。</string>
+    <string name="health_connect_sleep">睡眠</string>
+    <string name="health_connect_sleep_summary">在首页显示训练前的最近一次睡眠和昨晚的睡眠</string>
+    <string name="health_connect_section_data">数据类型</string>
+    <string name="health_connect_workouts">写入训练</string>
+    <string name="health_connect_workouts_summary">将已完成的训练共享到 Health Connect</string>
+    <string name="health_connect_heart_rate">心率</string>
+    <string name="health_connect_heart_rate_summary">在训练总结中显示平均和最高心率</string>
+    <string name="health_connect_steps">步数</string>
+    <string name="health_connect_steps_summary">在首页和训练总结中显示步数</string>
+    <string name="health_connect_calories">卡路里</string>
+    <string name="health_connect_calories_summary">在训练总结中显示活动卡路里</string>
+    <string name="health_connect_metric_denied">未授予访问权限。此数据类型保持关闭。</string>
+    <string name="health_connect_chip_connected">已连接</string>
+    <string name="health_connect_chip_unavailable">不可用</string>
+    <string name="health_connect_chip_permission_missing">缺少权限</string>
+    <string name="health_connect_chip_off">关闭</string>
+    <string name="health_connect_action_ok">确定</string>
+    <string name="health_privacy_title">GymPulse 如何使用 Health Connect</string>
+    <string name="health_privacy_write">完成训练后，GymPulse 会把它作为一次运动记录写入 Health Connect，包含开始和结束时间、标题和备注。</string>
+    <string name="health_privacy_read">GymPulse 仅为了在设置中显示而从 Health Connect 读取你的体重。只有当你点按“导入”时，它才会保存为身体测量记录。如果你允许，GymPulse 还会读取已完成训练期间的心率、步数和活动卡路里，并在单独开启睡眠开关后读取训练前最近一次睡眠。这些数值只会显示在训练总结中，不会被保存。它们可能来自任何向 Health Connect 写入数据的应用。</string>
+    <string name="health_privacy_storage">你的数据保留在你的设备上。GymPulse 不会向服务器发送健康数据，不会将其用于广告，也不会与他人共享。</string>
+    <string name="health_privacy_revoke">你可以随时在 GymPulse 设置中关闭此连接，并在 Health Connect 中撤销权限。</string>
+    <string name="health_privacy_close">关闭</string>
+</resources>

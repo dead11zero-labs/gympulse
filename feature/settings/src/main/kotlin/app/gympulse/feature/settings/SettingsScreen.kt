@@ -454,14 +454,13 @@ private fun AccentSwatch(accent: AccentColor) {
     )
 }
 
+/** Sprachen heißen in ihrer eigenen Sprache, damit man sie auch bei fremder Oberfläche findet. */
 @Composable
-private fun languageLabel(language: AppLanguage): String = stringResource(
-    when (language) {
-        AppLanguage.SYSTEM -> R.string.settings_language_system
-        AppLanguage.GERMAN -> R.string.settings_language_german
-        AppLanguage.ENGLISH -> R.string.settings_language_english
-    },
-)
+private fun languageLabel(language: AppLanguage): String {
+    if (language == AppLanguage.SYSTEM) return stringResource(R.string.settings_language_system)
+    val locale = Locale.forLanguageTag(language.languageTag)
+    return locale.getDisplayName(locale).replaceFirstChar { it.titlecase(locale) }
+}
 
 /** Zahl in der Sprache des Geräts, ohne Tausendertrenner, höchstens zwei Nachkommastellen. */
 internal fun formatNumber(value: Double): String =

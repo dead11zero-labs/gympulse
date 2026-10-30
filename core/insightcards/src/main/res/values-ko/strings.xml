@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">운동 인사이트</string>
+    <string name="insights_section_title_exercise">인사이트</string>
+    <string name="insights_disclaimer">제안은 기록한 운동을 바탕으로 하며 의학적 조언이 아닙니다.</string>
+    <string name="insights_unknown_exercise">운동 종목</string>
+    <string name="insights_empty_not_enough_title">아직 데이터가 충분하지 않아요</string>
+    <string name="insights_empty_not_enough_message">무게와 횟수를 포함해 운동을 몇 번 기록해 보세요. 한 종목을 약 4회 기록하면 추세와 제안이 여기에 표시됩니다.</string>
+    <string name="insights_empty_notable_title">특이 사항 없음</string>
+    <string name="insights_empty_notable_message">운동이 순조롭게 진행되고 있어요. 기록을 이어가면 새로운 발견이 여기에 나타납니다.</string>
+    <string name="insights_empty_exercise_message">이 종목은 아직 데이터가 충분하지 않아요. 약 4회 기록하면 여기에서 추세와 제안을 볼 수 있어요.</string>
+    <string name="insights_title_plateau">정체기</string>
+    <string name="insights_title_decline">근력 감소</string>
+    <string name="insights_title_progress">발전 중</string>
+    <string name="insights_title_deload">디로드 시기</string>
+    <string name="insights_title_increase_weight">무게 늘리기</string>
+    <string name="insights_title_increase_reps">횟수 추가</string>
+    <string name="insights_title_hold">무게 유지</string>
+    <string name="insights_title_imbalance">불균형</string>
+    <string name="insights_title_low_volume">낮은 볼륨</string>
+    <string name="insights_title_high_volume">높은 볼륨</string>
+    <string name="insights_subject_push_pull">밀기 vs 당기기</string>
+    <string name="insights_subject_quads_hamstrings">대퇴사두근 vs 햄스트링</string>
+    <string name="insights_message_plateau">%1$d일 동안 신기록이 없습니다. 마지막 최고 기록 이후 세션: %2$d회. 추정 1RM: %3$s kg.</string>
+    <string name="insights_message_decline">추정 1RM은 %1$s kg이고, 최고 기록은 %2$s kg이었어요. 회복 상태를 확인하거나 더 가벼운 주를 계획해 보세요.</string>
+    <string name="insights_message_progress">추정 1RM은 %1$s kg이며, 매주 약 %2$s kg씩 늘고 있어요.</string>
+    <string name="insights_message_deload_plateau">몇 기간 동안 발전이 멈췄어요. 약 일주일간 %1$s kg(현재 %2$s kg)으로 %3$d회를 목표로 운동한 뒤 다시 무게를 올려 보세요.</string>
+    <string name="insights_message_deload_decline">근력이 떨어지고 있어요. 약 일주일간 %1$s kg(현재 %2$s kg)으로 %3$d회를 목표로 운동한 뒤 다시 무게를 올려 보세요.</string>
+    <string name="insights_message_increase_weight">모든 세트가 목표 횟수 범위의 상한에 도달했어요. 다음에는 %1$s kg(현재 %2$s kg)으로 %3$d회를 해 보세요.</string>
+    <string name="insights_message_increase_reps">%1$s kg을 유지하고 세트당 %2$d회를 목표로 하세요.</string>
+    <string name="insights_message_hold_reps">최소 횟수에 못 미쳤어요. %1$s kg을 유지하고 %2$d회를 목표로 하세요.</string>
+    <string name="insights_message_hold_sets_missing">계획한 세트 일부가 빠졌어요. %1$s kg을 유지하고 모든 세트를 %2$d회로 마치세요.</string>
+    <string name="insights_message_hold_rpe">세트가 매우 힘들게 느껴졌어요. 더 편해질 때까지 %1$s kg을 유지하고 %2$d회로 진행하세요.</string>
+    <string name="insights_message_low_volume">주당 고강도 세트 %1$s개. 적정 범위는 %2$s~%3$s개예요.</string>
+    <string name="insights_message_high_volume">주당 고강도 세트 %1$s개로, 일반적인 %2$s~%3$s개를 넘었어요. 회복 상태를 살펴보세요.</string>
+    <string name="insights_message_push_dominant">미는 근육은 주당 %1$s세트, 당기는 근육은 %2$s세트뿐이에요. 로우나 풀다운을 추가해 균형을 맞춰 보세요.</string>
+    <string name="insights_message_pull_dominant">당기는 근육은 주당 %1$s세트, 미는 근육은 %2$s세트뿐이에요. 프레스 운동을 추가해 균형을 맞춰 보세요.</string>
+    <string name="insights_message_quads_dominant">대퇴사두근은 주당 %1$s세트, 햄스트링은 %2$s세트뿐이에요. 레그 컬이나 루마니안 데드리프트를 추가해 보세요.</string>
+    <string name="insights_message_hamstrings_dominant">햄스트링은 주당 %1$s세트, 대퇴사두근은 %2$s세트뿐이에요. 스쿼트나 레그 프레스를 추가해 보세요.</string>
+</resources>

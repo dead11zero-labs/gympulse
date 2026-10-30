@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_plans_title">Planos</string>
+    <string name="plans_new">Novo plano</string>
+    <string name="plans_title">Planos de treino</string>
+    <string name="plans_more_exercises">+%1$d</string>
+    <string name="plans_empty_title">Ainda não há planos</string>
+    <string name="plans_empty_body">Crie um plano para organizar seus treinos.</string>
+    <string name="plans_no_exercises_yet">Ainda não há exercícios</string>
+    <string name="plans_duration_minutes">~%1$d min</string>
+    <string name="plans_meta">%1$s · %2$s · %3$s</string>
+    <string name="plans_more_options">Mais opções</string>
+    <string name="plans_menu_edit">Editar</string>
+    <string name="plans_menu_duplicate">Duplicar</string>
+    <string name="plans_menu_delete">Excluir</string>
+    <string name="plans_copy_name">%1$s (cópia)</string>
+    <string name="plans_delete_title">Excluir o plano?</string>
+    <string name="plans_delete_message">“%1$s” será removido. Treinos anteriores continuam no seu histórico.</string>
+    <string name="plans_delete_confirm">Excluir</string>
+    <string name="plans_cancel">Cancelar</string>
+    <string name="plans_editor_title_new">Novo plano</string>
+    <string name="plans_editor_title_edit">Editar plano</string>
+    <string name="plans_editor_subtitle">Crie uma rotina de treino sob medida</string>
+    <string name="plans_back">Voltar</string>
+    <string name="plans_field_name_required">Nome do plano *</string>
+    <string name="plans_field_name_hint">p. ex. Dia de empurrar A, Corpo inteiro…</string>
+    <string name="plans_field_notes_hint">Metas, tempos de descanso, detalhes do aquecimento…</string>
+    <string name="plans_no_exercises_body">Escolha entre exercícios para peito, costas, pernas e mais.</string>
+    <string name="plans_field_name_error">Informe um nome</string>
+    <string name="plans_field_notes">Anotações (opcional)</string>
+    <string name="plans_exercises_header">Exercícios</string>
+    <string name="plans_add_exercises">Adicionar exercícios</string>
+    <string name="plans_no_exercises_hint">Adicione pelo menos um exercício.</string>
+    <string name="plans_unknown_exercise">Exercício desconhecido</string>
+    <string name="plans_field_sets">Séries</string>
+    <string name="plans_field_reps_min">Reps mín.</string>
+    <string name="plans_field_reps_max">Reps máx.</string>
+    <string name="plans_field_weight">Carga alvo (kg)</string>
+    <string name="plans_field_rest">Descanso (s)</string>
+    <string name="plans_field_duration_minutes">Duração (min)</string>
+    <string name="plans_error_invalid">Inválido</string>
+    <string name="plans_move_up">Mover para cima</string>
+    <string name="plans_move_down">Mover para baixo</string>
+    <string name="plans_remove_exercise">Remover exercício</string>
+    <string name="plans_superset_link">Unir ao próximo como superset</string>
+    <string name="plans_superset_unlink">Separar do próximo</string>
+    <string name="plans_save">Salvar</string>
+    <string name="plans_save_failed">Não foi possível salvar o plano</string>
+    <string name="plans_discard_title">Descartar alterações?</string>
+    <string name="plans_discard_message">Suas alterações não salvas serão perdidas.</string>
+    <string name="plans_discard_confirm">Descartar</string>
+    <string name="plans_discard_keep">Continuar editando</string>
+    <string name="plans_picker_search">Buscar exercícios</string>
+    <string name="plans_picker_clear">Limpar busca</string>
+    <string name="plans_picker_close">Fechar</string>
+    <string name="plans_picker_empty">Nenhum exercício encontrado</string>
+    <string name="plans_picker_empty_hint">Tente outro termo de busca.</string>
+    <string name="plans_picker_select_hint">Selecionar exercícios</string>
+    <plurals name="plans_subtitle">
+        <item quantity="one">%d plano</item>
+        <item quantity="many">%d planos</item>
+        <item quantity="other">%d planos</item>
+    </plurals>
+    <plurals name="plans_exercise_count">
+        <item quantity="one">%d exercício</item>
+        <item quantity="many">%d exercícios</item>
+        <item quantity="other">%d exercícios</item>
+    </plurals>
+    <plurals name="plans_set_count">
+        <item quantity="one">%d série</item>
+        <item quantity="many">%d séries</item>
+        <item quantity="other">%d séries</item>
+    </plurals>
+    <plurals name="plans_picker_add_count">
+        <item quantity="one">Adicionar %d exercício</item>
+        <item quantity="many">Adicionar %d exercícios</item>
+        <item quantity="other">Adicionar %d exercícios</item>
+    </plurals>
+</resources>

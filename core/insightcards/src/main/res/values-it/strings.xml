@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Analisi dell\'allenamento</string>
+    <string name="insights_section_title_exercise">Analisi</string>
+    <string name="insights_disclaimer">I suggerimenti si basano sugli allenamenti registrati e non sono un parere medico.</string>
+    <string name="insights_unknown_exercise">Esercizio</string>
+    <string name="insights_empty_not_enough_title">Dati ancora insufficienti</string>
+    <string name="insights_empty_not_enough_message">Registra alcuni allenamenti con pesi e ripetizioni. Dopo circa quattro sessioni di un esercizio qui compaiono andamenti e suggerimenti.</string>
+    <string name="insights_empty_notable_title">Niente da segnalare</string>
+    <string name="insights_empty_notable_message">Il tuo allenamento è sulla buona strada. Le nuove osservazioni compaiono qui man mano che continui a registrare.</string>
+    <string name="insights_empty_exercise_message">Dati ancora insufficienti per questo esercizio. Dopo circa quattro sessioni registrate vedrai qui andamenti e suggerimenti.</string>
+    <string name="insights_title_plateau">Plateau</string>
+    <string name="insights_title_decline">Forza in calo</string>
+    <string name="insights_title_progress">Stai progredendo</string>
+    <string name="insights_title_deload">È ora di una settimana di scarico</string>
+    <string name="insights_title_increase_weight">Aumenta il peso</string>
+    <string name="insights_title_increase_reps">Aggiungi ripetizioni</string>
+    <string name="insights_title_hold">Mantieni il peso</string>
+    <string name="insights_title_imbalance">Squilibrio</string>
+    <string name="insights_title_low_volume">Volume basso</string>
+    <string name="insights_title_high_volume">Volume alto</string>
+    <string name="insights_subject_push_pull">Spinta e trazione</string>
+    <string name="insights_subject_quads_hamstrings">Quadricipiti e femorali</string>
+    <string name="insights_message_plateau">Nessun nuovo record da %1$d giorni. Sessioni dall\'ultimo record: %2$d. Massimale stimato: %3$s kg.</string>
+    <string name="insights_message_decline">Il tuo massimale stimato è %1$s kg, il tuo record era %2$s kg. Controlla il recupero o pianifica una settimana più leggera.</string>
+    <string name="insights_message_progress">Il tuo massimale stimato è %1$s kg, circa %2$s kg in più a settimana.</string>
+    <string name="insights_message_deload_plateau">I progressi sono fermi da diversi periodi. Allenati con %1$s kg (ora %2$s kg) per circa una settimana, puntando a %3$d ripetizioni, poi risali gradualmente.</string>
+    <string name="insights_message_deload_decline">La forza è in calo. Allenati con %1$s kg (ora %2$s kg) per circa una settimana, puntando a %3$d ripetizioni, poi risali gradualmente.</string>
+    <string name="insights_message_increase_weight">Tutte le serie hanno raggiunto il limite alto del tuo intervallo di ripetizioni. La prossima volta usa %1$s kg (ora %2$s kg) per %3$d ripetizioni.</string>
+    <string name="insights_message_increase_reps">Resta a %1$s kg e punta a %2$d ripetizioni per serie.</string>
+    <string name="insights_message_hold_reps">Non hai raggiunto il minimo di ripetizioni. Resta a %1$s kg e punta a %2$d ripetizioni.</string>
+    <string name="insights_message_hold_sets_missing">Mancano alcune serie pianificate. Resta a %1$s kg e completa tutte le serie con %2$d ripetizioni.</string>
+    <string name="insights_message_hold_rpe">Le serie sono sembrate molto dure. Resta a %1$s kg finché non diventa più facile, con %2$d ripetizioni.</string>
+    <string name="insights_message_low_volume">%1$s serie dure a settimana. Un buon intervallo va da %2$s a %3$s.</string>
+    <string name="insights_message_high_volume">%1$s serie dure a settimana, sopra il consueto intervallo da %2$s a %3$s. Tieni d\'occhio il recupero.</string>
+    <string name="insights_message_push_dominant">I muscoli di spinta ricevono %1$s serie a settimana, quelli di trazione solo %2$s. Aggiungi rematori o lat machine per bilanciare.</string>
+    <string name="insights_message_pull_dominant">I muscoli di trazione ricevono %1$s serie a settimana, quelli di spinta solo %2$s. Aggiungi distensioni per bilanciare.</string>
+    <string name="insights_message_quads_dominant">I quadricipiti ricevono %1$s serie a settimana, i femorali solo %2$s. Aggiungi leg curl o stacchi rumeni.</string>
+    <string name="insights_message_hamstrings_dominant">I femorali ricevono %1$s serie a settimana, i quadricipiti solo %2$s. Aggiungi squat o leg press.</string>
+</resources>

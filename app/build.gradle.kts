@@ -29,7 +29,9 @@ android {
 
     androidResources {
         // Nur die unterstützten App-Sprachen ausliefern.
-        localeFilters += listOf("en", "de")
+        localeFilters += listOf(
+            "en", "de", "es", "fr", "it", "pt-rBR", "nl", "pl", "tr", "ru", "ja", "ko", "zh-rCN",
+        )
     }
 }
 

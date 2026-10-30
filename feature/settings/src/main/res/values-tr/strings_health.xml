@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">Antrenmanlar bitince Health Connect ile paylaşılır</string>
+    <string name="health_connect_not_installed">Bunu kullanmak için Health Connect\'i Google Play\'den kur</string>
+    <string name="health_connect_update_required">Bunu kullanmak için Health Connect\'i Google Play\'den güncelle</string>
+    <string name="health_connect_unsupported">Health Connect bu cihazda kullanılamıyor</string>
+    <string name="health_connect_permissions">İzinler</string>
+    <string name="health_connect_permissions_missing">Erişim eksik. Antrenmanlara ve vücut ağırlığına izin vermek için dokun.</string>
+    <string name="health_connect_permissions_denied">Health Connect erişimi verilmedi. Antrenmanlar paylaşılmayacak.</string>
+    <string name="health_connect_sources_hint">Samsung Health gibi uygulamalar verilerini Health Connect üzerinden paylaşır. Samsung Health\'te buna Ayarlar → Health Connect altından izin ver.</string>
+    <string name="health_connect_sleep">Uyku</string>
+    <string name="health_connect_sleep_summary">Panoda antrenmandan önceki son uykuyu ve dün geceyi göster</string>
+    <string name="health_connect_section_data">Veri türleri</string>
+    <string name="health_connect_workouts">Antrenmanları yaz</string>
+    <string name="health_connect_workouts_summary">Biten antrenmanları Health Connect ile paylaş</string>
+    <string name="health_connect_heart_rate">Kalp atış hızı</string>
+    <string name="health_connect_heart_rate_summary">Antrenman özetinde ortalama ve en yüksek kalp atış hızını göster</string>
+    <string name="health_connect_steps">Adım</string>
+    <string name="health_connect_steps_summary">Panoda ve antrenman özetinde adımları göster</string>
+    <string name="health_connect_calories">Kalori</string>
+    <string name="health_connect_calories_summary">Antrenman özetinde aktif kaloriyi göster</string>
+    <string name="health_connect_metric_denied">Erişim verilmedi. Bu veri türü kapalı kalır.</string>
+    <string name="health_connect_chip_connected">Bağlı</string>
+    <string name="health_connect_chip_unavailable">Kullanılamıyor</string>
+    <string name="health_connect_chip_permission_missing">İzin eksik</string>
+    <string name="health_connect_chip_off">Kapalı</string>
+    <string name="health_connect_action_ok">Tamam</string>
+    <string name="health_privacy_title">GymPulse Health Connect\'i nasıl kullanır</string>
+    <string name="health_privacy_write">Bir antrenmanı bitirdiğinde GymPulse onu başlangıç ve bitiş saati, başlık ve notlarla bir egzersiz seansı olarak Health Connect\'e yazar.</string>
+    <string name="health_privacy_read">GymPulse vücut ağırlığını Health Connect\'ten yalnızca ayarlarda göstermek için okur. Yalnızca İçe aktar\'a dokunduğunda vücut ölçümü olarak kaydedilir. İzin verirsen GymPulse, bitmiş bir antrenmanın süresi için kalp atış hızı, adım ve aktif kaloriyi, ayrı uyku anahtarıyla da antrenmandan önceki son uykunu okur. Bu değerler yalnızca antrenman özetinde gösterilir ve kaydedilmez. Health Connect\'e yazan herhangi bir uygulamadan gelebilirler.</string>
+    <string name="health_privacy_storage">Verilerin cihazında kalır. GymPulse sağlık verilerini sunuculara göndermez, reklam için kullanmaz ve başkalarıyla paylaşmaz.</string>
+    <string name="health_privacy_revoke">Bağlantıyı GymPulse ayarlarından istediğin zaman kapatabilir ve izinleri Health Connect\'te geri alabilirsin.</string>
+    <string name="health_privacy_close">Kapat</string>
+</resources>

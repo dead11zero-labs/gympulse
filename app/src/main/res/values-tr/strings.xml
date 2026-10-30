@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">Pano</string>
+    <string name="nav_plans">Planlar</string>
+    <string name="nav_library">Kitaplık</string>
+    <string name="nav_calendar">Takvim</string>
+    <string name="action_settings">Ayarlar</string>
+    <string name="action_account">Hesap menüsü</string>
+    <string name="action_back">Geri</string>
+    <string name="onboarding_skip">Atla</string>
+    <string name="onboarding_next">İleri</string>
+    <string name="onboarding_start">Başlayalım</string>
+    <string name="onboarding_page_indicator">Sayfa %1$d / %2$d</string>
+    <string name="onboarding_welcome_title">GymPulse\'a hoş geldin</string>
+    <string name="onboarding_welcome_body">Antrenmanlarını kaydet, ilerlemeni takip et ve rotanı koru. Her şey cihazında kalır.</string>
+    <string name="onboarding_goal_title">Haftalık hedefini belirle</string>
+    <string name="onboarding_goal_body">Haftada kaç antrenman yapmak istiyorsun? Bunu istediğin zaman Ayarlar\'dan değiştirebilirsin.</string>
+    <string name="onboarding_done_title">Her şey hazır</string>
+    <string name="onboarding_done_body">İlk antrenmanını panodan başlat. İyi çalışmalar!</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="one">Haftada %d antrenman</item>
+        <item quantity="other">Haftada %d antrenman</item>
+    </plurals>
+</resources>

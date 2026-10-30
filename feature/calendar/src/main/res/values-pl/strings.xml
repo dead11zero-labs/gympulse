@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Kalendarz</string>
+    <string name="feature_calendar_premium_title">Kalendarz to funkcja Premium</string>
+    <string name="feature_calendar_premium_body">Przypisuj plany do dni tygodnia, przesuwaj pojedyncze dni treningowe i przeglądaj historię według tygodnia lub miesiąca. Twój obecny harmonogram pozostaje zapisany i dostępny do odczytu.</string>
+    <string name="feature_calendar_previous">Poprzedni okres</string>
+    <string name="feature_calendar_next">Następny okres</string>
+    <string name="feature_calendar_mode_week">Tydzień</string>
+    <string name="feature_calendar_mode_month">Miesiąc</string>
+    <string name="feature_calendar_today">Dziś</string>
+    <string name="feature_calendar_week_number">Tydzień %1$d</string>
+    <string name="feature_calendar_duration_min">%1$d min</string>
+    <string name="feature_calendar_status_volume">%1$s · wolumen %2$s kg</string>
+    <string name="feature_calendar_rest_day">Dzień odpoczynku</string>
+    <string name="feature_calendar_unknown_plan">Usunięty plan</string>
+    <string name="feature_calendar_free_workout">Trening dowolny</string>
+    <string name="feature_calendar_status_completed">Ukończony</string>
+    <string name="feature_calendar_status_planned">Zaplanowany</string>
+    <string name="feature_calendar_status_missed">Opuszczony</string>
+    <string name="feature_calendar_status_skipped">Pominięty</string>
+    <string name="feature_calendar_override_skipped">Wyjątek: pominięty</string>
+    <string name="feature_calendar_override_moved">Wyjątek: przesunięty tutaj</string>
+    <string name="feature_calendar_override_added">Wyjątek: dodany</string>
+    <string name="feature_calendar_history">Ukończone treningi</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d min · %3$s kg</string>
+    <string name="feature_calendar_action_skip">Pomiń ten dzień</string>
+    <string name="feature_calendar_action_move">Przenieś na inny dzień</string>
+    <string name="feature_calendar_action_add">Dodaj plan</string>
+    <string name="feature_calendar_action_reset">Przywróć harmonogram tygodniowy</string>
+    <string name="feature_calendar_move_title">Przenieś na</string>
+    <string name="feature_calendar_add_plan_title">Dodaj plan</string>
+    <string name="feature_calendar_scheme_title">Harmonogram tygodniowy</string>
+    <string name="feature_calendar_scheme_hint">Powtarza się co tydzień, od dziś.</string>
+    <string name="feature_calendar_pick_plan_for">Plan na %1$s</string>
+    <string name="feature_calendar_edit">Zmień plan</string>
+    <string name="feature_calendar_no_plans">Brak planów. Utwórz plan w zakładce Plany.</string>
+    <string name="feature_calendar_cancel">Anuluj</string>
+</resources>

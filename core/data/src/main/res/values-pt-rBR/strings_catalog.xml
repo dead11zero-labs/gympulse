@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Abdômen</string>
+    <string name="muscle_abductors">Abdutores</string>
+    <string name="muscle_adductors">Adutores</string>
+    <string name="muscle_biceps">Bíceps</string>
+    <string name="muscle_calves">Panturrilhas</string>
+    <string name="muscle_chest">Peito</string>
+    <string name="muscle_forearms">Antebraços</string>
+    <string name="muscle_glutes">Glúteos</string>
+    <string name="muscle_hamstrings">Posteriores de coxa</string>
+    <string name="muscle_lats">Dorsais</string>
+    <string name="muscle_lower_back">Lombar</string>
+    <string name="muscle_middle_back">Costas (meio)</string>
+    <string name="muscle_neck">Pescoço</string>
+    <string name="muscle_quadriceps">Quadríceps</string>
+    <string name="muscle_shoulders">Ombros</string>
+    <string name="muscle_traps">Trapézios</string>
+    <string name="muscle_triceps">Tríceps</string>
+    <string name="equipment_band">Elástico</string>
+    <string name="equipment_barbell">Barra</string>
+    <string name="equipment_bodyweight">Peso corporal</string>
+    <string name="equipment_cable">Polia</string>
+    <string name="equipment_dumbbell">Halter</string>
+    <string name="equipment_exercise_ball">Bola suíça</string>
+    <string name="equipment_ez_bar">Barra W</string>
+    <string name="equipment_foam_roll">Rolo de espuma</string>
+    <string name="equipment_kettlebell">Kettlebell</string>
+    <string name="equipment_machine">Máquina</string>
+    <string name="equipment_medicine_ball">Bola medicinal</string>
+    <string name="equipment_other">Outro</string>
+</resources>

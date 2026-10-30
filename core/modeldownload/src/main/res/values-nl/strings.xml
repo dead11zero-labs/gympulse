@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_modeldownload_channel">AI-model downloaden</string>
+    <string name="core_modeldownload_channel_description">Voortgang terwijl het lokale AI-coachmodel via wifi wordt gedownload</string>
+    <string name="core_modeldownload_title">AI-model downloaden</string>
+    <string name="core_modeldownload_preparing">Download voorbereiden…</string>
+    <string name="core_modeldownload_progress">%1$d%% · %2$d van %3$d MB</string>
+    <string name="core_modeldownload_verifying">Bestand controleren…</string>
+    <string name="core_modeldownload_cancel">Annuleren</string>
+</resources>

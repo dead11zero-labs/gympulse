@@ -53,8 +53,6 @@
     <string name="settings_section_language">Language</string>
     <string name="settings_language">App language</string>
     <string name="settings_language_system">System default</string>
-    <string name="settings_language_german" translatable="false">Deutsch</string>
-    <string name="settings_language_english" translatable="false">English</string>
 
     <string name="settings_section_body">Body measurements</string>
     <string name="settings_body_measurements">Weight, body fat and measurements</string>

@@ -12,18 +12,37 @@ enum class WeekStart(val dayOfWeek: DayOfWeek) {
     SUNDAY(DayOfWeek.SUNDAY),
 }
 
-/** App-Sprache. [languageTag] ist leer für "Systemsprache" (AppCompat-Konvention). */
+/**
+ * App-Sprache. [languageTag] ist leer für "Systemsprache" (AppCompat-Konvention).
+ * Neue Sprachen hier ergänzen sowie in `locales_config.xml` und den `localeFilters` von `app` und `wear`.
+ */
 enum class AppLanguage(val languageTag: String) {
     SYSTEM(""),
-    GERMAN("de"),
     ENGLISH("en"),
+    GERMAN("de"),
+    SPANISH("es"),
+    FRENCH("fr"),
+    ITALIAN("it"),
+    PORTUGUESE_BRAZIL("pt-BR"),
+    DUTCH("nl"),
+    POLISH("pl"),
+    TURKISH("tr"),
+    RUSSIAN("ru"),
+    JAPANESE("ja"),
+    KOREAN("ko"),
+    CHINESE_SIMPLIFIED("zh-CN"),
     ;
 
     companion object {
-        /** Ordnet ein BCP-47-Tag (z. B. "de-DE") einer unterstützten Sprache zu, sonst [SYSTEM]. */
+        /**
+         * Ordnet ein BCP-47-Tag (z. B. "de-DE") einer unterstützten Sprache zu, sonst [SYSTEM].
+         * Ein exakter Treffer (z. B. "pt-BR") gewinnt vor dem reinen Sprachcode.
+         */
         fun fromLanguageTag(tag: String): AppLanguage {
-            val language = tag.substringBefore(',').substringBefore('-').substringBefore('_').lowercase()
-            return entries.firstOrNull { it != SYSTEM && it.languageTag == language } ?: SYSTEM
+            val first = tag.substringBefore(',').replace('_', '-')
+            entries.firstOrNull { it != SYSTEM && it.languageTag.equals(first, ignoreCase = true) }?.let { return it }
+            val language = first.substringBefore('-').lowercase()
+            return entries.firstOrNull { it != SYSTEM && it.languageTag.substringBefore('-') == language } ?: SYSTEM
         }
     }
 }

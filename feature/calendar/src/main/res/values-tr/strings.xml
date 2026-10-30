@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Takvim</string>
+    <string name="feature_calendar_premium_title">Takvim bir Premium özelliktir</string>
+    <string name="feature_calendar_premium_body">Planları haftanın günlerine ata, tek tek antrenman günlerini taşı ve geçmişini hafta veya ay olarak gez. Mevcut programın kayıtlı ve okunabilir kalır.</string>
+    <string name="feature_calendar_previous">Önceki dönem</string>
+    <string name="feature_calendar_next">Sonraki dönem</string>
+    <string name="feature_calendar_mode_week">Hafta</string>
+    <string name="feature_calendar_mode_month">Ay</string>
+    <string name="feature_calendar_today">Bugün</string>
+    <string name="feature_calendar_week_number">%1$d. hafta</string>
+    <string name="feature_calendar_duration_min">%1$d dk</string>
+    <string name="feature_calendar_status_volume">%1$s · %2$s kg hacim</string>
+    <string name="feature_calendar_rest_day">Dinlenme günü</string>
+    <string name="feature_calendar_unknown_plan">Silinmiş plan</string>
+    <string name="feature_calendar_free_workout">Serbest antrenman</string>
+    <string name="feature_calendar_status_completed">Tamamlandı</string>
+    <string name="feature_calendar_status_planned">Planlandı</string>
+    <string name="feature_calendar_status_missed">Kaçırıldı</string>
+    <string name="feature_calendar_status_skipped">Atlandı</string>
+    <string name="feature_calendar_override_skipped">İstisna: atlandı</string>
+    <string name="feature_calendar_override_moved">İstisna: buraya taşındı</string>
+    <string name="feature_calendar_override_added">İstisna: eklendi</string>
+    <string name="feature_calendar_history">Tamamlanan antrenmanlar</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d dk · %3$s kg</string>
+    <string name="feature_calendar_action_skip">Bu günü atla</string>
+    <string name="feature_calendar_action_move">Başka bir güne taşı</string>
+    <string name="feature_calendar_action_add">Plan ekle</string>
+    <string name="feature_calendar_action_reset">Haftalık programa sıfırla</string>
+    <string name="feature_calendar_move_title">Şuraya taşı</string>
+    <string name="feature_calendar_add_plan_title">Plan ekle</string>
+    <string name="feature_calendar_scheme_title">Haftalık program</string>
+    <string name="feature_calendar_scheme_hint">Bugünden başlayarak her hafta tekrarlanır.</string>
+    <string name="feature_calendar_pick_plan_for">%1$s için plan</string>
+    <string name="feature_calendar_edit">Planı değiştir</string>
+    <string name="feature_calendar_no_plans">Henüz plan yok. Planlar sekmesinde bir tane oluştur.</string>
+    <string name="feature_calendar_cancel">İptal</string>
+</resources>

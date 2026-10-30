@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">Yükselen eğilim: %1$s</string>
+    <string name="designsystem_trend_down">Düşen eğilim: %1$s</string>
+    <string name="designsystem_trend_flat">Değişmeyen eğilim: %1$s</string>
+    <string name="designsystem_progress_percent">yüzde %1$d</string>
+    <string name="designsystem_stepper_decrease">Azalış</string>
+    <string name="designsystem_stepper_increase">Artış</string>
+    <string name="designsystem_set_checkbox">Set %1$s</string>
+    <string name="designsystem_pr_badge">PR</string>
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">Тренировки передаются в Health Connect после завершения</string>
+    <string name="health_connect_not_installed">Установите Health Connect из Google Play, чтобы пользоваться этим</string>
+    <string name="health_connect_update_required">Обновите Health Connect из Google Play, чтобы пользоваться этим</string>
+    <string name="health_connect_unsupported">Health Connect недоступен на этом устройстве</string>
+    <string name="health_connect_permissions">Разрешения</string>
+    <string name="health_connect_permissions_missing">Нет доступа. Нажмите, чтобы разрешить тренировки и вес тела.</string>
+    <string name="health_connect_permissions_denied">Доступ к Health Connect не предоставлен. Тренировки не будут передаваться.</string>
+    <string name="health_connect_sources_hint">Приложения вроде Samsung Health передают данные через Health Connect. В Samsung Health разрешите это в разделе «Настройки» → Health Connect.</string>
+    <string name="health_connect_sleep">Сон</string>
+    <string name="health_connect_sleep_summary">Показывать на главной сон перед тренировкой и прошлой ночью</string>
+    <string name="health_connect_section_data">Типы данных</string>
+    <string name="health_connect_workouts">Записывать тренировки</string>
+    <string name="health_connect_workouts_summary">Передавать завершённые тренировки в Health Connect</string>
+    <string name="health_connect_heart_rate">Пульс</string>
+    <string name="health_connect_heart_rate_summary">Показывать средний и максимальный пульс в итогах тренировки</string>
+    <string name="health_connect_steps">Шаги</string>
+    <string name="health_connect_steps_summary">Показывать шаги на главной и в итогах тренировки</string>
+    <string name="health_connect_calories">Калории</string>
+    <string name="health_connect_calories_summary">Показывать активные калории в итогах тренировки</string>
+    <string name="health_connect_metric_denied">Доступ не предоставлен. Этот тип данных остаётся выключенным.</string>
+    <string name="health_connect_chip_connected">Подключено</string>
+    <string name="health_connect_chip_unavailable">Недоступно</string>
+    <string name="health_connect_chip_permission_missing">Нет разрешения</string>
+    <string name="health_connect_chip_off">Выключено</string>
+    <string name="health_connect_action_ok">ОК</string>
+    <string name="health_privacy_title">Как GymPulse использует Health Connect</string>
+    <string name="health_privacy_write">Когда вы завершаете тренировку, GymPulse записывает её в Health Connect как занятие с временем начала и окончания, названием и заметками.</string>
+    <string name="health_privacy_read">GymPulse считывает ваш вес из Health Connect только для показа в настройках. Он сохраняется как замер тела, только когда вы нажимаете «Импорт». Если вы разрешите, GymPulse также считывает пульс, шаги и активные калории за время завершённой тренировки и, при отдельном переключателе сна, ваш последний сон перед тренировкой. Эти значения только показываются в итогах тренировки и не сохраняются. Они могут поступать из любого приложения, которое пишет в Health Connect.</string>
+    <string name="health_privacy_storage">Ваши данные остаются на вашем устройстве. GymPulse не отправляет данные о здоровье на серверы, не использует их для рекламы и не передаёт другим.</string>
+    <string name="health_privacy_revoke">Подключение можно отключить в настройках GymPulse в любой момент, а разрешения отозвать в Health Connect.</string>
+    <string name="health_privacy_close">Закрыть</string>
+</resources>

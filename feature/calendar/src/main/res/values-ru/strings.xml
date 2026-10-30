@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Календарь</string>
+    <string name="feature_calendar_premium_title">Календарь — функция Premium</string>
+    <string name="feature_calendar_premium_body">Назначайте планы на дни недели, переносите отдельные тренировочные дни и просматривайте историю по неделям или месяцам. Ваше текущее расписание сохраняется и остаётся доступным для чтения.</string>
+    <string name="feature_calendar_previous">Предыдущий период</string>
+    <string name="feature_calendar_next">Следующий период</string>
+    <string name="feature_calendar_mode_week">Неделя</string>
+    <string name="feature_calendar_mode_month">Месяц</string>
+    <string name="feature_calendar_today">Сегодня</string>
+    <string name="feature_calendar_week_number">Неделя %1$d</string>
+    <string name="feature_calendar_duration_min">%1$d мин</string>
+    <string name="feature_calendar_status_volume">%1$s · объём %2$s кг</string>
+    <string name="feature_calendar_rest_day">День отдыха</string>
+    <string name="feature_calendar_unknown_plan">Удалённый план</string>
+    <string name="feature_calendar_free_workout">Свободная тренировка</string>
+    <string name="feature_calendar_status_completed">Выполнено</string>
+    <string name="feature_calendar_status_planned">Запланировано</string>
+    <string name="feature_calendar_status_missed">Не выполнено</string>
+    <string name="feature_calendar_status_skipped">Пропущено</string>
+    <string name="feature_calendar_override_skipped">Исключение: пропущено</string>
+    <string name="feature_calendar_override_moved">Исключение: перенесено сюда</string>
+    <string name="feature_calendar_override_added">Исключение: добавлено</string>
+    <string name="feature_calendar_history">Завершённые тренировки</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d мин · %3$s кг</string>
+    <string name="feature_calendar_action_skip">Пропустить этот день</string>
+    <string name="feature_calendar_action_move">Перенести на другой день</string>
+    <string name="feature_calendar_action_add">Добавить план</string>
+    <string name="feature_calendar_action_reset">Вернуть недельное расписание</string>
+    <string name="feature_calendar_move_title">Перенести на</string>
+    <string name="feature_calendar_add_plan_title">Добавить план</string>
+    <string name="feature_calendar_scheme_title">Недельное расписание</string>
+    <string name="feature_calendar_scheme_hint">Повторяется каждую неделю, начиная с сегодняшнего дня.</string>
+    <string name="feature_calendar_pick_plan_for">План на %1$s</string>
+    <string name="feature_calendar_edit">Сменить план</string>
+    <string name="feature_calendar_no_plans">Планов пока нет. Создайте план на вкладке «Планы».</string>
+    <string name="feature_calendar_cancel">Отмена</string>
+</resources>

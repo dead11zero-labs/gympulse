@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Brzuch</string>
+    <string name="muscle_abductors">Odwodziciele</string>
+    <string name="muscle_adductors">Przywodziciele</string>
+    <string name="muscle_biceps">Bicepsy</string>
+    <string name="muscle_calves">Łydki</string>
+    <string name="muscle_chest">Klatka piersiowa</string>
+    <string name="muscle_forearms">Przedramiona</string>
+    <string name="muscle_glutes">Pośladki</string>
+    <string name="muscle_hamstrings">Dwugłowe uda</string>
+    <string name="muscle_lats">Najszersze grzbietu</string>
+    <string name="muscle_lower_back">Dolny odcinek pleców</string>
+    <string name="muscle_middle_back">Środek pleców</string>
+    <string name="muscle_neck">Szyja</string>
+    <string name="muscle_quadriceps">Czworogłowe uda</string>
+    <string name="muscle_shoulders">Barki</string>
+    <string name="muscle_traps">Czworoboczne</string>
+    <string name="muscle_triceps">Tricepsy</string>
+    <string name="equipment_band">Guma</string>
+    <string name="equipment_barbell">Sztanga</string>
+    <string name="equipment_bodyweight">Masa ciała</string>
+    <string name="equipment_cable">Wyciąg</string>
+    <string name="equipment_dumbbell">Hantla</string>
+    <string name="equipment_exercise_ball">Piłka gimnastyczna</string>
+    <string name="equipment_ez_bar">Gryf łamany</string>
+    <string name="equipment_foam_roll">Wałek do rolowania</string>
+    <string name="equipment_kettlebell">Kettlebell</string>
+    <string name="equipment_machine">Maszyna</string>
+    <string name="equipment_medicine_ball">Piłka lekarska</string>
+    <string name="equipment_other">Inne</string>
+</resources>

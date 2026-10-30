@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">Los entrenamientos se comparten con Health Connect al terminarlos</string>
+    <string name="health_connect_not_installed">Instala Health Connect desde Google Play para usarlo</string>
+    <string name="health_connect_update_required">Actualiza Health Connect desde Google Play para usarlo</string>
+    <string name="health_connect_unsupported">Health Connect no está disponible en este dispositivo</string>
+    <string name="health_connect_permissions">Permisos</string>
+    <string name="health_connect_permissions_missing">Falta el acceso. Toca para permitir entrenamientos y peso corporal.</string>
+    <string name="health_connect_permissions_denied">No se concedió acceso a Health Connect. Los entrenamientos no se compartirán.</string>
+    <string name="health_connect_sources_hint">Apps como Samsung Health comparten sus datos a través de Health Connect. En Samsung Health, permítelo en Ajustes → Health Connect.</string>
+    <string name="health_connect_sleep">Sueño</string>
+    <string name="health_connect_sleep_summary">Muestra el último sueño antes de un entrenamiento y el de anoche en el panel</string>
+    <string name="health_connect_section_data">Tipos de datos</string>
+    <string name="health_connect_workouts">Escribir entrenamientos</string>
+    <string name="health_connect_workouts_summary">Comparte los entrenamientos terminados con Health Connect</string>
+    <string name="health_connect_heart_rate">Frecuencia cardiaca</string>
+    <string name="health_connect_heart_rate_summary">Muestra la frecuencia cardiaca media y máxima en el resumen del entrenamiento</string>
+    <string name="health_connect_steps">Pasos</string>
+    <string name="health_connect_steps_summary">Muestra los pasos en el panel y en el resumen del entrenamiento</string>
+    <string name="health_connect_calories">Calorías</string>
+    <string name="health_connect_calories_summary">Muestra las calorías activas en el resumen del entrenamiento</string>
+    <string name="health_connect_metric_denied">No se concedió acceso. Este tipo de datos sigue desactivado.</string>
+    <string name="health_connect_chip_connected">Conectado</string>
+    <string name="health_connect_chip_unavailable">No disponible</string>
+    <string name="health_connect_chip_permission_missing">Falta el permiso</string>
+    <string name="health_connect_chip_off">Desactivado</string>
+    <string name="health_connect_action_ok">Aceptar</string>
+    <string name="health_privacy_title">Cómo usa GymPulse Health Connect</string>
+    <string name="health_privacy_write">Al terminar un entrenamiento, GymPulse lo escribe en Health Connect como sesión de ejercicio con hora de inicio y fin, título y notas.</string>
+    <string name="health_privacy_read">GymPulse lee tu peso corporal de Health Connect solo para mostrarlo en los ajustes. Solo se guarda como medida corporal cuando tocas Importar. Si lo permites, GymPulse también lee la frecuencia cardiaca, los pasos y las calorías activas del momento de un entrenamiento terminado y, con el interruptor aparte de sueño, tu último sueño antes del entrenamiento. Estos valores solo se muestran en el resumen del entrenamiento y no se guardan. Pueden proceder de cualquier app que escriba en Health Connect.</string>
+    <string name="health_privacy_storage">Tus datos se quedan en tu dispositivo. GymPulse no envía datos de salud a servidores, no los usa para publicidad y no los comparte con nadie.</string>
+    <string name="health_privacy_revoke">Puedes desactivar la conexión en los ajustes de GymPulse en cualquier momento y revocar los permisos en Health Connect.</string>
+    <string name="health_privacy_close">Cerrar</string>
+</resources>

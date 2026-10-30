@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">カレンダー</string>
+    <string name="feature_calendar_premium_title">カレンダーはPremium機能です</string>
+    <string name="feature_calendar_premium_body">曜日ごとにプランを割り当て、トレーニング日を個別に移動し、週または月ごとに履歴を確認できます。既存のスケジュールは保存され、閲覧できます。</string>
+    <string name="feature_calendar_previous">前の期間</string>
+    <string name="feature_calendar_next">次の期間</string>
+    <string name="feature_calendar_mode_week">週</string>
+    <string name="feature_calendar_mode_month">月</string>
+    <string name="feature_calendar_today">今日</string>
+    <string name="feature_calendar_week_number">第%1$d週</string>
+    <string name="feature_calendar_duration_min">%1$d分</string>
+    <string name="feature_calendar_status_volume">%1$s・ボリューム%2$s kg</string>
+    <string name="feature_calendar_rest_day">休養日</string>
+    <string name="feature_calendar_unknown_plan">削除されたプラン</string>
+    <string name="feature_calendar_free_workout">フリーワークアウト</string>
+    <string name="feature_calendar_status_completed">完了</string>
+    <string name="feature_calendar_status_planned">予定</string>
+    <string name="feature_calendar_status_missed">未実施</string>
+    <string name="feature_calendar_status_skipped">スキップ</string>
+    <string name="feature_calendar_override_skipped">例外：スキップ</string>
+    <string name="feature_calendar_override_moved">例外：ここへ移動</string>
+    <string name="feature_calendar_override_added">例外：追加</string>
+    <string name="feature_calendar_history">完了したワークアウト</string>
+    <string name="feature_calendar_session_meta">%1$s・%2$d分・%3$s kg</string>
+    <string name="feature_calendar_action_skip">この日をスキップ</string>
+    <string name="feature_calendar_action_move">別の日に移動</string>
+    <string name="feature_calendar_action_add">プランを追加</string>
+    <string name="feature_calendar_action_reset">週間スケジュールに戻す</string>
+    <string name="feature_calendar_move_title">移動先</string>
+    <string name="feature_calendar_add_plan_title">プランを追加</string>
+    <string name="feature_calendar_scheme_title">週間スケジュール</string>
+    <string name="feature_calendar_scheme_hint">今日から毎週繰り返されます。</string>
+    <string name="feature_calendar_pick_plan_for">%1$sのプラン</string>
+    <string name="feature_calendar_edit">プランを変更</string>
+    <string name="feature_calendar_no_plans">プランがまだありません。プランタブで作成してください。</string>
+    <string name="feature_calendar_cancel">キャンセル</string>
+</resources>

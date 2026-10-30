@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">导出数据</string>
+    <string name="data_export_summary">将计划、训练、动作和设置保存为 JSON 文件</string>
+    <string name="data_export_csv">导出训练历史（CSV）</string>
+    <string name="data_export_csv_summary">将每个已完成的组导出为电子表格文件（CSV）</string>
+    <string name="data_import">导入数据</string>
+    <string name="data_import_summary">先预览，再恢复 GymPulse 备份</string>
+    <string name="data_action_ok">确定</string>
+    <string name="data_action_import">导入</string>
+    <string name="data_working_export">正在导出…</string>
+    <string name="data_working_read">正在读取备份…</string>
+    <string name="data_working_import">正在导入…</string>
+    <string name="data_export_done_title">备份已保存</string>
+    <string name="data_import_done_title">导入完成</string>
+    <string name="data_import_done_message">新增 %1$d 条，更新 %2$d 条，未变 %3$d 条。</string>
+    <string name="data_import_done_settings">设置也已恢复。</string>
+    <string name="data_export_failed_title">导出失败</string>
+    <string name="data_import_failed_title">导入失败</string>
+    <string name="data_error_io">无法读取或写入文件。请重试，或选择其他位置。</string>
+    <string name="data_error_invalid">此文件不是 GymPulse 备份，或已损坏。</string>
+    <string name="data_error_missing_references">该备份引用了这台设备上不存在的动作或计划。未做任何更改。</string>
+    <string name="data_error_write">无法保存数据。未做任何更改。</string>
+    <string name="data_preview_title">导入备份</string>
+    <string name="data_preview_source">由 GymPulse %2$s 于 %1$s 创建</string>
+    <string name="data_preview_newer_version">此备份来自更新版本的 GymPulse。当前版本无法识别的数据将被跳过。</string>
+    <string name="data_preview_empty">备份中没有数据。</string>
+    <string name="data_preview_counts">新增 %1$d · 更新 %2$d · 未变 %3$d</string>
+    <string name="data_preview_conflicts">已存在的条目</string>
+    <string name="data_preview_apply_settings">同时恢复设置</string>
+    <string name="data_strategy_newer">保留较新的版本</string>
+    <string name="data_strategy_newer_summary">推荐。比较每个条目的最后修改时间。</string>
+    <string name="data_strategy_keep">保留现有条目</string>
+    <string name="data_strategy_keep_summary">只添加这台设备上还没有的条目。</string>
+    <string name="data_strategy_overwrite">覆盖</string>
+    <string name="data_strategy_overwrite_summary">用备份中的条目替换现有条目。已删除的条目仍保持删除状态。</string>
+    <string name="data_table_profile">个人资料</string>
+    <string name="data_table_body_measurements">身体围度</string>
+    <string name="data_table_equipment">器材</string>
+    <string name="data_table_equipment_settings">器材设置</string>
+    <string name="data_table_custom_exercises">自定义动作</string>
+    <string name="data_table_library_changes">动作库收藏和备注</string>
+    <string name="data_table_exercise_names">动作名称</string>
+    <string name="data_table_exercise_muscles">动作肌群</string>
+    <string name="data_table_plans">计划</string>
+    <string name="data_table_plan_exercises">计划动作</string>
+    <string name="data_table_schedule">每周日程</string>
+    <string name="data_table_schedule_changes">日程变更</string>
+    <string name="data_table_workouts">训练</string>
+    <string name="data_table_workout_exercises">训练动作</string>
+    <string name="data_table_sets">组数</string>
+    <string name="data_table_records">个人纪录</string>
+    <plurals name="data_export_done_message">
+        <item quantity="other">已导出 %d 条记录。</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="other">%d 条记录引用了这台设备上不存在的动作或计划。请更新应用后重试。</item>
+    </plurals>
+</resources>

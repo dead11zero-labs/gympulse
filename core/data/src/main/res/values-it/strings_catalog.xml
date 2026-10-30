@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Addominali</string>
+    <string name="muscle_abductors">Abduttori</string>
+    <string name="muscle_adductors">Adduttori</string>
+    <string name="muscle_biceps">Bicipiti</string>
+    <string name="muscle_calves">Polpacci</string>
+    <string name="muscle_chest">Petto</string>
+    <string name="muscle_forearms">Avambracci</string>
+    <string name="muscle_glutes">Glutei</string>
+    <string name="muscle_hamstrings">Femorali</string>
+    <string name="muscle_lats">Dorsali</string>
+    <string name="muscle_lower_back">Zona lombare</string>
+    <string name="muscle_middle_back">Schiena centrale</string>
+    <string name="muscle_neck">Collo</string>
+    <string name="muscle_quadriceps">Quadricipiti</string>
+    <string name="muscle_shoulders">Spalle</string>
+    <string name="muscle_traps">Trapezi</string>
+    <string name="muscle_triceps">Tricipiti</string>
+    <string name="equipment_band">Elastico</string>
+    <string name="equipment_barbell">Bilanciere</string>
+    <string name="equipment_bodyweight">Corpo libero</string>
+    <string name="equipment_cable">Cavi</string>
+    <string name="equipment_dumbbell">Manubrio</string>
+    <string name="equipment_exercise_ball">Palla ginnica</string>
+    <string name="equipment_ez_bar">Bilanciere EZ</string>
+    <string name="equipment_foam_roll">Foam roller</string>
+    <string name="equipment_kettlebell">Kettlebell</string>
+    <string name="equipment_machine">Macchina</string>
+    <string name="equipment_medicine_ball">Palla medica</string>
+    <string name="equipment_other">Altro</string>
+</resources>

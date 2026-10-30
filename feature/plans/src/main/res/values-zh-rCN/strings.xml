@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_plans_title">计划</string>
+    <string name="plans_new">新建计划</string>
+    <string name="plans_title">训练计划</string>
+    <string name="plans_more_exercises">另有 %1$d 个</string>
+    <string name="plans_empty_title">还没有计划</string>
+    <string name="plans_empty_body">创建一个计划来安排你的训练。</string>
+    <string name="plans_no_exercises_yet">还没有动作</string>
+    <string name="plans_duration_minutes">约 %1$d 分钟</string>
+    <string name="plans_meta">%1$s · %2$s · %3$s</string>
+    <string name="plans_more_options">更多选项</string>
+    <string name="plans_menu_edit">编辑</string>
+    <string name="plans_menu_duplicate">复制</string>
+    <string name="plans_menu_delete">删除</string>
+    <string name="plans_copy_name">%1$s（副本）</string>
+    <string name="plans_delete_title">删除这个计划？</string>
+    <string name="plans_delete_message">“%1$s”将被移除。过去的训练仍保留在你的历史记录中。</string>
+    <string name="plans_delete_confirm">删除</string>
+    <string name="plans_cancel">取消</string>
+    <string name="plans_editor_title_new">新建计划</string>
+    <string name="plans_editor_title_edit">编辑计划</string>
+    <string name="plans_editor_subtitle">打造专属于你的训练流程</string>
+    <string name="plans_back">返回</string>
+    <string name="plans_field_name_required">计划名称 *</string>
+    <string name="plans_field_name_hint">例如：推日 A、全身…</string>
+    <string name="plans_field_notes_hint">目标、休息时间、热身细节…</string>
+    <string name="plans_no_exercises_body">从胸部、背部、腿部等动作中挑选。</string>
+    <string name="plans_field_name_error">请输入名称</string>
+    <string name="plans_field_notes">备注（可选）</string>
+    <string name="plans_exercises_header">动作</string>
+    <string name="plans_add_exercises">添加动作</string>
+    <string name="plans_no_exercises_hint">至少添加一个动作。</string>
+    <string name="plans_unknown_exercise">未知动作</string>
+    <string name="plans_field_sets">组数</string>
+    <string name="plans_field_reps_min">最少次数</string>
+    <string name="plans_field_reps_max">最多次数</string>
+    <string name="plans_field_weight">目标重量（公斤）</string>
+    <string name="plans_field_rest">休息（秒）</string>
+    <string name="plans_field_duration_minutes">时长（分钟）</string>
+    <string name="plans_error_invalid">无效</string>
+    <string name="plans_move_up">上移</string>
+    <string name="plans_move_down">下移</string>
+    <string name="plans_remove_exercise">移除动作</string>
+    <string name="plans_superset_link">与下一个动作组成超级组</string>
+    <string name="plans_superset_unlink">与下一个动作取消关联</string>
+    <string name="plans_save">保存</string>
+    <string name="plans_save_failed">无法保存计划</string>
+    <string name="plans_discard_title">放弃更改？</string>
+    <string name="plans_discard_message">未保存的更改将丢失。</string>
+    <string name="plans_discard_confirm">放弃</string>
+    <string name="plans_discard_keep">继续编辑</string>
+    <string name="plans_picker_search">搜索动作</string>
+    <string name="plans_picker_clear">清除搜索</string>
+    <string name="plans_picker_close">关闭</string>
+    <string name="plans_picker_empty">未找到动作</string>
+    <string name="plans_picker_empty_hint">试试其他搜索词。</string>
+    <string name="plans_picker_select_hint">选择动作</string>
+    <plurals name="plans_subtitle">
+        <item quantity="other">%d 个计划</item>
+    </plurals>
+    <plurals name="plans_exercise_count">
+        <item quantity="other">%d 个动作</item>
+    </plurals>
+    <plurals name="plans_set_count">
+        <item quantity="other">%d 组</item>
+    </plurals>
+    <plurals name="plans_picker_add_count">
+        <item quantity="other">添加 %d 个动作</item>
+    </plurals>
+</resources>

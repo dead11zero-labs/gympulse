@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Экспорт данных</string>
+    <string name="data_export_summary">Сохранить планы, тренировки, упражнения и настройки в файл JSON</string>
+    <string name="data_export_csv">Экспорт истории тренировок (CSV)</string>
+    <string name="data_export_csv_summary">Каждый выполненный подход в файле таблицы (CSV)</string>
+    <string name="data_import">Импорт данных</string>
+    <string name="data_import_summary">Восстановить копию GymPulse с предварительным просмотром</string>
+    <string name="data_action_ok">ОК</string>
+    <string name="data_action_import">Импортировать</string>
+    <string name="data_working_export">Экспорт…</string>
+    <string name="data_working_read">Чтение копии…</string>
+    <string name="data_working_import">Импорт…</string>
+    <string name="data_export_done_title">Копия сохранена</string>
+    <string name="data_import_done_title">Импорт завершён</string>
+    <string name="data_import_done_message">Добавлено: %1$d, обновлено: %2$d, без изменений: %3$d.</string>
+    <string name="data_import_done_settings">Настройки тоже восстановлены.</string>
+    <string name="data_export_failed_title">Не удалось экспортировать</string>
+    <string name="data_import_failed_title">Не удалось импортировать</string>
+    <string name="data_error_io">Не удалось прочитать или записать файл. Повторите попытку или выберите другое место.</string>
+    <string name="data_error_invalid">Этот файл не является копией GymPulse или повреждён.</string>
+    <string name="data_error_missing_references">Копия ссылается на упражнения или планы, которых нет на этом устройстве. Ничего не изменено.</string>
+    <string name="data_error_write">Не удалось сохранить данные. Ничего не изменено.</string>
+    <string name="data_preview_title">Импорт копии</string>
+    <string name="data_preview_source">Создано %1$s в GymPulse %2$s</string>
+    <string name="data_preview_newer_version">Эта копия создана в более новой версии GymPulse. Данные, которых эта версия не знает, будут пропущены.</string>
+    <string name="data_preview_empty">В копии нет данных.</string>
+    <string name="data_preview_counts">Новых: %1$d · Обновлено: %2$d · Без изменений: %3$d</string>
+    <string name="data_preview_conflicts">Уже существующие записи</string>
+    <string name="data_preview_apply_settings">Восстановить также настройки</string>
+    <string name="data_strategy_newer">Оставить более новую версию</string>
+    <string name="data_strategy_newer_summary">Рекомендуется. Сравнивает последнее изменение каждой записи.</string>
+    <string name="data_strategy_keep">Оставить существующие</string>
+    <string name="data_strategy_keep_summary">Добавляет только записи, которых ещё нет на этом устройстве.</string>
+    <string name="data_strategy_overwrite">Перезаписать</string>
+    <string name="data_strategy_overwrite_summary">Заменяет существующие записи записями из копии. Удалённые записи остаются удалёнными.</string>
+    <string name="data_table_profile">Профиль</string>
+    <string name="data_table_body_measurements">Замеры тела</string>
+    <string name="data_table_equipment">Инвентарь</string>
+    <string name="data_table_equipment_settings">Настройки инвентаря</string>
+    <string name="data_table_custom_exercises">Свои упражнения</string>
+    <string name="data_table_library_changes">Избранное и заметки библиотеки</string>
+    <string name="data_table_exercise_names">Названия упражнений</string>
+    <string name="data_table_exercise_muscles">Мышцы упражнений</string>
+    <string name="data_table_plans">Планы</string>
+    <string name="data_table_plan_exercises">Упражнения планов</string>
+    <string name="data_table_schedule">Недельное расписание</string>
+    <string name="data_table_schedule_changes">Изменения расписания</string>
+    <string name="data_table_workouts">Тренировки</string>
+    <string name="data_table_workout_exercises">Упражнения тренировок</string>
+    <string name="data_table_sets">Подходы</string>
+    <string name="data_table_records">Личные рекорды</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">Экспортирована %d запись.</item>
+        <item quantity="few">Экспортировано записи: %d.</item>
+        <item quantity="many">Экспортировано записей: %d.</item>
+        <item quantity="other">Экспортировано записей: %d.</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d запись ссылается на упражнение или план, которых нет на этом устройстве. Обновите приложение и повторите попытку.</item>
+        <item quantity="few">%d записи ссылаются на упражнения или планы, которых нет на этом устройстве. Обновите приложение и повторите попытку.</item>
+        <item quantity="many">%d записей ссылаются на упражнения или планы, которых нет на этом устройстве. Обновите приложение и повторите попытку.</item>
+        <item quantity="other">%d записей ссылаются на упражнения или планы, которых нет на этом устройстве. Обновите приложение и повторите попытку.</item>
+    </plurals>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">Trener AI</string>
+    <string name="ai_coach">Lokalny trener AI</string>
+    <string name="ai_coach_entry_summary">Opcjonalnie: model na Twoim urządzeniu redaguje podsumowanie treningu</string>
+    <string name="ai_coach_summary_on">Włączone. Bez modelu trener używa prostych szablonów tekstu.</string>
+    <string name="ai_coach_summary_off">Wyłączone</string>
+    <string name="ai_coach_privacy">Analiza działa w całości na Twoim urządzeniu. Żadne dane treningowe nie są przesyłane. Sugestie nie są poradą medyczną.</string>
+    <string name="ai_coach_section_model">Model AI</string>
+    <string name="ai_coach_model_download">Pobierz model</string>
+    <string name="ai_coach_model_not_downloaded">Nie pobrano · około %1$s, tylko Wi-Fi</string>
+    <string name="ai_coach_model_downloading">Pobieranie modelu…</string>
+    <string name="ai_coach_model_waiting_wifi">Oczekiwanie na Wi-Fi</string>
+    <string name="ai_coach_model_progress">%1$s z %2$s</string>
+    <string name="ai_coach_model_cancel">Anuluj pobieranie</string>
+    <string name="ai_coach_model_ready">Model gotowy</string>
+    <string name="ai_coach_model_ready_size">Zajmuje %1$s miejsca</string>
+    <string name="ai_coach_model_delete">Usuń model</string>
+    <string name="ai_coach_model_delete_summary">Zwalnia miejsce. Trener używa wtedy szablonów tekstu.</string>
+    <string name="ai_coach_model_failed">Pobieranie nie powiodło się. Dotknij, aby spróbować ponownie.</string>
+    <string name="ai_coach_notice_not_configured">Model AI nie jest jeszcze dostępny w tej wersji aplikacji. Do tego czasu trener używa prostych szablonów tekstu.</string>
+    <string name="ai_coach_notice_storage">Za mało wolnego miejsca: potrzeba %1$s, dostępne %2$s. Zwolnij miejsce i spróbuj ponownie.</string>
+    <string name="ai_coach_error_storage">Za mało wolnego miejsca. Zwolnij miejsce i spróbuj ponownie.</string>
+    <string name="ai_coach_error_corrupt">Pobrany plik jest uszkodzony. Spróbuj ponownie.</string>
+    <string name="ai_coach_error_network">Nie udało się połączyć z serwerem. Sprawdź Wi-Fi i spróbuj ponownie.</string>
+    <string name="ai_coach_model_verifying">Sprawdzanie pliku…</string>
+    <string name="ai_coach_error_details">Szczegóły: %1$s</string>
+    <string name="ai_coach_error_unknown">Coś poszło nie tak. Spróbuj ponownie.</string>
+    <string name="ai_coach_optin_title">Włączyć trenera AI?</string>
+    <string name="ai_coach_optin_local">Redagowanie działa w całości na Twoim urządzeniu. Żadne dane treningowe nie opuszczają telefonu.</string>
+    <string name="ai_coach_optin_download">Jednorazowo model AI (około %1$s) jest pobierany z Hugging Face. Serwer widzi Twój adres IP, ale nie widzi danych treningowych.</string>
+    <string name="ai_coach_optin_storage">Potrzebujesz około %1$s wolnego miejsca.</string>
+    <string name="ai_coach_optin_wifi">Pobieranie odbywa się tylko przez Wi-Fi. Możesz je anulować lub usunąć model w dowolnej chwili.</string>
+    <string name="ai_coach_optin_medical">Sugestie nie są poradą medyczną i mogą zawierać błędy.</string>
+    <string name="ai_coach_optin_confirm">Włącz i pobierz</string>
+    <string name="ai_coach_delete_title">Usunąć model?</string>
+    <string name="ai_coach_delete_message">To zwalnia %1$s. Trener używa wtedy prostych szablonów tekstu, dopóki nie pobierzesz modelu ponownie.</string>
+    <string name="ai_coach_delete_confirm">Usuń</string>
+</resources>

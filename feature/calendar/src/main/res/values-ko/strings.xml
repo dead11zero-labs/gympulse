@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">캘린더</string>
+    <string name="feature_calendar_premium_title">캘린더는 프리미엄 기능입니다</string>
+    <string name="feature_calendar_premium_body">요일별로 플랜을 지정하고, 운동일을 하나씩 옮기고, 주별·월별로 기록을 둘러보세요. 기존 일정은 그대로 저장되어 읽을 수 있습니다.</string>
+    <string name="feature_calendar_previous">이전 기간</string>
+    <string name="feature_calendar_next">다음 기간</string>
+    <string name="feature_calendar_mode_week">주</string>
+    <string name="feature_calendar_mode_month">월</string>
+    <string name="feature_calendar_today">오늘</string>
+    <string name="feature_calendar_week_number">%1$d주차</string>
+    <string name="feature_calendar_duration_min">%1$d분</string>
+    <string name="feature_calendar_status_volume">%1$s · 볼륨 %2$s kg</string>
+    <string name="feature_calendar_rest_day">휴식일</string>
+    <string name="feature_calendar_unknown_plan">삭제된 플랜</string>
+    <string name="feature_calendar_free_workout">자유 운동</string>
+    <string name="feature_calendar_status_completed">완료</string>
+    <string name="feature_calendar_status_planned">예정</string>
+    <string name="feature_calendar_status_missed">미완료</string>
+    <string name="feature_calendar_status_skipped">건너뜀</string>
+    <string name="feature_calendar_override_skipped">예외: 건너뜀</string>
+    <string name="feature_calendar_override_moved">예외: 여기로 이동</string>
+    <string name="feature_calendar_override_added">예외: 추가됨</string>
+    <string name="feature_calendar_history">완료한 운동</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d분 · %3$s kg</string>
+    <string name="feature_calendar_action_skip">이 날 건너뛰기</string>
+    <string name="feature_calendar_action_move">다른 날로 이동</string>
+    <string name="feature_calendar_action_add">플랜 추가</string>
+    <string name="feature_calendar_action_reset">주간 일정으로 되돌리기</string>
+    <string name="feature_calendar_move_title">이동할 곳</string>
+    <string name="feature_calendar_add_plan_title">플랜 추가</string>
+    <string name="feature_calendar_scheme_title">주간 일정</string>
+    <string name="feature_calendar_scheme_hint">오늘부터 매주 반복됩니다.</string>
+    <string name="feature_calendar_pick_plan_for">%1$s의 플랜</string>
+    <string name="feature_calendar_edit">플랜 변경</string>
+    <string name="feature_calendar_no_plans">아직 플랜이 없어요. 플랜 탭에서 만들어 보세요.</string>
+    <string name="feature_calendar_cancel">취소</string>
+</resources>

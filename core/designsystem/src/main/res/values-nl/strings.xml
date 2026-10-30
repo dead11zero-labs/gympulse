@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">Stijgende trend: %1$s</string>
+    <string name="designsystem_trend_down">Dalende trend: %1$s</string>
+    <string name="designsystem_trend_flat">Gelijkblijvende trend: %1$s</string>
+    <string name="designsystem_progress_percent">%1$d procent</string>
+    <string name="designsystem_stepper_decrease">Daling</string>
+    <string name="designsystem_stepper_increase">Stijging</string>
+    <string name="designsystem_set_checkbox">Set %1$s</string>
+    <string name="designsystem_pr_badge">PR</string>
+</resources>

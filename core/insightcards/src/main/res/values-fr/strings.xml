@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Analyse de l\'entraînement</string>
+    <string name="insights_section_title_exercise">Analyses</string>
+    <string name="insights_disclaimer">Les suggestions reposent sur vos séances enregistrées et ne constituent pas un avis médical.</string>
+    <string name="insights_unknown_exercise">Exercice</string>
+    <string name="insights_empty_not_enough_title">Pas encore assez de données</string>
+    <string name="insights_empty_not_enough_message">Enregistrez quelques séances avec charges et répétitions. Après environ quatre séances d\'un exercice, les tendances et suggestions apparaissent ici.</string>
+    <string name="insights_empty_notable_title">Rien à signaler</string>
+    <string name="insights_empty_notable_message">Votre entraînement est sur la bonne voie. De nouvelles observations apparaîtront ici au fil de vos enregistrements.</string>
+    <string name="insights_empty_exercise_message">Pas encore assez de données pour cet exercice. Après environ quatre séances enregistrées, vous verrez ici des tendances et des suggestions.</string>
+    <string name="insights_title_plateau">Plateau</string>
+    <string name="insights_title_decline">Force en baisse</string>
+    <string name="insights_title_progress">En progression</string>
+    <string name="insights_title_deload">C\'est le moment d\'une semaine de décharge</string>
+    <string name="insights_title_increase_weight">Augmentez la charge</string>
+    <string name="insights_title_increase_reps">Ajoutez des répétitions</string>
+    <string name="insights_title_hold">Gardez la charge</string>
+    <string name="insights_title_imbalance">Déséquilibre</string>
+    <string name="insights_title_low_volume">Volume faible</string>
+    <string name="insights_title_high_volume">Volume élevé</string>
+    <string name="insights_subject_push_pull">Poussée contre tirage</string>
+    <string name="insights_subject_quads_hamstrings">Quadriceps contre ischio-jambiers</string>
+    <string name="insights_message_plateau">Aucun nouveau record depuis %1$d jours. Séances depuis votre dernier record : %2$d. Maximum sur une répétition estimé : %3$s kg.</string>
+    <string name="insights_message_decline">Votre maximum sur une répétition estimé est de %1$s kg, votre record était de %2$s kg. Vérifiez votre récupération ou prévoyez une semaine plus légère.</string>
+    <string name="insights_message_progress">Votre maximum sur une répétition estimé est de %1$s kg, soit environ %2$s kg de plus par semaine.</string>
+    <string name="insights_message_deload_plateau">La progression stagne depuis plusieurs périodes. Entraînez-vous avec %1$s kg (actuellement %2$s kg) pendant environ une semaine, avec %3$d répétitions, puis remontez progressivement.</string>
+    <string name="insights_message_deload_decline">La force est en baisse. Entraînez-vous avec %1$s kg (actuellement %2$s kg) pendant environ une semaine, avec %3$d répétitions, puis remontez progressivement.</string>
+    <string name="insights_message_increase_weight">Toutes les séries ont atteint le haut de votre fourchette de répétitions. La prochaine fois, prenez %1$s kg (actuellement %2$s kg) pour %3$d répétitions.</string>
+    <string name="insights_message_increase_reps">Restez à %1$s kg et visez %2$d répétitions par série.</string>
+    <string name="insights_message_hold_reps">Vous n\'avez pas atteint le minimum de répétitions. Restez à %1$s kg et visez %2$d répétitions.</string>
+    <string name="insights_message_hold_sets_missing">Certaines séries prévues manquent. Restez à %1$s kg et terminez toutes les séries avec %2$d répétitions.</string>
+    <string name="insights_message_hold_rpe">Vos séries étaient très dures. Restez à %1$s kg jusqu\'à ce que ce soit plus facile, avec %2$d répétitions.</string>
+    <string name="insights_message_low_volume">%1$s séries difficiles par semaine. Une bonne plage va de %2$s à %3$s.</string>
+    <string name="insights_message_high_volume">%1$s séries difficiles par semaine, au-dessus de la plage habituelle (%2$s à %3$s). Surveillez votre récupération.</string>
+    <string name="insights_message_push_dominant">Les muscles de poussée reçoivent %1$s séries par semaine, ceux de tirage seulement %2$s. Ajoutez des rowings ou des tirages verticaux pour équilibrer.</string>
+    <string name="insights_message_pull_dominant">Les muscles de tirage reçoivent %1$s séries par semaine, ceux de poussée seulement %2$s. Ajoutez des développés pour équilibrer.</string>
+    <string name="insights_message_quads_dominant">Les quadriceps reçoivent %1$s séries par semaine, les ischio-jambiers seulement %2$s. Ajoutez des leg curls ou du soulevé de terre roumain.</string>
+    <string name="insights_message_hamstrings_dominant">Les ischio-jambiers reçoivent %1$s séries par semaine, les quadriceps seulement %2$s. Ajoutez des squats ou de la presse à cuisses.</string>
+</resources>

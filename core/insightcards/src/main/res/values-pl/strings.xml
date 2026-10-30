@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Analiza treningu</string>
+    <string name="insights_section_title_exercise">Analizy</string>
+    <string name="insights_disclaimer">Sugestie opierają się na zapisanych treningach i nie stanowią porady medycznej.</string>
+    <string name="insights_unknown_exercise">Ćwiczenie</string>
+    <string name="insights_empty_not_enough_title">Za mało danych</string>
+    <string name="insights_empty_not_enough_message">Zapisz kilka treningów z ciężarami i powtórzeniami. Po około czterech sesjach danego ćwiczenia pojawią się tutaj trendy i sugestie.</string>
+    <string name="insights_empty_notable_title">Nic do zgłoszenia</string>
+    <string name="insights_empty_notable_message">Twój trening wygląda dobrze. Nowe obserwacje pojawią się tutaj, gdy będziesz dalej zapisywać treningi.</string>
+    <string name="insights_empty_exercise_message">Za mało danych o tym ćwiczeniu. Po około czterech zapisanych sesjach zobaczysz tutaj trendy i sugestie.</string>
+    <string name="insights_title_plateau">Plateau</string>
+    <string name="insights_title_decline">Siła spada</string>
+    <string name="insights_title_progress">Robisz postępy</string>
+    <string name="insights_title_deload">Czas na tydzień deloadu</string>
+    <string name="insights_title_increase_weight">Zwiększ ciężar</string>
+    <string name="insights_title_increase_reps">Dodaj powtórzenia</string>
+    <string name="insights_title_hold">Utrzymaj ciężar</string>
+    <string name="insights_title_imbalance">Brak równowagi</string>
+    <string name="insights_title_low_volume">Niski wolumen</string>
+    <string name="insights_title_high_volume">Wysoki wolumen</string>
+    <string name="insights_subject_push_pull">Pchanie a ciągnięcie</string>
+    <string name="insights_subject_quads_hamstrings">Czworogłowe a dwugłowe uda</string>
+    <string name="insights_message_plateau">Brak nowego rekordu od %1$d dni. Sesje od ostatniego rekordu: %2$d. Szacowany maksymalny ciężar na jedno powtórzenie: %3$s kg.</string>
+    <string name="insights_message_decline">Twój szacowany maksymalny ciężar na jedno powtórzenie to %1$s kg, a Twój rekord to %2$s kg. Sprawdź regenerację lub zaplanuj lżejszy tydzień.</string>
+    <string name="insights_message_progress">Twój szacowany maksymalny ciężar na jedno powtórzenie to %1$s kg, czyli około %2$s kg więcej tygodniowo.</string>
+    <string name="insights_message_deload_plateau">Postępy stoją w miejscu od kilku okresów. Trenuj z ciężarem %1$s kg (teraz %2$s kg) przez około tydzień, celując w %3$d powtórzeń, a potem znów go zwiększaj.</string>
+    <string name="insights_message_deload_decline">Siła spada. Trenuj z ciężarem %1$s kg (teraz %2$s kg) przez około tydzień, celując w %3$d powtórzeń, a potem znów go zwiększaj.</string>
+    <string name="insights_message_increase_weight">Wszystkie serie osiągnęły górną granicę zakresu powtórzeń. Następnym razem użyj %1$s kg (teraz %2$s kg) na %3$d powtórzeń.</string>
+    <string name="insights_message_increase_reps">Zostań przy %1$s kg i celuj w %2$d powtórzeń na serię.</string>
+    <string name="insights_message_hold_reps">Nie osiągnięto minimalnej liczby powtórzeń. Zostań przy %1$s kg i celuj w %2$d powtórzeń.</string>
+    <string name="insights_message_hold_sets_missing">Brakuje niektórych zaplanowanych serii. Zostań przy %1$s kg i wykonaj wszystkie serie po %2$d powtórzeń.</string>
+    <string name="insights_message_hold_rpe">Serie były bardzo ciężkie. Zostań przy %1$s kg, aż będzie łatwiej, po %2$d powtórzeń.</string>
+    <string name="insights_message_low_volume">%1$s ciężkich serii tygodniowo. Dobry zakres to %2$s do %3$s.</string>
+    <string name="insights_message_high_volume">%1$s ciężkich serii tygodniowo, powyżej zwykłego zakresu %2$s do %3$s. Miej oko na regenerację.</string>
+    <string name="insights_message_push_dominant">Mięśnie pchające dostają %1$s serii tygodniowo, a ciągnące tylko %2$s. Dodaj wiosłowanie lub ściąganie drążka, aby to wyrównać.</string>
+    <string name="insights_message_pull_dominant">Mięśnie ciągnące dostają %1$s serii tygodniowo, a pchające tylko %2$s. Dodaj wyciskanie, aby to wyrównać.</string>
+    <string name="insights_message_quads_dominant">Czworogłowe uda dostają %1$s serii tygodniowo, a dwugłowe tylko %2$s. Dodaj uginanie nóg lub rumuński martwy ciąg.</string>
+    <string name="insights_message_hamstrings_dominant">Dwugłowe uda dostają %1$s serii tygodniowo, a czworogłowe tylko %2$s. Dodaj przysiady lub wypychanie na suwnicy.</string>
+</resources>

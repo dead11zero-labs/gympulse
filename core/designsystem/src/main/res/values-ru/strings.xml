@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">Тренд растёт: %1$s</string>
+    <string name="designsystem_trend_down">Тренд снижается: %1$s</string>
+    <string name="designsystem_trend_flat">Тренд не меняется: %1$s</string>
+    <string name="designsystem_progress_percent">%1$d процентов</string>
+    <string name="designsystem_stepper_decrease">Снижение</string>
+    <string name="designsystem_stepper_increase">Рост</string>
+    <string name="designsystem_set_checkbox">Подход %1$s</string>
+    <string name="designsystem_pr_badge">Рекорд</string>
+</resources>

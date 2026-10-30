@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_modeldownload_channel">AIモデルのダウンロード</string>
+    <string name="core_modeldownload_channel_description">ローカルAIコーチのモデルをWi-Fiでダウンロード中の進捗</string>
+    <string name="core_modeldownload_title">AIモデルをダウンロード中</string>
+    <string name="core_modeldownload_preparing">ダウンロードを準備中…</string>
+    <string name="core_modeldownload_progress">%1$d%%・%2$d／%3$d MB</string>
+    <string name="core_modeldownload_verifying">ファイルを確認中…</string>
+    <string name="core_modeldownload_cancel">キャンセル</string>
+</resources>

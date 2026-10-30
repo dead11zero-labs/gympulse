@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">Coach IA</string>
+    <string name="ai_coach">Coach IA locale</string>
+    <string name="ai_coach_entry_summary">Facoltativo: un modello sul tuo dispositivo formula il riepilogo dell\'allenamento</string>
+    <string name="ai_coach_summary_on">Attivo. Senza un modello il coach usa semplici modelli di testo.</string>
+    <string name="ai_coach_summary_off">Disattivato</string>
+    <string name="ai_coach_privacy">L\'analisi viene eseguita interamente sul tuo dispositivo. Non viene trasmesso alcun dato di allenamento. I suggerimenti non sono un parere medico.</string>
+    <string name="ai_coach_section_model">Modello IA</string>
+    <string name="ai_coach_model_download">Scarica il modello</string>
+    <string name="ai_coach_model_not_downloaded">Non scaricato · circa %1$s, solo Wi-Fi</string>
+    <string name="ai_coach_model_downloading">Download del modello…</string>
+    <string name="ai_coach_model_waiting_wifi">In attesa del Wi-Fi</string>
+    <string name="ai_coach_model_progress">%1$s di %2$s</string>
+    <string name="ai_coach_model_cancel">Annulla il download</string>
+    <string name="ai_coach_model_ready">Modello pronto</string>
+    <string name="ai_coach_model_ready_size">Occupa %1$s di spazio</string>
+    <string name="ai_coach_model_delete">Elimina il modello</string>
+    <string name="ai_coach_model_delete_summary">Libera spazio. Il coach usa poi modelli di testo.</string>
+    <string name="ai_coach_model_failed">Download non riuscito. Tocca per riprovare.</string>
+    <string name="ai_coach_notice_not_configured">Il modello IA non è ancora disponibile in questa versione dell\'app. Fino ad allora il coach usa semplici modelli di testo.</string>
+    <string name="ai_coach_notice_storage">Spazio di archiviazione insufficiente: servono %1$s, disponibili %2$s. Libera spazio e riprova.</string>
+    <string name="ai_coach_error_storage">Spazio di archiviazione insufficiente. Libera spazio e riprova.</string>
+    <string name="ai_coach_error_corrupt">Il file scaricato è danneggiato. Riprova.</string>
+    <string name="ai_coach_error_network">Impossibile raggiungere il server. Controlla il Wi-Fi e riprova.</string>
+    <string name="ai_coach_model_verifying">Controllo del file…</string>
+    <string name="ai_coach_error_details">Dettagli: %1$s</string>
+    <string name="ai_coach_error_unknown">Qualcosa è andato storto. Riprova.</string>
+    <string name="ai_coach_optin_title">Attivare il coach IA?</string>
+    <string name="ai_coach_optin_local">La formulazione viene eseguita interamente sul tuo dispositivo. Nessun dato di allenamento lascia il telefono.</string>
+    <string name="ai_coach_optin_download">Una sola volta viene scaricato da Hugging Face un modello IA (circa %1$s). Il server vede il tuo indirizzo IP, ma nessun dato di allenamento.</string>
+    <string name="ai_coach_optin_storage">Servono circa %1$s di spazio libero.</string>
+    <string name="ai_coach_optin_wifi">Il download avviene solo via Wi-Fi. Puoi annullarlo o eliminare il modello in qualsiasi momento.</string>
+    <string name="ai_coach_optin_medical">I suggerimenti non sono un parere medico e possono contenere errori.</string>
+    <string name="ai_coach_optin_confirm">Attiva e scarica</string>
+    <string name="ai_coach_delete_title">Eliminare il modello?</string>
+    <string name="ai_coach_delete_message">Questo libera %1$s. Il coach userà semplici modelli di testo finché non scaricherai di nuovo il modello.</string>
+    <string name="ai_coach_delete_confirm">Elimina</string>
+</resources>

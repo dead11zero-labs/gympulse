@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">복근</string>
+    <string name="muscle_abductors">외전근</string>
+    <string name="muscle_adductors">내전근</string>
+    <string name="muscle_biceps">이두근</string>
+    <string name="muscle_calves">종아리</string>
+    <string name="muscle_chest">가슴</string>
+    <string name="muscle_forearms">전완</string>
+    <string name="muscle_glutes">둔근</string>
+    <string name="muscle_hamstrings">햄스트링</string>
+    <string name="muscle_lats">광배근</string>
+    <string name="muscle_lower_back">허리</string>
+    <string name="muscle_middle_back">등 중부</string>
+    <string name="muscle_neck">목</string>
+    <string name="muscle_quadriceps">대퇴사두근</string>
+    <string name="muscle_shoulders">어깨</string>
+    <string name="muscle_traps">승모근</string>
+    <string name="muscle_triceps">삼두근</string>
+    <string name="equipment_band">밴드</string>
+    <string name="equipment_barbell">바벨</string>
+    <string name="equipment_bodyweight">맨몸</string>
+    <string name="equipment_cable">케이블</string>
+    <string name="equipment_dumbbell">덤벨</string>
+    <string name="equipment_exercise_ball">짐볼</string>
+    <string name="equipment_ez_bar">EZ바</string>
+    <string name="equipment_foam_roll">폼롤러</string>
+    <string name="equipment_kettlebell">케틀벨</string>
+    <string name="equipment_machine">머신</string>
+    <string name="equipment_medicine_ball">메디신볼</string>
+    <string name="equipment_other">기타</string>
+</resources>

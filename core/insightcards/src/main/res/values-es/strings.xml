@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Análisis del entrenamiento</string>
+    <string name="insights_section_title_exercise">Análisis</string>
+    <string name="insights_disclaimer">Las sugerencias se basan en tus entrenamientos registrados y no son consejo médico.</string>
+    <string name="insights_unknown_exercise">Ejercicio</string>
+    <string name="insights_empty_not_enough_title">Aún no hay suficientes datos</string>
+    <string name="insights_empty_not_enough_message">Registra algunos entrenamientos con pesos y repeticiones. Tras unas cuatro sesiones de un ejercicio, aquí aparecen tendencias y sugerencias.</string>
+    <string name="insights_empty_notable_title">Nada que destacar</string>
+    <string name="insights_empty_notable_message">Tu entrenamiento va bien encaminado. Los nuevos hallazgos aparecerán aquí a medida que sigas registrando.</string>
+    <string name="insights_empty_exercise_message">Aún no hay suficientes datos de este ejercicio. Tras unas cuatro sesiones registradas verás tendencias y sugerencias aquí.</string>
+    <string name="insights_title_plateau">Estancamiento</string>
+    <string name="insights_title_decline">La fuerza baja</string>
+    <string name="insights_title_progress">Vas progresando</string>
+    <string name="insights_title_deload">Toca una semana de descarga</string>
+    <string name="insights_title_increase_weight">Sube el peso</string>
+    <string name="insights_title_increase_reps">Añade repeticiones</string>
+    <string name="insights_title_hold">Mantén el peso</string>
+    <string name="insights_title_imbalance">Desequilibrio</string>
+    <string name="insights_title_low_volume">Volumen bajo</string>
+    <string name="insights_title_high_volume">Volumen alto</string>
+    <string name="insights_subject_push_pull">Empuje frente a tirón</string>
+    <string name="insights_subject_quads_hamstrings">Cuádriceps frente a isquiotibiales</string>
+    <string name="insights_message_plateau">Sin nueva marca desde hace %1$d días. Sesiones desde tu última marca: %2$d. Repetición máxima estimada: %3$s kg.</string>
+    <string name="insights_message_decline">Tu repetición máxima estimada es de %1$s kg y tu mejor marca fue de %2$s kg. Revisa tu recuperación o planifica una semana más ligera.</string>
+    <string name="insights_message_progress">Tu repetición máxima estimada es de %1$s kg, unos %2$s kg más por semana.</string>
+    <string name="insights_message_deload_plateau">El progreso lleva varios periodos estancado. Entrena con %1$s kg (ahora %2$s kg) durante una semana, con %3$d repeticiones, y luego vuelve a subir.</string>
+    <string name="insights_message_deload_decline">La fuerza ha ido bajando. Entrena con %1$s kg (ahora %2$s kg) durante una semana, con %3$d repeticiones, y luego vuelve a subir.</string>
+    <string name="insights_message_increase_weight">Todas las series llegaron al máximo de tu rango de repeticiones. La próxima vez usa %1$s kg (ahora %2$s kg) para %3$d repeticiones.</string>
+    <string name="insights_message_increase_reps">Mantén %1$s kg y apunta a %2$d repeticiones por serie.</string>
+    <string name="insights_message_hold_reps">No llegaste al mínimo de repeticiones. Mantén %1$s kg y apunta a %2$d repeticiones.</string>
+    <string name="insights_message_hold_sets_missing">Faltan algunas series planificadas. Mantén %1$s kg y completa todas las series con %2$d repeticiones.</string>
+    <string name="insights_message_hold_rpe">Tus series se sintieron muy duras. Mantén %1$s kg hasta que resulte más fácil, con %2$d repeticiones.</string>
+    <string name="insights_message_low_volume">%1$s series duras por semana. Un buen rango es de %2$s a %3$s.</string>
+    <string name="insights_message_high_volume">%1$s series duras por semana, por encima de lo habitual (%2$s a %3$s). Vigila tu recuperación.</string>
+    <string name="insights_message_push_dominant">Los músculos de empuje reciben %1$s series por semana y los de tirón solo %2$s. Añade remos o jalones para equilibrar.</string>
+    <string name="insights_message_pull_dominant">Los músculos de tirón reciben %1$s series por semana y los de empuje solo %2$s. Añade press para equilibrar.</string>
+    <string name="insights_message_quads_dominant">Los cuádriceps reciben %1$s series por semana y los isquiotibiales solo %2$s. Añade curl femoral o peso muerto rumano.</string>
+    <string name="insights_message_hamstrings_dominant">Los isquiotibiales reciben %1$s series por semana y los cuádriceps solo %2$s. Añade sentadillas o prensa de piernas.</string>
+</resources>

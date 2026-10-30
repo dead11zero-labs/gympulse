@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_plans_title">Schede</string>
+    <string name="plans_new">Nuova scheda</string>
+    <string name="plans_title">Schede di allenamento</string>
+    <string name="plans_more_exercises">+%1$d altri</string>
+    <string name="plans_empty_title">Ancora nessuna scheda</string>
+    <string name="plans_empty_body">Crea una scheda per organizzare i tuoi allenamenti.</string>
+    <string name="plans_no_exercises_yet">Ancora nessun esercizio</string>
+    <string name="plans_duration_minutes">~%1$d min</string>
+    <string name="plans_meta">%1$s · %2$s · %3$s</string>
+    <string name="plans_more_options">Altre opzioni</string>
+    <string name="plans_menu_edit">Modifica</string>
+    <string name="plans_menu_duplicate">Duplica</string>
+    <string name="plans_menu_delete">Elimina</string>
+    <string name="plans_copy_name">%1$s (copia)</string>
+    <string name="plans_delete_title">Eliminare la scheda?</string>
+    <string name="plans_delete_message">«%1$s» verrà rimossa. Gli allenamenti passati restano nella cronologia.</string>
+    <string name="plans_delete_confirm">Elimina</string>
+    <string name="plans_cancel">Annulla</string>
+    <string name="plans_editor_title_new">Nuova scheda</string>
+    <string name="plans_editor_title_edit">Modifica scheda</string>
+    <string name="plans_editor_subtitle">Crea una routine di allenamento su misura</string>
+    <string name="plans_back">Indietro</string>
+    <string name="plans_field_name_required">Nome della scheda *</string>
+    <string name="plans_field_name_hint">ad es. Giorno spinta A, Full body…</string>
+    <string name="plans_field_notes_hint">Obiettivi, tempi di recupero, dettagli del riscaldamento…</string>
+    <string name="plans_no_exercises_body">Scegli tra esercizi per petto, schiena, gambe e altro.</string>
+    <string name="plans_field_name_error">Inserisci un nome</string>
+    <string name="plans_field_notes">Note (facoltative)</string>
+    <string name="plans_exercises_header">Esercizi</string>
+    <string name="plans_add_exercises">Aggiungi esercizi</string>
+    <string name="plans_no_exercises_hint">Aggiungi almeno un esercizio.</string>
+    <string name="plans_unknown_exercise">Esercizio sconosciuto</string>
+    <string name="plans_field_sets">Serie</string>
+    <string name="plans_field_reps_min">Rip. min</string>
+    <string name="plans_field_reps_max">Rip. max</string>
+    <string name="plans_field_weight">Peso obiettivo (kg)</string>
+    <string name="plans_field_rest">Recupero (s)</string>
+    <string name="plans_field_duration_minutes">Durata (min)</string>
+    <string name="plans_error_invalid">Non valido</string>
+    <string name="plans_move_up">Sposta su</string>
+    <string name="plans_move_down">Sposta giù</string>
+    <string name="plans_remove_exercise">Rimuovi esercizio</string>
+    <string name="plans_superset_link">Collega al successivo come superserie</string>
+    <string name="plans_superset_unlink">Scollega dal successivo</string>
+    <string name="plans_save">Salva</string>
+    <string name="plans_save_failed">Impossibile salvare la scheda</string>
+    <string name="plans_discard_title">Scartare le modifiche?</string>
+    <string name="plans_discard_message">Le modifiche non salvate andranno perse.</string>
+    <string name="plans_discard_confirm">Scarta</string>
+    <string name="plans_discard_keep">Continua a modificare</string>
+    <string name="plans_picker_search">Cerca esercizi</string>
+    <string name="plans_picker_clear">Cancella ricerca</string>
+    <string name="plans_picker_close">Chiudi</string>
+    <string name="plans_picker_empty">Nessun esercizio trovato</string>
+    <string name="plans_picker_empty_hint">Prova un altro termine di ricerca.</string>
+    <string name="plans_picker_select_hint">Seleziona esercizi</string>
+    <plurals name="plans_subtitle">
+        <item quantity="one">%d scheda</item>
+        <item quantity="many">%d schede</item>
+        <item quantity="other">%d schede</item>
+    </plurals>
+    <plurals name="plans_exercise_count">
+        <item quantity="one">%d esercizio</item>
+        <item quantity="many">%d esercizi</item>
+        <item quantity="other">%d esercizi</item>
+    </plurals>
+    <plurals name="plans_set_count">
+        <item quantity="one">%d serie</item>
+        <item quantity="many">%d serie</item>
+        <item quantity="other">%d serie</item>
+    </plurals>
+    <plurals name="plans_picker_add_count">
+        <item quantity="one">Aggiungi %d esercizio</item>
+        <item quantity="many">Aggiungi %d esercizi</item>
+        <item quantity="other">Aggiungi %d esercizi</item>
+    </plurals>
+</resources>

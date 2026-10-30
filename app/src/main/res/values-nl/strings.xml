@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_plans">Schema\'s</string>
+    <string name="nav_library">Bibliotheek</string>
+    <string name="nav_calendar">Agenda</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="action_account">Accountmenu</string>
+    <string name="action_back">Terug</string>
+    <string name="onboarding_skip">Overslaan</string>
+    <string name="onboarding_next">Volgende</string>
+    <string name="onboarding_start">Aan de slag</string>
+    <string name="onboarding_page_indicator">Pagina %1$d van %2$d</string>
+    <string name="onboarding_welcome_title">Welkom bij GymPulse</string>
+    <string name="onboarding_welcome_body">Log je trainingen, volg je voortgang en blijf op koers. Alles blijft op je apparaat.</string>
+    <string name="onboarding_goal_title">Stel je weekdoel in</string>
+    <string name="onboarding_goal_body">Hoeveel trainingen per week wil je doen? Je kunt dit altijd aanpassen in Instellingen.</string>
+    <string name="onboarding_done_title">Alles is klaar</string>
+    <string name="onboarding_done_body">Start je eerste training vanuit het dashboard. Veel plezier!</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="one">%d training per week</item>
+        <item quantity="other">%d trainingen per week</item>
+    </plurals>
+</resources>
