@@ -8,6 +8,7 @@ android {
 }
 
 dependencies {
+    api(projects.core.designsystem)
     // DataStore steckt im Hilt-Modul, daher muss die App-Komponente die Typen sehen.
     api(libs.androidx.datastore.preferences)
     implementation(libs.kotlinx.coroutines.core)

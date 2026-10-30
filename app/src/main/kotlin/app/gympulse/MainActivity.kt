@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     )
                     onDispose { }
                 }
-                GymPulseTheme(darkTheme = darkTheme, dynamicColor = current.dynamicColor) {
+                GymPulseTheme(darkTheme = darkTheme, dynamicColor = current.dynamicColor, accent = current.accentColor) {
                     if (current.onboardingCompleted) {
                         GymPulseApp()
                     } else {

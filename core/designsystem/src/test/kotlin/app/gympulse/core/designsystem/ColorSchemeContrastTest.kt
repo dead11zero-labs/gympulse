@@ -1,6 +1,7 @@
 package app.gympulse.core.designsystem
 
 import androidx.compose.ui.graphics.Color
+import app.gympulse.core.designsystem.theme.AccentColor
 import app.gympulse.core.designsystem.theme.ColorContrast
 import app.gympulse.core.designsystem.theme.GymPulseSeedColor
 import app.gympulse.core.designsystem.theme.contrastPairs
@@ -112,11 +113,33 @@ class ColorSchemeContrastTest {
         }
     }
 
-    private fun assertAllPairsPass(dark: Boolean) {
-        val pairs = gymPulseColorScheme(darkTheme = dark).contrastPairs()
+    @Test
+    fun `every accent color meets minimum contrast in both schemes`() {
+        AccentColor.entries.forEach { accent ->
+            listOf(true, false).forEach { dark -> assertAllPairsPass(dark, accent) }
+        }
+    }
+
+    @Test
+    fun `accents change only the primary roles and mint is the default`() {
+        listOf(true, false).forEach { dark ->
+            val base = gymPulseColorScheme(dark)
+            assertEquals(base, gymPulseColorScheme(dark, AccentColor.MINT))
+            AccentColor.entries.filter { it != AccentColor.MINT }.forEach { accent ->
+                val scheme = gymPulseColorScheme(dark, accent)
+                assertNotEquals(base.primary, scheme.primary)
+                assertEquals(base.surface, scheme.surface)
+                assertEquals(base.secondary, scheme.secondary)
+                assertEquals(base.tertiary, scheme.tertiary)
+            }
+        }
+    }
+
+    private fun assertAllPairsPass(dark: Boolean, accent: AccentColor = AccentColor.MINT) {
+        val pairs = gymPulseColorScheme(darkTheme = dark, accent = accent).contrastPairs()
         assertTrue(pairs.isNotEmpty())
         val failures = pairs.filterNot { it.passes }
             .map { "${it.name}: ${"%.2f".format(it.ratio)} < ${it.minimum}" }
-        assertTrue("Kontrast zu gering (dark=$dark):\n" + failures.joinToString("\n"), failures.isEmpty())
+        assertTrue("Kontrast zu gering (dark=$dark, accent=$accent):\n" + failures.joinToString("\n"), failures.isEmpty())
     }
 }

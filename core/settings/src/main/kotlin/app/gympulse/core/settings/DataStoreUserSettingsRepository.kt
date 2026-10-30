@@ -1,5 +1,6 @@
 package app.gympulse.core.settings
 
+import app.gympulse.core.designsystem.theme.AccentColor
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -50,6 +51,10 @@ class DataStoreUserSettingsRepository @Inject constructor(
         dataStore.edit { it[Keys.DYNAMIC_COLOR] = enabled }
     }
 
+    override suspend fun setAccentColor(accent: AccentColor) {
+        dataStore.edit { it[Keys.ACCENT_COLOR] = accent.name }
+    }
+
     override suspend fun setLanguage(language: AppLanguage) {
         dataStore.edit { it[Keys.LANGUAGE] = language.name }
     }
@@ -64,6 +69,7 @@ class DataStoreUserSettingsRepository @Inject constructor(
         val WEEKLY_GOAL = intPreferencesKey("weekly_goal")
         val THEME_MODE = stringPreferencesKey("theme_mode")
         val DYNAMIC_COLOR = booleanPreferencesKey("dynamic_color")
+        val ACCENT_COLOR = stringPreferencesKey("accent_color")
         val LANGUAGE = stringPreferencesKey("language")
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
     }
@@ -76,6 +82,7 @@ class DataStoreUserSettingsRepository @Inject constructor(
             .coerceIn(SettingsLimits.WEEKLY_GOAL),
         themeMode = enumOrDefault(this[Keys.THEME_MODE], ThemeMode.DARK),
         dynamicColor = this[Keys.DYNAMIC_COLOR] ?: false,
+        accentColor = enumOrDefault(this[Keys.ACCENT_COLOR], AccentColor.MINT),
         language = enumOrDefault(this[Keys.LANGUAGE], AppLanguage.SYSTEM),
         onboardingCompleted = this[Keys.ONBOARDING_COMPLETED] ?: false,
     )

@@ -1,5 +1,6 @@
 package app.gympulse.core.settings
 
+import app.gympulse.core.designsystem.theme.AccentColor
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -28,6 +29,7 @@ interface UserSettingsRepository {
     suspend fun setWeeklyGoal(sessionsPerWeek: Int)
     suspend fun setThemeMode(mode: ThemeMode)
     suspend fun setDynamicColor(enabled: Boolean)
+    suspend fun setAccentColor(accent: AccentColor)
     suspend fun setLanguage(language: AppLanguage)
     suspend fun setOnboardingCompleted(completed: Boolean)
 }

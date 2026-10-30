@@ -1,5 +1,6 @@
 package app.gympulse.core.settings
 
+import app.gympulse.core.designsystem.theme.AccentColor
 import java.time.DayOfWeek
 
 /** Darstellung der App: folgt dem System oder ist fest hell bzw. dunkel. */
@@ -48,6 +49,8 @@ data class UserSettings(
     val themeMode: ThemeMode = ThemeMode.DARK,
     /** Material You ist optional; Standard ist das eigene Kinetic-Schema. */
     val dynamicColor: Boolean = false,
+    /** Akzentfarbe des eigenen Schemas; mit Material You (dynamicColor) hat dieses Vorrang. */
+    val accentColor: AccentColor = AccentColor.MINT,
     val language: AppLanguage = AppLanguage.SYSTEM,
     /** Ob das Onboarding beim ersten Start abgeschlossen oder übersprungen wurde. */
     val onboardingCompleted: Boolean = false,

@@ -28,6 +28,7 @@ class SettingsAdaptersTest {
         override suspend fun setWeeklyGoal(sessionsPerWeek: Int) = state.update { it.copy(weeklyGoal = sessionsPerWeek) }
         override suspend fun setThemeMode(mode: ThemeMode) = state.update { it.copy(themeMode = mode) }
         override suspend fun setDynamicColor(enabled: Boolean) = state.update { it.copy(dynamicColor = enabled) }
+        override suspend fun setAccentColor(accent: app.gympulse.core.designsystem.theme.AccentColor) = state.update { it.copy(accentColor = accent) }
         override suspend fun setLanguage(language: AppLanguage) = state.update { it.copy(language = language) }
         override suspend fun setOnboardingCompleted(completed: Boolean) =
             state.update { it.copy(onboardingCompleted = completed) }

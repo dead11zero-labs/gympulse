@@ -35,6 +35,7 @@ class OnboardingViewModelTest {
         override suspend fun setWeeklyGoal(sessionsPerWeek: Int) = update { copy(weeklyGoal = sessionsPerWeek) }
         override suspend fun setThemeMode(mode: ThemeMode) = update { copy(themeMode = mode) }
         override suspend fun setDynamicColor(enabled: Boolean) = update { copy(dynamicColor = enabled) }
+        override suspend fun setAccentColor(accent: app.gympulse.core.designsystem.theme.AccentColor) = update { copy(accentColor = accent) }
         override suspend fun setLanguage(language: AppLanguage) = update { copy(language = language) }
         override suspend fun setOnboardingCompleted(completed: Boolean) = update { copy(onboardingCompleted = completed) }
 
