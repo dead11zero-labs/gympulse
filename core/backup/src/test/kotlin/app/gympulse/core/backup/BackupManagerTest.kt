@@ -462,6 +462,7 @@ private class FakeSettings(initial: UserSettings = UserSettings()) : UserSetting
     override suspend fun setWeeklyGoal(sessionsPerWeek: Int) = state.update { copy(weeklyGoal = sessionsPerWeek) }
     override suspend fun setThemeMode(mode: ThemeMode) = state.update { copy(themeMode = mode) }
     override suspend fun setDynamicColor(enabled: Boolean) = state.update { copy(dynamicColor = enabled) }
+    override suspend fun setAccentColor(accent: app.gympulse.core.designsystem.theme.AccentColor) = state.update { copy(accentColor = accent) }
     override suspend fun setLanguage(language: AppLanguage) = state.update { copy(language = language) }
     override suspend fun setOnboardingCompleted(completed: Boolean) = state.update { copy(onboardingCompleted = completed) }
 
