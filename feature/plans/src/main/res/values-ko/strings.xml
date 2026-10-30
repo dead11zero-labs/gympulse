@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_plans_title">플랜</string>
+    <string name="plans_new">새 플랜</string>
+    <string name="plans_title">운동 플랜</string>
+    <string name="plans_more_exercises">외 %1$d개</string>
+    <string name="plans_empty_title">아직 플랜이 없어요</string>
+    <string name="plans_empty_body">플랜을 만들어 운동을 체계적으로 관리하세요.</string>
+    <string name="plans_no_exercises_yet">아직 운동 종목이 없어요</string>
+    <string name="plans_duration_minutes">약 %1$d분</string>
+    <string name="plans_meta">%1$s · %2$s · %3$s</string>
+    <string name="plans_more_options">옵션 더보기</string>
+    <string name="plans_menu_edit">편집</string>
+    <string name="plans_menu_duplicate">복제</string>
+    <string name="plans_menu_delete">삭제</string>
+    <string name="plans_copy_name">%1$s (사본)</string>
+    <string name="plans_delete_title">플랜을 삭제할까요?</string>
+    <string name="plans_delete_message">"%1$s" 플랜이 삭제됩니다. 지난 운동은 기록에 남습니다.</string>
+    <string name="plans_delete_confirm">삭제</string>
+    <string name="plans_cancel">취소</string>
+    <string name="plans_editor_title_new">새 플랜</string>
+    <string name="plans_editor_title_edit">플랜 편집</string>
+    <string name="plans_editor_subtitle">나에게 딱 맞는 운동 루틴을 만들어 보세요</string>
+    <string name="plans_back">뒤로</string>
+    <string name="plans_field_name_required">플랜 이름 *</string>
+    <string name="plans_field_name_hint">예: 푸시 데이 A, 전신…</string>
+    <string name="plans_field_notes_hint">목표, 휴식 시간, 워밍업 세부 사항…</string>
+    <string name="plans_no_exercises_body">가슴, 등, 하체 등의 종목에서 고르세요.</string>
+    <string name="plans_field_name_error">이름을 입력하세요</string>
+    <string name="plans_field_notes">메모(선택)</string>
+    <string name="plans_exercises_header">운동 종목</string>
+    <string name="plans_add_exercises">종목 추가</string>
+    <string name="plans_no_exercises_hint">종목을 하나 이상 추가하세요.</string>
+    <string name="plans_unknown_exercise">알 수 없는 종목</string>
+    <string name="plans_field_sets">세트</string>
+    <string name="plans_field_reps_min">최소 횟수</string>
+    <string name="plans_field_reps_max">최대 횟수</string>
+    <string name="plans_field_weight">목표 무게(kg)</string>
+    <string name="plans_field_rest">휴식(초)</string>
+    <string name="plans_field_duration_minutes">시간(분)</string>
+    <string name="plans_error_invalid">올바르지 않음</string>
+    <string name="plans_move_up">위로 이동</string>
+    <string name="plans_move_down">아래로 이동</string>
+    <string name="plans_remove_exercise">종목 제거</string>
+    <string name="plans_superset_link">다음 종목과 슈퍼세트로 연결</string>
+    <string name="plans_superset_unlink">다음 종목과 연결 해제</string>
+    <string name="plans_save">저장</string>
+    <string name="plans_save_failed">플랜을 저장하지 못했어요</string>
+    <string name="plans_discard_title">변경 사항을 버릴까요?</string>
+    <string name="plans_discard_message">저장하지 않은 변경 사항이 사라집니다.</string>
+    <string name="plans_discard_confirm">버리기</string>
+    <string name="plans_discard_keep">계속 편집</string>
+    <string name="plans_picker_search">운동 종목 검색</string>
+    <string name="plans_picker_clear">검색어 지우기</string>
+    <string name="plans_picker_close">닫기</string>
+    <string name="plans_picker_empty">운동 종목을 찾지 못했어요</string>
+    <string name="plans_picker_empty_hint">다른 검색어를 입력해 보세요.</string>
+    <string name="plans_picker_select_hint">종목 선택</string>
+    <plurals name="plans_subtitle">
+        <item quantity="other">플랜 %d개</item>
+    </plurals>
+    <plurals name="plans_exercise_count">
+        <item quantity="other">종목 %d개</item>
+    </plurals>
+    <plurals name="plans_set_count">
+        <item quantity="other">%d세트</item>
+    </plurals>
+    <plurals name="plans_picker_add_count">
+        <item quantity="other">종목 %d개 추가</item>
+    </plurals>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_modeldownload_channel">Загрузка модели ИИ</string>
+    <string name="core_modeldownload_channel_description">Ход загрузки модели локального ИИ-тренера по Wi-Fi</string>
+    <string name="core_modeldownload_title">Загрузка модели ИИ</string>
+    <string name="core_modeldownload_preparing">Подготовка загрузки…</string>
+    <string name="core_modeldownload_progress">%1$d%% · %2$d из %3$d МБ</string>
+    <string name="core_modeldownload_verifying">Проверка файла…</string>
+    <string name="core_modeldownload_cancel">Отмена</string>
+</resources>

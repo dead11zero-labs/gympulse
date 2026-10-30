@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">日历</string>
+    <string name="feature_calendar_premium_title">日历是高级版功能</string>
+    <string name="feature_calendar_premium_body">把计划分配到每周的某几天，单独调整训练日，并按周或按月浏览历史记录。你现有的日程会保留且可查看。</string>
+    <string name="feature_calendar_previous">上一时段</string>
+    <string name="feature_calendar_next">下一时段</string>
+    <string name="feature_calendar_mode_week">周</string>
+    <string name="feature_calendar_mode_month">月</string>
+    <string name="feature_calendar_today">今天</string>
+    <string name="feature_calendar_week_number">第 %1$d 周</string>
+    <string name="feature_calendar_duration_min">%1$d 分钟</string>
+    <string name="feature_calendar_status_volume">%1$s · 训练量 %2$s 公斤</string>
+    <string name="feature_calendar_rest_day">休息日</string>
+    <string name="feature_calendar_unknown_plan">已删除的计划</string>
+    <string name="feature_calendar_free_workout">自由训练</string>
+    <string name="feature_calendar_status_completed">已完成</string>
+    <string name="feature_calendar_status_planned">已计划</string>
+    <string name="feature_calendar_status_missed">未完成</string>
+    <string name="feature_calendar_status_skipped">已跳过</string>
+    <string name="feature_calendar_override_skipped">例外：已跳过</string>
+    <string name="feature_calendar_override_moved">例外：已移到此处</string>
+    <string name="feature_calendar_override_added">例外：已添加</string>
+    <string name="feature_calendar_history">已完成的训练</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d 分钟 · %3$s 公斤</string>
+    <string name="feature_calendar_action_skip">跳过这一天</string>
+    <string name="feature_calendar_action_move">移到另一天</string>
+    <string name="feature_calendar_action_add">添加计划</string>
+    <string name="feature_calendar_action_reset">恢复为每周日程</string>
+    <string name="feature_calendar_move_title">移到</string>
+    <string name="feature_calendar_add_plan_title">添加计划</string>
+    <string name="feature_calendar_scheme_title">每周日程</string>
+    <string name="feature_calendar_scheme_hint">从今天起每周重复。</string>
+    <string name="feature_calendar_pick_plan_for">%1$s 的计划</string>
+    <string name="feature_calendar_edit">更换计划</string>
+    <string name="feature_calendar_no_plans">还没有计划。请在“计划”标签页创建一个。</string>
+    <string name="feature_calendar_cancel">取消</string>
+</resources>

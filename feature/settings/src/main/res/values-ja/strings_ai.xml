@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">AIコーチ</string>
+    <string name="ai_coach">ローカルAIコーチ</string>
+    <string name="ai_coach_entry_summary">任意：端末上のモデルがトレーニングのまとめを文章にします</string>
+    <string name="ai_coach_summary_on">オン。モデルがない場合、コーチは簡易テキストテンプレートを使います。</string>
+    <string name="ai_coach_summary_off">オフ</string>
+    <string name="ai_coach_privacy">分析はすべて端末内で実行されます。トレーニングデータは送信されません。提案は医学的なアドバイスではありません。</string>
+    <string name="ai_coach_section_model">AIモデル</string>
+    <string name="ai_coach_model_download">モデルをダウンロード</string>
+    <string name="ai_coach_model_not_downloaded">未ダウンロード・約%1$s、Wi-Fiのみ</string>
+    <string name="ai_coach_model_downloading">モデルをダウンロード中…</string>
+    <string name="ai_coach_model_waiting_wifi">Wi-Fiを待機中</string>
+    <string name="ai_coach_model_progress">%1$s／%2$s</string>
+    <string name="ai_coach_model_cancel">ダウンロードをキャンセル</string>
+    <string name="ai_coach_model_ready">モデルの準備完了</string>
+    <string name="ai_coach_model_ready_size">%1$sのストレージを使用</string>
+    <string name="ai_coach_model_delete">モデルを削除</string>
+    <string name="ai_coach_model_delete_summary">ストレージを空けます。その後、コーチはテキストテンプレートを使います。</string>
+    <string name="ai_coach_model_failed">ダウンロードに失敗しました。タップして再試行してください。</string>
+    <string name="ai_coach_notice_not_configured">AIモデルはこのバージョンのアプリではまだ利用できません。それまでは、コーチは簡易テキストテンプレートを使います。</string>
+    <string name="ai_coach_notice_storage">空きストレージが足りません：%1$s必要、%2$s利用可能。空き容量を確保してもう一度お試しください。</string>
+    <string name="ai_coach_error_storage">空きストレージが足りません。空き容量を確保してもう一度お試しください。</string>
+    <string name="ai_coach_error_corrupt">ダウンロードしたファイルが破損しています。もう一度お試しください。</string>
+    <string name="ai_coach_error_network">サーバーに接続できませんでした。Wi-Fiを確認してもう一度お試しください。</string>
+    <string name="ai_coach_model_verifying">ファイルを確認中…</string>
+    <string name="ai_coach_error_details">詳細：%1$s</string>
+    <string name="ai_coach_error_unknown">問題が発生しました。もう一度お試しください。</string>
+    <string name="ai_coach_optin_title">AIコーチをオンにしますか？</string>
+    <string name="ai_coach_optin_local">文章の生成はすべて端末内で実行されます。トレーニングデータがスマートフォンの外に出ることはありません。</string>
+    <string name="ai_coach_optin_download">最初の1回だけ、AIモデル（約%1$s）をHugging Faceからダウンロードします。サーバーにはIPアドレスが見えますが、トレーニングデータは見えません。</string>
+    <string name="ai_coach_optin_storage">約%1$sの空きストレージが必要です。</string>
+    <string name="ai_coach_optin_wifi">ダウンロードはWi-Fiでのみ行われます。いつでもキャンセルまたはモデルの削除ができます。</string>
+    <string name="ai_coach_optin_medical">提案は医学的なアドバイスではなく、誤りを含む場合があります。</string>
+    <string name="ai_coach_optin_confirm">オンにしてダウンロード</string>
+    <string name="ai_coach_delete_title">モデルを削除しますか？</string>
+    <string name="ai_coach_delete_message">%1$sが空きます。モデルを再ダウンロードするまで、コーチは簡易テキストテンプレートを使います。</string>
+    <string name="ai_coach_delete_confirm">削除</string>
+</resources>

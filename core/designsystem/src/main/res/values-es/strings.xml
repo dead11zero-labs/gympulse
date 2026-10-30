@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">Tendencia al alza: %1$s</string>
+    <string name="designsystem_trend_down">Tendencia a la baja: %1$s</string>
+    <string name="designsystem_trend_flat">Tendencia estable: %1$s</string>
+    <string name="designsystem_progress_percent">%1$d por ciento</string>
+    <string name="designsystem_stepper_decrease">Disminución</string>
+    <string name="designsystem_stepper_increase">Aumento</string>
+    <string name="designsystem_set_checkbox">Serie %1$s</string>
+    <string name="designsystem_pr_badge">RP</string>
+</resources>

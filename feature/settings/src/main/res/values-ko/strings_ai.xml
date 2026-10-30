@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">AI 코치</string>
+    <string name="ai_coach">로컬 AI 코치</string>
+    <string name="ai_coach_entry_summary">선택 사항: 기기에 있는 모델이 운동 요약을 문장으로 만들어 줍니다</string>
+    <string name="ai_coach_summary_on">켜짐. 모델이 없으면 코치는 간단한 문구 템플릿을 사용합니다.</string>
+    <string name="ai_coach_summary_off">꺼짐</string>
+    <string name="ai_coach_privacy">분석은 모두 기기에서 실행됩니다. 운동 데이터는 전송되지 않습니다. 제안은 의학적 조언이 아닙니다.</string>
+    <string name="ai_coach_section_model">AI 모델</string>
+    <string name="ai_coach_model_download">모델 다운로드</string>
+    <string name="ai_coach_model_not_downloaded">다운로드 안 됨 · 약 %1$s, Wi-Fi 전용</string>
+    <string name="ai_coach_model_downloading">모델 다운로드 중…</string>
+    <string name="ai_coach_model_waiting_wifi">Wi-Fi 대기 중</string>
+    <string name="ai_coach_model_progress">%1$s / %2$s</string>
+    <string name="ai_coach_model_cancel">다운로드 취소</string>
+    <string name="ai_coach_model_ready">모델 준비됨</string>
+    <string name="ai_coach_model_ready_size">저장 공간 %1$s 사용</string>
+    <string name="ai_coach_model_delete">모델 삭제</string>
+    <string name="ai_coach_model_delete_summary">저장 공간을 확보합니다. 이후 코치는 문구 템플릿을 사용합니다.</string>
+    <string name="ai_coach_model_failed">다운로드에 실패했어요. 눌러서 다시 시도하세요.</string>
+    <string name="ai_coach_notice_not_configured">AI 모델은 이 버전의 앱에서 아직 사용할 수 없어요. 그때까지 코치는 간단한 문구 템플릿을 사용합니다.</string>
+    <string name="ai_coach_notice_storage">저장 공간이 부족해요: %1$s 필요, %2$s 사용 가능. 공간을 확보한 뒤 다시 시도하세요.</string>
+    <string name="ai_coach_error_storage">저장 공간이 부족해요. 공간을 확보한 뒤 다시 시도하세요.</string>
+    <string name="ai_coach_error_corrupt">내려받은 파일이 손상되었어요. 다시 시도하세요.</string>
+    <string name="ai_coach_error_network">서버에 연결할 수 없어요. Wi-Fi를 확인하고 다시 시도하세요.</string>
+    <string name="ai_coach_model_verifying">파일 확인 중…</string>
+    <string name="ai_coach_error_details">자세히: %1$s</string>
+    <string name="ai_coach_error_unknown">문제가 발생했어요. 다시 시도해 주세요.</string>
+    <string name="ai_coach_optin_title">AI 코치를 켤까요?</string>
+    <string name="ai_coach_optin_local">문장 생성은 모두 기기에서 실행됩니다. 운동 데이터는 휴대전화 밖으로 나가지 않아요.</string>
+    <string name="ai_coach_optin_download">처음 한 번, AI 모델(약 %1$s)을 Hugging Face에서 내려받습니다. 서버는 IP 주소를 볼 수 있지만 운동 데이터는 볼 수 없어요.</string>
+    <string name="ai_coach_optin_storage">약 %1$s의 여유 저장 공간이 필요해요.</string>
+    <string name="ai_coach_optin_wifi">다운로드는 Wi-Fi에서만 진행됩니다. 언제든지 취소하거나 모델을 삭제할 수 있어요.</string>
+    <string name="ai_coach_optin_medical">제안은 의학적 조언이 아니며 오류가 있을 수 있습니다.</string>
+    <string name="ai_coach_optin_confirm">켜고 다운로드</string>
+    <string name="ai_coach_delete_title">모델을 삭제할까요?</string>
+    <string name="ai_coach_delete_message">%1$s의 공간이 확보됩니다. 모델을 다시 내려받기 전까지 코치는 간단한 문구 템플릿을 사용합니다.</string>
+    <string name="ai_coach_delete_confirm">삭제</string>
+</resources>

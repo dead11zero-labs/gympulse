@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Eksportuj dane</string>
+    <string name="data_export_summary">Zapisz plany, treningi, ćwiczenia i ustawienia jako plik JSON</string>
+    <string name="data_export_csv">Eksportuj historię treningów (CSV)</string>
+    <string name="data_export_csv_summary">Każda ukończona seria w pliku arkusza (CSV)</string>
+    <string name="data_import">Importuj dane</string>
+    <string name="data_import_summary">Przywróć kopię GymPulse z wcześniejszym podglądem</string>
+    <string name="data_action_ok">OK</string>
+    <string name="data_action_import">Importuj</string>
+    <string name="data_working_export">Eksportowanie…</string>
+    <string name="data_working_read">Odczytywanie kopii…</string>
+    <string name="data_working_import">Importowanie…</string>
+    <string name="data_export_done_title">Kopia zapisana</string>
+    <string name="data_import_done_title">Import zakończony</string>
+    <string name="data_import_done_message">Dodano: %1$d, zaktualizowano: %2$d, bez zmian: %3$d.</string>
+    <string name="data_import_done_settings">Ustawienia też zostały przywrócone.</string>
+    <string name="data_export_failed_title">Eksport nie powiódł się</string>
+    <string name="data_import_failed_title">Import nie powiódł się</string>
+    <string name="data_error_io">Nie udało się odczytać ani zapisać pliku. Spróbuj ponownie lub wybierz inną lokalizację.</string>
+    <string name="data_error_invalid">Ten plik nie jest kopią GymPulse albo jest uszkodzony.</string>
+    <string name="data_error_missing_references">Kopia odwołuje się do ćwiczeń lub planów, których brakuje na tym urządzeniu. Nic nie zmieniono.</string>
+    <string name="data_error_write">Nie udało się zapisać danych. Nic nie zmieniono.</string>
+    <string name="data_preview_title">Importuj kopię</string>
+    <string name="data_preview_source">Utworzono %1$s w GymPulse %2$s</string>
+    <string name="data_preview_newer_version">Ta kopia pochodzi z nowszej wersji GymPulse. Dane, których ta wersja nie zna, zostaną pominięte.</string>
+    <string name="data_preview_empty">Kopia nie zawiera danych.</string>
+    <string name="data_preview_counts">Nowe: %1$d · Zaktualizowane: %2$d · Bez zmian: %3$d</string>
+    <string name="data_preview_conflicts">Wpisy, które już istnieją</string>
+    <string name="data_preview_apply_settings">Przywróć także ustawienia</string>
+    <string name="data_strategy_newer">Zachowaj nowszą wersję</string>
+    <string name="data_strategy_newer_summary">Zalecane. Porównuje ostatnią zmianę każdego wpisu.</string>
+    <string name="data_strategy_keep">Zachowaj istniejące</string>
+    <string name="data_strategy_keep_summary">Dodaje tylko wpisy, których jeszcze nie ma na tym urządzeniu.</string>
+    <string name="data_strategy_overwrite">Nadpisz</string>
+    <string name="data_strategy_overwrite_summary">Zastępuje istniejące wpisy wpisami z kopii. Usunięte wpisy pozostają usunięte.</string>
+    <string name="data_table_profile">Profil</string>
+    <string name="data_table_body_measurements">Pomiary ciała</string>
+    <string name="data_table_equipment">Sprzęt</string>
+    <string name="data_table_equipment_settings">Ustawienia sprzętu</string>
+    <string name="data_table_custom_exercises">Własne ćwiczenia</string>
+    <string name="data_table_library_changes">Ulubione i notatki w bibliotece</string>
+    <string name="data_table_exercise_names">Nazwy ćwiczeń</string>
+    <string name="data_table_exercise_muscles">Mięśnie ćwiczeń</string>
+    <string name="data_table_plans">Plany</string>
+    <string name="data_table_plan_exercises">Ćwiczenia w planach</string>
+    <string name="data_table_schedule">Harmonogram tygodniowy</string>
+    <string name="data_table_schedule_changes">Zmiany harmonogramu</string>
+    <string name="data_table_workouts">Treningi</string>
+    <string name="data_table_workout_exercises">Ćwiczenia w treningach</string>
+    <string name="data_table_sets">Serie</string>
+    <string name="data_table_records">Rekordy osobiste</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">Wyeksportowano %d wpis.</item>
+        <item quantity="few">Wyeksportowano %d wpisy.</item>
+        <item quantity="many">Wyeksportowano %d wpisów.</item>
+        <item quantity="other">Wyeksportowano %d wpisów.</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d wpis odwołuje się do ćwiczenia lub planu, którego brakuje na tym urządzeniu. Zaktualizuj aplikację i spróbuj ponownie.</item>
+        <item quantity="few">%d wpisy odwołują się do ćwiczeń lub planów, których brakuje na tym urządzeniu. Zaktualizuj aplikację i spróbuj ponownie.</item>
+        <item quantity="many">%d wpisów odwołuje się do ćwiczeń lub planów, których brakuje na tym urządzeniu. Zaktualizuj aplikację i spróbuj ponownie.</item>
+        <item quantity="other">%d wpisów odwołuje się do ćwiczeń lub planów, których brakuje na tym urządzeniu. Zaktualizuj aplikację i spróbuj ponownie.</item>
+    </plurals>
+</resources>

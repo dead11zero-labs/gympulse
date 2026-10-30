@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Trainingsinzichten</string>
+    <string name="insights_section_title_exercise">Inzichten</string>
+    <string name="insights_disclaimer">Suggesties zijn gebaseerd op je gelogde trainingen en zijn geen medisch advies.</string>
+    <string name="insights_unknown_exercise">Oefening</string>
+    <string name="insights_empty_not_enough_title">Nog niet genoeg gegevens</string>
+    <string name="insights_empty_not_enough_message">Log een paar trainingen met gewicht en herhalingen. Na ongeveer vier sessies van een oefening verschijnen hier trends en suggesties.</string>
+    <string name="insights_empty_notable_title">Niets bijzonders</string>
+    <string name="insights_empty_notable_message">Je training ligt op koers. Nieuwe bevindingen verschijnen hier terwijl je blijft loggen.</string>
+    <string name="insights_empty_exercise_message">Nog niet genoeg gegevens voor deze oefening. Na ongeveer vier gelogde sessies zie je hier trends en suggesties.</string>
+    <string name="insights_title_plateau">Plateau</string>
+    <string name="insights_title_decline">Kracht daalt</string>
+    <string name="insights_title_progress">Vooruitgang</string>
+    <string name="insights_title_deload">Tijd voor een deload</string>
+    <string name="insights_title_increase_weight">Verhoog het gewicht</string>
+    <string name="insights_title_increase_reps">Voeg herhalingen toe</string>
+    <string name="insights_title_hold">Houd het gewicht vast</string>
+    <string name="insights_title_imbalance">Onbalans</string>
+    <string name="insights_title_low_volume">Laag volume</string>
+    <string name="insights_title_high_volume">Hoog volume</string>
+    <string name="insights_subject_push_pull">Duwen vs. trekken</string>
+    <string name="insights_subject_quads_hamstrings">Quadriceps vs. hamstrings</string>
+    <string name="insights_message_plateau">Al %1$d dagen geen nieuw record. Sessies sinds je laatste record: %2$d. Geschat eenrepetitiemaximum: %3$s kg.</string>
+    <string name="insights_message_decline">Je geschatte eenrepetitiemaximum is %1$s kg, je beste was %2$s kg. Controleer je herstel of plan een lichtere week.</string>
+    <string name="insights_message_progress">Je geschatte eenrepetitiemaximum is %1$s kg, ongeveer %2$s kg meer per week.</string>
+    <string name="insights_message_deload_plateau">De voortgang stagneert al enkele periodes. Train ongeveer een week met %1$s kg (nu %2$s kg), met %3$d herhalingen, en bouw daarna weer op.</string>
+    <string name="insights_message_deload_decline">Je kracht daalt. Train ongeveer een week met %1$s kg (nu %2$s kg), met %3$d herhalingen, en bouw daarna weer op.</string>
+    <string name="insights_message_increase_weight">Alle sets haalden de bovengrens van je herhalingsbereik. Gebruik de volgende keer %1$s kg (nu %2$s kg) voor %3$d herhalingen.</string>
+    <string name="insights_message_increase_reps">Blijf op %1$s kg en mik op %2$d herhalingen per set.</string>
+    <string name="insights_message_hold_reps">Je bleef onder het minimum aantal herhalingen. Blijf op %1$s kg en mik op %2$d herhalingen.</string>
+    <string name="insights_message_hold_sets_missing">Een aantal geplande sets ontbreekt. Blijf op %1$s kg en voltooi alle sets met %2$d herhalingen.</string>
+    <string name="insights_message_hold_rpe">Je sets voelden erg zwaar. Blijf op %1$s kg tot het makkelijker voelt, met %2$d herhalingen.</string>
+    <string name="insights_message_low_volume">%1$s zware sets per week. Een goed bereik is %2$s tot %3$s.</string>
+    <string name="insights_message_high_volume">%1$s zware sets per week, boven het gebruikelijke bereik van %2$s tot %3$s. Houd je herstel in de gaten.</string>
+    <string name="insights_message_push_dominant">Duwspieren krijgen %1$s sets per week, trekspieren slechts %2$s. Voeg roeioefeningen of lat pulldowns toe om het gelijk te trekken.</string>
+    <string name="insights_message_pull_dominant">Trekspieren krijgen %1$s sets per week, duwspieren slechts %2$s. Voeg pressoefeningen toe om het gelijk te trekken.</string>
+    <string name="insights_message_quads_dominant">Quadriceps krijgen %1$s sets per week, hamstrings slechts %2$s. Voeg leg curls of Roemeense deadlifts toe.</string>
+    <string name="insights_message_hamstrings_dominant">Hamstrings krijgen %1$s sets per week, quadriceps slechts %2$s. Voeg squats of beenpers toe.</string>
+</resources>

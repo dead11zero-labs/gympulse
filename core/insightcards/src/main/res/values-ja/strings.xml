@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">トレーニング分析</string>
+    <string name="insights_section_title_exercise">分析</string>
+    <string name="insights_disclaimer">提案は記録されたワークアウトに基づくもので、医学的なアドバイスではありません。</string>
+    <string name="insights_unknown_exercise">種目</string>
+    <string name="insights_empty_not_enough_title">データがまだ足りません</string>
+    <string name="insights_empty_not_enough_message">重量と回数を付けて数回のワークアウトを記録してください。1つの種目で4回ほど記録すると、傾向と提案がここに表示されます。</string>
+    <string name="insights_empty_notable_title">特に指摘はありません</string>
+    <string name="insights_empty_notable_message">トレーニングは順調です。記録を続けると、新しい気づきがここに表示されます。</string>
+    <string name="insights_empty_exercise_message">この種目のデータがまだ足りません。4回ほど記録すると、傾向と提案が表示されます。</string>
+    <string name="insights_title_plateau">停滞</string>
+    <string name="insights_title_decline">筋力が低下中</string>
+    <string name="insights_title_progress">順調に進歩</string>
+    <string name="insights_title_deload">ディロードの時期です</string>
+    <string name="insights_title_increase_weight">重量を増やす</string>
+    <string name="insights_title_increase_reps">回数を増やす</string>
+    <string name="insights_title_hold">重量を維持</string>
+    <string name="insights_title_imbalance">バランスの偏り</string>
+    <string name="insights_title_low_volume">ボリュームが少ない</string>
+    <string name="insights_title_high_volume">ボリュームが多い</string>
+    <string name="insights_subject_push_pull">プッシュとプル</string>
+    <string name="insights_subject_quads_hamstrings">大腿四頭筋とハムストリングス</string>
+    <string name="insights_message_plateau">%1$d日間、自己ベストを更新していません。前回の自己ベスト以降のセッション数：%2$d。推定1RM：%3$s kg。</string>
+    <string name="insights_message_decline">推定1RMは%1$s kgで、自己ベストは%2$s kgでした。疲労回復を確認するか、軽めの週を計画しましょう。</string>
+    <string name="insights_message_progress">推定1RMは%1$s kgで、毎週およそ%2$s kgずつ伸びています。</string>
+    <string name="insights_message_deload_plateau">数期間にわたり進歩が止まっています。約1週間%1$s kg（現在%2$s kg）で%3$d回を目標にトレーニングし、その後また重量を上げましょう。</string>
+    <string name="insights_message_deload_decline">筋力が低下しています。約1週間%1$s kg（現在%2$s kg）で%3$d回を目標にトレーニングし、その後また重量を上げましょう。</string>
+    <string name="insights_message_increase_weight">すべてのセットが回数範囲の上限に達しました。次回は%1$s kg（現在%2$s kg）で%3$d回行いましょう。</string>
+    <string name="insights_message_increase_reps">%1$s kgのまま、1セット%2$d回を目指しましょう。</string>
+    <string name="insights_message_hold_reps">最低回数に届きませんでした。%1$s kgのまま、%2$d回を目指しましょう。</string>
+    <string name="insights_message_hold_sets_missing">計画したセットの一部が足りません。%1$s kgのまま、すべてのセットを%2$d回で完了しましょう。</string>
+    <string name="insights_message_hold_rpe">セットがとてもきつく感じられました。楽になるまで%1$s kgのまま、%2$d回で行いましょう。</string>
+    <string name="insights_message_low_volume">週あたり%1$sセットの高強度セット。適切な範囲は%2$s〜%3$sです。</string>
+    <string name="insights_message_high_volume">週あたり%1$sセットの高強度セットで、通常の%2$s〜%3$sを上回っています。回復に注意しましょう。</string>
+    <string name="insights_message_push_dominant">押す筋肉は週%1$sセット、引く筋肉は%2$sセットだけです。ローイングやプルダウンを追加してバランスを整えましょう。</string>
+    <string name="insights_message_pull_dominant">引く筋肉は週%1$sセット、押す筋肉は%2$sセットだけです。プレス系を追加してバランスを整えましょう。</string>
+    <string name="insights_message_quads_dominant">大腿四頭筋は週%1$sセット、ハムストリングスは%2$sセットだけです。レッグカールやルーマニアンデッドリフトを追加しましょう。</string>
+    <string name="insights_message_hamstrings_dominant">ハムストリングスは週%1$sセット、大腿四頭筋は%2$sセットだけです。スクワットやレッグプレスを追加しましょう。</string>
+</resources>

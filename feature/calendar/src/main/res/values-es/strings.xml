@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Calendario</string>
+    <string name="feature_calendar_premium_title">El calendario es una función Premium</string>
+    <string name="feature_calendar_premium_body">Asigna planes a los días de la semana, mueve días de entrenamiento sueltos y consulta tu historial por semana o mes. Tu calendario actual sigue guardado y se puede leer.</string>
+    <string name="feature_calendar_previous">Periodo anterior</string>
+    <string name="feature_calendar_next">Periodo siguiente</string>
+    <string name="feature_calendar_mode_week">Semana</string>
+    <string name="feature_calendar_mode_month">Mes</string>
+    <string name="feature_calendar_today">Hoy</string>
+    <string name="feature_calendar_week_number">Semana %1$d</string>
+    <string name="feature_calendar_duration_min">%1$d min</string>
+    <string name="feature_calendar_status_volume">%1$s · volumen de %2$s kg</string>
+    <string name="feature_calendar_rest_day">Día de descanso</string>
+    <string name="feature_calendar_unknown_plan">Plan eliminado</string>
+    <string name="feature_calendar_free_workout">Entrenamiento libre</string>
+    <string name="feature_calendar_status_completed">Completado</string>
+    <string name="feature_calendar_status_planned">Planificado</string>
+    <string name="feature_calendar_status_missed">Perdido</string>
+    <string name="feature_calendar_status_skipped">Omitido</string>
+    <string name="feature_calendar_override_skipped">Excepción: omitido</string>
+    <string name="feature_calendar_override_moved">Excepción: movido aquí</string>
+    <string name="feature_calendar_override_added">Excepción: añadido</string>
+    <string name="feature_calendar_history">Entrenamientos completados</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d min · %3$s kg</string>
+    <string name="feature_calendar_action_skip">Omitir este día</string>
+    <string name="feature_calendar_action_move">Mover a otro día</string>
+    <string name="feature_calendar_action_add">Añadir un plan</string>
+    <string name="feature_calendar_action_reset">Volver al calendario semanal</string>
+    <string name="feature_calendar_move_title">Mover a</string>
+    <string name="feature_calendar_add_plan_title">Añadir un plan</string>
+    <string name="feature_calendar_scheme_title">Calendario semanal</string>
+    <string name="feature_calendar_scheme_hint">Se repite cada semana, a partir de hoy.</string>
+    <string name="feature_calendar_pick_plan_for">Plan para %1$s</string>
+    <string name="feature_calendar_edit">Cambiar plan</string>
+    <string name="feature_calendar_no_plans">Aún no hay planes. Crea uno en la pestaña Planes.</string>
+    <string name="feature_calendar_cancel">Cancelar</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Antrenman analizleri</string>
+    <string name="insights_section_title_exercise">Analizler</string>
+    <string name="insights_disclaimer">Öneriler kaydettiğin antrenmanlara dayanır ve tıbbi tavsiye değildir.</string>
+    <string name="insights_unknown_exercise">Egzersiz</string>
+    <string name="insights_empty_not_enough_title">Henüz yeterli veri yok</string>
+    <string name="insights_empty_not_enough_message">Ağırlık ve tekrar içeren birkaç antrenman kaydet. Bir egzersizin yaklaşık dört seansından sonra eğilimler ve öneriler burada görünür.</string>
+    <string name="insights_empty_notable_title">Dikkat çeken bir şey yok</string>
+    <string name="insights_empty_notable_message">Antrenmanın yolunda görünüyor. Kayıt tuttukça yeni tespitler burada belirir.</string>
+    <string name="insights_empty_exercise_message">Bu egzersiz için henüz yeterli veri yok. Yaklaşık dört kayıtlı seanstan sonra burada eğilimler ve öneriler göreceksin.</string>
+    <string name="insights_title_plateau">Plato</string>
+    <string name="insights_title_decline">Güç düşüyor</string>
+    <string name="insights_title_progress">İlerleme var</string>
+    <string name="insights_title_deload">Deload zamanı</string>
+    <string name="insights_title_increase_weight">Ağırlığı artır</string>
+    <string name="insights_title_increase_reps">Tekrar ekle</string>
+    <string name="insights_title_hold">Ağırlığı koru</string>
+    <string name="insights_title_imbalance">Dengesizlik</string>
+    <string name="insights_title_low_volume">Düşük hacim</string>
+    <string name="insights_title_high_volume">Yüksek hacim</string>
+    <string name="insights_subject_push_pull">İtme ve çekme</string>
+    <string name="insights_subject_quads_hamstrings">Ön bacak ve arka bacak</string>
+    <string name="insights_message_plateau">%1$d gündür yeni rekor yok. Son rekorundan beri seans sayısı: %2$d. Tahmini tek tekrar maksimumu: %3$s kg.</string>
+    <string name="insights_message_decline">Tahmini tek tekrar maksimumun %1$s kg, en iyi sonucun %2$s kg idi. Toparlanmanı kontrol et veya daha hafif bir hafta planla.</string>
+    <string name="insights_message_progress">Tahmini tek tekrar maksimumun %1$s kg, haftada yaklaşık %2$s kg artıyor.</string>
+    <string name="insights_message_deload_plateau">İlerleme birkaç dönemdir durdu. Yaklaşık bir hafta %1$s kg (şu an %2$s kg) ile çalış, %3$d tekrar hedefle, sonra yeniden yüklen.</string>
+    <string name="insights_message_deload_decline">Güç düşüyor. Yaklaşık bir hafta %1$s kg (şu an %2$s kg) ile çalış, %3$d tekrar hedefle, sonra yeniden yüklen.</string>
+    <string name="insights_message_increase_weight">Tüm setler tekrar aralığının üst sınırına ulaştı. Bir sonraki sefer %3$d tekrar için %1$s kg (şu an %2$s kg) kullan.</string>
+    <string name="insights_message_increase_reps">%1$s kg\'da kal ve set başına %2$d tekrar hedefle.</string>
+    <string name="insights_message_hold_reps">Minimum tekrarın altında kaldın. %1$s kg\'da kal ve %2$d tekrar hedefle.</string>
+    <string name="insights_message_hold_sets_missing">Planlanan bazı setler eksik. %1$s kg\'da kal ve tüm setleri %2$d tekrarla tamamla.</string>
+    <string name="insights_message_hold_rpe">Setlerin çok zor geldi. Daha kolay gelene kadar %1$s kg\'da kal, %2$d tekrarla.</string>
+    <string name="insights_message_low_volume">Haftada %1$s zor set. İyi bir aralık %2$s ile %3$s arasıdır.</string>
+    <string name="insights_message_high_volume">Haftada %1$s zor set, olağan %2$s ile %3$s aralığının üzerinde. Toparlanmanı gözle.</string>
+    <string name="insights_message_push_dominant">İtme kasları haftada %1$s set alıyor, çekme kasları yalnızca %2$s. Dengelemek için kürek veya lat pulldown ekle.</string>
+    <string name="insights_message_pull_dominant">Çekme kasları haftada %1$s set alıyor, itme kasları yalnızca %2$s. Dengelemek için press hareketleri ekle.</string>
+    <string name="insights_message_quads_dominant">Ön bacak haftada %1$s set alıyor, arka bacak yalnızca %2$s. Leg curl veya Romen deadlift ekle.</string>
+    <string name="insights_message_hamstrings_dominant">Arka bacak haftada %1$s set alıyor, ön bacak yalnızca %2$s. Squat veya leg press ekle.</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">腹筋</string>
+    <string name="muscle_abductors">外転筋</string>
+    <string name="muscle_adductors">内転筋</string>
+    <string name="muscle_biceps">上腕二頭筋</string>
+    <string name="muscle_calves">ふくらはぎ</string>
+    <string name="muscle_chest">胸</string>
+    <string name="muscle_forearms">前腕</string>
+    <string name="muscle_glutes">臀筋</string>
+    <string name="muscle_hamstrings">ハムストリングス</string>
+    <string name="muscle_lats">広背筋</string>
+    <string name="muscle_lower_back">腰</string>
+    <string name="muscle_middle_back">背中中部</string>
+    <string name="muscle_neck">首</string>
+    <string name="muscle_quadriceps">大腿四頭筋</string>
+    <string name="muscle_shoulders">肩</string>
+    <string name="muscle_traps">僧帽筋</string>
+    <string name="muscle_triceps">上腕三頭筋</string>
+    <string name="equipment_band">バンド</string>
+    <string name="equipment_barbell">バーベル</string>
+    <string name="equipment_bodyweight">自重</string>
+    <string name="equipment_cable">ケーブル</string>
+    <string name="equipment_dumbbell">ダンベル</string>
+    <string name="equipment_exercise_ball">エクササイズボール</string>
+    <string name="equipment_ez_bar">EZバー</string>
+    <string name="equipment_foam_roll">フォームローラー</string>
+    <string name="equipment_kettlebell">ケトルベル</string>
+    <string name="equipment_machine">マシン</string>
+    <string name="equipment_medicine_ball">メディシンボール</string>
+    <string name="equipment_other">その他</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">Yapay zekâ koçu</string>
+    <string name="ai_coach">Yerel yapay zekâ koçu</string>
+    <string name="ai_coach_entry_summary">İsteğe bağlı: cihazındaki bir model antrenman özetini kaleme alır</string>
+    <string name="ai_coach_summary_on">Açık. Model yoksa koç basit metin şablonları kullanır.</string>
+    <string name="ai_coach_summary_off">Kapalı</string>
+    <string name="ai_coach_privacy">Analiz tamamen cihazında çalışır. Hiçbir antrenman verisi iletilmez. Öneriler tıbbi tavsiye değildir.</string>
+    <string name="ai_coach_section_model">Yapay zekâ modeli</string>
+    <string name="ai_coach_model_download">Modeli indir</string>
+    <string name="ai_coach_model_not_downloaded">İndirilmedi · yaklaşık %1$s, yalnızca Wi-Fi</string>
+    <string name="ai_coach_model_downloading">Model indiriliyor…</string>
+    <string name="ai_coach_model_waiting_wifi">Wi-Fi bekleniyor</string>
+    <string name="ai_coach_model_progress">%1$s / %2$s</string>
+    <string name="ai_coach_model_cancel">İndirmeyi iptal et</string>
+    <string name="ai_coach_model_ready">Model hazır</string>
+    <string name="ai_coach_model_ready_size">%1$s depolama kullanır</string>
+    <string name="ai_coach_model_delete">Modeli sil</string>
+    <string name="ai_coach_model_delete_summary">Depolama alanını boşaltır. Koç bundan sonra metin şablonları kullanır.</string>
+    <string name="ai_coach_model_failed">İndirme başarısız oldu. Tekrar denemek için dokun.</string>
+    <string name="ai_coach_notice_not_configured">Yapay zekâ modeli uygulamanın bu sürümünde henüz mevcut değil. O zamana kadar koç basit metin şablonları kullanır.</string>
+    <string name="ai_coach_notice_storage">Yeterli boş depolama yok: %1$s gerekli, %2$s mevcut. Yer aç ve tekrar dene.</string>
+    <string name="ai_coach_error_storage">Yeterli boş depolama yok. Yer aç ve tekrar dene.</string>
+    <string name="ai_coach_error_corrupt">İndirilen dosya bozuk. Tekrar dene.</string>
+    <string name="ai_coach_error_network">Sunucuya ulaşılamadı. Wi-Fi bağlantını kontrol et ve tekrar dene.</string>
+    <string name="ai_coach_model_verifying">Dosya denetleniyor…</string>
+    <string name="ai_coach_error_details">Ayrıntılar: %1$s</string>
+    <string name="ai_coach_error_unknown">Bir şeyler ters gitti. Lütfen tekrar dene.</string>
+    <string name="ai_coach_optin_title">Yapay zekâ koçu açılsın mı?</string>
+    <string name="ai_coach_optin_local">Metin oluşturma tamamen cihazında çalışır. Hiçbir antrenman verisi telefonundan çıkmaz.</string>
+    <string name="ai_coach_optin_download">Bir kereye mahsus, bir yapay zekâ modeli (yaklaşık %1$s) Hugging Face\'ten indirilir. Sunucu IP adresini görür, ancak antrenman verisini görmez.</string>
+    <string name="ai_coach_optin_storage">Yaklaşık %1$s boş depolama alanına ihtiyacın var.</string>
+    <string name="ai_coach_optin_wifi">İndirme yalnızca Wi-Fi üzerinden çalışır. Dilediğin zaman iptal edebilir veya modeli silebilirsin.</string>
+    <string name="ai_coach_optin_medical">Öneriler tıbbi tavsiye değildir ve hatalar içerebilir.</string>
+    <string name="ai_coach_optin_confirm">Aç ve indir</string>
+    <string name="ai_coach_delete_title">Model silinsin mi?</string>
+    <string name="ai_coach_delete_message">Bu, %1$s yer açar. Koç, modeli yeniden indirene kadar basit metin şablonları kullanır.</string>
+    <string name="ai_coach_delete_confirm">Sil</string>
+</resources>

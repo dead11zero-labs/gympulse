@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">ワークアウトは完了時にHealth Connectと共有されます</string>
+    <string name="health_connect_not_installed">この機能を使うには、Google PlayからHealth Connectをインストールしてください</string>
+    <string name="health_connect_update_required">この機能を使うには、Google PlayでHealth Connectを更新してください</string>
+    <string name="health_connect_unsupported">この端末ではHealth Connectを利用できません</string>
+    <string name="health_connect_permissions">権限</string>
+    <string name="health_connect_permissions_missing">アクセス権がありません。タップしてワークアウトと体重を許可します。</string>
+    <string name="health_connect_permissions_denied">Health Connectへのアクセスが許可されませんでした。ワークアウトは共有されません。</string>
+    <string name="health_connect_sources_hint">Samsung Healthなどのアプリは、Health Connect経由でデータを共有します。Samsung Healthで、設定 → Health Connectから許可してください。</string>
+    <string name="health_connect_sleep">睡眠</string>
+    <string name="health_connect_sleep_summary">ダッシュボードにワークアウト前の直近の睡眠と昨夜の睡眠を表示します</string>
+    <string name="health_connect_section_data">データの種類</string>
+    <string name="health_connect_workouts">ワークアウトを書き込む</string>
+    <string name="health_connect_workouts_summary">完了したワークアウトをHealth Connectと共有します</string>
+    <string name="health_connect_heart_rate">心拍数</string>
+    <string name="health_connect_heart_rate_summary">ワークアウトのまとめに平均心拍数と最大心拍数を表示します</string>
+    <string name="health_connect_steps">歩数</string>
+    <string name="health_connect_steps_summary">ダッシュボードとワークアウトのまとめに歩数を表示します</string>
+    <string name="health_connect_calories">カロリー</string>
+    <string name="health_connect_calories_summary">ワークアウトのまとめに消費カロリーを表示します</string>
+    <string name="health_connect_metric_denied">アクセスが許可されませんでした。このデータの種類はオフのままです。</string>
+    <string name="health_connect_chip_connected">接続済み</string>
+    <string name="health_connect_chip_unavailable">利用不可</string>
+    <string name="health_connect_chip_permission_missing">権限がありません</string>
+    <string name="health_connect_chip_off">オフ</string>
+    <string name="health_connect_action_ok">OK</string>
+    <string name="health_privacy_title">GymPulseによるHealth Connectの使い方</string>
+    <string name="health_privacy_write">ワークアウトを終了すると、GymPulseは開始・終了時刻、タイトル、メモを付けた運動セッションとしてHealth Connectに書き込みます。</string>
+    <string name="health_privacy_read">GymPulseは、設定に表示する目的でのみHealth Connectから体重を読み取ります。体の計測として保存されるのは、インポートをタップしたときだけです。許可すると、GymPulseは完了したワークアウトの時間帯の心拍数、歩数、消費カロリーも読み取り、睡眠の別スイッチをオンにするとワークアウト前の直近の睡眠も読み取ります。これらの値はワークアウトのまとめに表示されるだけで、保存されません。Health Connectに書き込むどのアプリのデータも対象になります。</string>
+    <string name="health_privacy_storage">データは端末内に残ります。GymPulseは健康データをサーバーに送信せず、広告にも使わず、第三者と共有しません。</string>
+    <string name="health_privacy_revoke">連携はGymPulseの設定でいつでもオフにでき、権限はHealth Connectで取り消せます。</string>
+    <string name="health_privacy_close">閉じる</string>
+</resources>

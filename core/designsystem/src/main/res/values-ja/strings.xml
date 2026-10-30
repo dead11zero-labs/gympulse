@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">上昇傾向：%1$s</string>
+    <string name="designsystem_trend_down">下降傾向：%1$s</string>
+    <string name="designsystem_trend_flat">横ばい：%1$s</string>
+    <string name="designsystem_progress_percent">%1$d％</string>
+    <string name="designsystem_stepper_decrease">減少</string>
+    <string name="designsystem_stepper_increase">増加</string>
+    <string name="designsystem_set_checkbox">セット%1$s</string>
+    <string name="designsystem_pr_badge">自己ベスト</string>
+</resources>

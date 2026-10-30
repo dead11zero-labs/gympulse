@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">训练洞察</string>
+    <string name="insights_section_title_exercise">洞察</string>
+    <string name="insights_disclaimer">建议基于你记录的训练，不构成医疗建议。</string>
+    <string name="insights_unknown_exercise">动作</string>
+    <string name="insights_empty_not_enough_title">数据还不够</string>
+    <string name="insights_empty_not_enough_message">记录几次带重量和次数的训练。某个动作训练约四次后，趋势和建议就会显示在这里。</string>
+    <string name="insights_empty_notable_title">暂无需要关注的内容</string>
+    <string name="insights_empty_notable_message">你的训练状态良好。继续记录，新的发现会出现在这里。</string>
+    <string name="insights_empty_exercise_message">这个动作的数据还不够。记录约四次训练后，你会在这里看到趋势和建议。</string>
+    <string name="insights_title_plateau">平台期</string>
+    <string name="insights_title_decline">力量下降</string>
+    <string name="insights_title_progress">正在进步</string>
+    <string name="insights_title_deload">该安排减负周了</string>
+    <string name="insights_title_increase_weight">增加重量</string>
+    <string name="insights_title_increase_reps">增加次数</string>
+    <string name="insights_title_hold">保持重量</string>
+    <string name="insights_title_imbalance">失衡</string>
+    <string name="insights_title_low_volume">训练量偏低</string>
+    <string name="insights_title_high_volume">训练量偏高</string>
+    <string name="insights_subject_push_pull">推与拉</string>
+    <string name="insights_subject_quads_hamstrings">股四头肌与腘绳肌</string>
+    <string name="insights_message_plateau">已有 %1$d 天没有新纪录。自上次最佳以来的训练次数：%2$d。估算单次最大重量：%3$s 公斤。</string>
+    <string name="insights_message_decline">你的估算单次最大重量为 %1$s 公斤，最佳成绩为 %2$s 公斤。请检查恢复情况，或安排一个较轻松的周。</string>
+    <string name="insights_message_progress">你的估算单次最大重量为 %1$s 公斤，每周约增加 %2$s 公斤。</string>
+    <string name="insights_message_deload_plateau">进步已停滞好几个周期。用 %1$s 公斤（当前 %2$s 公斤）训练约一周，目标 %3$d 次，然后再逐步加重。</string>
+    <string name="insights_message_deload_decline">力量一直在下降。用 %1$s 公斤（当前 %2$s 公斤）训练约一周，目标 %3$d 次，然后再逐步加重。</string>
+    <string name="insights_message_increase_weight">所有组都达到了次数范围的上限。下次用 %1$s 公斤（当前 %2$s 公斤）做 %3$d 次。</string>
+    <string name="insights_message_increase_reps">保持 %1$s 公斤，每组目标 %2$d 次。</string>
+    <string name="insights_message_hold_reps">你没有达到最低次数。保持 %1$s 公斤，目标 %2$d 次。</string>
+    <string name="insights_message_hold_sets_missing">部分计划组数缺失。保持 %1$s 公斤，每组做 %2$d 次，完成所有组。</string>
+    <string name="insights_message_hold_rpe">这几组感觉非常吃力。保持 %1$s 公斤，直到轻松些，每组做 %2$d 次。</string>
+    <string name="insights_message_low_volume">每周 %1$s 组高强度训练。合适的范围是 %2$s 到 %3$s 组。</string>
+    <string name="insights_message_high_volume">每周 %1$s 组高强度训练，高于通常的 %2$s 到 %3$s 组。请留意恢复情况。</string>
+    <string name="insights_message_push_dominant">推类肌群每周 %1$s 组，拉类肌群只有 %2$s 组。增加划船或下拉来平衡。</string>
+    <string name="insights_message_pull_dominant">拉类肌群每周 %1$s 组，推类肌群只有 %2$s 组。增加推举类动作来平衡。</string>
+    <string name="insights_message_quads_dominant">股四头肌每周 %1$s 组，腘绳肌只有 %2$s 组。增加腿弯举或罗马尼亚硬拉。</string>
+    <string name="insights_message_hamstrings_dominant">腘绳肌每周 %1$s 组，股四头肌只有 %2$s 组。增加深蹲或腿举。</string>
+</resources>

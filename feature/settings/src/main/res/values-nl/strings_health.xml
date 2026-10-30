@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="health_connect_summary_on">Trainingen worden met Health Connect gedeeld zodra je ze afrondt</string>
+    <string name="health_connect_not_installed">Installeer Health Connect via Google Play om dit te gebruiken</string>
+    <string name="health_connect_update_required">Werk Health Connect bij via Google Play om dit te gebruiken</string>
+    <string name="health_connect_unsupported">Health Connect is niet beschikbaar op dit apparaat</string>
+    <string name="health_connect_permissions">Machtigingen</string>
+    <string name="health_connect_permissions_missing">Toegang ontbreekt. Tik om trainingen en lichaamsgewicht toe te staan.</string>
+    <string name="health_connect_permissions_denied">Toegang tot Health Connect is niet verleend. Trainingen worden niet gedeeld.</string>
+    <string name="health_connect_sources_hint">Apps zoals Samsung Health delen hun gegevens via Health Connect. Sta dit in Samsung Health toe onder Instellingen → Health Connect.</string>
+    <string name="health_connect_sleep">Slaap</string>
+    <string name="health_connect_sleep_summary">Toon de laatste slaap vóór een training en afgelopen nacht op het dashboard</string>
+    <string name="health_connect_section_data">Gegevenstypen</string>
+    <string name="health_connect_workouts">Trainingen schrijven</string>
+    <string name="health_connect_workouts_summary">Deel voltooide trainingen met Health Connect</string>
+    <string name="health_connect_heart_rate">Hartslag</string>
+    <string name="health_connect_heart_rate_summary">Toon gemiddelde en maximale hartslag in de trainingssamenvatting</string>
+    <string name="health_connect_steps">Stappen</string>
+    <string name="health_connect_steps_summary">Toon stappen op het dashboard en in de trainingssamenvatting</string>
+    <string name="health_connect_calories">Calorieën</string>
+    <string name="health_connect_calories_summary">Toon actieve calorieën in de trainingssamenvatting</string>
+    <string name="health_connect_metric_denied">Toegang is niet verleend. Dit gegevenstype blijft uit.</string>
+    <string name="health_connect_chip_connected">Verbonden</string>
+    <string name="health_connect_chip_unavailable">Niet beschikbaar</string>
+    <string name="health_connect_chip_permission_missing">Machtiging ontbreekt</string>
+    <string name="health_connect_chip_off">Uit</string>
+    <string name="health_connect_action_ok">OK</string>
+    <string name="health_privacy_title">Hoe GymPulse Health Connect gebruikt</string>
+    <string name="health_privacy_write">Als je een training afrondt, schrijft GymPulse die naar Health Connect als oefensessie met begin- en eindtijd, titel en notities.</string>
+    <string name="health_privacy_read">GymPulse leest je lichaamsgewicht uit Health Connect alleen om het in de instellingen te tonen. Het wordt alleen als lichaamsmeting opgeslagen wanneer je op Importeren tikt. Als je dat toestaat, leest GymPulse ook hartslag, stappen en actieve calorieën over de duur van een afgeronde training en, met de aparte slaapschakelaar, je laatste slaap vóór de training. Deze waarden worden alleen in de trainingssamenvatting getoond en niet opgeslagen. Ze kunnen afkomstig zijn van elke app die naar Health Connect schrijft.</string>
+    <string name="health_privacy_storage">Je gegevens blijven op je apparaat. GymPulse stuurt geen gezondheidsgegevens naar servers, gebruikt ze niet voor advertenties en deelt ze niet met anderen.</string>
+    <string name="health_privacy_revoke">Je kunt de koppeling op elk moment uitschakelen in de GymPulse-instellingen en de machtigingen intrekken in Health Connect.</string>
+    <string name="health_privacy_close">Sluiten</string>
+</resources>

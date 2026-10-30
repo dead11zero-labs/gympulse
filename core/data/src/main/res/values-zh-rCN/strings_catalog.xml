@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">腹肌</string>
+    <string name="muscle_abductors">外展肌</string>
+    <string name="muscle_adductors">内收肌</string>
+    <string name="muscle_biceps">肱二头肌</string>
+    <string name="muscle_calves">小腿</string>
+    <string name="muscle_chest">胸部</string>
+    <string name="muscle_forearms">前臂</string>
+    <string name="muscle_glutes">臀肌</string>
+    <string name="muscle_hamstrings">腘绳肌</string>
+    <string name="muscle_lats">背阔肌</string>
+    <string name="muscle_lower_back">下背部</string>
+    <string name="muscle_middle_back">中背部</string>
+    <string name="muscle_neck">颈部</string>
+    <string name="muscle_quadriceps">股四头肌</string>
+    <string name="muscle_shoulders">肩部</string>
+    <string name="muscle_traps">斜方肌</string>
+    <string name="muscle_triceps">肱三头肌</string>
+    <string name="equipment_band">弹力带</string>
+    <string name="equipment_barbell">杠铃</string>
+    <string name="equipment_bodyweight">徒手</string>
+    <string name="equipment_cable">绳索</string>
+    <string name="equipment_dumbbell">哑铃</string>
+    <string name="equipment_exercise_ball">健身球</string>
+    <string name="equipment_ez_bar">曲杆</string>
+    <string name="equipment_foam_roll">泡沫轴</string>
+    <string name="equipment_kettlebell">壶铃</string>
+    <string name="equipment_machine">器械</string>
+    <string name="equipment_medicine_ball">药球</string>
+    <string name="equipment_other">其他</string>
+</resources>

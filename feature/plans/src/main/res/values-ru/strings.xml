@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_plans_title">Планы</string>
+    <string name="plans_new">Новый план</string>
+    <string name="plans_title">Планы тренировок</string>
+    <string name="plans_more_exercises">Ещё +%1$d</string>
+    <string name="plans_empty_title">Планов пока нет</string>
+    <string name="plans_empty_body">Создайте план, чтобы упорядочить тренировки.</string>
+    <string name="plans_no_exercises_yet">Упражнений пока нет</string>
+    <string name="plans_duration_minutes">~%1$d мин</string>
+    <string name="plans_meta">%1$s · %2$s · %3$s</string>
+    <string name="plans_more_options">Дополнительные параметры</string>
+    <string name="plans_menu_edit">Изменить</string>
+    <string name="plans_menu_duplicate">Дублировать</string>
+    <string name="plans_menu_delete">Удалить</string>
+    <string name="plans_copy_name">%1$s (копия)</string>
+    <string name="plans_delete_title">Удалить план?</string>
+    <string name="plans_delete_message">План «%1$s» будет удалён. Прошлые тренировки останутся в истории.</string>
+    <string name="plans_delete_confirm">Удалить</string>
+    <string name="plans_cancel">Отмена</string>
+    <string name="plans_editor_title_new">Новый план</string>
+    <string name="plans_editor_title_edit">Изменить план</string>
+    <string name="plans_editor_subtitle">Составьте тренировочную программу под себя</string>
+    <string name="plans_back">Назад</string>
+    <string name="plans_field_name_required">Название плана *</string>
+    <string name="plans_field_name_hint">напр. День жима А, Всё тело…</string>
+    <string name="plans_field_notes_hint">Цели, время отдыха, детали разминки…</string>
+    <string name="plans_no_exercises_body">Выбирайте упражнения для груди, спины, ног и не только.</string>
+    <string name="plans_field_name_error">Введите название</string>
+    <string name="plans_field_notes">Заметки (необязательно)</string>
+    <string name="plans_exercises_header">Упражнения</string>
+    <string name="plans_add_exercises">Добавить упражнения</string>
+    <string name="plans_no_exercises_hint">Добавьте хотя бы одно упражнение.</string>
+    <string name="plans_unknown_exercise">Неизвестное упражнение</string>
+    <string name="plans_field_sets">Подходы</string>
+    <string name="plans_field_reps_min">Повт. мин.</string>
+    <string name="plans_field_reps_max">Повт. макс.</string>
+    <string name="plans_field_weight">Целевой вес (кг)</string>
+    <string name="plans_field_rest">Отдых (с)</string>
+    <string name="plans_field_duration_minutes">Длительность (мин)</string>
+    <string name="plans_error_invalid">Неверно</string>
+    <string name="plans_move_up">Вверх</string>
+    <string name="plans_move_down">Вниз</string>
+    <string name="plans_remove_exercise">Убрать упражнение</string>
+    <string name="plans_superset_link">Объединить со следующим в суперсет</string>
+    <string name="plans_superset_unlink">Отделить от следующего</string>
+    <string name="plans_save">Сохранить</string>
+    <string name="plans_save_failed">Не удалось сохранить план</string>
+    <string name="plans_discard_title">Отменить изменения?</string>
+    <string name="plans_discard_message">Несохранённые изменения будут потеряны.</string>
+    <string name="plans_discard_confirm">Отменить</string>
+    <string name="plans_discard_keep">Продолжить редактирование</string>
+    <string name="plans_picker_search">Поиск упражнений</string>
+    <string name="plans_picker_clear">Очистить поиск</string>
+    <string name="plans_picker_close">Закрыть</string>
+    <string name="plans_picker_empty">Упражнения не найдены</string>
+    <string name="plans_picker_empty_hint">Попробуйте другой запрос.</string>
+    <string name="plans_picker_select_hint">Выберите упражнения</string>
+    <plurals name="plans_subtitle">
+        <item quantity="one">%d план</item>
+        <item quantity="few">%d плана</item>
+        <item quantity="many">%d планов</item>
+        <item quantity="other">%d планов</item>
+    </plurals>
+    <plurals name="plans_exercise_count">
+        <item quantity="one">%d упражнение</item>
+        <item quantity="few">%d упражнения</item>
+        <item quantity="many">%d упражнений</item>
+        <item quantity="other">%d упражнений</item>
+    </plurals>
+    <plurals name="plans_set_count">
+        <item quantity="one">%d подход</item>
+        <item quantity="few">%d подхода</item>
+        <item quantity="many">%d подходов</item>
+        <item quantity="other">%d подходов</item>
+    </plurals>
+    <plurals name="plans_picker_add_count">
+        <item quantity="one">Добавить %d упражнение</item>
+        <item quantity="few">Добавить %d упражнения</item>
+        <item quantity="many">Добавить %d упражнений</item>
+        <item quantity="other">Добавить %d упражнений</item>
+    </plurals>
+</resources>

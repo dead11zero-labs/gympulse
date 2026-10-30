@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Karın kasları</string>
+    <string name="muscle_abductors">Abdüktörler</string>
+    <string name="muscle_adductors">Addüktörler</string>
+    <string name="muscle_biceps">Pazı (biceps)</string>
+    <string name="muscle_calves">Baldır</string>
+    <string name="muscle_chest">Göğüs</string>
+    <string name="muscle_forearms">Ön kol</string>
+    <string name="muscle_glutes">Kalça kasları</string>
+    <string name="muscle_hamstrings">Arka bacak</string>
+    <string name="muscle_lats">Sırt (latissimus)</string>
+    <string name="muscle_lower_back">Alt sırt</string>
+    <string name="muscle_middle_back">Orta sırt</string>
+    <string name="muscle_neck">Boyun</string>
+    <string name="muscle_quadriceps">Ön bacak (quadriceps)</string>
+    <string name="muscle_shoulders">Omuzlar</string>
+    <string name="muscle_traps">Trapez</string>
+    <string name="muscle_triceps">Arka kol (triceps)</string>
+    <string name="equipment_band">Direnç bandı</string>
+    <string name="equipment_barbell">Halter</string>
+    <string name="equipment_bodyweight">Vücut ağırlığı</string>
+    <string name="equipment_cable">Kablo</string>
+    <string name="equipment_dumbbell">Dambıl</string>
+    <string name="equipment_exercise_ball">Egzersiz topu</string>
+    <string name="equipment_ez_bar">EZ bar</string>
+    <string name="equipment_foam_roll">Köpük rulo</string>
+    <string name="equipment_kettlebell">Kettlebell</string>
+    <string name="equipment_machine">Makine</string>
+    <string name="equipment_medicine_ball">Sağlık topu</string>
+    <string name="equipment_other">Diğer</string>
+</resources>

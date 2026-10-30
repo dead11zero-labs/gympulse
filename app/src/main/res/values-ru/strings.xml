@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">Главная</string>
+    <string name="nav_plans">Планы</string>
+    <string name="nav_library">Библиотека</string>
+    <string name="nav_calendar">Календарь</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_account">Меню аккаунта</string>
+    <string name="action_back">Назад</string>
+    <string name="onboarding_skip">Пропустить</string>
+    <string name="onboarding_next">Далее</string>
+    <string name="onboarding_start">Поехали</string>
+    <string name="onboarding_page_indicator">Страница %1$d из %2$d</string>
+    <string name="onboarding_welcome_title">Добро пожаловать в GymPulse</string>
+    <string name="onboarding_welcome_body">Записывайте тренировки, следите за прогрессом и держите курс. Все данные остаются на вашем устройстве.</string>
+    <string name="onboarding_goal_title">Задайте недельную цель</string>
+    <string name="onboarding_goal_body">Сколько тренировок в неделю вы хотите проводить? Это можно изменить в любой момент в настройках.</string>
+    <string name="onboarding_done_title">Всё готово</string>
+    <string name="onboarding_done_body">Начните первую тренировку с главного экрана. Удачной тренировки!</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="one">%d тренировка в неделю</item>
+        <item quantity="few">%d тренировки в неделю</item>
+        <item quantity="many">%d тренировок в неделю</item>
+        <item quantity="other">%d тренировок в неделю</item>
+    </plurals>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Аналитика тренировок</string>
+    <string name="insights_section_title_exercise">Аналитика</string>
+    <string name="insights_disclaimer">Рекомендации основаны на записанных тренировках и не являются медицинским советом.</string>
+    <string name="insights_unknown_exercise">Упражнение</string>
+    <string name="insights_empty_not_enough_title">Пока недостаточно данных</string>
+    <string name="insights_empty_not_enough_message">Запишите несколько тренировок с весами и повторениями. Примерно после четырёх занятий по упражнению здесь появятся тренды и рекомендации.</string>
+    <string name="insights_empty_notable_title">Всё в порядке</string>
+    <string name="insights_empty_notable_message">Тренировки идут по плану. Новые наблюдения появятся здесь по мере записи.</string>
+    <string name="insights_empty_exercise_message">По этому упражнению пока недостаточно данных. Примерно после четырёх записанных занятий здесь появятся тренды и рекомендации.</string>
+    <string name="insights_title_plateau">Плато</string>
+    <string name="insights_title_decline">Сила снижается</string>
+    <string name="insights_title_progress">Есть прогресс</string>
+    <string name="insights_title_deload">Пора на неделю разгрузки</string>
+    <string name="insights_title_increase_weight">Увеличьте вес</string>
+    <string name="insights_title_increase_reps">Добавьте повторения</string>
+    <string name="insights_title_hold">Оставьте вес</string>
+    <string name="insights_title_imbalance">Дисбаланс</string>
+    <string name="insights_title_low_volume">Малый объём</string>
+    <string name="insights_title_high_volume">Большой объём</string>
+    <string name="insights_subject_push_pull">Жим и тяга</string>
+    <string name="insights_subject_quads_hamstrings">Квадрицепс и задняя поверхность бедра</string>
+    <string name="insights_message_plateau">Нового рекорда нет уже %1$d дн. Занятий с последнего рекорда: %2$d. Оценка разового максимума: %3$s кг.</string>
+    <string name="insights_message_decline">Оценка вашего разового максимума — %1$s кг, ваш лучший результат был %2$s кг. Проверьте восстановление или запланируйте неделю полегче.</string>
+    <string name="insights_message_progress">Оценка вашего разового максимума — %1$s кг, примерно на %2$s кг больше каждую неделю.</string>
+    <string name="insights_message_deload_plateau">Прогресс стоит на месте уже несколько периодов. Работайте с %1$s кг (сейчас %2$s кг) около недели, стремясь к %3$d повторениям, затем снова наращивайте вес.</string>
+    <string name="insights_message_deload_decline">Сила снижается. Работайте с %1$s кг (сейчас %2$s кг) около недели, стремясь к %3$d повторениям, затем снова наращивайте вес.</string>
+    <string name="insights_message_increase_weight">Все подходы дошли до верхней границы диапазона повторений. В следующий раз возьмите %1$s кг (сейчас %2$s кг) на %3$d повторений.</string>
+    <string name="insights_message_increase_reps">Оставайтесь на %1$s кг и стремитесь к %2$d повторениям в подходе.</string>
+    <string name="insights_message_hold_reps">Вы не дотянули до минимума повторений. Оставайтесь на %1$s кг и стремитесь к %2$d повторениям.</string>
+    <string name="insights_message_hold_sets_missing">Не хватает части запланированных подходов. Оставайтесь на %1$s кг и выполните все подходы по %2$d повторений.</string>
+    <string name="insights_message_hold_rpe">Подходы дались очень тяжело. Оставайтесь на %1$s кг, пока не станет легче, по %2$d повторений.</string>
+    <string name="insights_message_low_volume">%1$s тяжёлых подходов в неделю. Хороший диапазон — от %2$s до %3$s.</string>
+    <string name="insights_message_high_volume">%1$s тяжёлых подходов в неделю, выше обычных %2$s–%3$s. Следите за восстановлением.</string>
+    <string name="insights_message_push_dominant">Мышцы жима получают %1$s подходов в неделю, а мышцы тяги — только %2$s. Добавьте тяги в наклоне или тяги блока, чтобы выровнять.</string>
+    <string name="insights_message_pull_dominant">Мышцы тяги получают %1$s подходов в неделю, а мышцы жима — только %2$s. Добавьте жимы, чтобы выровнять.</string>
+    <string name="insights_message_quads_dominant">Квадрицепс получает %1$s подходов в неделю, а задняя поверхность бедра — только %2$s. Добавьте сгибания ног или румынскую тягу.</string>
+    <string name="insights_message_hamstrings_dominant">Задняя поверхность бедра получает %1$s подходов в неделю, а квадрицепс — только %2$s. Добавьте приседания или жим ногами.</string>
+</resources>

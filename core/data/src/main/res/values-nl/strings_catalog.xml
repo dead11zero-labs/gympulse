@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Buikspieren</string>
+    <string name="muscle_abductors">Abductoren</string>
+    <string name="muscle_adductors">Adductoren</string>
+    <string name="muscle_biceps">Biceps</string>
+    <string name="muscle_calves">Kuiten</string>
+    <string name="muscle_chest">Borst</string>
+    <string name="muscle_forearms">Onderarmen</string>
+    <string name="muscle_glutes">Bilspieren</string>
+    <string name="muscle_hamstrings">Hamstrings</string>
+    <string name="muscle_lats">Brede rugspieren</string>
+    <string name="muscle_lower_back">Onderrug</string>
+    <string name="muscle_middle_back">Midden van de rug</string>
+    <string name="muscle_neck">Nek</string>
+    <string name="muscle_quadriceps">Quadriceps</string>
+    <string name="muscle_shoulders">Schouders</string>
+    <string name="muscle_traps">Trapezius</string>
+    <string name="muscle_triceps">Triceps</string>
+    <string name="equipment_band">Weerstandsband</string>
+    <string name="equipment_barbell">Barbell</string>
+    <string name="equipment_bodyweight">Lichaamsgewicht</string>
+    <string name="equipment_cable">Kabel</string>
+    <string name="equipment_dumbbell">Dumbbell</string>
+    <string name="equipment_exercise_ball">Gymbal</string>
+    <string name="equipment_ez_bar">EZ-stang</string>
+    <string name="equipment_foam_roll">Foamroller</string>
+    <string name="equipment_kettlebell">Kettlebell</string>
+    <string name="equipment_machine">Machine</string>
+    <string name="equipment_medicine_ball">Medicijnbal</string>
+    <string name="equipment_other">Overig</string>
+</resources>

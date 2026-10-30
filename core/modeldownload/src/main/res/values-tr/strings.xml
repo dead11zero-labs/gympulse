@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_modeldownload_channel">Yapay zekâ modeli indirme</string>
+    <string name="core_modeldownload_channel_description">Yerel yapay zekâ koçu modeli Wi-Fi ile inerken ilerleme</string>
+    <string name="core_modeldownload_title">Yapay zekâ modeli indiriliyor</string>
+    <string name="core_modeldownload_preparing">İndirme hazırlanıyor…</string>
+    <string name="core_modeldownload_progress">%1$d%% · %2$d / %3$d MB</string>
+    <string name="core_modeldownload_verifying">Dosya denetleniyor…</string>
+    <string name="core_modeldownload_cancel">İptal</string>
+</resources>

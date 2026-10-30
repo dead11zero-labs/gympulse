@@ -88,7 +88,7 @@ class BackupManager internal constructor(
      * gewählte Dokument. Die Übungsnamen folgen der App-Sprache.
      */
     suspend fun exportCsvTo(uri: Uri): ExportResult {
-        val locale = settingsRepository.settings.first().language.languageTag
+        val locale = settingsRepository.settings.first().language.languageTag.substringBefore('-')
             .ifEmpty { java.util.Locale.getDefault().language }
         val rows = withContext(ioDispatcher) { store.inTransaction { store.readWorkoutHistory(locale) } }
         writeText(uri, WorkoutCsv.encode(rows), "CSV")

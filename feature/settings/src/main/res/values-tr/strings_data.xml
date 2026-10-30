@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Verileri dışa aktar</string>
+    <string name="data_export_summary">Planları, antrenmanları, egzersizleri ve ayarları JSON dosyası olarak kaydet</string>
+    <string name="data_export_csv">Antrenman geçmişini dışa aktar (CSV)</string>
+    <string name="data_export_csv_summary">Tamamlanan her set bir elektronik tablo dosyası olarak (CSV)</string>
+    <string name="data_import">Verileri içe aktar</string>
+    <string name="data_import_summary">Önce önizleme göstererek bir GymPulse yedeğini geri yükle</string>
+    <string name="data_action_ok">Tamam</string>
+    <string name="data_action_import">İçe aktar</string>
+    <string name="data_working_export">Dışa aktarılıyor…</string>
+    <string name="data_working_read">Yedek okunuyor…</string>
+    <string name="data_working_import">İçe aktarılıyor…</string>
+    <string name="data_export_done_title">Yedek kaydedildi</string>
+    <string name="data_import_done_title">İçe aktarma tamamlandı</string>
+    <string name="data_import_done_message">%1$d eklendi, %2$d güncellendi, %3$d değişmedi.</string>
+    <string name="data_import_done_settings">Ayarlar da geri yüklendi.</string>
+    <string name="data_export_failed_title">Dışa aktarma başarısız</string>
+    <string name="data_import_failed_title">İçe aktarma başarısız</string>
+    <string name="data_error_io">Dosya okunamadı veya yazılamadı. Tekrar dene veya başka bir konum seç.</string>
+    <string name="data_error_invalid">Bu dosya bir GymPulse yedeği değil veya bozuk.</string>
+    <string name="data_error_missing_references">Yedek, bu cihazda bulunmayan egzersizlere veya planlara başvuruyor. Hiçbir şey değiştirilmedi.</string>
+    <string name="data_error_write">Veriler kaydedilemedi. Hiçbir şey değiştirilmedi.</string>
+    <string name="data_preview_title">Yedeği içe aktar</string>
+    <string name="data_preview_source">GymPulse %2$s ile %1$s tarihinde oluşturuldu</string>
+    <string name="data_preview_newer_version">Bu yedek GymPulse\'ın daha yeni bir sürümünden geliyor. Bu sürümün tanımadığı veriler atlanacak.</string>
+    <string name="data_preview_empty">Yedek veri içermiyor.</string>
+    <string name="data_preview_counts">%1$d yeni · %2$d güncellendi · %3$d değişmedi</string>
+    <string name="data_preview_conflicts">Zaten var olan kayıtlar</string>
+    <string name="data_preview_apply_settings">Ayarları da geri yükle</string>
+    <string name="data_strategy_newer">Daha yeni sürümü koru</string>
+    <string name="data_strategy_newer_summary">Önerilen. Her kaydın son değişikliğini karşılaştırır.</string>
+    <string name="data_strategy_keep">Var olanı koru</string>
+    <string name="data_strategy_keep_summary">Yalnızca bu cihazda henüz olmayan kayıtları ekler.</string>
+    <string name="data_strategy_overwrite">Üzerine yaz</string>
+    <string name="data_strategy_overwrite_summary">Var olan kayıtları yedektekilerle değiştirir. Silinen kayıtlar silinmiş kalır.</string>
+    <string name="data_table_profile">Profil</string>
+    <string name="data_table_body_measurements">Vücut ölçüleri</string>
+    <string name="data_table_equipment">Ekipman</string>
+    <string name="data_table_equipment_settings">Ekipman ayarları</string>
+    <string name="data_table_custom_exercises">Özel egzersizler</string>
+    <string name="data_table_library_changes">Kitaplık favorileri ve notları</string>
+    <string name="data_table_exercise_names">Egzersiz adları</string>
+    <string name="data_table_exercise_muscles">Egzersiz kasları</string>
+    <string name="data_table_plans">Planlar</string>
+    <string name="data_table_plan_exercises">Plan egzersizleri</string>
+    <string name="data_table_schedule">Haftalık program</string>
+    <string name="data_table_schedule_changes">Program değişiklikleri</string>
+    <string name="data_table_workouts">Antrenmanlar</string>
+    <string name="data_table_workout_exercises">Antrenman egzersizleri</string>
+    <string name="data_table_sets">Setler</string>
+    <string name="data_table_records">Kişisel rekorlar</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">%d kayıt dışa aktarıldı.</item>
+        <item quantity="other">%d kayıt dışa aktarıldı.</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d kayıt, bu cihazda bulunmayan bir egzersize veya plana başvuruyor. Uygulamayı güncelle ve tekrar dene.</item>
+        <item quantity="other">%d kayıt, bu cihazda bulunmayan egzersizlere veya planlara başvuruyor. Uygulamayı güncelle ve tekrar dene.</item>
+    </plurals>
+</resources>

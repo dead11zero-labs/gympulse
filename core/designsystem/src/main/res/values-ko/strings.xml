@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">상승 추세: %1$s</string>
+    <string name="designsystem_trend_down">하락 추세: %1$s</string>
+    <string name="designsystem_trend_flat">변화 없음: %1$s</string>
+    <string name="designsystem_progress_percent">%1$d퍼센트</string>
+    <string name="designsystem_stepper_decrease">감소</string>
+    <string name="designsystem_stepper_increase">증가</string>
+    <string name="designsystem_set_checkbox">세트 %1$s</string>
+    <string name="designsystem_pr_badge">PR</string>
+</resources>

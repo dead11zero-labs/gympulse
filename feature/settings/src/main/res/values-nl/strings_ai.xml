@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">AI-coach</string>
+    <string name="ai_coach">Lokale AI-coach</string>
+    <string name="ai_coach_entry_summary">Optioneel: een model op je apparaat formuleert je trainingssamenvatting</string>
+    <string name="ai_coach_summary_on">Aan. Zonder model gebruikt de coach eenvoudige tekstsjablonen.</string>
+    <string name="ai_coach_summary_off">Uit</string>
+    <string name="ai_coach_privacy">De analyse draait volledig op je apparaat. Er worden geen trainingsgegevens verzonden. Suggesties zijn geen medisch advies.</string>
+    <string name="ai_coach_section_model">AI-model</string>
+    <string name="ai_coach_model_download">Model downloaden</string>
+    <string name="ai_coach_model_not_downloaded">Niet gedownload · ongeveer %1$s, alleen wifi</string>
+    <string name="ai_coach_model_downloading">Model downloaden…</string>
+    <string name="ai_coach_model_waiting_wifi">Wachten op wifi</string>
+    <string name="ai_coach_model_progress">%1$s van %2$s</string>
+    <string name="ai_coach_model_cancel">Download annuleren</string>
+    <string name="ai_coach_model_ready">Model gereed</string>
+    <string name="ai_coach_model_ready_size">Gebruikt %1$s opslag</string>
+    <string name="ai_coach_model_delete">Model verwijderen</string>
+    <string name="ai_coach_model_delete_summary">Geeft opslagruimte vrij. De coach gebruikt dan tekstsjablonen.</string>
+    <string name="ai_coach_model_failed">Download mislukt. Tik om het opnieuw te proberen.</string>
+    <string name="ai_coach_notice_not_configured">Het AI-model is nog niet beschikbaar in deze versie van de app. Tot die tijd gebruikt de coach eenvoudige tekstsjablonen.</string>
+    <string name="ai_coach_notice_storage">Niet genoeg vrije opslagruimte: %1$s nodig, %2$s beschikbaar. Maak ruimte vrij en probeer het opnieuw.</string>
+    <string name="ai_coach_error_storage">Niet genoeg vrije opslagruimte. Maak ruimte vrij en probeer het opnieuw.</string>
+    <string name="ai_coach_error_corrupt">Het gedownloade bestand is beschadigd. Probeer het opnieuw.</string>
+    <string name="ai_coach_error_network">De server kon niet worden bereikt. Controleer je wifi en probeer het opnieuw.</string>
+    <string name="ai_coach_model_verifying">Bestand controleren…</string>
+    <string name="ai_coach_error_details">Details: %1$s</string>
+    <string name="ai_coach_error_unknown">Er ging iets mis. Probeer het opnieuw.</string>
+    <string name="ai_coach_optin_title">De AI-coach inschakelen?</string>
+    <string name="ai_coach_optin_local">De formulering draait volledig op je apparaat. Er verlaten geen trainingsgegevens je telefoon.</string>
+    <string name="ai_coach_optin_download">Eenmalig wordt een AI-model (ongeveer %1$s) van Hugging Face gedownload. De server ziet je IP-adres, maar geen trainingsgegevens.</string>
+    <string name="ai_coach_optin_storage">Je hebt ongeveer %1$s vrije opslagruimte nodig.</string>
+    <string name="ai_coach_optin_wifi">De download loopt alleen via wifi. Je kunt hem op elk moment annuleren of het model verwijderen.</string>
+    <string name="ai_coach_optin_medical">Suggesties zijn geen medisch advies en kunnen fouten bevatten.</string>
+    <string name="ai_coach_optin_confirm">Inschakelen en downloaden</string>
+    <string name="ai_coach_delete_title">Model verwijderen?</string>
+    <string name="ai_coach_delete_message">Dit geeft %1$s vrij. De coach gebruikt dan eenvoudige tekstsjablonen tot je het model opnieuw downloadt.</string>
+    <string name="ai_coach_delete_confirm">Verwijderen</string>
+</resources>

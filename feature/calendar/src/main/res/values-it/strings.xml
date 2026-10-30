@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Calendario</string>
+    <string name="feature_calendar_premium_title">Il calendario è una funzione Premium</string>
+    <string name="feature_calendar_premium_body">Assegna le schede ai giorni della settimana, sposta singoli giorni di allenamento e sfoglia la cronologia per settimana o mese. Il tuo programma attuale resta salvato e leggibile.</string>
+    <string name="feature_calendar_previous">Periodo precedente</string>
+    <string name="feature_calendar_next">Periodo successivo</string>
+    <string name="feature_calendar_mode_week">Settimana</string>
+    <string name="feature_calendar_mode_month">Mese</string>
+    <string name="feature_calendar_today">Oggi</string>
+    <string name="feature_calendar_week_number">Settimana %1$d</string>
+    <string name="feature_calendar_duration_min">%1$d min</string>
+    <string name="feature_calendar_status_volume">%1$s · volume di %2$s kg</string>
+    <string name="feature_calendar_rest_day">Giorno di riposo</string>
+    <string name="feature_calendar_unknown_plan">Scheda eliminata</string>
+    <string name="feature_calendar_free_workout">Allenamento libero</string>
+    <string name="feature_calendar_status_completed">Completato</string>
+    <string name="feature_calendar_status_planned">Pianificato</string>
+    <string name="feature_calendar_status_missed">Non eseguito</string>
+    <string name="feature_calendar_status_skipped">Saltato</string>
+    <string name="feature_calendar_override_skipped">Eccezione: saltato</string>
+    <string name="feature_calendar_override_moved">Eccezione: spostato qui</string>
+    <string name="feature_calendar_override_added">Eccezione: aggiunto</string>
+    <string name="feature_calendar_history">Allenamenti completati</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d min · %3$s kg</string>
+    <string name="feature_calendar_action_skip">Salta questo giorno</string>
+    <string name="feature_calendar_action_move">Sposta su un altro giorno</string>
+    <string name="feature_calendar_action_add">Aggiungi una scheda</string>
+    <string name="feature_calendar_action_reset">Ripristina il programma settimanale</string>
+    <string name="feature_calendar_move_title">Sposta a</string>
+    <string name="feature_calendar_add_plan_title">Aggiungi una scheda</string>
+    <string name="feature_calendar_scheme_title">Programma settimanale</string>
+    <string name="feature_calendar_scheme_hint">Si ripete ogni settimana, a partire da oggi.</string>
+    <string name="feature_calendar_pick_plan_for">Scheda per %1$s</string>
+    <string name="feature_calendar_edit">Cambia scheda</string>
+    <string name="feature_calendar_no_plans">Ancora nessuna scheda. Creane una nella scheda Schede.</string>
+    <string name="feature_calendar_cancel">Annulla</string>
+</resources>

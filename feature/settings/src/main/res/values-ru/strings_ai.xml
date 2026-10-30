@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">ИИ-тренер</string>
+    <string name="ai_coach">Локальный ИИ-тренер</string>
+    <string name="ai_coach_entry_summary">По желанию: модель на вашем устройстве формулирует сводку тренировок</string>
+    <string name="ai_coach_summary_on">Включено. Без модели тренер использует простые текстовые шаблоны.</string>
+    <string name="ai_coach_summary_off">Выключено</string>
+    <string name="ai_coach_privacy">Анализ полностью выполняется на вашем устройстве. Данные тренировок не передаются. Рекомендации не являются медицинским советом.</string>
+    <string name="ai_coach_section_model">Модель ИИ</string>
+    <string name="ai_coach_model_download">Скачать модель</string>
+    <string name="ai_coach_model_not_downloaded">Не загружена · около %1$s, только по Wi-Fi</string>
+    <string name="ai_coach_model_downloading">Загрузка модели…</string>
+    <string name="ai_coach_model_waiting_wifi">Ожидание Wi-Fi</string>
+    <string name="ai_coach_model_progress">%1$s из %2$s</string>
+    <string name="ai_coach_model_cancel">Отменить загрузку</string>
+    <string name="ai_coach_model_ready">Модель готова</string>
+    <string name="ai_coach_model_ready_size">Занимает %1$s</string>
+    <string name="ai_coach_model_delete">Удалить модель</string>
+    <string name="ai_coach_model_delete_summary">Освобождает место. Тогда тренер использует текстовые шаблоны.</string>
+    <string name="ai_coach_model_failed">Загрузка не удалась. Нажмите, чтобы повторить.</string>
+    <string name="ai_coach_notice_not_configured">Модель ИИ пока недоступна в этой версии приложения. До тех пор тренер использует простые текстовые шаблоны.</string>
+    <string name="ai_coach_notice_storage">Недостаточно свободной памяти: нужно %1$s, доступно %2$s. Освободите место и повторите.</string>
+    <string name="ai_coach_error_storage">Недостаточно свободной памяти. Освободите место и повторите.</string>
+    <string name="ai_coach_error_corrupt">Загруженный файл повреждён. Повторите попытку.</string>
+    <string name="ai_coach_error_network">Не удалось связаться с сервером. Проверьте Wi-Fi и повторите попытку.</string>
+    <string name="ai_coach_model_verifying">Проверка файла…</string>
+    <string name="ai_coach_error_details">Подробности: %1$s</string>
+    <string name="ai_coach_error_unknown">Что-то пошло не так. Повторите попытку.</string>
+    <string name="ai_coach_optin_title">Включить ИИ-тренера?</string>
+    <string name="ai_coach_optin_local">Формулировки создаются полностью на вашем устройстве. Данные тренировок не покидают телефон.</string>
+    <string name="ai_coach_optin_download">Один раз с Hugging Face загружается модель ИИ (около %1$s). Сервер видит ваш IP-адрес, но не видит данных тренировок.</string>
+    <string name="ai_coach_optin_storage">Нужно около %1$s свободной памяти.</string>
+    <string name="ai_coach_optin_wifi">Загрузка идёт только по Wi-Fi. Вы можете отменить её или удалить модель в любой момент.</string>
+    <string name="ai_coach_optin_medical">Рекомендации не являются медицинским советом и могут содержать ошибки.</string>
+    <string name="ai_coach_optin_confirm">Включить и скачать</string>
+    <string name="ai_coach_delete_title">Удалить модель?</string>
+    <string name="ai_coach_delete_message">Это освободит %1$s. Тренер будет использовать простые текстовые шаблоны, пока вы снова не скачаете модель.</string>
+    <string name="ai_coach_delete_confirm">Удалить</string>
+</resources>

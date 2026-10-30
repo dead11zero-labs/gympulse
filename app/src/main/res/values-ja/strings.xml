@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">ダッシュボード</string>
+    <string name="nav_plans">プラン</string>
+    <string name="nav_library">ライブラリ</string>
+    <string name="nav_calendar">カレンダー</string>
+    <string name="action_settings">設定</string>
+    <string name="action_account">アカウントメニュー</string>
+    <string name="action_back">戻る</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_start">はじめる</string>
+    <string name="onboarding_page_indicator">%2$dページ中%1$dページ目</string>
+    <string name="onboarding_welcome_title">GymPulseへようこそ</string>
+    <string name="onboarding_welcome_body">ワークアウトを記録して、成長を確認し、トレーニングを継続しましょう。データはすべて端末内に保存されます。</string>
+    <string name="onboarding_goal_title">週間の目標を設定</string>
+    <string name="onboarding_goal_body">1週間に何回トレーニングしますか？ 設定でいつでも変更できます。</string>
+    <string name="onboarding_done_title">準備完了</string>
+    <string name="onboarding_done_body">ダッシュボードから最初のワークアウトを始めましょう。良いトレーニングを！</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="other">週%d回のワークアウト</item>
+    </plurals>
+</resources>

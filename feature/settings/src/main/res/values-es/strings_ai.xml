@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_section_ai_coach">Entrenador de IA</string>
+    <string name="ai_coach">Entrenador de IA local</string>
+    <string name="ai_coach_entry_summary">Opcional: un modelo en tu dispositivo redacta el resumen de tu entrenamiento</string>
+    <string name="ai_coach_summary_on">Activado. Sin modelo, el entrenador usa plantillas de texto sencillas.</string>
+    <string name="ai_coach_summary_off">Desactivado</string>
+    <string name="ai_coach_privacy">El análisis se ejecuta por completo en tu dispositivo. No se transmite ningún dato de entrenamiento. Las sugerencias no son consejo médico.</string>
+    <string name="ai_coach_section_model">Modelo de IA</string>
+    <string name="ai_coach_model_download">Descargar modelo</string>
+    <string name="ai_coach_model_not_downloaded">No descargado · unos %1$s, solo por Wi-Fi</string>
+    <string name="ai_coach_model_downloading">Descargando el modelo…</string>
+    <string name="ai_coach_model_waiting_wifi">Esperando Wi-Fi</string>
+    <string name="ai_coach_model_progress">%1$s de %2$s</string>
+    <string name="ai_coach_model_cancel">Cancelar descarga</string>
+    <string name="ai_coach_model_ready">Modelo listo</string>
+    <string name="ai_coach_model_ready_size">Ocupa %1$s de almacenamiento</string>
+    <string name="ai_coach_model_delete">Eliminar modelo</string>
+    <string name="ai_coach_model_delete_summary">Libera almacenamiento. El entrenador usará entonces plantillas de texto.</string>
+    <string name="ai_coach_model_failed">La descarga falló. Toca para intentarlo de nuevo.</string>
+    <string name="ai_coach_notice_not_configured">El modelo de IA aún no está disponible en esta versión de la app. Hasta entonces, el entrenador usa plantillas de texto sencillas.</string>
+    <string name="ai_coach_notice_storage">No hay suficiente almacenamiento libre: se necesitan %1$s y hay %2$s. Libera espacio e inténtalo de nuevo.</string>
+    <string name="ai_coach_error_storage">No hay suficiente almacenamiento libre. Libera espacio e inténtalo de nuevo.</string>
+    <string name="ai_coach_error_corrupt">El archivo descargado está dañado. Inténtalo de nuevo.</string>
+    <string name="ai_coach_error_network">No se pudo contactar con el servidor. Comprueba tu Wi-Fi e inténtalo de nuevo.</string>
+    <string name="ai_coach_model_verifying">Comprobando el archivo…</string>
+    <string name="ai_coach_error_details">Detalles: %1$s</string>
+    <string name="ai_coach_error_unknown">Algo salió mal. Inténtalo de nuevo.</string>
+    <string name="ai_coach_optin_title">¿Activar el entrenador de IA?</string>
+    <string name="ai_coach_optin_local">La redacción se ejecuta por completo en tu dispositivo. Ningún dato de entrenamiento sale de tu teléfono.</string>
+    <string name="ai_coach_optin_download">Una sola vez se descarga un modelo de IA (unos %1$s) desde Hugging Face. El servidor ve tu dirección IP, pero ningún dato de entrenamiento.</string>
+    <string name="ai_coach_optin_storage">Necesitas unos %1$s de almacenamiento libre.</string>
+    <string name="ai_coach_optin_wifi">La descarga solo se hace por Wi-Fi. Puedes cancelarla o eliminar el modelo en cualquier momento.</string>
+    <string name="ai_coach_optin_medical">Las sugerencias no son consejo médico y pueden contener errores.</string>
+    <string name="ai_coach_optin_confirm">Activar y descargar</string>
+    <string name="ai_coach_delete_title">¿Eliminar el modelo?</string>
+    <string name="ai_coach_delete_message">Esto libera %1$s. El entrenador usará plantillas de texto sencillas hasta que vuelvas a descargar el modelo.</string>
+    <string name="ai_coach_delete_confirm">Eliminar</string>
+</resources>

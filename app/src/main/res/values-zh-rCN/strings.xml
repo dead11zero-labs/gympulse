@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">首页</string>
+    <string name="nav_plans">计划</string>
+    <string name="nav_library">动作库</string>
+    <string name="nav_calendar">日历</string>
+    <string name="action_settings">设置</string>
+    <string name="action_account">账号菜单</string>
+    <string name="action_back">返回</string>
+    <string name="onboarding_skip">跳过</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_start">开始吧</string>
+    <string name="onboarding_page_indicator">第 %1$d 页，共 %2$d 页</string>
+    <string name="onboarding_welcome_title">欢迎使用 GymPulse</string>
+    <string name="onboarding_welcome_body">记录训练、跟踪进步、保持节奏。所有数据都保存在你的设备上。</string>
+    <string name="onboarding_goal_title">设定每周目标</string>
+    <string name="onboarding_goal_body">你想每周训练几次？随时可以在设置中修改。</string>
+    <string name="onboarding_done_title">一切就绪</string>
+    <string name="onboarding_done_body">从首页开始你的第一次训练吧。训练愉快！</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="other">每周 %d 次训练</item>
+    </plurals>
+</resources>

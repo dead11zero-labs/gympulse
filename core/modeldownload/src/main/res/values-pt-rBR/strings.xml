@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_modeldownload_channel">Download do modelo de IA</string>
+    <string name="core_modeldownload_channel_description">Progresso enquanto o modelo do coach de IA local é baixado por Wi-Fi</string>
+    <string name="core_modeldownload_title">Baixando o modelo de IA</string>
+    <string name="core_modeldownload_preparing">Preparando o download…</string>
+    <string name="core_modeldownload_progress">%1$d%% · %2$d de %3$d MB</string>
+    <string name="core_modeldownload_verifying">Verificando o arquivo…</string>
+    <string name="core_modeldownload_cancel">Cancelar</string>
+</resources>

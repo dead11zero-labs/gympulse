@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">データをエクスポート</string>
+    <string name="data_export_summary">プラン、ワークアウト、種目、設定をJSONファイルとして保存します</string>
+    <string name="data_export_csv">トレーニング履歴をエクスポート（CSV）</string>
+    <string name="data_export_csv_summary">完了したすべてのセットをスプレッドシートファイル（CSV）で</string>
+    <string name="data_import">データをインポート</string>
+    <string name="data_import_summary">プレビューを確認してからGymPulseのバックアップを復元します</string>
+    <string name="data_action_ok">OK</string>
+    <string name="data_action_import">インポート</string>
+    <string name="data_working_export">エクスポート中…</string>
+    <string name="data_working_read">バックアップを読み込み中…</string>
+    <string name="data_working_import">インポート中…</string>
+    <string name="data_export_done_title">バックアップを保存しました</string>
+    <string name="data_import_done_title">インポート完了</string>
+    <string name="data_import_done_message">追加%1$d件、更新%2$d件、変更なし%3$d件。</string>
+    <string name="data_import_done_settings">設定も復元されました。</string>
+    <string name="data_export_failed_title">エクスポートに失敗しました</string>
+    <string name="data_import_failed_title">インポートに失敗しました</string>
+    <string name="data_error_io">ファイルを読み書きできませんでした。もう一度お試しいただくか、別の場所を選んでください。</string>
+    <string name="data_error_invalid">このファイルはGymPulseのバックアップではないか、破損しています。</string>
+    <string name="data_error_missing_references">バックアップは、この端末にない種目またはプランを参照しています。何も変更されていません。</string>
+    <string name="data_error_write">データを保存できませんでした。何も変更されていません。</string>
+    <string name="data_preview_title">バックアップをインポート</string>
+    <string name="data_preview_source">GymPulse %2$sで%1$sに作成</string>
+    <string name="data_preview_newer_version">このバックアップは新しいバージョンのGymPulseのものです。このバージョンが認識しないデータはスキップされます。</string>
+    <string name="data_preview_empty">バックアップにデータが含まれていません。</string>
+    <string name="data_preview_counts">新規%1$d件・更新%2$d件・変更なし%3$d件</string>
+    <string name="data_preview_conflicts">すでに存在する項目</string>
+    <string name="data_preview_apply_settings">設定も復元する</string>
+    <string name="data_strategy_newer">新しい方を残す</string>
+    <string name="data_strategy_newer_summary">おすすめ。各項目の最終更新を比較します。</string>
+    <string name="data_strategy_keep">既存を残す</string>
+    <string name="data_strategy_keep_summary">この端末にまだない項目だけを追加します。</string>
+    <string name="data_strategy_overwrite">上書き</string>
+    <string name="data_strategy_overwrite_summary">既存の項目をバックアップの内容で置き換えます。削除済みの項目は削除されたままです。</string>
+    <string name="data_table_profile">プロフィール</string>
+    <string name="data_table_body_measurements">体の計測</string>
+    <string name="data_table_equipment">器具</string>
+    <string name="data_table_equipment_settings">器具の設定</string>
+    <string name="data_table_custom_exercises">カスタム種目</string>
+    <string name="data_table_library_changes">ライブラリのお気に入りとメモ</string>
+    <string name="data_table_exercise_names">種目名</string>
+    <string name="data_table_exercise_muscles">種目の筋肉</string>
+    <string name="data_table_plans">プラン</string>
+    <string name="data_table_plan_exercises">プランの種目</string>
+    <string name="data_table_schedule">週間スケジュール</string>
+    <string name="data_table_schedule_changes">スケジュールの変更</string>
+    <string name="data_table_workouts">ワークアウト</string>
+    <string name="data_table_workout_exercises">ワークアウトの種目</string>
+    <string name="data_table_sets">セット</string>
+    <string name="data_table_records">自己ベスト</string>
+    <plurals name="data_export_done_message">
+        <item quantity="other">%d件をエクスポートしました。</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="other">%d件が、この端末にない種目またはプランを参照しています。アプリを更新してもう一度お試しください。</item>
+    </plurals>
+</resources>

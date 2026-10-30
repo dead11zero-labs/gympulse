@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="designsystem_trend_up">上升趋势：%1$s</string>
+    <string name="designsystem_trend_down">下降趋势：%1$s</string>
+    <string name="designsystem_trend_flat">趋势持平：%1$s</string>
+    <string name="designsystem_progress_percent">百分之 %1$d</string>
+    <string name="designsystem_stepper_decrease">减少</string>
+    <string name="designsystem_stepper_increase">增加</string>
+    <string name="designsystem_set_checkbox">第 %1$s 组</string>
+    <string name="designsystem_pr_badge">PR</string>
+</resources>

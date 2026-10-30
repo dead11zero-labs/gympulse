@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">데이터 내보내기</string>
+    <string name="data_export_summary">플랜, 운동, 종목, 설정을 JSON 파일로 저장합니다</string>
+    <string name="data_export_csv">운동 기록 내보내기(CSV)</string>
+    <string name="data_export_csv_summary">완료한 모든 세트를 스프레드시트 파일(CSV)로</string>
+    <string name="data_import">데이터 가져오기</string>
+    <string name="data_import_summary">미리보기를 확인한 뒤 GymPulse 백업을 복원합니다</string>
+    <string name="data_action_ok">확인</string>
+    <string name="data_action_import">가져오기</string>
+    <string name="data_working_export">내보내는 중…</string>
+    <string name="data_working_read">백업 읽는 중…</string>
+    <string name="data_working_import">가져오는 중…</string>
+    <string name="data_export_done_title">백업 저장됨</string>
+    <string name="data_import_done_title">가져오기 완료</string>
+    <string name="data_import_done_message">추가 %1$d, 업데이트 %2$d, 변경 없음 %3$d.</string>
+    <string name="data_import_done_settings">설정도 함께 복원되었어요.</string>
+    <string name="data_export_failed_title">내보내기 실패</string>
+    <string name="data_import_failed_title">가져오기 실패</string>
+    <string name="data_error_io">파일을 읽거나 쓸 수 없어요. 다시 시도하거나 다른 위치를 선택하세요.</string>
+    <string name="data_error_invalid">이 파일은 GymPulse 백업이 아니거나 손상되었어요.</string>
+    <string name="data_error_missing_references">백업이 이 기기에 없는 종목이나 플랜을 참조하고 있어요. 아무것도 변경되지 않았어요.</string>
+    <string name="data_error_write">데이터를 저장하지 못했어요. 아무것도 변경되지 않았어요.</string>
+    <string name="data_preview_title">백업 가져오기</string>
+    <string name="data_preview_source">GymPulse %2$s로 %1$s에 생성됨</string>
+    <string name="data_preview_newer_version">이 백업은 더 최신 버전의 GymPulse에서 만들어졌어요. 이 버전이 알지 못하는 데이터는 건너뜁니다.</string>
+    <string name="data_preview_empty">백업에 데이터가 없어요.</string>
+    <string name="data_preview_counts">신규 %1$d · 업데이트 %2$d · 변경 없음 %3$d</string>
+    <string name="data_preview_conflicts">이미 있는 항목</string>
+    <string name="data_preview_apply_settings">설정도 함께 복원</string>
+    <string name="data_strategy_newer">더 최신 버전 유지</string>
+    <string name="data_strategy_newer_summary">권장. 각 항목의 마지막 변경 시각을 비교합니다.</string>
+    <string name="data_strategy_keep">기존 항목 유지</string>
+    <string name="data_strategy_keep_summary">이 기기에 아직 없는 항목만 추가합니다.</string>
+    <string name="data_strategy_overwrite">덮어쓰기</string>
+    <string name="data_strategy_overwrite_summary">기존 항목을 백업의 항목으로 바꿉니다. 삭제된 항목은 삭제된 상태로 유지됩니다.</string>
+    <string name="data_table_profile">프로필</string>
+    <string name="data_table_body_measurements">신체 치수</string>
+    <string name="data_table_equipment">장비</string>
+    <string name="data_table_equipment_settings">장비 설정</string>
+    <string name="data_table_custom_exercises">직접 만든 종목</string>
+    <string name="data_table_library_changes">라이브러리 즐겨찾기와 메모</string>
+    <string name="data_table_exercise_names">종목 이름</string>
+    <string name="data_table_exercise_muscles">종목 근육</string>
+    <string name="data_table_plans">플랜</string>
+    <string name="data_table_plan_exercises">플랜 종목</string>
+    <string name="data_table_schedule">주간 일정</string>
+    <string name="data_table_schedule_changes">일정 변경</string>
+    <string name="data_table_workouts">운동</string>
+    <string name="data_table_workout_exercises">운동 종목</string>
+    <string name="data_table_sets">세트</string>
+    <string name="data_table_records">개인 기록</string>
+    <plurals name="data_export_done_message">
+        <item quantity="other">%d개를 내보냈어요.</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="other">%d개 항목이 이 기기에 없는 종목이나 플랜을 참조하고 있어요. 앱을 업데이트한 뒤 다시 시도하세요.</item>
+    </plurals>
+</resources>

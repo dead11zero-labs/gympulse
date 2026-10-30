@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">대시보드</string>
+    <string name="nav_plans">플랜</string>
+    <string name="nav_library">라이브러리</string>
+    <string name="nav_calendar">캘린더</string>
+    <string name="action_settings">설정</string>
+    <string name="action_account">계정 메뉴</string>
+    <string name="action_back">뒤로</string>
+    <string name="onboarding_skip">건너뛰기</string>
+    <string name="onboarding_next">다음</string>
+    <string name="onboarding_start">시작하기</string>
+    <string name="onboarding_page_indicator">%2$d페이지 중 %1$d페이지</string>
+    <string name="onboarding_welcome_title">GymPulse에 오신 것을 환영합니다</string>
+    <string name="onboarding_welcome_body">운동을 기록하고, 성장을 확인하고, 꾸준히 이어가세요. 모든 데이터는 기기에만 저장됩니다.</string>
+    <string name="onboarding_goal_title">주간 목표 설정</string>
+    <string name="onboarding_goal_body">일주일에 몇 번 운동하고 싶으신가요? 설정에서 언제든지 바꿀 수 있어요.</string>
+    <string name="onboarding_done_title">준비 완료</string>
+    <string name="onboarding_done_body">대시보드에서 첫 운동을 시작해 보세요. 좋은 운동 되세요!</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="other">주 %d회 운동</item>
+    </plurals>
+</resources>

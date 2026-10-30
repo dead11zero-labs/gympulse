@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_dashboard">Tableau de bord</string>
+    <string name="nav_plans">Programmes</string>
+    <string name="nav_library">Bibliothèque</string>
+    <string name="nav_calendar">Calendrier</string>
+    <string name="action_settings">Réglages</string>
+    <string name="action_account">Menu du compte</string>
+    <string name="action_back">Retour</string>
+    <string name="onboarding_skip">Passer</string>
+    <string name="onboarding_next">Suivant</string>
+    <string name="onboarding_start">C\'est parti</string>
+    <string name="onboarding_page_indicator">Page %1$d sur %2$d</string>
+    <string name="onboarding_welcome_title">Bienvenue dans GymPulse</string>
+    <string name="onboarding_welcome_body">Notez vos séances, suivez vos progrès et gardez le cap. Tout reste sur votre appareil.</string>
+    <string name="onboarding_goal_title">Fixez votre objectif hebdomadaire</string>
+    <string name="onboarding_goal_body">Combien de séances par semaine voulez-vous faire ? Vous pouvez le modifier à tout moment dans les réglages.</string>
+    <string name="onboarding_done_title">Tout est prêt</string>
+    <string name="onboarding_done_body">Lancez votre première séance depuis le tableau de bord. Bonne séance !</string>
+    <plurals name="onboarding_goal_summary">
+        <item quantity="one">%d séance par semaine</item>
+        <item quantity="many">%d séances par semaine</item>
+        <item quantity="other">%d séances par semaine</item>
+    </plurals>
+</resources>

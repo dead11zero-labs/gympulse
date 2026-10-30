@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="insights_section_title">Análises do treino</string>
+    <string name="insights_section_title_exercise">Análises</string>
+    <string name="insights_disclaimer">As sugestões se baseiam nos seus treinos registrados e não são aconselhamento médico.</string>
+    <string name="insights_unknown_exercise">Exercício</string>
+    <string name="insights_empty_not_enough_title">Ainda não há dados suficientes</string>
+    <string name="insights_empty_not_enough_message">Registre alguns treinos com cargas e repetições. Depois de cerca de quatro sessões de um exercício, tendências e sugestões aparecem aqui.</string>
+    <string name="insights_empty_notable_title">Nada a destacar</string>
+    <string name="insights_empty_notable_message">Seu treino está no caminho certo. Novas observações aparecem aqui conforme você continua registrando.</string>
+    <string name="insights_empty_exercise_message">Ainda não há dados suficientes deste exercício. Depois de cerca de quatro sessões registradas, você verá tendências e sugestões aqui.</string>
+    <string name="insights_title_plateau">Platô</string>
+    <string name="insights_title_decline">Força em queda</string>
+    <string name="insights_title_progress">Em progresso</string>
+    <string name="insights_title_deload">Hora de uma semana de descarga</string>
+    <string name="insights_title_increase_weight">Aumente a carga</string>
+    <string name="insights_title_increase_reps">Adicione repetições</string>
+    <string name="insights_title_hold">Mantenha a carga</string>
+    <string name="insights_title_imbalance">Desequilíbrio</string>
+    <string name="insights_title_low_volume">Volume baixo</string>
+    <string name="insights_title_high_volume">Volume alto</string>
+    <string name="insights_subject_push_pull">Empurrar x puxar</string>
+    <string name="insights_subject_quads_hamstrings">Quadríceps x posteriores de coxa</string>
+    <string name="insights_message_plateau">Nenhum recorde novo há %1$d dias. Sessões desde o último recorde: %2$d. Repetição máxima estimada: %3$s kg.</string>
+    <string name="insights_message_decline">Sua repetição máxima estimada é de %1$s kg e seu melhor resultado foi %2$s kg. Verifique sua recuperação ou planeje uma semana mais leve.</string>
+    <string name="insights_message_progress">Sua repetição máxima estimada é de %1$s kg, cerca de %2$s kg a mais por semana.</string>
+    <string name="insights_message_deload_plateau">O progresso está parado há vários períodos. Treine com %1$s kg (agora %2$s kg) por cerca de uma semana, buscando %3$d repetições, e depois volte a subir.</string>
+    <string name="insights_message_deload_decline">A força vem caindo. Treine com %1$s kg (agora %2$s kg) por cerca de uma semana, buscando %3$d repetições, e depois volte a subir.</string>
+    <string name="insights_message_increase_weight">Todas as séries chegaram ao topo da sua faixa de repetições. Na próxima vez, use %1$s kg (agora %2$s kg) para %3$d repetições.</string>
+    <string name="insights_message_increase_reps">Fique em %1$s kg e busque %2$d repetições por série.</string>
+    <string name="insights_message_hold_reps">Você ficou abaixo do mínimo de repetições. Fique em %1$s kg e busque %2$d repetições.</string>
+    <string name="insights_message_hold_sets_missing">Faltam algumas séries planejadas. Fique em %1$s kg e complete todas as séries com %2$d repetições.</string>
+    <string name="insights_message_hold_rpe">Suas séries pareceram muito pesadas. Fique em %1$s kg até ficar mais fácil, com %2$d repetições.</string>
+    <string name="insights_message_low_volume">%1$s séries pesadas por semana. Uma boa faixa vai de %2$s a %3$s.</string>
+    <string name="insights_message_high_volume">%1$s séries pesadas por semana, acima do usual (%2$s a %3$s). Fique de olho na recuperação.</string>
+    <string name="insights_message_push_dominant">Os músculos de empurrar recebem %1$s séries por semana e os de puxar apenas %2$s. Adicione remadas ou puxadas para equilibrar.</string>
+    <string name="insights_message_pull_dominant">Os músculos de puxar recebem %1$s séries por semana e os de empurrar apenas %2$s. Adicione supinos ou desenvolvimentos para equilibrar.</string>
+    <string name="insights_message_quads_dominant">Os quadríceps recebem %1$s séries por semana e os posteriores de coxa apenas %2$s. Adicione mesa flexora ou stiff.</string>
+    <string name="insights_message_hamstrings_dominant">Os posteriores de coxa recebem %1$s séries por semana e os quadríceps apenas %2$s. Adicione agachamentos ou leg press.</string>
+</resources>

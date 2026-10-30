@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Exportar dados</string>
+    <string name="data_export_summary">Salva planos, treinos, exercícios e ajustes como arquivo JSON</string>
+    <string name="data_export_csv">Exportar histórico de treino (CSV)</string>
+    <string name="data_export_csv_summary">Cada série concluída em um arquivo de planilha (CSV)</string>
+    <string name="data_import">Importar dados</string>
+    <string name="data_import_summary">Restaura um backup do GymPulse com uma prévia antes</string>
+    <string name="data_action_ok">OK</string>
+    <string name="data_action_import">Importar</string>
+    <string name="data_working_export">Exportando…</string>
+    <string name="data_working_read">Lendo o backup…</string>
+    <string name="data_working_import">Importando…</string>
+    <string name="data_export_done_title">Backup salvo</string>
+    <string name="data_import_done_title">Importação concluída</string>
+    <string name="data_import_done_message">%1$d adicionadas, %2$d atualizadas, %3$d inalteradas.</string>
+    <string name="data_import_done_settings">Os ajustes também foram restaurados.</string>
+    <string name="data_export_failed_title">Falha na exportação</string>
+    <string name="data_import_failed_title">Falha na importação</string>
+    <string name="data_error_io">Não foi possível ler ou gravar o arquivo. Tente de novo ou escolha outro local.</string>
+    <string name="data_error_invalid">Este arquivo não é um backup do GymPulse ou está danificado.</string>
+    <string name="data_error_missing_references">O backup se refere a exercícios ou planos que não existem neste dispositivo. Nada foi alterado.</string>
+    <string name="data_error_write">Não foi possível salvar os dados. Nada foi alterado.</string>
+    <string name="data_preview_title">Importar backup</string>
+    <string name="data_preview_source">Criado em %1$s com o GymPulse %2$s</string>
+    <string name="data_preview_newer_version">Este backup vem de uma versão mais nova do GymPulse. Dados que esta versão não conhece serão ignorados.</string>
+    <string name="data_preview_empty">O backup não contém dados.</string>
+    <string name="data_preview_counts">%1$d novas · %2$d atualizadas · %3$d inalteradas</string>
+    <string name="data_preview_conflicts">Entradas que já existem</string>
+    <string name="data_preview_apply_settings">Restaurar também os ajustes</string>
+    <string name="data_strategy_newer">Manter a versão mais nova</string>
+    <string name="data_strategy_newer_summary">Recomendado. Compara a última alteração de cada entrada.</string>
+    <string name="data_strategy_keep">Manter o existente</string>
+    <string name="data_strategy_keep_summary">Só adiciona entradas que ainda não estão neste dispositivo.</string>
+    <string name="data_strategy_overwrite">Sobrescrever</string>
+    <string name="data_strategy_overwrite_summary">Substitui as entradas existentes pelas do backup. Entradas excluídas continuam excluídas.</string>
+    <string name="data_table_profile">Perfil</string>
+    <string name="data_table_body_measurements">Medidas corporais</string>
+    <string name="data_table_equipment">Equipamento</string>
+    <string name="data_table_equipment_settings">Ajustes de equipamento</string>
+    <string name="data_table_custom_exercises">Exercícios personalizados</string>
+    <string name="data_table_library_changes">Favoritos e anotações da biblioteca</string>
+    <string name="data_table_exercise_names">Nomes de exercícios</string>
+    <string name="data_table_exercise_muscles">Músculos dos exercícios</string>
+    <string name="data_table_plans">Planos</string>
+    <string name="data_table_plan_exercises">Exercícios dos planos</string>
+    <string name="data_table_schedule">Programação semanal</string>
+    <string name="data_table_schedule_changes">Alterações da programação</string>
+    <string name="data_table_workouts">Treinos</string>
+    <string name="data_table_workout_exercises">Exercícios dos treinos</string>
+    <string name="data_table_sets">Séries</string>
+    <string name="data_table_records">Recordes pessoais</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">%d registro exportado.</item>
+        <item quantity="many">%d registros exportados.</item>
+        <item quantity="other">%d registros exportados.</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d registro se refere a um exercício ou plano que não existe neste dispositivo. Atualize o app e tente de novo.</item>
+        <item quantity="many">%d registros se referem a exercícios ou planos que não existem neste dispositivo. Atualize o app e tente de novo.</item>
+        <item quantity="other">%d registros se referem a exercícios ou planos que não existem neste dispositivo. Atualize o app e tente de novo.</item>
+    </plurals>
+</resources>

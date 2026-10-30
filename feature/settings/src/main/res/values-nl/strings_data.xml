@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_export">Gegevens exporteren</string>
+    <string name="data_export_summary">Sla schema\'s, trainingen, oefeningen en instellingen op als JSON-bestand</string>
+    <string name="data_export_csv">Trainingsgeschiedenis exporteren (CSV)</string>
+    <string name="data_export_csv_summary">Elke voltooide set als spreadsheetbestand (CSV)</string>
+    <string name="data_import">Gegevens importeren</string>
+    <string name="data_import_summary">Zet een GymPulse-back-up terug, eerst met een voorbeeld</string>
+    <string name="data_action_ok">OK</string>
+    <string name="data_action_import">Importeren</string>
+    <string name="data_working_export">Exporteren…</string>
+    <string name="data_working_read">Back-up lezen…</string>
+    <string name="data_working_import">Importeren…</string>
+    <string name="data_export_done_title">Back-up opgeslagen</string>
+    <string name="data_import_done_title">Import voltooid</string>
+    <string name="data_import_done_message">%1$d toegevoegd, %2$d bijgewerkt, %3$d ongewijzigd.</string>
+    <string name="data_import_done_settings">De instellingen zijn ook teruggezet.</string>
+    <string name="data_export_failed_title">Export mislukt</string>
+    <string name="data_import_failed_title">Import mislukt</string>
+    <string name="data_error_io">Het bestand kon niet worden gelezen of geschreven. Probeer het opnieuw of kies een andere locatie.</string>
+    <string name="data_error_invalid">Dit bestand is geen GymPulse-back-up of is beschadigd.</string>
+    <string name="data_error_missing_references">De back-up verwijst naar oefeningen of schema\'s die op dit apparaat ontbreken. Er is niets gewijzigd.</string>
+    <string name="data_error_write">De gegevens konden niet worden opgeslagen. Er is niets gewijzigd.</string>
+    <string name="data_preview_title">Back-up importeren</string>
+    <string name="data_preview_source">Gemaakt op %1$s met GymPulse %2$s</string>
+    <string name="data_preview_newer_version">Deze back-up komt van een nieuwere versie van GymPulse. Gegevens die deze versie niet kent, worden overgeslagen.</string>
+    <string name="data_preview_empty">De back-up bevat geen gegevens.</string>
+    <string name="data_preview_counts">%1$d nieuw · %2$d bijgewerkt · %3$d ongewijzigd</string>
+    <string name="data_preview_conflicts">Items die al bestaan</string>
+    <string name="data_preview_apply_settings">Ook instellingen terugzetten</string>
+    <string name="data_strategy_newer">Nieuwere versie behouden</string>
+    <string name="data_strategy_newer_summary">Aanbevolen. Vergelijkt de laatste wijziging van elk item.</string>
+    <string name="data_strategy_keep">Bestaande behouden</string>
+    <string name="data_strategy_keep_summary">Voegt alleen items toe die nog niet op dit apparaat staan.</string>
+    <string name="data_strategy_overwrite">Overschrijven</string>
+    <string name="data_strategy_overwrite_summary">Vervangt bestaande items door die uit de back-up. Verwijderde items blijven verwijderd.</string>
+    <string name="data_table_profile">Profiel</string>
+    <string name="data_table_body_measurements">Lichaamsmaten</string>
+    <string name="data_table_equipment">Apparatuur</string>
+    <string name="data_table_equipment_settings">Apparatuurinstellingen</string>
+    <string name="data_table_custom_exercises">Eigen oefeningen</string>
+    <string name="data_table_library_changes">Favorieten en notities in de bibliotheek</string>
+    <string name="data_table_exercise_names">Oefeningsnamen</string>
+    <string name="data_table_exercise_muscles">Oefeningsspieren</string>
+    <string name="data_table_plans">Schema\'s</string>
+    <string name="data_table_plan_exercises">Schema-oefeningen</string>
+    <string name="data_table_schedule">Weekplanning</string>
+    <string name="data_table_schedule_changes">Planningswijzigingen</string>
+    <string name="data_table_workouts">Trainingen</string>
+    <string name="data_table_workout_exercises">Trainingsoefeningen</string>
+    <string name="data_table_sets">Sets</string>
+    <string name="data_table_records">Persoonlijke records</string>
+    <plurals name="data_export_done_message">
+        <item quantity="one">%d item geëxporteerd.</item>
+        <item quantity="other">%d items geëxporteerd.</item>
+    </plurals>
+    <plurals name="data_preview_missing_references">
+        <item quantity="one">%d item verwijst naar een oefening of schema dat op dit apparaat ontbreekt. Werk de app bij en probeer het opnieuw.</item>
+        <item quantity="other">%d items verwijzen naar oefeningen of schema\'s die op dit apparaat ontbreken. Werk de app bij en probeer het opnieuw.</item>
+    </plurals>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="muscle_abdominals">Пресс</string>
+    <string name="muscle_abductors">Отводящие мышцы</string>
+    <string name="muscle_adductors">Приводящие мышцы</string>
+    <string name="muscle_biceps">Бицепс</string>
+    <string name="muscle_calves">Икры</string>
+    <string name="muscle_chest">Грудь</string>
+    <string name="muscle_forearms">Предплечья</string>
+    <string name="muscle_glutes">Ягодицы</string>
+    <string name="muscle_hamstrings">Задняя поверхность бедра</string>
+    <string name="muscle_lats">Широчайшие</string>
+    <string name="muscle_lower_back">Поясница</string>
+    <string name="muscle_middle_back">Середина спины</string>
+    <string name="muscle_neck">Шея</string>
+    <string name="muscle_quadriceps">Квадрицепс</string>
+    <string name="muscle_shoulders">Плечи</string>
+    <string name="muscle_traps">Трапеции</string>
+    <string name="muscle_triceps">Трицепс</string>
+    <string name="equipment_band">Резинка</string>
+    <string name="equipment_barbell">Штанга</string>
+    <string name="equipment_bodyweight">Собственный вес</string>
+    <string name="equipment_cable">Блок</string>
+    <string name="equipment_dumbbell">Гантель</string>
+    <string name="equipment_exercise_ball">Фитбол</string>
+    <string name="equipment_ez_bar">EZ-гриф</string>
+    <string name="equipment_foam_roll">Массажный ролик</string>
+    <string name="equipment_kettlebell">Гиря</string>
+    <string name="equipment_machine">Тренажёр</string>
+    <string name="equipment_medicine_ball">Медицинбол</string>
+    <string name="equipment_other">Другое</string>
+</resources>

@@ -109,6 +109,10 @@ class UserSettingsRepositoryTest {
         assertEquals(AppLanguage.GERMAN, AppLanguage.fromLanguageTag("de-DE"))
         assertEquals(AppLanguage.ENGLISH, AppLanguage.fromLanguageTag("en_US"))
         assertEquals(AppLanguage.SYSTEM, AppLanguage.fromLanguageTag(""))
-        assertEquals(AppLanguage.SYSTEM, AppLanguage.fromLanguageTag("fr"))
+        assertEquals(AppLanguage.SYSTEM, AppLanguage.fromLanguageTag("sv"))
+        assertEquals(AppLanguage.FRENCH, AppLanguage.fromLanguageTag("fr-CA"))
+        assertEquals(AppLanguage.PORTUGUESE_BRAZIL, AppLanguage.fromLanguageTag("pt-BR"))
+        assertEquals(AppLanguage.PORTUGUESE_BRAZIL, AppLanguage.fromLanguageTag("pt_PT"))
+        assertEquals(AppLanguage.CHINESE_SIMPLIFIED, AppLanguage.fromLanguageTag("zh-Hans-CN"))
     }
 }

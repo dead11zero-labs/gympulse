@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_calendar_title">Agenda</string>
+    <string name="feature_calendar_premium_title">De agenda is een Premium-functie</string>
+    <string name="feature_calendar_premium_body">Wijs schema\'s toe aan weekdagen, verplaats losse trainingsdagen en blader door je geschiedenis per week of maand. Je bestaande planning blijft opgeslagen en leesbaar.</string>
+    <string name="feature_calendar_previous">Vorige periode</string>
+    <string name="feature_calendar_next">Volgende periode</string>
+    <string name="feature_calendar_mode_week">Week</string>
+    <string name="feature_calendar_mode_month">Maand</string>
+    <string name="feature_calendar_today">Vandaag</string>
+    <string name="feature_calendar_week_number">Week %1$d</string>
+    <string name="feature_calendar_duration_min">%1$d min</string>
+    <string name="feature_calendar_status_volume">%1$s · volume %2$s kg</string>
+    <string name="feature_calendar_rest_day">Rustdag</string>
+    <string name="feature_calendar_unknown_plan">Verwijderd schema</string>
+    <string name="feature_calendar_free_workout">Vrije training</string>
+    <string name="feature_calendar_status_completed">Voltooid</string>
+    <string name="feature_calendar_status_planned">Gepland</string>
+    <string name="feature_calendar_status_missed">Gemist</string>
+    <string name="feature_calendar_status_skipped">Overgeslagen</string>
+    <string name="feature_calendar_override_skipped">Uitzondering: overgeslagen</string>
+    <string name="feature_calendar_override_moved">Uitzondering: hierheen verplaatst</string>
+    <string name="feature_calendar_override_added">Uitzondering: toegevoegd</string>
+    <string name="feature_calendar_history">Voltooide trainingen</string>
+    <string name="feature_calendar_session_meta">%1$s · %2$d min · %3$s kg</string>
+    <string name="feature_calendar_action_skip">Deze dag overslaan</string>
+    <string name="feature_calendar_action_move">Naar een andere dag verplaatsen</string>
+    <string name="feature_calendar_action_add">Schema toevoegen</string>
+    <string name="feature_calendar_action_reset">Terug naar weekplanning</string>
+    <string name="feature_calendar_move_title">Verplaatsen naar</string>
+    <string name="feature_calendar_add_plan_title">Schema toevoegen</string>
+    <string name="feature_calendar_scheme_title">Weekplanning</string>
+    <string name="feature_calendar_scheme_hint">Herhaalt elke week, vanaf vandaag.</string>
+    <string name="feature_calendar_pick_plan_for">Schema voor %1$s</string>
+    <string name="feature_calendar_edit">Schema wijzigen</string>
+    <string name="feature_calendar_no_plans">Nog geen schema\'s. Maak er een op het tabblad Schema\'s.</string>
+    <string name="feature_calendar_cancel">Annuleren</string>
+</resources>
