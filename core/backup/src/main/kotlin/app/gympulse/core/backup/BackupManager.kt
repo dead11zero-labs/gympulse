@@ -1,5 +1,6 @@
 package app.gympulse.core.backup
 
+import app.gympulse.core.designsystem.theme.AccentColor
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.SQLException
@@ -187,6 +188,7 @@ class BackupManager internal constructor(
         settings.weeklyGoal?.let { settingsRepository.setWeeklyGoal(it) }
         settings.themeMode.toEnum<ThemeMode>()?.let { settingsRepository.setThemeMode(it) }
         settings.dynamicColor?.let { settingsRepository.setDynamicColor(it) }
+        settings.accentColor.toEnum<AccentColor>()?.let { settingsRepository.setAccentColor(it) }
         settings.language.toEnum<AppLanguage>()?.let { settingsRepository.setLanguage(it) }
     }
 
@@ -236,6 +238,7 @@ internal fun UserSettings.toBackup() = BackupSettings(
     weeklyGoal = weeklyGoal,
     themeMode = themeMode.name,
     dynamicColor = dynamicColor,
+    accentColor = accentColor.name,
     language = language.name,
 )
 

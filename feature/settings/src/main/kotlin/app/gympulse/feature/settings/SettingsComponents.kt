@@ -149,6 +149,7 @@ internal fun <T> ChoiceDialog(
     label: @Composable (T) -> String,
     onSelect: (T) -> Unit,
     onDismiss: () -> Unit,
+    leading: (@Composable (T) -> Unit)? = null,
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -169,6 +170,9 @@ internal fun <T> ChoiceDialog(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         RadioButton(selected = option == selected, onClick = null)
+                        leading?.let {
+                            Box(modifier = Modifier.padding(start = Spacing.m)) { it(option) }
+                        }
                         Text(
                             text = label(option),
                             style = MaterialTheme.typography.bodyLarge,

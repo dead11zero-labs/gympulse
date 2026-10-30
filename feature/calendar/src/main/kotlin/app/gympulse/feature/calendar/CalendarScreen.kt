@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import app.gympulse.core.designsystem.component.StatusChip
+import app.gympulse.core.designsystem.theme.LocalAccentScheme
 import java.time.temporal.WeekFields
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -164,8 +165,8 @@ internal fun PremiumNotice(modifier: Modifier = Modifier) {
     ) {
         ListRowIcon(
             icon = Icons.Filled.Lock,
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = LocalAccentScheme.current.primary,
+            contentColor = LocalAccentScheme.current.onPrimary,
         )
         Text(
             text = stringResource(R.string.feature_calendar_premium_title),
@@ -375,9 +376,9 @@ private const val PLANNED_ALPHA = 0.55f
 
 @Composable
 private fun statusColor(status: DayStatus): Color = when (status) {
-    DayStatus.COMPLETED -> MaterialTheme.colorScheme.primary
+    DayStatus.COMPLETED -> LocalAccentScheme.current.primary
     // Geplant: gedämpftes Primärgrün, klar von "erledigt" (volles primary) unterscheidbar.
-    DayStatus.PLANNED -> MaterialTheme.colorScheme.primary.copy(alpha = PLANNED_ALPHA)
+    DayStatus.PLANNED -> LocalAccentScheme.current.primary.copy(alpha = PLANNED_ALPHA)
     DayStatus.MISSED -> MaterialTheme.colorScheme.error
     DayStatus.SKIPPED -> MaterialTheme.colorScheme.outline
     DayStatus.REST -> MaterialTheme.colorScheme.onSurfaceVariant
@@ -510,8 +511,8 @@ private fun sessionMinutes(session: CompletedSessionSummary): Long =
 private fun DayBadge(label: String, number: String, isToday: Boolean) {
     Surface(
         shape = MaterialTheme.shapes.medium,
-        color = if (isToday) MaterialTheme.colorScheme.primary else Color.Transparent,
-        contentColor = if (isToday) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
+        color = if (isToday) LocalAccentScheme.current.primary else Color.Transparent,
+        contentColor = if (isToday) LocalAccentScheme.current.onPrimary else MaterialTheme.colorScheme.onSurface,
     ) {
         Column(
             modifier = Modifier
@@ -522,7 +523,7 @@ private fun DayBadge(label: String, number: String, isToday: Boolean) {
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
-                color = if (isToday) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+                color = if (isToday) LocalAccentScheme.current.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
             )
             Text(text = number, style = MaterialTheme.typography.headlineSmall)
@@ -581,7 +582,7 @@ private fun MonthCell(
     modifier: Modifier = Modifier,
 ) {
     val background = when {
-        day.isToday -> MaterialTheme.colorScheme.primary
+        day.isToday -> LocalAccentScheme.current.primary
         isSelected -> MaterialTheme.colorScheme.surfaceContainerHighest
         else -> Color.Transparent
     }
@@ -606,7 +607,7 @@ private fun MonthCell(
                     MaterialTheme.typography.bodyLarge
                 },
                 color = when {
-                    day.isToday -> MaterialTheme.colorScheme.onPrimary
+                    day.isToday -> LocalAccentScheme.current.onPrimary
                     day.inPeriod -> MaterialTheme.colorScheme.onSurface
                     else -> MaterialTheme.colorScheme.outline
                 },
@@ -617,7 +618,7 @@ private fun MonthCell(
                     .background(
                         color = when {
                             day.status == DayStatus.REST -> Color.Transparent
-                            day.isToday -> MaterialTheme.colorScheme.onPrimary
+                            day.isToday -> LocalAccentScheme.current.onPrimary
                             else -> statusColor(day.status)
                         },
                         shape = CircleShape,
@@ -702,7 +703,7 @@ private fun ActionRow(icon: ImageVector, label: String, onClick: () -> Unit) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = LocalAccentScheme.current.primary,
             )
         },
         onClick = onClick,
@@ -728,7 +729,7 @@ private fun SessionRow(session: CompletedSessionSummary, zone: ZoneId, locale: L
             Icon(
                 imageVector = Icons.Filled.CheckCircle,
                 contentDescription = stringResource(R.string.feature_calendar_status_completed),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = LocalAccentScheme.current.primary,
             )
         },
     )

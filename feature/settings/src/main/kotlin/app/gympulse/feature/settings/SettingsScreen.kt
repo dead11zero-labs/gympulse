@@ -5,6 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.background
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -57,6 +61,7 @@ import app.gympulse.core.designsystem.theme.ExpressiveShapes
 import app.gympulse.core.designsystem.theme.Sizing
 import app.gympulse.core.designsystem.theme.Spacing
 import app.gympulse.core.settings.AppLanguage
+import app.gympulse.core.designsystem.theme.AccentColor
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.WeekStart
 import app.gympulse.feature.settings.ai.AiCoachSettingsEntry
@@ -66,7 +71,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 /** Dialoge der Einstellungen; es ist höchstens einer gleichzeitig offen. */
-private enum class SettingsDialog { NAME, WEIGHT, HEIGHT, REST_TIMER, WEEKLY_GOAL, WEEK_START, THEME, LANGUAGE }
+private enum class SettingsDialog { NAME, WEIGHT, HEIGHT, REST_TIMER, WEEKLY_GOAL, WEEK_START, THEME, ACCENT, LANGUAGE }
 
 @Composable
 internal fun SettingsScreen(
@@ -162,6 +167,20 @@ internal fun SettingsScreen(
                     } else {
                         null
                     },
+                )
+                SettingsDivider(withIcon = true)
+                SettingsRow(
+                    headline = stringResource(R.string.settings_accent_color),
+                    supporting = stringResource(
+                        if (settings.dynamicColor && dynamicColorSupported) {
+                            R.string.settings_accent_color_overridden
+                        } else {
+                            accentLabelRes(settings.accentColor)
+                        },
+                    ),
+                    icon = Icons.Filled.Favorite,
+                    trailing = { AccentSwatch(settings.accentColor) },
+                    onClick = { dialog = SettingsDialog.ACCENT },
                 )
             }
 
@@ -305,6 +324,15 @@ internal fun SettingsScreen(
             onSelect = { viewModel.setThemeMode(it); dismiss() },
             onDismiss = dismiss,
         )
+        SettingsDialog.ACCENT -> ChoiceDialog(
+            title = stringResource(R.string.settings_accent_color),
+            options = AccentColor.entries,
+            selected = settings.accentColor,
+            label = { stringResource(accentLabelRes(it)) },
+            onSelect = { viewModel.setAccentColor(it); dismiss() },
+            onDismiss = dismiss,
+            leading = { AccentSwatch(it) },
+        )
         SettingsDialog.LANGUAGE -> ChoiceDialog(
             title = stringResource(R.string.settings_language),
             options = AppLanguage.entries,
@@ -407,6 +435,24 @@ private fun themeLabel(mode: ThemeMode): String = stringResource(
         ThemeMode.DARK -> R.string.settings_theme_dark
     },
 )
+
+private fun accentLabelRes(accent: AccentColor): Int = when (accent) {
+    AccentColor.MINT -> R.string.settings_accent_mint
+    AccentColor.BLUE -> R.string.settings_accent_blue
+    AccentColor.VIOLET -> R.string.settings_accent_violet
+    AccentColor.PINK -> R.string.settings_accent_pink
+    AccentColor.ORANGE -> R.string.settings_accent_orange
+}
+
+/** Farbpunkt der Akzentfarbe; der Name steht daneben, daher keine eigene Beschreibung. */
+@Composable
+private fun AccentSwatch(accent: AccentColor) {
+    Box(
+        modifier = Modifier
+            .size(Sizing.statusDot * 2)
+            .background(color = accent.swatch, shape = CircleShape),
+    )
+}
 
 @Composable
 private fun languageLabel(language: AppLanguage): String = stringResource(

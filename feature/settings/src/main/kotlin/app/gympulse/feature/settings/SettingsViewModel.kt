@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.gympulse.core.data.repository.ProfileRepository
 import app.gympulse.core.data.repository.UserProfile
 import app.gympulse.core.settings.AppLanguage
+import app.gympulse.core.designsystem.theme.AccentColor
 import app.gympulse.core.settings.ThemeMode
 import app.gympulse.core.settings.UserSettings
 import app.gympulse.core.settings.UserSettingsRepository
@@ -55,6 +56,7 @@ internal class SettingsViewModel @Inject constructor(
     fun setThemeMode(mode: ThemeMode) = viewModelScope.launch { settingsRepository.setThemeMode(mode) }
 
     fun setDynamicColor(enabled: Boolean) = viewModelScope.launch { settingsRepository.setDynamicColor(enabled) }
+    fun setAccentColor(accent: AccentColor) = viewModelScope.launch { settingsRepository.setAccentColor(accent) }
 
     fun setLanguage(language: AppLanguage) = viewModelScope.launch { settingsRepository.setLanguage(language) }
 

@@ -42,6 +42,13 @@
     <string name="settings_dynamic_color">Dynamic color</string>
     <string name="settings_dynamic_color_summary">Use colors from your wallpaper</string>
     <string name="settings_dynamic_color_unavailable">Requires Android 12 or newer</string>
+    <string name="settings_accent_color">Accent color</string>
+    <string name="settings_accent_color_overridden">Overridden by dynamic color</string>
+    <string name="settings_accent_mint">Mint</string>
+    <string name="settings_accent_blue">Blue</string>
+    <string name="settings_accent_violet">Violet</string>
+    <string name="settings_accent_pink">Pink</string>
+    <string name="settings_accent_orange">Orange</string>
 
     <string name="settings_section_language">Language</string>
     <string name="settings_language">App language</string>

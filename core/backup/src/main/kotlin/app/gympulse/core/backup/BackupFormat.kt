@@ -35,6 +35,7 @@ data class BackupSettings(
     @SerialName("weekly_goal") val weeklyGoal: Int? = null,
     @SerialName("theme_mode") val themeMode: String? = null,
     @SerialName("dynamic_color") val dynamicColor: Boolean? = null,
+    @SerialName("accent_color") val accentColor: String? = null,
     @SerialName("language") val language: String? = null,
 )
 

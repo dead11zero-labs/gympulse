@@ -1,5 +1,6 @@
 package app.gympulse.core.settings
 
+import app.gympulse.core.designsystem.theme.AccentColor
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -47,6 +48,7 @@ class UserSettingsRepositoryTest {
         assertEquals(3, settings.weeklyGoal)
         assertEquals(ThemeMode.DARK, settings.themeMode)
         assertEquals(false, settings.dynamicColor)
+        assertEquals(AccentColor.MINT, settings.accentColor)
         assertEquals(AppLanguage.SYSTEM, settings.language)
         assertEquals(false, settings.onboardingCompleted)
     }
@@ -58,13 +60,14 @@ class UserSettingsRepositoryTest {
         repository.setWeeklyGoal(5)
         repository.setThemeMode(ThemeMode.DARK)
         repository.setDynamicColor(false)
+        repository.setAccentColor(AccentColor.VIOLET)
         repository.setLanguage(AppLanguage.GERMAN)
         repository.setOnboardingCompleted(true)
 
         assertEquals(
             UserSettings(
                 120, WeekStart.SUNDAY, 5, ThemeMode.DARK,
-                dynamicColor = false, language = AppLanguage.GERMAN, onboardingCompleted = true,
+                dynamicColor = false, accentColor = AccentColor.VIOLET, language = AppLanguage.GERMAN, onboardingCompleted = true,
             ),
             repository.settings.first(),
         )
