@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">Cores dinâmicas</string>
     <string name="settings_dynamic_color_summary">Usa as cores do seu papel de parede</string>
     <string name="settings_dynamic_color_unavailable">Requer Android 12 ou mais recente</string>
+    <string name="settings_accent_color">Cor de destaque</string>
+    <string name="settings_accent_color_overridden">Substituída pela cor dinâmica</string>
+    <string name="settings_accent_mint">Menta</string>
+    <string name="settings_accent_blue">Azul</string>
+    <string name="settings_accent_violet">Violeta</string>
+    <string name="settings_accent_pink">Rosa</string>
+    <string name="settings_accent_orange">Laranja</string>
     <string name="settings_section_language">Idioma</string>
     <string name="settings_language">Idioma do app</string>
     <string name="settings_language_system">Padrão do sistema</string>

@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">다이내믹 컬러</string>
     <string name="settings_dynamic_color_summary">배경화면의 색상을 사용합니다</string>
     <string name="settings_dynamic_color_unavailable">Android 12 이상 필요</string>
+    <string name="settings_accent_color">강조 색상</string>
+    <string name="settings_accent_color_overridden">다이내믹 컬러가 우선 적용됨</string>
+    <string name="settings_accent_mint">민트</string>
+    <string name="settings_accent_blue">파랑</string>
+    <string name="settings_accent_violet">보라</string>
+    <string name="settings_accent_pink">분홍</string>
+    <string name="settings_accent_orange">주황</string>
     <string name="settings_section_language">언어</string>
     <string name="settings_language">앱 언어</string>
     <string name="settings_language_system">시스템 기본값</string>

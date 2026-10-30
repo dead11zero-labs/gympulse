@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">动态取色</string>
     <string name="settings_dynamic_color_summary">使用壁纸中的颜色</string>
     <string name="settings_dynamic_color_unavailable">需要 Android 12 或更高版本</string>
+    <string name="settings_accent_color">强调色</string>
+    <string name="settings_accent_color_overridden">已被动态取色覆盖</string>
+    <string name="settings_accent_mint">薄荷绿</string>
+    <string name="settings_accent_blue">蓝色</string>
+    <string name="settings_accent_violet">紫色</string>
+    <string name="settings_accent_pink">粉色</string>
+    <string name="settings_accent_orange">橙色</string>
     <string name="settings_section_language">语言</string>
     <string name="settings_language">应用语言</string>
     <string name="settings_language_system">跟随系统</string>

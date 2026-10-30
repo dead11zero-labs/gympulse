@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">ダイナミックカラー</string>
     <string name="settings_dynamic_color_summary">壁紙の色を使用します</string>
     <string name="settings_dynamic_color_unavailable">Android 12以降が必要です</string>
+    <string name="settings_accent_color">アクセントカラー</string>
+    <string name="settings_accent_color_overridden">ダイナミックカラーが優先されています</string>
+    <string name="settings_accent_mint">ミント</string>
+    <string name="settings_accent_blue">ブルー</string>
+    <string name="settings_accent_violet">バイオレット</string>
+    <string name="settings_accent_pink">ピンク</string>
+    <string name="settings_accent_orange">オレンジ</string>
     <string name="settings_section_language">言語</string>
     <string name="settings_language">アプリの言語</string>
     <string name="settings_language_system">システムのデフォルト</string>

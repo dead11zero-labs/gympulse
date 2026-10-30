@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">Color dinámico</string>
     <string name="settings_dynamic_color_summary">Usa los colores de tu fondo de pantalla</string>
     <string name="settings_dynamic_color_unavailable">Requiere Android 12 o posterior</string>
+    <string name="settings_accent_color">Color de acento</string>
+    <string name="settings_accent_color_overridden">Reemplazado por el color dinámico</string>
+    <string name="settings_accent_mint">Menta</string>
+    <string name="settings_accent_blue">Azul</string>
+    <string name="settings_accent_violet">Violeta</string>
+    <string name="settings_accent_pink">Rosa</string>
+    <string name="settings_accent_orange">Naranja</string>
     <string name="settings_section_language">Idioma</string>
     <string name="settings_language">Idioma de la app</string>
     <string name="settings_language_system">Predeterminado del sistema</string>

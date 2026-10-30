@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">Динамические цвета</string>
     <string name="settings_dynamic_color_summary">Использовать цвета обоев</string>
     <string name="settings_dynamic_color_unavailable">Требуется Android 12 или новее</string>
+    <string name="settings_accent_color">Акцентный цвет</string>
+    <string name="settings_accent_color_overridden">Заменён динамическими цветами</string>
+    <string name="settings_accent_mint">Мятный</string>
+    <string name="settings_accent_blue">Синий</string>
+    <string name="settings_accent_violet">Фиолетовый</string>
+    <string name="settings_accent_pink">Розовый</string>
+    <string name="settings_accent_orange">Оранжевый</string>
     <string name="settings_section_language">Язык</string>
     <string name="settings_language">Язык приложения</string>
     <string name="settings_language_system">Как в системе</string>

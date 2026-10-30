@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">Couleurs dynamiques</string>
     <string name="settings_dynamic_color_summary">Utilise les couleurs de votre fond d\'écran</string>
     <string name="settings_dynamic_color_unavailable">Nécessite Android 12 ou version ultérieure</string>
+    <string name="settings_accent_color">Couleur d\'accent</string>
+    <string name="settings_accent_color_overridden">Remplacée par les couleurs dynamiques</string>
+    <string name="settings_accent_mint">Menthe</string>
+    <string name="settings_accent_blue">Bleu</string>
+    <string name="settings_accent_violet">Violet</string>
+    <string name="settings_accent_pink">Rose</string>
+    <string name="settings_accent_orange">Orange</string>
     <string name="settings_section_language">Langue</string>
     <string name="settings_language">Langue de l\'application</string>
     <string name="settings_language_system">Par défaut du système</string>

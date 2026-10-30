@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">Dinamik renk</string>
     <string name="settings_dynamic_color_summary">Duvar kâğıdındaki renkleri kullan</string>
     <string name="settings_dynamic_color_unavailable">Android 12 veya üstü gerekir</string>
+    <string name="settings_accent_color">Vurgu rengi</string>
+    <string name="settings_accent_color_overridden">Dinamik renk tarafından geçersiz kılındı</string>
+    <string name="settings_accent_mint">Nane</string>
+    <string name="settings_accent_blue">Mavi</string>
+    <string name="settings_accent_violet">Mor</string>
+    <string name="settings_accent_pink">Pembe</string>
+    <string name="settings_accent_orange">Turuncu</string>
     <string name="settings_section_language">Dil</string>
     <string name="settings_language">Uygulama dili</string>
     <string name="settings_language_system">Sistem varsayılanı</string>

@@ -37,6 +37,13 @@
     <string name="settings_dynamic_color">Dynamische kleur</string>
     <string name="settings_dynamic_color_summary">Gebruik kleuren van je achtergrond</string>
     <string name="settings_dynamic_color_unavailable">Vereist Android 12 of nieuwer</string>
+    <string name="settings_accent_color">Accentkleur</string>
+    <string name="settings_accent_color_overridden">Overschreven door dynamische kleur</string>
+    <string name="settings_accent_mint">Mint</string>
+    <string name="settings_accent_blue">Blauw</string>
+    <string name="settings_accent_violet">Violet</string>
+    <string name="settings_accent_pink">Roze</string>
+    <string name="settings_accent_orange">Oranje</string>
     <string name="settings_section_language">Taal</string>
     <string name="settings_language">App-taal</string>
     <string name="settings_language_system">Systeemstandaard</string>
