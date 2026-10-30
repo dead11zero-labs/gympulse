@@ -50,7 +50,7 @@ private fun AccentColor.darkRoles(): AccentRoles? = when (this) {
 private fun AccentColor.lightRoles(): AccentRoles? = when (this) {
     AccentColor.MINT -> null
     AccentColor.BLUE -> roles(0xFF1F5FA6, 0xFFFFFFFF, 0xFFD3E4FF, 0xFF001C3A, 0xFF7DB7FF)
-    AccentColor.VIOLET -> X, 0xFF230B5C, 0xFFCDB5FF)
+    AccentColor.VIOLET -> roles(0xFF634AAE, 0xFFFFFFFF, 0xFFEADDFF, 0xFF230B5C, 0xFFCDB5FF)
     AccentColor.PINK -> roles(0xFF953660, 0xFFFFFFFF, 0xFFFFD8E6, 0xFF3D0522, 0xFFFFAFD0)
     AccentColor.ORANGE -> roles(0xFF8C4A00, 0xFFFFFFFF, 0xFFFFDCC0, 0xFF2D1600, 0xFFFFB374)
 }
