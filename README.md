@@ -221,4 +221,4 @@ Offen:
 - **Deutsche Namen, Gerätevorlagen und Kraftgeräte-Liste:** eigene Inhalte, CC0-1.0. Details in [`core/database/src/main/assets/seed/LICENSES.md`](core/database/src/main/assets/seed/LICENSES.md).
 - **KI-Modell:** Gemma 4 E2B (LiteRT-Community auf Hugging Face, Apache 2.0). Das Modell ist nicht im Repo, die App lädt es auf Wunsch.
 - **Bibliotheken:** Open-Source-Lizenzen der verwendeten Bibliotheken zeigt die App unter Einstellungen, "Über die App".
-- **Quellcode:** Das Repo enthält derzeit keine `LICENSE`-Datei, es gelten die Rechte der Autoren.
+- **Quellcode:** GymPulse steht unter der [GNU General Public License v3.0](LICENSE) (GPL-3.0-only). Wer die App oder Teile davon weitergibt, muss den Quellcode unter denselben Bedingungen zur Verfügung stellen. Die Lizenzen der Seed-Daten und des KI-Modells (siehe oben) sind davon getrennt.
